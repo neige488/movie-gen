@@ -1,49 +1,138 @@
 import { useEffect, useState } from "react";
-import type { MovieDto } from "../shared/dto.js";
+import type { LibraryDto, MovieDto } from "../shared/dto.js";
 import { SceneNavigator } from "./components/SceneNavigator.js";
 import { SceneView } from "./components/SceneView.js";
+import { LibraryPage } from "./components/LibraryPage.js";
+import { useHashRoute, type Route } from "./hash-route.js";
 
-type FetchState =
+type FetchState<T> =
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "ok"; movie: MovieDto };
+  | { kind: "ok"; value: T };
 
 export function App() {
-  const [state, setState] = useState<FetchState>({ kind: "loading" });
+  const route = useHashRoute();
+  const [movie, setMovie] = useState<FetchState<MovieDto>>({ kind: "loading" });
+  const [library, setLibrary] = useState<FetchState<LibraryDto>>({
+    kind: "loading",
+  });
 
   useEffect(() => {
     let cancelled = false;
     fetch("/api/movie")
       .then(async (r) => {
-        if (!r.ok) {
-          throw new Error(`api returned ${r.status}`);
-        }
+        if (!r.ok) throw new Error(`api returned ${r.status}`);
         return (await r.json()) as MovieDto;
       })
-      .then((movie) => {
-        if (!cancelled) setState({ kind: "ok", movie });
-      })
-      .catch((err: Error) => {
-        if (!cancelled) setState({ kind: "error", message: err.message });
-      });
+      .then((value) => !cancelled && setMovie({ kind: "ok", value }))
+      .catch(
+        (err: Error) =>
+          !cancelled && setMovie({ kind: "error", message: err.message }),
+      );
     return () => {
       cancelled = true;
     };
   }, []);
 
-  if (state.kind === "loading") {
-    return <div className="status">Loading project…</div>;
-  }
-  if (state.kind === "error") {
-    return (
-      <div className="status status--error">
-        Failed to load project: {state.message}
-      </div>
-    );
+  // Library is fetched on-demand the first time the route asks for it, then
+  // refetched whenever the library page re-mounts (after an upload).
+  function refreshLibrary(): void {
+    setLibrary({ kind: "loading" });
+    fetch("/api/library")
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`api returned ${r.status}`);
+        return (await r.json()) as LibraryDto;
+      })
+      .then((value) => setLibrary({ kind: "ok", value }))
+      .catch((err: Error) =>
+        setLibrary({ kind: "error", message: err.message }),
+      );
   }
 
-  const { movie } = state;
-  if (movie.scenes.length === 0) {
+  useEffect(() => {
+    if (route.name === "library") {
+      refreshLibrary();
+    }
+  }, [route.name]);
+
+  return (
+    <div className="layout">
+      <Sidebar route={route} movie={movie} />
+      <main className="main">
+        {route.name === "viewer" ? (
+          <ViewerMain movie={movie} />
+        ) : (
+          <LibraryMain library={library} onUploaded={refreshLibrary} />
+        )}
+      </main>
+    </div>
+  );
+}
+
+function Sidebar({
+  route,
+  movie,
+}: {
+  route: Route;
+  movie: FetchState<MovieDto>;
+}) {
+  return (
+    <aside className="sidebar">
+      <h1 className="sidebar__title">Movie Gen</h1>
+      <nav className="topnav" aria-label="Sections">
+        <a
+          className={`topnav__link ${route.name === "viewer" ? "topnav__link--active" : ""}`}
+          href="#/"
+        >
+          Scenes
+        </a>
+        <a
+          className={`topnav__link ${route.name === "library" ? "topnav__link--active" : ""}`}
+          href="#/library"
+        >
+          Library
+        </a>
+      </nav>
+      {route.name === "viewer" && movie.kind === "ok" && (
+        <>
+          <SceneNavigator scenes={movie.value.scenes} />
+          <div className="sidebar__meta">
+            <div>
+              <strong>{movie.value.scenes.length}</strong> starred scene
+              {movie.value.scenes.length === 1 ? "" : "s"}
+            </div>
+            <div>
+              <strong>{movie.value.allScenes.length}</strong> total
+            </div>
+            <div>
+              <strong>{movie.value.characters.length}</strong> character
+              {movie.value.characters.length === 1 ? "" : "s"}
+            </div>
+            <div>
+              <strong>{movie.value.locations.length}</strong> location
+              {movie.value.locations.length === 1 ? "" : "s"}
+            </div>
+            <div>
+              <strong>{movie.value.props.length}</strong> prop
+              {movie.value.props.length === 1 ? "" : "s"}
+            </div>
+          </div>
+        </>
+      )}
+    </aside>
+  );
+}
+
+function ViewerMain({ movie }: { movie: FetchState<MovieDto> }) {
+  if (movie.kind === "loading")
+    return <div className="status">Loading project…</div>;
+  if (movie.kind === "error")
+    return (
+      <div className="status status--error">
+        Failed to load project: {movie.message}
+      </div>
+    );
+  if (movie.value.scenes.length === 0) {
     return (
       <div className="status">
         No starred scenes — add <code>isStarred: true</code> to a scene to
@@ -51,39 +140,29 @@ export function App() {
       </div>
     );
   }
-
   return (
-    <div className="layout">
-      <aside className="sidebar">
-        <h1 className="sidebar__title">Movie Gen</h1>
-        <SceneNavigator scenes={movie.scenes} />
-        <div className="sidebar__meta">
-          <div>
-            <strong>{movie.scenes.length}</strong> starred scene
-            {movie.scenes.length === 1 ? "" : "s"}
-          </div>
-          <div>
-            <strong>{movie.allScenes.length}</strong> total
-          </div>
-          <div>
-            <strong>{movie.characters.length}</strong> character
-            {movie.characters.length === 1 ? "" : "s"}
-          </div>
-          <div>
-            <strong>{movie.locations.length}</strong> location
-            {movie.locations.length === 1 ? "" : "s"}
-          </div>
-          <div>
-            <strong>{movie.props.length}</strong> prop
-            {movie.props.length === 1 ? "" : "s"}
-          </div>
-        </div>
-      </aside>
-      <main className="main">
-        {movie.scenes.map((scene) => (
-          <SceneView key={scene.slug} scene={scene} />
-        ))}
-      </main>
-    </div>
+    <>
+      {movie.value.scenes.map((scene) => (
+        <SceneView key={scene.slug} scene={scene} />
+      ))}
+    </>
   );
+}
+
+function LibraryMain({
+  library,
+  onUploaded,
+}: {
+  library: FetchState<LibraryDto>;
+  onUploaded: () => void;
+}) {
+  if (library.kind === "loading")
+    return <div className="status">Loading library…</div>;
+  if (library.kind === "error")
+    return (
+      <div className="status status--error">
+        Failed to load library: {library.message}
+      </div>
+    );
+  return <LibraryPage library={library.value} onUploaded={onUploaded} />;
 }

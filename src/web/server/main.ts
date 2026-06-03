@@ -1,36 +1,64 @@
 /**
- * Local dev server. Loads the Project from `data/` at boot (fail-fast on
- * schema / invariant errors per PRD), then serves the JSON DTO at /api/movie.
+ * Local dev server.
  *
- * The SPA is served by Vite in dev mode; in production this server would also
- * serve the built bundle — out of scope for slice #1.
+ * Slice #1: load Project at boot (fail-fast), serve MovieDto at /api/movie.
+ * Slice #2 (this file's additions):
+ *   - GET  /api/library             — LibraryDto (characters/locations/props with image slots)
+ *   - POST /api/assets/upload       — multipart upload to AssetStore + YAML update
+ *   - GET  /assets/*                — static binary serving (path-traversal guarded)
+ *   - In-memory project state mutated on upload so subsequent /api/library /
+ *     /api/movie calls see the new image paths without a server restart.
+ *
+ * Concurrency: single user assumption. last-write-wins (ADR 0001). The project
+ * is held in a single `currentProject` variable, replaced atomically after
+ * each upload completes.
  */
 
 import express from "express";
+import Busboy from "busboy";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadProject, ProjectLoadError } from "@adapter/project-repository.js";
-import { projectToMovieDto } from "./dto-mapper.js";
+import {
+  saveCharacter,
+  saveLocation,
+  saveProp,
+} from "@adapter/project-writer.js";
+import {
+  createAssetStore,
+  AssetStoreError,
+  type AssetSlot,
+} from "@adapter/asset-store.js";
+import { createProject, type Project } from "@domain/movie.js";
+import { projectToLibraryDto, projectToMovieDto } from "./dto-mapper.js";
+import {
+  applyUpload,
+  UploadValidationError,
+  type UploadCommand,
+} from "./upload-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
 const DATA_DIR =
   process.env.MOVIEGEN_DATA_DIR ?? path.join(PROJECT_ROOT, "data");
+const ASSETS_DIR =
+  process.env.MOVIEGEN_ASSETS_DIR ?? path.join(PROJECT_ROOT, "assets");
 const PORT = Number(process.env.MOVIEGEN_PORT ?? 5174);
+
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB
 
 async function main(): Promise<void> {
   console.log(`[movie-gen] loading project from ${DATA_DIR}`);
+  console.log(`[movie-gen] assets root: ${ASSETS_DIR}`);
 
-  let movieDto;
+  let currentProject: Project;
   try {
-    const project = await loadProject(DATA_DIR);
-    movieDto = projectToMovieDto(project);
+    currentProject = await loadProject(DATA_DIR);
     console.log(
-      `[movie-gen] loaded ${movieDto.allScenes.length} scenes ` +
-        `(${movieDto.scenes.length} starred in movie sequence), ` +
-        `${movieDto.characters.length} characters, ` +
-        `${movieDto.locations.length} locations, ` +
-        `${movieDto.props.length} props`,
+      `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
+        `${currentProject.characters.length} characters, ` +
+        `${currentProject.locations.length} locations, ` +
+        `${currentProject.props.length} props`,
     );
   } catch (err) {
     if (err instanceof ProjectLoadError) {
@@ -40,15 +68,143 @@ async function main(): Promise<void> {
     throw err;
   }
 
+  const assetStore = createAssetStore(ASSETS_DIR);
   const app = express();
-
-  app.get("/api/movie", (_req, res) => {
-    res.json(movieDto);
-  });
 
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true });
   });
+
+  app.get("/api/movie", (_req, res) => {
+    res.json(projectToMovieDto(currentProject));
+  });
+
+  app.get("/api/library", (_req, res) => {
+    res.json(projectToLibraryDto(currentProject));
+  });
+
+  // Static asset serving — explicit path resolution through AssetStore so any
+  // traversal attempt produces a 400, not a 404.
+  app.get("/assets/*", (req, res) => {
+    const rel = decodeURIComponent(
+      (req.params as { [key: string]: string })[0] ?? "",
+    );
+    try {
+      const abs = assetStore.resolve(rel);
+      res.sendFile(abs, (err) => {
+        if (err) {
+          res.status(404).end();
+        }
+      });
+    } catch (err) {
+      if (err instanceof AssetStoreError) {
+        res.status(400).type("text/plain").send(err.message);
+        return;
+      }
+      throw err;
+    }
+  });
+
+  // Upload endpoint. Multipart fields:
+  //   slot   = JSON-encoded AssetSlot
+  //   file   = the binary
+  app.post("/api/assets/upload", (req, res) => {
+    const bb = Busboy({
+      headers: req.headers,
+      limits: { files: 1, fileSize: MAX_UPLOAD_BYTES, fields: 5 },
+    });
+
+    let slotJson = "";
+    let fileBuf: Buffer | null = null;
+    let fileName = "";
+    let aborted = false;
+    let tooLarge = false;
+
+    bb.on("field", (name, val) => {
+      if (name === "slot") slotJson = val;
+    });
+
+    bb.on("file", (_name, stream, info) => {
+      fileName = info.filename ?? "";
+      const chunks: Buffer[] = [];
+      stream.on("data", (chunk: Buffer) => chunks.push(chunk));
+      stream.on("limit", () => {
+        tooLarge = true;
+        stream.resume();
+      });
+      stream.on("end", () => {
+        if (!tooLarge) fileBuf = Buffer.concat(chunks);
+      });
+    });
+
+    bb.on("error", (err: Error) => {
+      if (aborted) return;
+      aborted = true;
+      res.status(400).json({ error: err.message });
+    });
+
+    bb.on("close", () => {
+      if (aborted) return;
+      if (tooLarge) {
+        res
+          .status(413)
+          .json({ error: `file exceeds limit (${MAX_UPLOAD_BYTES} bytes)` });
+        return;
+      }
+      if (!slotJson || !fileBuf) {
+        res
+          .status(400)
+          .json({ error: "missing 'slot' (json) or 'file' (binary)" });
+        return;
+      }
+      let slot: AssetSlot;
+      try {
+        slot = JSON.parse(slotJson) as AssetSlot;
+      } catch {
+        res.status(400).json({ error: "slot is not valid JSON" });
+        return;
+      }
+      const command: UploadCommand = {
+        slot,
+        originalFilename: fileName,
+        data: fileBuf,
+      };
+      void handleUpload(command).then(
+        (relativePath) => {
+          res.json({ relativePath });
+        },
+        (err: Error) => {
+          if (
+            err instanceof AssetStoreError ||
+            err instanceof UploadValidationError
+          ) {
+            // Client-actionable: bad slot input or unknown target object.
+            res.status(400).json({ error: err.message });
+          } else {
+            console.error("[movie-gen] upload failed:", err);
+            res.status(500).json({ error: err.message });
+          }
+        },
+      );
+    });
+
+    req.pipe(bb);
+  });
+
+  async function handleUpload(command: UploadCommand): Promise<string> {
+    const result = await applyUpload({
+      project: currentProject,
+      command,
+      assetStore,
+      dataDir: DATA_DIR,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      createProject,
+    });
+    currentProject = result.project;
+    return result.relativePath;
+  }
 
   app.listen(PORT, () => {
     console.log(`[movie-gen] api ready at http://localhost:${PORT}`);

@@ -84,3 +84,49 @@ export interface MovieDto {
   locations: LocationDto[];
   props: PropDto[];
 }
+
+// ---------------------------------------------------------------------------
+// Library DTOs — richer shapes for /library page (slice #2)
+// ---------------------------------------------------------------------------
+
+export interface ImageReferenceDto {
+  name: string;
+  prompt: string;
+  image: string; // relative path under assets root (empty if unset)
+}
+
+export interface LookDto {
+  name: string;
+  /** 3 entries, possibly empty strings when a slot is unfilled. */
+  bodyImages: string[];
+  /** 5 entries, possibly empty strings when a slot is unfilled. */
+  faceImages: string[];
+}
+
+export interface LibraryCharacterDto {
+  name: string;
+  headshot: string;
+  looks: LookDto[];
+}
+
+export interface LibraryLocationDto {
+  name: string;
+  references: ImageReferenceDto[];
+}
+
+export interface LibraryPropDto {
+  name: string;
+  references: ImageReferenceDto[];
+}
+
+export interface LibraryDto {
+  characters: LibraryCharacterDto[];
+  locations: LibraryLocationDto[];
+  props: LibraryPropDto[];
+}
+
+/** Response from POST /api/assets/upload */
+export interface UploadResponseDto {
+  /** Relative path under assets root, also written into YAML. */
+  relativePath: string;
+}
