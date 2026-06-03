@@ -5,7 +5,14 @@
 import { parseShotMarkers } from "@domain/marker-parser.js";
 import { movieSequence, type Project, type Scene } from "@domain/movie.js";
 import { evaluateSceneSync } from "@domain/sync-evaluator.js";
-import type { MovieDto, SceneDto } from "../shared/dto.js";
+import type {
+  LibraryCharacterDto,
+  LibraryDto,
+  LibraryLocationDto,
+  LibraryPropDto,
+  MovieDto,
+  SceneDto,
+} from "../shared/dto.js";
 
 export function projectToMovieDto(project: Project): MovieDto {
   const sequenced = movieSequence(project);
@@ -69,6 +76,55 @@ function sceneToDto(scene: Scene): SceneDto {
         isStarred: t.isStarred,
       })),
       syncStatus: syncByShotId.get(shot.id) ?? "orphan",
+    })),
+  };
+}
+
+/**
+ * Library mapping — richer than MovieDto because the /library page needs the
+ * exact image slot layout (face×5, body×3, references[]) so it can render
+ * empty slots distinctly.
+ */
+export function projectToLibraryDto(project: Project): LibraryDto {
+  return {
+    characters: project.characters.map(characterToLibrary),
+    locations: project.locations.map(locationToLibrary),
+    props: project.props.map(propToLibrary),
+  };
+}
+
+function characterToLibrary(c: Project["characters"][number]): LibraryCharacterDto {
+  return {
+    name: c.name,
+    headshot: c.headshot,
+    looks: c.looks.map((l) => ({
+      name: l.name,
+      bodyImages: [...l.bodyProfile.images],
+      faceImages: [...l.faceProfile.images],
+    })),
+  };
+}
+
+function locationToLibrary(
+  l: Project["locations"][number],
+): LibraryLocationDto {
+  return {
+    name: l.name,
+    references: l.references.map((r) => ({
+      name: r.name,
+      prompt: r.prompt,
+      image: r.image,
+    })),
+  };
+}
+
+function propToLibrary(p: Project["props"][number]): LibraryPropDto {
+  return {
+    name: p.name,
+    references: p.references.map((r) => ({
+      name: r.name,
+      prompt: r.prompt,
+      image: r.image,
     })),
   };
 }
