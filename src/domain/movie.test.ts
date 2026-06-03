@@ -11,6 +11,8 @@ import {
   createProp,
   createProject,
   movieSequence,
+  setSceneStarred,
+  setTakeStarred,
   DomainInvariantError,
 } from "./movie.js";
 
@@ -391,6 +393,254 @@ describe("Project — reference integrity", () => {
       props: [knife],
     });
     expect(project.scenes).toHaveLength(1);
+  });
+});
+
+describe("setSceneStarred — Scene isStarred immutable update", () => {
+  const mkShot = (id: string) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5 });
+
+  const mkScene = (slug: string, isStarred: boolean) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "x",
+      isStarred,
+      shots: [mkShot("01")],
+    });
+
+  it("flips a Scene's isStarred from false to true", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", false), mkScene("s02-b", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneStarred(project, "s01-a", true);
+    expect(next.scenes.find((s) => s.slug === "s01-a")!.isStarred).toBe(true);
+    // Other scene unchanged.
+    expect(next.scenes.find((s) => s.slug === "s02-b")!.isStarred).toBe(true);
+  });
+
+  it("flips a Scene's isStarred from true to false (removes from sequence)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", true), mkScene("s02-b", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneStarred(project, "s01-a", false);
+    expect(movieSequence(next).map((s) => s.slug)).toEqual(["s02-b"]);
+  });
+
+  it("is a no-op when the value already matches (returns equivalent Project)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneStarred(project, "s01-a", true);
+    expect(next.scenes[0]!.isStarred).toBe(true);
+  });
+
+  it("throws if the Scene slug is unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setSceneStarred(project, "ghost", true)).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("preserves the Scene's shots, slugline, and screenplay on toggle", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", false)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneStarred(project, "s01-a", true);
+    const after = next.scenes[0]!;
+    expect(after.slug).toBe("s01-a");
+    expect(after.slugline).toBe("INT. ROOM - DAY");
+    expect(after.screenplay).toBe("x");
+    expect(after.shots).toHaveLength(1);
+    expect(after.shots[0]!.id).toBe("01");
+  });
+
+  it("returns a new Project reference (immutability)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", false)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneStarred(project, "s01-a", true);
+    expect(next).not.toBe(project);
+    expect(project.scenes[0]!.isStarred).toBe(false); // original untouched
+  });
+});
+
+describe("setTakeStarred — Shot invariant: at most 1 starred Take", () => {
+  const baseTake = (id: string, isStarred = false) =>
+    createTake({
+      id,
+      videoPath: `assets/${id}.mp4`,
+      screenplayHash: "h",
+      createdAt: "2026-06-03T10:00:00.000Z",
+      isStarred,
+    });
+
+  const baseShot = (takes: ReturnType<typeof baseTake>[]) =>
+    createShot({ ...VALID_SHOT_BASE, duration: 5, takes });
+
+  const baseScene = (shot: ReturnType<typeof baseShot>) =>
+    createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [shot],
+    });
+
+  function mkProject(shot: ReturnType<typeof baseShot>) {
+    return createProject({
+      scenes: [baseScene(shot)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+  }
+
+  it("flips a single Take from unstarred to starred", () => {
+    const project = mkProject(baseShot([baseTake("t01")]));
+    const next = setTakeStarred(project, "s01-a", "01", "t01", true);
+    const reloaded = next.scenes[0]!.shots[0]!.takes[0]!;
+    expect(reloaded.isStarred).toBe(true);
+  });
+
+  it("turns OFF an existing starred Take when a different Take is starred ON", () => {
+    const project = mkProject(
+      baseShot([baseTake("t01", true), baseTake("t02"), baseTake("t03")]),
+    );
+    const next = setTakeStarred(project, "s01-a", "01", "t02", true);
+    const takes = next.scenes[0]!.shots[0]!.takes;
+    expect(takes.find((t) => t.id === "t01")!.isStarred).toBe(false);
+    expect(takes.find((t) => t.id === "t02")!.isStarred).toBe(true);
+    expect(takes.find((t) => t.id === "t03")!.isStarred).toBe(false);
+  });
+
+  it("allows turning OFF the currently starred Take (no Take starred afterwards)", () => {
+    const project = mkProject(
+      baseShot([baseTake("t01", true), baseTake("t02")]),
+    );
+    const next = setTakeStarred(project, "s01-a", "01", "t01", false);
+    const takes = next.scenes[0]!.shots[0]!.takes;
+    expect(takes.every((t) => !t.isStarred)).toBe(true);
+  });
+
+  it("is a no-op when the value already matches", () => {
+    const project = mkProject(
+      baseShot([baseTake("t01", true), baseTake("t02")]),
+    );
+    const next = setTakeStarred(project, "s01-a", "01", "t01", true);
+    expect(next.scenes[0]!.shots[0]!.takes.find((t) => t.id === "t01")!.isStarred).toBe(
+      true,
+    );
+    expect(next.scenes[0]!.shots[0]!.takes.find((t) => t.id === "t02")!.isStarred).toBe(
+      false,
+    );
+  });
+
+  it("never produces more than one starred Take after any toggle", () => {
+    // Sanity invariant: rapid toggling stays within the rule.
+    let p = mkProject(
+      baseShot([baseTake("t01"), baseTake("t02"), baseTake("t03")]),
+    );
+    p = setTakeStarred(p, "s01-a", "01", "t01", true);
+    p = setTakeStarred(p, "s01-a", "01", "t02", true);
+    p = setTakeStarred(p, "s01-a", "01", "t03", true);
+    const starred = p.scenes[0]!.shots[0]!.takes.filter((t) => t.isStarred);
+    expect(starred).toHaveLength(1);
+    expect(starred[0]!.id).toBe("t03");
+  });
+
+  it("throws if Scene unknown", () => {
+    const project = mkProject(baseShot([baseTake("t01")]));
+    expect(() =>
+      setTakeStarred(project, "ghost", "01", "t01", true),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("throws if Shot unknown", () => {
+    const project = mkProject(baseShot([baseTake("t01")]));
+    expect(() =>
+      setTakeStarred(project, "s01-a", "99", "t01", true),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("throws if Take unknown", () => {
+    const project = mkProject(baseShot([baseTake("t01")]));
+    expect(() =>
+      setTakeStarred(project, "s01-a", "01", "ghost", true),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("returns a new Project reference (immutability of the input)", () => {
+    const project = mkProject(baseShot([baseTake("t01"), baseTake("t02")]));
+    const next = setTakeStarred(project, "s01-a", "01", "t01", true);
+    expect(next).not.toBe(project);
+    // Original still has no starred.
+    expect(
+      project.scenes[0]!.shots[0]!.takes.every((t) => !t.isStarred),
+    ).toBe(true);
+  });
+
+  it("does not touch other Shots in the same Scene", () => {
+    // Two shots: shot 01 starred t01-a, shot 02 starred t02-x.
+    const project = createProject({
+      scenes: [
+        createScene({
+          slug: "s01-a",
+          slugline: "X",
+          screenplay: "y",
+          isStarred: true,
+          shots: [
+            createShot({
+              ...VALID_SHOT_BASE,
+              id: "01",
+              duration: 5,
+              takes: [baseTake("t01-a", true), baseTake("t01-b")],
+            }),
+            createShot({
+              ...VALID_SHOT_BASE,
+              id: "02",
+              duration: 5,
+              takes: [baseTake("t02-x", true)],
+            }),
+          ],
+        }),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setTakeStarred(project, "s01-a", "01", "t01-b", true);
+    // Shot 01 — flip happened.
+    expect(
+      next.scenes[0]!.shots[0]!.takes.find((t) => t.id === "t01-a")!.isStarred,
+    ).toBe(false);
+    expect(
+      next.scenes[0]!.shots[0]!.takes.find((t) => t.id === "t01-b")!.isStarred,
+    ).toBe(true);
+    // Shot 02 — untouched.
+    expect(
+      next.scenes[0]!.shots[1]!.takes.find((t) => t.id === "t02-x")!.isStarred,
+    ).toBe(true);
   });
 });
 

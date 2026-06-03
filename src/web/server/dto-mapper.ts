@@ -20,6 +20,7 @@ export function projectToMovieDto(project: Project): MovieDto {
     scenes: sequenced.map(sceneToDto),
     allScenes: project.scenes.map((s) => ({
       slug: s.slug,
+      slugline: s.slugline,
       isStarred: s.isStarred,
     })),
     characters: project.characters.map((c) => ({

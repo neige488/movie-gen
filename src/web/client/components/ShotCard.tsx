@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
-import type { ShotDto, TakeDto } from "../../shared/dto.js";
-import { uploadTake } from "../upload-client.js";
+import type { MovieDto, ShotDto, TakeDto } from "../../shared/dto.js";
+import { toggleTakeStarred, uploadTake } from "../upload-client.js";
+import { StarButton } from "./StarButton.js";
 
 interface Props {
   shot: ShotDto;
   sceneSlug: string;
   onTakeUploaded: () => void;
+  onMovieChanged: (movie: MovieDto) => void;
 }
 
 const STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
@@ -20,7 +22,12 @@ const STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
 // extensions will be rejected with a 400.
 const ACCEPT_VIDEO = "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov";
 
-export function ShotCard({ shot, sceneSlug, onTakeUploaded }: Props) {
+export function ShotCard({
+  shot,
+  sceneSlug,
+  onTakeUploaded,
+  onMovieChanged,
+}: Props) {
   const chips: { kind: string; label: string }[] = [];
   for (const r of shot.characterRefs) {
     chips.push({ kind: "char", label: `${r.character} / ${r.look}` });
@@ -70,6 +77,7 @@ export function ShotCard({ shot, sceneSlug, onTakeUploaded }: Props) {
         shot={shot}
         sceneSlug={sceneSlug}
         onTakeUploaded={onTakeUploaded}
+        onMovieChanged={onMovieChanged}
       />
     </article>
   );
@@ -79,10 +87,12 @@ function TakesSection({
   shot,
   sceneSlug,
   onTakeUploaded,
+  onMovieChanged,
 }: {
   shot: ShotDto;
   sceneSlug: string;
   onTakeUploaded: () => void;
+  onMovieChanged: (movie: MovieDto) => void;
 }) {
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -124,12 +134,23 @@ function TakesSection({
     .filter(Boolean)
     .join(" ");
 
+  async function handleTakeStar(takeId: string, next: boolean): Promise<void> {
+    const movie = await toggleTakeStarred(sceneSlug, shot.id, takeId, next);
+    onMovieChanged(movie);
+  }
+
   return (
     <div className="takes">
       {shot.takes.length > 0 && (
         <div className="takes__list">
           {shot.takes.map((t) => (
-            <TakePlayer key={t.id} take={t} />
+            <TakePlayer
+              key={t.id}
+              take={t}
+              sceneSlug={sceneSlug}
+              shotId={shot.id}
+              onStarToggle={(next) => handleTakeStar(t.id, next)}
+            />
           ))}
         </div>
       )}
@@ -163,9 +184,21 @@ function TakesSection({
   );
 }
 
-function TakePlayer({ take }: { take: TakeDto }) {
+function TakePlayer({
+  take,
+  sceneSlug,
+  shotId,
+  onStarToggle,
+}: {
+  take: TakeDto;
+  sceneSlug: string;
+  shotId: string;
+  onStarToggle: (next: boolean) => Promise<void>;
+}) {
   return (
-    <figure className={`take-card ${take.isStarred ? "take-card--starred" : ""}`}>
+    <figure
+      className={`take-card ${take.isStarred ? "take-card--starred" : ""}`}
+    >
       <video
         className="take-card__video"
         src={`/assets/${encodeURI(take.videoPath)}`}
@@ -173,10 +206,18 @@ function TakePlayer({ take }: { take: TakeDto }) {
         preload="metadata"
       />
       <figcaption className="take-card__caption">
-        <span className="take-card__id">
-          {take.isStarred ? "★ " : ""}
-          {take.id}
-        </span>
+        <span className="take-card__id">{take.id}</span>
+        <StarButton
+          isStarred={take.isStarred}
+          onToggle={onStarToggle}
+          title={
+            take.isStarred
+              ? "Unstar this Take"
+              : `Set as starred Take for Shot ${shotId}`
+          }
+          ariaLabel={`Toggle Take ${take.id} starred (scene ${sceneSlug}, shot ${shotId})`}
+          size="sm"
+        />
         <time className="take-card__time" dateTime={take.createdAt}>
           {formatRelativeOrDate(take.createdAt)}
         </time>
