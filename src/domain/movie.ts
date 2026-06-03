@@ -414,3 +414,140 @@ export function movieSequence(project: Project): readonly Scene[] {
     .filter((s) => s.isStarred)
     .sort((a, b) => a.slug.localeCompare(b.slug));
 }
+
+// ---------------------------------------------------------------------------
+// Starred toggles — pure immutable updates that re-validate the Project.
+// ---------------------------------------------------------------------------
+
+/**
+ * Toggle a Scene's `isStarred` flag, returning a new Project. The flag drives
+ * movie-sequence membership per CONTEXT.md ("영화 시퀀스 = `isStarred=true`인
+ * Scene들의 폴더명 prefix 정렬"). All other Scene fields (slug, slugline,
+ * screenplay, shots) are preserved untouched.
+ *
+ * Rebuilds the Project via `createProject` so reference integrity is re-checked
+ * — toggling cannot accidentally introduce an invariant violation, but the
+ * defensive re-validation guards against future mutations slipping through
+ * this helper.
+ */
+export function setSceneStarred(
+  project: Project,
+  sceneSlug: string,
+  value: boolean,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `setSceneStarred: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug
+      ? createScene({
+          slug: s.slug,
+          slugline: s.slugline,
+          screenplay: s.screenplay,
+          isStarred: value,
+          shots: s.shots,
+        })
+      : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
+ * Toggle a Take's `isStarred` flag, returning a new Project. Enforces the
+ * Shot-level invariant (at most 1 starred Take per Shot) by automatically
+ * turning OFF any other starred Take in the same Shot when `value=true`.
+ *
+ * Per CONTEXT.md: "isStarred (on Take): 해당 Shot의 채택된 Take. Shot당 최대 1개."
+ *
+ * The Take's other fields (videoPath, screenplayHash, createdAt — immutable
+ * provenance) are preserved. Other Shots in the Scene and other Scenes are
+ * untouched.
+ */
+export function setTakeStarred(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  takeId: string,
+  value: boolean,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `setTakeStarred: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) {
+    throw new DomainInvariantError(
+      `setTakeStarred: unknown Shot "${shotId}" in Scene "${sceneSlug}"`,
+    );
+  }
+  if (!shot.takes.some((t) => t.id === takeId)) {
+    throw new DomainInvariantError(
+      `setTakeStarred: unknown Take "${takeId}" in Shot "${shotId}" (Scene "${sceneSlug}")`,
+    );
+  }
+
+  // When setting a Take to starred=true, force all sibling Takes to false to
+  // honor the Shot-level invariant. When setting to false, only flip the
+  // target.
+  const nextTakes = shot.takes.map((t) => {
+    if (t.id === takeId) {
+      return createTake({
+        id: t.id,
+        videoPath: t.videoPath,
+        screenplayHash: t.screenplayHash,
+        createdAt: t.createdAt,
+        isStarred: value,
+      });
+    }
+    if (value && t.isStarred) {
+      return createTake({
+        id: t.id,
+        videoPath: t.videoPath,
+        screenplayHash: t.screenplayHash,
+        createdAt: t.createdAt,
+        isStarred: false,
+      });
+    }
+    return t;
+  });
+
+  const nextShot = createShot({
+    id: shot.id,
+    prompt: shot.prompt,
+    duration: shot.duration,
+    screenplayHash: shot.screenplayHash,
+    prevShotRef: shot.prevShotRef,
+    characterRefs: shot.characterRefs,
+    locationRefs: shot.locationRefs,
+    propRefs: shot.propRefs,
+    takes: nextTakes,
+  });
+
+  const nextShots = scene.shots.map((s) => (s.id === shotId ? nextShot : s));
+  const nextScene = createScene({
+    slug: scene.slug,
+    slugline: scene.slugline,
+    screenplay: scene.screenplay,
+    isStarred: scene.isStarred,
+    shots: nextShots,
+  });
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug ? nextScene : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
