@@ -8,6 +8,7 @@
 
 import type {
   MovieDto,
+  SceneCopyResponseDto,
   TakeUploadResponseDto,
   UploadResponseDto,
 } from "../shared/dto.js";
@@ -110,6 +111,61 @@ async function asError(res: Response, fallback: string): Promise<Error> {
     // ignore
   }
   return new Error(message);
+}
+
+/**
+ * Light-edit (Slice 5) endpoints — slugline / screenplay / copy.
+ *
+ * Each returns the full updated MovieDto (or {movie, newSlug} for copy) so
+ * the App can update its state in one round-trip; on error the body's
+ * `error` field becomes the thrown message so the UI can render it directly.
+ */
+export async function editSceneSlugline(
+  sceneSlug: string,
+  slugline: string,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/slugline`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ slugline }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "slugline edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function editSceneScreenplay(
+  sceneSlug: string,
+  markdown: string,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/screenplay`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ markdown }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "screenplay edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function copySceneRequest(
+  sourceSlug: string,
+  newSlug: string,
+): Promise<SceneCopyResponseDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sourceSlug)}/copy`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ newSlug }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "scene copy failed");
+  return (await res.json()) as SceneCopyResponseDto;
 }
 
 export async function uploadTake(
