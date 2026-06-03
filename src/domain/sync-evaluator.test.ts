@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { computeScreenplayHash } from "./hash-calculator.js";
 import { createScene, createShot, createTake } from "./movie.js";
-import { evaluateSceneSync } from "./sync-evaluator.js";
+import { evaluateSceneSync, evaluateTakeSync } from "./sync-evaluator.js";
 
 const HASH_BODY_A = computeScreenplayHash("body A");
 const HASH_BODY_B = computeScreenplayHash("body B");
@@ -150,6 +150,71 @@ describe("evaluateSceneSync — orphan", () => {
       shotId: "01",
       status: "orphan",
     });
+  });
+});
+
+describe("evaluateTakeSync — per-Take sync status", () => {
+  it("returns 'current' for a Take whose hash matches the marker block hash", () => {
+    const scene = createScene({
+      slug: "s01",
+      slugline: "X",
+      screenplay: screenplayA,
+      isStarred: true,
+      shots: [
+        shotWithHash("01", HASH_BODY_A, [
+          createTake({
+            id: "t01",
+            videoPath: "v.mp4",
+            screenplayHash: HASH_BODY_A,
+            createdAt: "2026-06-03T10:00:00.000Z",
+          }),
+        ]),
+      ],
+    });
+    const result = evaluateTakeSync(scene, "01", "t01");
+    expect(result).toBe("current");
+  });
+
+  it("returns 'stale' when a Take's hash differs from the marker block hash", () => {
+    const scene = createScene({
+      slug: "s01",
+      slugline: "X",
+      screenplay: screenplayA,
+      isStarred: true,
+      shots: [
+        shotWithHash("01", HASH_BODY_A, [
+          createTake({
+            id: "t01",
+            videoPath: "v.mp4",
+            screenplayHash: HASH_BODY_B, // stale
+            createdAt: "2026-06-03T10:00:00.000Z",
+          }),
+        ]),
+      ],
+    });
+    const result = evaluateTakeSync(scene, "01", "t01");
+    expect(result).toBe("stale");
+  });
+
+  it("returns 'orphan' when the Shot has no matching marker block", () => {
+    const scene = createScene({
+      slug: "s01",
+      slugline: "X",
+      screenplay: "no markers here",
+      isStarred: true,
+      shots: [
+        shotWithHash("01", HASH_BODY_A, [
+          createTake({
+            id: "t01",
+            videoPath: "v.mp4",
+            screenplayHash: HASH_BODY_A,
+            createdAt: "2026-06-03T10:00:00.000Z",
+          }),
+        ]),
+      ],
+    });
+    const result = evaluateTakeSync(scene, "01", "t01");
+    expect(result).toBe("orphan");
   });
 });
 

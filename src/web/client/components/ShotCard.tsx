@@ -1,6 +1,11 @@
 import { useRef, useState } from "react";
 import type { MovieDto, ShotDto, TakeDto } from "../../shared/dto.js";
-import { toggleTakeStarred, uploadTake } from "../upload-client.js";
+import {
+  acknowledgeShotRequest,
+  acknowledgeTakeRequest,
+  toggleTakeStarred,
+  uploadTake,
+} from "../upload-client.js";
 import { StarButton } from "./StarButton.js";
 
 interface Props {
@@ -10,11 +15,28 @@ interface Props {
   onMovieChanged: (movie: MovieDto) => void;
 }
 
-const STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
+/**
+ * Per CONTEXT.md the Shot-level signal carries an emoji + text label so the
+ * cue is colour-blind safe and screen-readable. The colour comes from CSS
+ * (shot__status--<status>); the prefix is the human-language anchor.
+ *
+ * shot-stale → ⚠️ 각본 변경됨   (the screenplay drifted from when this Shot was authored)
+ * take-stale → 🟡 구버전 Take    (Shot is current but at least one Take is on an older revision)
+ * orphan     → 🟠 마커 없음     (no marker block in screenplay matches this Shot id)
+ */
+const SHOT_STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
   current: "in sync",
-  "shot-stale": "shot stale",
-  "take-stale": "take stale",
-  orphan: "orphan",
+  "shot-stale": "⚠️ 각본 변경됨",
+  "take-stale": "🟡 구버전 Take",
+  orphan: "🟠 마커 없음",
+};
+
+const TAKE_STATUS_LABEL: Record<TakeDto["syncStatus"], string> = {
+  current: "in sync",
+  stale: "🟡 구버전 각본 기반",
+  // Orphan at the parent Shot is surfaced on the Shot card; the Take card
+  // intentionally stays neutral to avoid double-flagging the same condition.
+  orphan: "",
 };
 
 // Mirrors the server-side video whitelist; reproduced here so we can hint the
@@ -51,8 +73,13 @@ export function ShotCard({
         <span className="shot__id">Shot {shot.id}</span>
         <span className="shot__duration">{shot.duration}s</span>
         <span className={`shot__status shot__status--${shot.syncStatus}`}>
-          {STATUS_LABEL[shot.syncStatus]}
+          {SHOT_STATUS_LABEL[shot.syncStatus]}
         </span>
+        <ShotAcknowledgeButton
+          shot={shot}
+          sceneSlug={sceneSlug}
+          onMovieChanged={onMovieChanged}
+        />
       </header>
       <p className="shot__prompt">{shot.prompt}</p>
       {shot.prevShotRef !== undefined && (
@@ -150,6 +177,7 @@ function TakesSection({
               sceneSlug={sceneSlug}
               shotId={shot.id}
               onStarToggle={(next) => handleTakeStar(t.id, next)}
+              onMovieChanged={onMovieChanged}
             />
           ))}
         </div>
@@ -189,15 +217,18 @@ function TakePlayer({
   sceneSlug,
   shotId,
   onStarToggle,
+  onMovieChanged,
 }: {
   take: TakeDto;
   sceneSlug: string;
   shotId: string;
   onStarToggle: (next: boolean) => Promise<void>;
+  onMovieChanged: (movie: MovieDto) => void;
 }) {
+  const staleLabel = TAKE_STATUS_LABEL[take.syncStatus];
   return (
     <figure
-      className={`take-card ${take.isStarred ? "take-card--starred" : ""}`}
+      className={`take-card take-card--sync-${take.syncStatus} ${take.isStarred ? "take-card--starred" : ""}`}
     >
       <video
         className="take-card__video"
@@ -222,7 +253,128 @@ function TakePlayer({
           {formatRelativeOrDate(take.createdAt)}
         </time>
       </figcaption>
+      {take.syncStatus === "stale" && (
+        <div className="take-card__sync">
+          <span className="take-card__sync-badge" role="status">
+            {staleLabel}
+          </span>
+          <TakeAcknowledgeButton
+            sceneSlug={sceneSlug}
+            shotId={shotId}
+            takeId={take.id}
+            onMovieChanged={onMovieChanged}
+          />
+        </div>
+      )}
     </figure>
+  );
+}
+
+/**
+ * "Shot 확인됨" — pins Shot.screenplayHash to the current marker block hash.
+ * Hidden on `current` (nothing to acknowledge) and `orphan` (no current hash
+ * to acknowledge to — the director has to either re-add a marker or
+ * delete the Shot from shots.yaml in Claude Code).
+ *
+ * `take-stale` is offered too — even though the Shot's own hash matches,
+ * acknowledging from the Shot card is the natural quick action when the
+ * director wants to clear the badge for the whole Shot. Visually clicking
+ * "Shot 확인됨" on take-stale is a no-op on Shot.screenplayHash but the
+ * server returns the same MovieDto so the UI stays consistent — and we
+ * decided NOT to hide the button on take-stale because the user might
+ * still want to use the per-Take "확인됨" buttons instead.
+ *
+ * Decision: only show on `shot-stale`. take-stale users use the per-Take
+ * button which is the one that actually does something.
+ */
+function ShotAcknowledgeButton({
+  shot,
+  sceneSlug,
+  onMovieChanged,
+}: {
+  shot: ShotDto;
+  sceneSlug: string;
+  onMovieChanged: (movie: MovieDto) => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  if (shot.syncStatus !== "shot-stale") {
+    return null;
+  }
+  async function onClick(): Promise<void> {
+    setBusy(true);
+    setError(null);
+    try {
+      const movie = await acknowledgeShotRequest(sceneSlug, shot.id);
+      onMovieChanged(movie);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <>
+      <button
+        type="button"
+        className="shot__ack-btn"
+        onClick={() => void onClick()}
+        disabled={busy}
+        title={`Pin Shot ${shot.id}'s screenplayHash to the current marker block`}
+      >
+        {busy ? "확인 중…" : "Shot 확인됨"}
+      </button>
+      {error && (
+        <span className="shot__ack-error" role="alert">
+          {error}
+        </span>
+      )}
+    </>
+  );
+}
+
+function TakeAcknowledgeButton({
+  sceneSlug,
+  shotId,
+  takeId,
+  onMovieChanged,
+}: {
+  sceneSlug: string;
+  shotId: string;
+  takeId: string;
+  onMovieChanged: (movie: MovieDto) => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  async function onClick(): Promise<void> {
+    setBusy(true);
+    setError(null);
+    try {
+      const movie = await acknowledgeTakeRequest(sceneSlug, shotId, takeId);
+      onMovieChanged(movie);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <>
+      <button
+        type="button"
+        className="take-card__ack-btn"
+        onClick={() => void onClick()}
+        disabled={busy}
+        title={`Pin Take ${takeId}'s screenplayHash to the current marker block`}
+      >
+        {busy ? "확인 중…" : "Take 확인됨"}
+      </button>
+      {error && (
+        <span className="take-card__ack-error" role="alert">
+          {error}
+        </span>
+      )}
+    </>
   );
 }
 

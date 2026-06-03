@@ -7,7 +7,7 @@
  * domain is the server's responsibility).
  */
 
-import type { SyncStatus } from "@domain/sync-evaluator.js";
+import type { SyncStatus, TakeSyncStatus } from "@domain/sync-evaluator.js";
 
 export interface MarkerBlockDto {
   shotId: string;
@@ -23,6 +23,15 @@ export interface TakeDto {
   /** ISO 8601 timestamp of original upload. Immutable. */
   createdAt: string;
   isStarred: boolean;
+  /**
+   * Per-Take sync status against the current screenplay marker block hash.
+   * - "current": Take.screenplayHash matches the marker block hash.
+   * - "stale":   Take.screenplayHash differs (older screenplay revision).
+   * - "orphan":  parent Shot has no matching marker block (Shot-level orphan
+   *              overrides — the Take card typically shows neutral and the
+   *              orphan badge surfaces at the Shot card).
+   */
+  syncStatus: TakeSyncStatus;
 }
 
 export interface CharacterRefDto {

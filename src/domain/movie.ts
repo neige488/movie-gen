@@ -16,8 +16,32 @@
  * - Character: at least one Look, unique Look names
  */
 
+import { computeScreenplayHash } from "./hash-calculator.js";
+import { parseShotMarkers } from "./marker-parser.js";
+
 export class DomainInvariantError extends Error {
   public override readonly name = "DomainInvariantError";
+}
+
+/**
+ * Compute the canonical "current" hash for a given Shot id in a Scene by
+ * concatenating the normalized text of all marker blocks that match the
+ * Shot id (joined by a blank line) and hashing. Mirrors `evaluateSceneSync`
+ * so acknowledge → sync status remain consistent.
+ *
+ * Returns `undefined` if the screenplay has no matching marker block (orphan
+ * Shot). Callers decide whether that is an error (acknowledge) or just a
+ * status signal (evaluate).
+ */
+function currentShotMarkerHash(
+  scene: Scene,
+  shotId: string,
+): string | undefined {
+  const blocks = parseShotMarkers(scene.screenplay).filter(
+    (b) => b.shotId === shotId,
+  );
+  if (blocks.length === 0) return undefined;
+  return computeScreenplayHash(blocks.map((b) => b.text).join("\n\n"));
 }
 
 // ---------------------------------------------------------------------------
@@ -524,6 +548,165 @@ export function setSceneScreenplay(
           shots: s.shots,
         })
       : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
+ * Acknowledge a Shot — refresh `Shot.screenplayHash` to the current marker
+ * block hash. Per CONTEXT.md ("작은 수정 → hash 갱신 (\"확인됨\" 액션)").
+ *
+ * Take is immutable and is not touched by this operation — directors who
+ * want to mark a Take as still-relevant against the new screenplay must
+ * call `acknowledgeTake` separately.
+ *
+ * Throws DomainInvariantError if:
+ *  - Scene slug unknown
+ *  - Shot id unknown in that Scene
+ *  - The screenplay has no marker block matching this Shot (orphan) — there's
+ *    no "current" hash to acknowledge to.
+ *
+ * The current hash is computed via the same canonical rule used by
+ * `SyncEvaluator` (concatenated normalized text of all blocks for the Shot
+ * id, joined by `\n\n`) so the acknowledge → status reflects the same model.
+ */
+export function acknowledgeShot(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `acknowledgeShot: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) {
+    throw new DomainInvariantError(
+      `acknowledgeShot: unknown Shot "${shotId}" in Scene "${sceneSlug}"`,
+    );
+  }
+
+  const currentHash = currentShotMarkerHash(scene, shotId);
+  if (currentHash === undefined) {
+    throw new DomainInvariantError(
+      `acknowledgeShot: Shot "${shotId}" has no matching marker block in screenplay (orphan — nothing to acknowledge)`,
+    );
+  }
+
+  const nextShot = createShot({
+    id: shot.id,
+    prompt: shot.prompt,
+    duration: shot.duration,
+    screenplayHash: currentHash,
+    prevShotRef: shot.prevShotRef,
+    characterRefs: shot.characterRefs,
+    locationRefs: shot.locationRefs,
+    propRefs: shot.propRefs,
+    takes: shot.takes,
+  });
+
+  const nextShots = scene.shots.map((s) => (s.id === shotId ? nextShot : s));
+  const nextScene = createScene({
+    slug: scene.slug,
+    slugline: scene.slugline,
+    screenplay: scene.screenplay,
+    isStarred: scene.isStarred,
+    shots: nextShots,
+  });
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug ? nextScene : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
+ * Acknowledge a Take — refresh `Take.screenplayHash` to the current marker
+ * block hash. All other Take fields (videoPath, createdAt, isStarred) are
+ * preserved — even though Take provenance is "immutable" in the spec, the
+ * hash itself is the one mutable field per CONTEXT.md ("작은 수정 → hash
+ * 갱신") because it is metadata about which screenplay revision the video
+ * was last reviewed against, not part of the video provenance proper.
+ *
+ * Throws DomainInvariantError on unknown Scene/Shot/Take or orphan Shot.
+ */
+export function acknowledgeTake(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  takeId: string,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `acknowledgeTake: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) {
+    throw new DomainInvariantError(
+      `acknowledgeTake: unknown Shot "${shotId}" in Scene "${sceneSlug}"`,
+    );
+  }
+  const take = shot.takes.find((t) => t.id === takeId);
+  if (!take) {
+    throw new DomainInvariantError(
+      `acknowledgeTake: unknown Take "${takeId}" in Shot "${shotId}" (Scene "${sceneSlug}")`,
+    );
+  }
+
+  const currentHash = currentShotMarkerHash(scene, shotId);
+  if (currentHash === undefined) {
+    throw new DomainInvariantError(
+      `acknowledgeTake: Shot "${shotId}" has no matching marker block in screenplay (orphan — nothing to acknowledge)`,
+    );
+  }
+
+  const nextTakes = shot.takes.map((t) =>
+    t.id === takeId
+      ? createTake({
+          id: t.id,
+          videoPath: t.videoPath,
+          screenplayHash: currentHash,
+          createdAt: t.createdAt,
+          isStarred: t.isStarred,
+        })
+      : t,
+  );
+
+  const nextShot = createShot({
+    id: shot.id,
+    prompt: shot.prompt,
+    duration: shot.duration,
+    screenplayHash: shot.screenplayHash,
+    prevShotRef: shot.prevShotRef,
+    characterRefs: shot.characterRefs,
+    locationRefs: shot.locationRefs,
+    propRefs: shot.propRefs,
+    takes: nextTakes,
+  });
+
+  const nextShots = scene.shots.map((s) => (s.id === shotId ? nextShot : s));
+  const nextScene = createScene({
+    slug: scene.slug,
+    slugline: scene.slugline,
+    screenplay: scene.screenplay,
+    isStarred: scene.isStarred,
+    shots: nextShots,
+  });
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug ? nextScene : s,
   );
   return createProject({
     scenes: nextScenes,
