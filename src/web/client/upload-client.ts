@@ -168,6 +168,44 @@ export async function copySceneRequest(
   return (await res.json()) as SceneCopyResponseDto;
 }
 
+/**
+ * Acknowledge a Shot — refresh `Shot.screenplayHash` server-side to the
+ * current marker block hash. Returns the updated MovieDto so the client can
+ * drop the stale badge in the same tick.
+ *
+ * Server rejects orphan Shots (400) — the UI hides the button on orphan
+ * Shots so this should never fire in normal use.
+ */
+export async function acknowledgeShotRequest(
+  sceneSlug: string,
+  shotId: string,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/acknowledge`,
+    { method: "POST" },
+  );
+  if (!res.ok) throw await asError(res, "shot acknowledge failed");
+  return (await res.json()) as MovieDto;
+}
+
+/**
+ * Acknowledge a Take — refresh `Take.screenplayHash` server-side. Take's
+ * other fields (videoPath, createdAt, isStarred) stay untouched. Returns
+ * the updated MovieDto.
+ */
+export async function acknowledgeTakeRequest(
+  sceneSlug: string,
+  shotId: string,
+  takeId: string,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/takes/${encodeURIComponent(takeId)}/acknowledge`,
+    { method: "POST" },
+  );
+  if (!res.ok) throw await asError(res, "take acknowledge failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,

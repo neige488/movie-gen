@@ -56,6 +56,11 @@ import {
   applySceneCopy,
   LightEditError,
 } from "./light-edit-handler.js";
+import {
+  applyAcknowledgeShot,
+  applyAcknowledgeTake,
+  AcknowledgeError,
+} from "./acknowledge-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -447,6 +452,67 @@ async function main(): Promise<void> {
       },
     );
   });
+
+  // --- Acknowledge (Slice 6) ----------------------------------------------
+
+  // "Shot 확인됨" — refresh Shot.screenplayHash to the current marker block
+  // hash. No body required. Returns the updated MovieDto so the client sees
+  // the new syncStatus immediately. Orphan Shot rejects (400).
+  app.post("/api/scenes/:slug/shots/:shotId/acknowledge", (req, res) => {
+    const { slug, shotId } = req.params;
+    void applyAcknowledgeShot({
+      project: currentProject,
+      sceneSlug: slug,
+      shotId,
+      dataDir: DATA_DIR,
+      saveSceneShots,
+      createProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToMovieDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof AcknowledgeError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] shot acknowledge failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // "Take 확인됨" — refresh Take.screenplayHash only. Other Take fields
+  // (videoPath, createdAt, isStarred) are preserved. Returns updated MovieDto.
+  app.post(
+    "/api/scenes/:slug/shots/:shotId/takes/:takeId/acknowledge",
+    (req, res) => {
+      const { slug, shotId, takeId } = req.params;
+      void applyAcknowledgeTake({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        takeId,
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }).then(
+        (result) => {
+          currentProject = result.project;
+          res.json(projectToMovieDto(currentProject));
+        },
+        (err: Error) => {
+          if (err instanceof AcknowledgeError) {
+            res.status(400).json({ error: err.message });
+          } else {
+            console.error("[movie-gen] take acknowledge failed:", err);
+            res.status(500).json({ error: err.message });
+          }
+        },
+      );
+    },
+  );
 
   // Scene copy. Body: {"newSlug": string}. Returns updated MovieDto +
   // newSlug so the client can navigate to the new Scene immediately.

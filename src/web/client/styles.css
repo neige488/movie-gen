@@ -889,3 +889,84 @@ body {
   background: rgba(247, 118, 142, 0.07);
   white-space: pre-wrap;
 }
+
+/* --- Sync signal + acknowledge (Slice 6) -------------------------------- */
+
+/*
+ * "Shot 확인됨" button — shown only when syncStatus is shot-stale.
+ * Sits inline in the Shot header, next to the status badge so the action
+ * is one click away from where the signal is read.
+ */
+.shot__ack-btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--accent-warm);
+  border-radius: 3px;
+  background: rgba(224, 175, 104, 0.1);
+  color: var(--accent-warm);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 100ms ease, color 100ms ease;
+}
+.shot__ack-btn:hover {
+  background: rgba(224, 175, 104, 0.22);
+  color: var(--fg);
+}
+.shot__ack-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.shot__ack-error {
+  font-size: 0.7rem;
+  color: var(--warn);
+  font-family: var(--mono);
+  margin-left: 0.4rem;
+}
+
+/* Take-level stale indicator and acknowledge button. Stacks below the
+ * caption so the director sees the badge in the same visual unit as the
+ * take video. Hidden visually when current/orphan (the Shot card already
+ * surfaces orphan at a higher level). */
+.take-card__sync {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.25rem 0.4rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+.take-card--sync-stale {
+  border-color: rgba(224, 175, 104, 0.45);
+}
+.take-card__sync-badge {
+  color: var(--accent-warm);
+  letter-spacing: 0.02em;
+}
+.take-card__ack-btn {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.12rem 0.5rem;
+  border: 1px solid var(--accent-warm);
+  border-radius: 3px;
+  background: rgba(224, 175, 104, 0.1);
+  color: var(--accent-warm);
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+.take-card__ack-btn:hover {
+  background: rgba(224, 175, 104, 0.22);
+  color: var(--fg);
+}
+.take-card__ack-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.take-card__ack-error {
+  font-size: 0.68rem;
+  color: var(--warn);
+  font-family: var(--mono);
+  padding: 0.1rem 0.4rem 0.3rem;
+  display: block;
+}
