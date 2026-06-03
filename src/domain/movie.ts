@@ -461,6 +461,79 @@ export function setSceneStarred(
 }
 
 /**
+ * Replace a Scene's `slugline` text, returning a new Project. Used by the
+ * Light edit (Slice 5) slugline editor. The screenplay, shots, and isStarred
+ * are preserved untouched. createScene re-validates the invariant
+ * "slugline required" so an empty value rejects.
+ */
+export function setSceneSlugline(
+  project: Project,
+  sceneSlug: string,
+  slugline: string,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `setSceneSlugline: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug
+      ? createScene({
+          slug: s.slug,
+          slugline,
+          screenplay: s.screenplay,
+          isStarred: s.isStarred,
+          shots: s.shots,
+        })
+      : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
+ * Replace a Scene's `screenplay` (Markdown body), returning a new Project.
+ * Used by the Light edit (Slice 5) screenplay editor — the caller is
+ * responsible for validating that the new text preserves the Shot markers
+ * (`validateMarkerConsistency` in `marker-parser.ts`). All other Scene
+ * fields are preserved untouched.
+ */
+export function setSceneScreenplay(
+  project: Project,
+  sceneSlug: string,
+  screenplay: string,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(
+      `setSceneScreenplay: unknown Scene "${sceneSlug}"`,
+    );
+  }
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug
+      ? createScene({
+          slug: s.slug,
+          slugline: s.slugline,
+          screenplay,
+          isStarred: s.isStarred,
+          shots: s.shots,
+        })
+      : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
  * Toggle a Take's `isStarred` flag, returning a new Project. Enforces the
  * Shot-level invariant (at most 1 starred Take per Shot) by automatically
  * turning OFF any other starred Take in the same Shot when `value=true`.

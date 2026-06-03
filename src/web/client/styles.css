@@ -709,3 +709,183 @@ body {
   width: 100%;
   height: 130px;
 }
+
+/* ---------------------------------------------------------------------------
+   Light edit (Slice 5) — slugline / screenplay editors + Scene Copy button
+   --------------------------------------------------------------------------- */
+
+.scene__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scene__copy-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  padding: 0.25rem 0.65rem;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.scene__copy-btn:hover:not(:disabled) {
+  color: var(--fg);
+  background: var(--bg-elev-2);
+  border-color: var(--accent);
+}
+.scene__copy-btn:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+.scene__copy-error {
+  color: var(--warn);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.7rem;
+  margin-bottom: 0.85rem;
+  border: 1px solid var(--warn);
+  border-radius: 6px;
+  background: rgba(247, 118, 142, 0.07);
+}
+
+.scene__slugline--editable {
+  cursor: text;
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  margin-left: -0.3rem;
+  transition: background 0.15s;
+}
+.scene__slugline--editable:hover {
+  background: var(--bg-elev-2);
+}
+.scene__slugline--editable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.scene__slugline-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.scene__slugline-input {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-family: var(--sans);
+  color: var(--fg);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  padding: 0.2rem 0.45rem;
+  min-width: 24rem;
+}
+.scene__slugline-error {
+  color: var(--warn);
+  font-size: 0.72rem;
+  font-family: var(--mono);
+}
+
+.scene__screenplay-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.scene__screenplay-edit-btn {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  padding: 0.2rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-family: var(--sans);
+  cursor: pointer;
+}
+.scene__screenplay-edit-btn:hover {
+  background: var(--bg-elev-2);
+  color: var(--fg);
+  border-color: var(--accent);
+}
+
+.scene__editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.4rem 0.55rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+.scene__editor-label code {
+  font-family: var(--mono);
+  background: var(--bg-elev);
+  padding: 0.05rem 0.25rem;
+  border-radius: 3px;
+}
+.scene__editor-dirty {
+  color: var(--accent-warm);
+  margin-left: 0.4rem;
+}
+.scene__editor-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+.scene__editor-actions button {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.scene__editor-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.scene__editor-cancel:hover:not(:disabled) {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.scene__editor-save:hover:not(:disabled) {
+  border-color: var(--good);
+  color: var(--good);
+}
+.scene__screenplay-textarea {
+  width: 100%;
+  min-height: 22rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 0 0 6px 6px;
+  padding: 0.85rem 1rem;
+  resize: vertical;
+  outline: none;
+}
+.scene__screenplay-textarea:focus {
+  border-color: var(--accent);
+}
+.scene__editor-error {
+  color: var(--warn);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.5rem 0.7rem;
+  margin-top: 0.45rem;
+  border: 1px solid var(--warn);
+  border-radius: 5px;
+  background: rgba(247, 118, 142, 0.07);
+  white-space: pre-wrap;
+}

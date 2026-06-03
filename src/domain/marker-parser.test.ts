@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { parseShotMarkers, MarkerParseError } from "./marker-parser.js";
+import {
+  parseShotMarkers,
+  MarkerParseError,
+  validateMarkerConsistency,
+  MarkerConsistencyError,
+} from "./marker-parser.js";
 
 describe("parseShotMarkers — basic extraction", () => {
   it("extracts a single shot block with its inner text", () => {
@@ -117,5 +122,104 @@ describe("parseShotMarkers — shot id format", () => {
   it("rejects non-numeric ids", () => {
     const md = "<!-- shot:abc -->\nx\n<!-- /shot:abc -->";
     expect(() => parseShotMarkers(md)).toThrow(MarkerParseError);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// validateMarkerConsistency — guards Light edit (Slice 5) screenplay writes.
+//
+// Per Slice 5 PRD: HTML comment marker must be preserved when the director
+// edits screenplay.md from the web. Adding new Shots is out of scope (Claude
+// Code recommended), so this validator is strict: the set of shotIds in the
+// new markdown must equal the expected set exactly. Mismatched (missing,
+// extra, duplicate) are all rejected with a clear message.
+// ---------------------------------------------------------------------------
+
+describe("validateMarkerConsistency — strict shotId set match", () => {
+  it("passes when markdown markers match the expected shot ids exactly", () => {
+    const md = [
+      "<!-- shot:01 -->",
+      "A",
+      "<!-- /shot:01 -->",
+      "<!-- shot:02 -->",
+      "B",
+      "<!-- /shot:02 -->",
+    ].join("\n");
+    expect(() =>
+      validateMarkerConsistency(md, ["01", "02"]),
+    ).not.toThrow();
+  });
+
+  it("passes when expected ids are empty and markdown has no markers", () => {
+    expect(() => validateMarkerConsistency("plain text", [])).not.toThrow();
+  });
+
+  it("passes regardless of expected id ordering", () => {
+    const md = [
+      "<!-- shot:02 -->",
+      "B",
+      "<!-- /shot:02 -->",
+      "<!-- shot:01 -->",
+      "A",
+      "<!-- /shot:01 -->",
+    ].join("\n");
+    expect(() =>
+      validateMarkerConsistency(md, ["01", "02"]),
+    ).not.toThrow();
+  });
+
+  it("allows the same shot id to appear in multiple disjoint blocks", () => {
+    const md = [
+      "<!-- shot:01 -->",
+      "part A",
+      "<!-- /shot:01 -->",
+      "interlude",
+      "<!-- shot:01 -->",
+      "part B",
+      "<!-- /shot:01 -->",
+    ].join("\n");
+    expect(() => validateMarkerConsistency(md, ["01"])).not.toThrow();
+  });
+
+  it("rejects when a shot marker is missing from the markdown", () => {
+    const md = "<!-- shot:01 -->\nA\n<!-- /shot:01 -->";
+    expect(() =>
+      validateMarkerConsistency(md, ["01", "02"]),
+    ).toThrow(MarkerConsistencyError);
+    expect(() =>
+      validateMarkerConsistency(md, ["01", "02"]),
+    ).toThrow(/missing.*02/i);
+  });
+
+  it("rejects when the markdown introduces an unknown shot id", () => {
+    const md = [
+      "<!-- shot:01 -->",
+      "A",
+      "<!-- /shot:01 -->",
+      "<!-- shot:99 -->",
+      "new",
+      "<!-- /shot:99 -->",
+    ].join("\n");
+    expect(() =>
+      validateMarkerConsistency(md, ["01"]),
+    ).toThrow(MarkerConsistencyError);
+    expect(() =>
+      validateMarkerConsistency(md, ["01"]),
+    ).toThrow(/unexpected.*99/i);
+  });
+
+  it("rejects when the markdown drops all markers but Shots exist", () => {
+    expect(() =>
+      validateMarkerConsistency("clean prose, no markers", ["01"]),
+    ).toThrow(MarkerConsistencyError);
+  });
+
+  it("surfaces structural parse errors (e.g. unclosed) as MarkerConsistencyError", () => {
+    // Light-edit users see a single category of error; we wrap the parse
+    // failure so the HTTP layer can map 4xx with a uniform shape.
+    const md = "<!-- shot:01 -->\nunclosed";
+    expect(() =>
+      validateMarkerConsistency(md, ["01"]),
+    ).toThrow(MarkerConsistencyError);
   });
 });

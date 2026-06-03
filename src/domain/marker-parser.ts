@@ -113,3 +113,75 @@ function validateShotId(id: string, line: number): void {
     );
   }
 }
+
+// ---------------------------------------------------------------------------
+// validateMarkerConsistency — strict shotId set guard for Light edit (Slice 5)
+// ---------------------------------------------------------------------------
+
+/**
+ * Raised when an edited screenplay's marker shotId set diverges from the
+ * Shot list defined in `shots.yaml`. Different from `MarkerParseError`
+ * (structural) so the HTTP layer can return a consistent 4xx shape for both
+ * structural and consistency failures (it can catch this superclass-of-base
+ * by name).
+ */
+export class MarkerConsistencyError extends Error {
+  public override readonly name = "MarkerConsistencyError";
+}
+
+/**
+ * Validate that a candidate screenplay's marker shot IDs match an expected
+ * set exactly. Used when the director edits `screenplay.md` from the web —
+ * adding/removing Shots is out of scope for the Light edit slice (Claude
+ * Code is the recommended authoring path for that), so we reject any drift.
+ *
+ * Rules (strict):
+ *  - Structural parse must succeed (delegates to `parseShotMarkers`). Parse
+ *    failures are re-raised as `MarkerConsistencyError` so callers handle one
+ *    error category.
+ *  - The set of distinct shot IDs in the markdown must equal
+ *    `expectedShotIds` (set equality; duplicates within the markdown are
+ *    allowed — multi-block Shots are legitimate).
+ *  - Missing IDs (expected but absent) and unexpected IDs (present but not
+ *    expected) both reject, with both lists surfaced in the message so the
+ *    user sees the full diff at once.
+ */
+export function validateMarkerConsistency(
+  markdown: string,
+  expectedShotIds: readonly string[],
+): void {
+  let blocks;
+  try {
+    blocks = parseShotMarkers(markdown);
+  } catch (err) {
+    if (err instanceof MarkerParseError) {
+      throw new MarkerConsistencyError(
+        `screenplay markers are malformed — ${err.message}`,
+      );
+    }
+    throw err;
+  }
+
+  const present = new Set(blocks.map((b) => b.shotId));
+  const expected = new Set(expectedShotIds);
+
+  const missing: string[] = [];
+  for (const id of expected) {
+    if (!present.has(id)) missing.push(id);
+  }
+  const unexpected: string[] = [];
+  for (const id of present) {
+    if (!expected.has(id)) unexpected.push(id);
+  }
+
+  if (missing.length === 0 && unexpected.length === 0) return;
+
+  const parts: string[] = [];
+  if (missing.length > 0) {
+    parts.push(`missing shot markers: ${missing.sort().join(", ")}`);
+  }
+  if (unexpected.length > 0) {
+    parts.push(`unexpected shot markers: ${unexpected.sort().join(", ")}`);
+  }
+  throw new MarkerConsistencyError(parts.join("; "));
+}

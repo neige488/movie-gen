@@ -26,6 +26,8 @@ import {
   saveSceneFile,
   saveSceneShots,
 } from "@adapter/project-writer.js";
+import { saveScreenplay } from "@adapter/screenplay-writer.js";
+import { copyScene } from "@adapter/scene-copier.js";
 import {
   createAssetStore,
   AssetStoreError,
@@ -48,6 +50,12 @@ import {
   applyToggleTakeStarred,
   StarredToggleError,
 } from "./starred-toggle-handler.js";
+import {
+  applySluglineEdit,
+  applyScreenplayEdit,
+  applySceneCopy,
+  LightEditError,
+} from "./light-edit-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -370,6 +378,121 @@ async function main(): Promise<void> {
       );
     },
   );
+
+  // --- Light edit (Slice 5) ------------------------------------------------
+
+  // Slugline edit. Body: {"slugline": string}. Returns updated MovieDto.
+  app.put("/api/scenes/:slug/slugline", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { slugline?: unknown };
+    if (typeof body?.slugline !== "string") {
+      res
+        .status(400)
+        .json({ error: "request body must be {slugline: string}" });
+      return;
+    }
+    void applySluglineEdit({
+      project: currentProject,
+      sceneSlug: slug,
+      slugline: body.slugline,
+      dataDir: DATA_DIR,
+      saveSceneFile,
+      createProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToMovieDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof LightEditError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] slugline edit failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // Screenplay edit. Body: {"markdown": string}. Strict marker validation —
+  // 4xx if the new text drops/adds shot markers vs the existing Shot ids.
+  app.put("/api/scenes/:slug/screenplay", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { markdown?: unknown };
+    if (typeof body?.markdown !== "string") {
+      res
+        .status(400)
+        .json({ error: "request body must be {markdown: string}" });
+      return;
+    }
+    void applyScreenplayEdit({
+      project: currentProject,
+      sceneSlug: slug,
+      markdown: body.markdown,
+      dataDir: DATA_DIR,
+      saveScreenplay,
+      createProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToMovieDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof LightEditError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] screenplay edit failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // Scene copy. Body: {"newSlug": string}. Returns updated MovieDto +
+  // newSlug so the client can navigate to the new Scene immediately.
+  app.post("/api/scenes/:slug/copy", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { newSlug?: unknown };
+    if (typeof body?.newSlug !== "string") {
+      res
+        .status(400)
+        .json({ error: "request body must be {newSlug: string}" });
+      return;
+    }
+    void applySceneCopy({
+      project: currentProject,
+      sourceSlug: slug,
+      newSlug: body.newSlug,
+      dataDir: DATA_DIR,
+      copyScene,
+      loadProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json({
+          movie: projectToMovieDto(currentProject),
+          newSlug: result.newSlug,
+        });
+      },
+      (err: Error) => {
+        if (err instanceof LightEditError) {
+          res.status(400).json({ error: err.message });
+        } else if (err instanceof ProjectLoadError) {
+          // The copy succeeded but the reloaded project failed schema/invariant
+          // validation. Surface as 500 since it points to data inconsistency,
+          // not a client error.
+          console.error(
+            "[movie-gen] scene copy reload failed:",
+            err.message,
+          );
+          res.status(500).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] scene copy failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
 
   async function handleUpload(command: UploadCommand): Promise<string> {
     const result = await applyUpload({

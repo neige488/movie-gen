@@ -149,3 +149,12 @@ export interface TakeUploadResponseDto {
   sceneSlug: string;
   shotId: string;
 }
+
+/**
+ * Response from POST /api/scenes/:slug/copy. Includes the new scene's slug
+ * so the client can navigate to it (hash route `#scene-<newSlug>`).
+ */
+export interface SceneCopyResponseDto {
+  movie: MovieDto;
+  newSlug: string;
+}

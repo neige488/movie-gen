@@ -12,6 +12,8 @@ import {
   createProject,
   movieSequence,
   setSceneStarred,
+  setSceneSlugline,
+  setSceneScreenplay,
   setTakeStarred,
   DomainInvariantError,
 } from "./movie.js";
@@ -683,5 +685,148 @@ describe("movieSequence — isStarred scenes sorted by slug prefix", () => {
       "s02-b",
       "s03-c",
     ]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// setSceneSlugline / setSceneScreenplay — Light edit (Slice 5) mutators.
+//
+// Both return a new Project (immutable), validate the Scene exists, and
+// preserve every other field on the Scene (shots, isStarred, the other text
+// field). Reference integrity is re-checked via createProject so the helper
+// is safe even if a future edit path tried to mutate something else.
+// ---------------------------------------------------------------------------
+
+describe("setSceneSlugline — Scene slugline immutable update", () => {
+  const mkShot = (id: string) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5 });
+  const mkScene = (slug: string, slugline: string) =>
+    createScene({
+      slug,
+      slugline,
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots: [mkShot("01")],
+    });
+
+  it("updates slugline and leaves other fields untouched", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "INT. ROOM - DAY")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneSlugline(project, "s01-a", "EXT. STREET - NIGHT");
+    const scene = next.scenes[0]!;
+    expect(scene.slugline).toBe("EXT. STREET - NIGHT");
+    expect(scene.slug).toBe("s01-a");
+    expect(scene.screenplay).toBe(
+      "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+    );
+    expect(scene.isStarred).toBe(true);
+    expect(scene.shots).toHaveLength(1);
+  });
+
+  it("returns a new Project (immutability of input)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "INT. ROOM - DAY")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneSlugline(project, "s01-a", "EXT. STREET - NIGHT");
+    expect(next).not.toBe(project);
+    expect(project.scenes[0]!.slugline).toBe("INT. ROOM - DAY");
+  });
+
+  it("throws if Scene slug unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "INT. ROOM - DAY")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setSceneSlugline(project, "ghost", "X")).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("rejects empty slugline (createScene invariant)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "INT. ROOM - DAY")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setSceneSlugline(project, "s01-a", "")).toThrow(
+      DomainInvariantError,
+    );
+  });
+});
+
+describe("setSceneScreenplay — Scene screenplay immutable update", () => {
+  const mkShot = (id: string) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5 });
+  const mkScene = (slug: string, screenplay: string) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay,
+      isStarred: true,
+      shots: [mkShot("01")],
+    });
+
+  it("replaces screenplay text and preserves other fields", () => {
+    const project = createProject({
+      scenes: [
+        mkScene("s01-a", "<!-- shot:01 -->\nold\n<!-- /shot:01 -->"),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneScreenplay(
+      project,
+      "s01-a",
+      "<!-- shot:01 -->\nnew text\n<!-- /shot:01 -->",
+    );
+    const scene = next.scenes[0]!;
+    expect(scene.screenplay).toBe(
+      "<!-- shot:01 -->\nnew text\n<!-- /shot:01 -->",
+    );
+    expect(scene.slug).toBe("s01-a");
+    expect(scene.slugline).toBe("INT. ROOM - DAY");
+    expect(scene.isStarred).toBe(true);
+    expect(scene.shots).toHaveLength(1);
+  });
+
+  it("returns a new Project (immutability of input)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "<!-- shot:01 -->\nA\n<!-- /shot:01 -->")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setSceneScreenplay(
+      project,
+      "s01-a",
+      "<!-- shot:01 -->\nB\n<!-- /shot:01 -->",
+    );
+    expect(next).not.toBe(project);
+    expect(project.scenes[0]!.screenplay).toBe(
+      "<!-- shot:01 -->\nA\n<!-- /shot:01 -->",
+    );
+  });
+
+  it("throws if Scene slug unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", "<!-- shot:01 -->\nA\n<!-- /shot:01 -->")],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setSceneScreenplay(project, "ghost", "anything")).toThrow(
+      DomainInvariantError,
+    );
   });
 });
