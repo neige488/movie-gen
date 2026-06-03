@@ -5,6 +5,7 @@ import { ShotCard } from "./ShotCard.js";
 
 interface Props {
   scene: SceneDto;
+  onTakeUploaded: () => void;
 }
 
 /**
@@ -18,7 +19,7 @@ function stripShotMarkers(text: string): string {
   return text.replace(/<!--\s*\/?shot:[^\s]+\s*-->\n?/g, "");
 }
 
-export function SceneView({ scene }: Props) {
+export function SceneView({ scene, onTakeUploaded }: Props) {
   const visibleScreenplay = stripShotMarkers(scene.screenplay);
 
   return (
@@ -38,7 +39,14 @@ export function SceneView({ scene }: Props) {
           {scene.shots.length === 0 ? (
             <div className="shot shot--empty">No shots yet.</div>
           ) : (
-            scene.shots.map((shot) => <ShotCard key={shot.id} shot={shot} />)
+            scene.shots.map((shot) => (
+              <ShotCard
+                key={shot.id}
+                shot={shot}
+                sceneSlug={scene.slug}
+                onTakeUploaded={onTakeUploaded}
+              />
+            ))
           )}
         </aside>
       </div>

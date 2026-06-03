@@ -1,7 +1,11 @@
-import type { ShotDto } from "../../shared/dto.js";
+import { useRef, useState } from "react";
+import type { ShotDto, TakeDto } from "../../shared/dto.js";
+import { uploadTake } from "../upload-client.js";
 
 interface Props {
   shot: ShotDto;
+  sceneSlug: string;
+  onTakeUploaded: () => void;
 }
 
 const STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
@@ -11,7 +15,12 @@ const STATUS_LABEL: Record<ShotDto["syncStatus"], string> = {
   orphan: "orphan",
 };
 
-export function ShotCard({ shot }: Props) {
+// Mirrors the server-side video whitelist; reproduced here so we can hint the
+// native file picker. The server is still the source of truth — bad
+// extensions will be rejected with a 400.
+const ACCEPT_VIDEO = "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov";
+
+export function ShotCard({ shot, sceneSlug, onTakeUploaded }: Props) {
   const chips: { kind: string; label: string }[] = [];
   for (const r of shot.characterRefs) {
     chips.push({ kind: "char", label: `${r.character} / ${r.look}` });
@@ -57,19 +66,130 @@ export function ShotCard({ shot }: Props) {
           ))}
         </div>
       )}
+      <TakesSection
+        shot={shot}
+        sceneSlug={sceneSlug}
+        onTakeUploaded={onTakeUploaded}
+      />
+    </article>
+  );
+}
+
+function TakesSection({
+  shot,
+  sceneSlug,
+  onTakeUploaded,
+}: {
+  shot: ShotDto;
+  sceneSlug: string;
+  onTakeUploaded: () => void;
+}) {
+  const [dragOver, setDragOver] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  async function handleFile(file: File): Promise<void> {
+    setBusy(true);
+    setError(null);
+    try {
+      await uploadTake(sceneSlug, shot.id, file);
+      onTakeUploaded();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function onDrop(e: React.DragEvent<HTMLDivElement>): void {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) void handleFile(file);
+  }
+
+  function onPick(e: React.ChangeEvent<HTMLInputElement>): void {
+    const file = e.target.files?.[0];
+    if (file) void handleFile(file);
+    // Reset so picking the same file twice still fires onChange.
+    e.target.value = "";
+  }
+
+  const dropClass = [
+    "takes__drop",
+    dragOver ? "takes__drop--drag" : "",
+    busy ? "takes__drop--busy" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className="takes">
       {shot.takes.length > 0 && (
-        <div className="shot__takes">
+        <div className="takes__list">
           {shot.takes.map((t) => (
-            <span
-              key={t.id}
-              className={`take ${t.isStarred ? "take--starred" : ""}`}
-            >
-              {t.isStarred ? "★ " : ""}
-              {t.id}
-            </span>
+            <TakePlayer key={t.id} take={t} />
           ))}
         </div>
       )}
-    </article>
+      <div
+        className={dropClass}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={onDrop}
+        onClick={() => inputRef.current?.click()}
+        role="button"
+        tabIndex={0}
+        title="Upload a take (mp4/webm/mov)"
+      >
+        <span className="takes__plus">+</span>
+        <span className="takes__hint">
+          {busy ? "uploading…" : "drop or click to upload Take"}
+        </span>
+        <input
+          ref={inputRef}
+          type="file"
+          accept={ACCEPT_VIDEO}
+          style={{ display: "none" }}
+          onChange={onPick}
+        />
+      </div>
+      {error && <div className="takes__error">{error}</div>}
+    </div>
   );
+}
+
+function TakePlayer({ take }: { take: TakeDto }) {
+  return (
+    <figure className={`take-card ${take.isStarred ? "take-card--starred" : ""}`}>
+      <video
+        className="take-card__video"
+        src={`/assets/${encodeURI(take.videoPath)}`}
+        controls
+        preload="metadata"
+      />
+      <figcaption className="take-card__caption">
+        <span className="take-card__id">
+          {take.isStarred ? "★ " : ""}
+          {take.id}
+        </span>
+        <time className="take-card__time" dateTime={take.createdAt}>
+          {formatRelativeOrDate(take.createdAt)}
+        </time>
+      </figcaption>
+    </figure>
+  );
+}
+
+function formatRelativeOrDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  // Use short YYYY-MM-DD HH:MM in local time; we deliberately avoid a full
+  // relative-time library — directors want timestamps, not "5 minutes ago".
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
