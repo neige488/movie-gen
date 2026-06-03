@@ -1,6 +1,6 @@
 ---
 feature: movie-gen
-milestone:  # git/gh 설정 후 채움
+milestone: 1
 base_branch: main
 merge_strategy: per-slice
 slices: []
