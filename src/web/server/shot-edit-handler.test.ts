@@ -35,6 +35,7 @@ import {
   applyShotDurationEdit,
   applyShotCharacterRefsEdit,
   applyShotLocationRefsEdit,
+  applyShotPrevShotRefEdit,
   applyShotPropRefsEdit,
   ShotEditError,
 } from "./shot-edit-handler.js";
@@ -391,5 +392,177 @@ describe("applyShotPropRefsEdit", () => {
         createProject,
       }),
     ).rejects.toBeInstanceOf(ShotEditError);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// applyShotPrevShotRefEdit — Slice 8 (Chaining)
+//
+// Writes a 2-shot scene so we can set prevShotRef on Shot 02 → Shot 01.
+// ---------------------------------------------------------------------------
+
+function writeTwoShotProject(opts?: { prevShotRefOnTwo?: string }): void {
+  const sceneDir = path.join(dataDir, "scenes", "s01-open");
+  mkdirSync(sceneDir, { recursive: true });
+  writeFileSync(
+    path.join(sceneDir, "scene.yaml"),
+    `slugline: "INT. ROOM - DAY"\nisStarred: true\n`,
+  );
+  writeFileSync(
+    path.join(sceneDir, "screenplay.md"),
+    `<!-- shot:01 -->\na\n<!-- /shot:01 -->\n<!-- shot:02 -->\nb\n<!-- /shot:02 -->\n`,
+  );
+  const shot1: Record<string, unknown> = {
+    id: "01",
+    prompt: "first",
+    duration: 5,
+    screenplayHash: "deadbeef",
+    characterRefs: [],
+    locationRefs: [],
+    propRefs: [],
+    takes: [],
+  };
+  const shot2: Record<string, unknown> = {
+    id: "02",
+    prompt: "second",
+    duration: 5,
+    screenplayHash: "deadbeef",
+    characterRefs: [],
+    locationRefs: [],
+    propRefs: [],
+    takes: [],
+  };
+  if (opts?.prevShotRefOnTwo) shot2.prevShotRef = opts.prevShotRefOnTwo;
+  writeFileSync(
+    path.join(sceneDir, "shots.yaml"),
+    yaml.dump({ shots: [shot1, shot2] }, { lineWidth: 120 }),
+  );
+}
+
+describe("applyShotPrevShotRefEdit", () => {
+  it("sets prevShotRef to an earlier Shot id and persists", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+
+    const result = await applyShotPrevShotRefEdit({
+      project,
+      sceneSlug: "s01-open",
+      shotId: "02",
+      prevShotRef: "01",
+      dataDir,
+      saveSceneShots,
+      createProject,
+    });
+
+    expect(result.project.scenes[0]!.shots[1]!.prevShotRef).toBe("01");
+
+    const reloaded = await loadProject(dataDir);
+    expect(reloaded.scenes[0]!.shots[1]!.prevShotRef).toBe("01");
+  });
+
+  it("clears prevShotRef with null", async () => {
+    writeTwoShotProject({ prevShotRefOnTwo: "01" });
+    const project = await loadProject(dataDir);
+
+    const result = await applyShotPrevShotRefEdit({
+      project,
+      sceneSlug: "s01-open",
+      shotId: "02",
+      prevShotRef: null,
+      dataDir,
+      saveSceneShots,
+      createProject,
+    });
+
+    expect(result.project.scenes[0]!.shots[1]!.prevShotRef).toBeUndefined();
+
+    const reloaded = await loadProject(dataDir);
+    expect(reloaded.scenes[0]!.shots[1]!.prevShotRef).toBeUndefined();
+  });
+
+  it("rejects forward ref (later Shot in same Scene)", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+    await expect(
+      applyShotPrevShotRefEdit({
+        project,
+        sceneSlug: "s01-open",
+        shotId: "01",
+        prevShotRef: "02",
+        dataDir,
+        saveSceneShots,
+        createProject,
+      }),
+    ).rejects.toBeInstanceOf(ShotEditError);
+  });
+
+  it("rejects self ref", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+    await expect(
+      applyShotPrevShotRefEdit({
+        project,
+        sceneSlug: "s01-open",
+        shotId: "02",
+        prevShotRef: "02",
+        dataDir,
+        saveSceneShots,
+        createProject,
+      }),
+    ).rejects.toBeInstanceOf(ShotEditError);
+  });
+
+  it("rejects unknown prevShotRef id", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+    await expect(
+      applyShotPrevShotRefEdit({
+        project,
+        sceneSlug: "s01-open",
+        shotId: "02",
+        prevShotRef: "ghost",
+        dataDir,
+        saveSceneShots,
+        createProject,
+      }),
+    ).rejects.toBeInstanceOf(ShotEditError);
+  });
+
+  it("rejects unknown Shot id (target)", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+    await expect(
+      applyShotPrevShotRefEdit({
+        project,
+        sceneSlug: "s01-open",
+        shotId: "99",
+        prevShotRef: "01",
+        dataDir,
+        saveSceneShots,
+        createProject,
+      }),
+    ).rejects.toBeInstanceOf(ShotEditError);
+  });
+
+  it("preserves other Shot fields on update", async () => {
+    writeTwoShotProject();
+    const project = await loadProject(dataDir);
+    const before = project.scenes[0]!.shots[1]!;
+
+    const result = await applyShotPrevShotRefEdit({
+      project,
+      sceneSlug: "s01-open",
+      shotId: "02",
+      prevShotRef: "01",
+      dataDir,
+      saveSceneShots,
+      createProject,
+    });
+
+    const after = result.project.scenes[0]!.shots[1]!;
+    expect(after.id).toBe(before.id);
+    expect(after.prompt).toBe(before.prompt);
+    expect(after.duration).toBe(before.duration);
+    expect(after.screenplayHash).toBe(before.screenplayHash);
   });
 });
