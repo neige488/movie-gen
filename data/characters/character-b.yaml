@@ -1,0 +1,16 @@
+name: character-b
+headshot: character-b/headshot.png
+looks:
+  - name: long-coat
+    bodyProfile:
+      images:
+        - character-b/long-coat/body-front.png
+        - character-b/long-coat/body-side.png
+        - character-b/long-coat/body-back.png
+    faceProfile:
+      images:
+        - character-b/long-coat/face-front.png
+        - character-b/long-coat/face-left.png
+        - character-b/long-coat/face-right.png
+        - character-b/long-coat/face-up.png
+        - character-b/long-coat/face-down.png
