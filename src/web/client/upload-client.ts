@@ -7,6 +7,7 @@
  */
 
 import type {
+  MovieDto,
   TakeUploadResponseDto,
   UploadResponseDto,
 } from "../shared/dto.js";
@@ -51,6 +52,64 @@ export async function uploadAsset(
     throw new Error(message);
   }
   return (await res.json()) as UploadResponseDto;
+}
+
+/**
+ * Toggle a Scene's `isStarred`. Returns the full updated MovieDto so the
+ * caller can refresh the movie sequence + sidebar in one round-trip. The
+ * server is authoritative — no optimistic UI on the client side because the
+ * Take-starred operation has a sibling auto-OFF side effect that's painful
+ * to mirror in the browser; we use the same response-driven shape for
+ * Scene-starred for consistency.
+ */
+export async function toggleSceneStarred(
+  sceneSlug: string,
+  isStarred: boolean,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/starred`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ isStarred }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "scene starred toggle failed");
+  return (await res.json()) as MovieDto;
+}
+
+/**
+ * Toggle a Take's `isStarred`. When `isStarred=true`, the server enforces the
+ * Shot-level invariant by auto-OFFing the sibling starred Take. The returned
+ * MovieDto reflects that side effect already.
+ */
+export async function toggleTakeStarred(
+  sceneSlug: string,
+  shotId: string,
+  takeId: string,
+  isStarred: boolean,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/takes/${encodeURIComponent(takeId)}/starred`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ isStarred }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "take starred toggle failed");
+  return (await res.json()) as MovieDto;
+}
+
+async function asError(res: Response, fallback: string): Promise<Error> {
+  let message = `${fallback} (${res.status})`;
+  try {
+    const body = (await res.json()) as { error?: string };
+    if (body.error) message = body.error;
+  } catch {
+    // ignore
+  }
+  return new Error(message);
 }
 
 export async function uploadTake(

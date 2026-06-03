@@ -1,11 +1,14 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { SceneDto } from "../../shared/dto.js";
+import type { MovieDto, SceneDto } from "../../shared/dto.js";
 import { ShotCard } from "./ShotCard.js";
+import { StarButton } from "./StarButton.js";
+import { toggleSceneStarred } from "../upload-client.js";
 
 interface Props {
   scene: SceneDto;
   onTakeUploaded: () => void;
+  onMovieChanged: (movie: MovieDto) => void;
 }
 
 /**
@@ -19,14 +22,31 @@ function stripShotMarkers(text: string): string {
   return text.replace(/<!--\s*\/?shot:[^\s]+\s*-->\n?/g, "");
 }
 
-export function SceneView({ scene, onTakeUploaded }: Props) {
+export function SceneView({ scene, onTakeUploaded, onMovieChanged }: Props) {
   const visibleScreenplay = stripShotMarkers(scene.screenplay);
+
+  async function handleStarToggle(next: boolean): Promise<void> {
+    const movie = await toggleSceneStarred(scene.slug, next);
+    onMovieChanged(movie);
+  }
 
   return (
     <section id={`scene-${scene.slug}`} className="scene">
       <header className="scene__header">
-        <div className="scene__slug">{scene.slug}</div>
-        <h2 className="scene__slugline">{scene.slugline}</h2>
+        <div className="scene__heading">
+          <div className="scene__slug">{scene.slug}</div>
+          <h2 className="scene__slugline">{scene.slugline}</h2>
+        </div>
+        <StarButton
+          isStarred={scene.isStarred}
+          onToggle={handleStarToggle}
+          title={
+            scene.isStarred
+              ? "Remove from movie sequence"
+              : "Add to movie sequence"
+          }
+          ariaLabel={`Toggle Scene ${scene.slug} starred`}
+        />
       </header>
 
       <div className="scene__body">
@@ -45,6 +65,7 @@ export function SceneView({ scene, onTakeUploaded }: Props) {
                 shot={shot}
                 sceneSlug={scene.slug}
                 onTakeUploaded={onTakeUploaded}
+                onMovieChanged={onMovieChanged}
               />
             ))
           )}

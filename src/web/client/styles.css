@@ -128,6 +128,14 @@ body {
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.6rem;
   margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.scene__heading {
+  display: flex;
+  flex-direction: column;
 }
 .scene__slug {
   font-family: var(--mono);
@@ -314,7 +322,7 @@ body {
   padding: 0.3rem 0.4rem;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem;
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -369,6 +377,91 @@ body {
   color: var(--warn);
   font-family: var(--mono);
   padding: 0.2rem 0.3rem;
+}
+
+/* StarButton — Unicode glyph, accent-warm when on, dim when off */
+.star-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0.15rem 0.4rem;
+  cursor: pointer;
+  color: var(--fg-dim);
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  user-select: none;
+}
+.star-btn:hover {
+  color: var(--accent-warm);
+  border-color: rgba(224, 175, 104, 0.4);
+  background: rgba(224, 175, 104, 0.08);
+}
+.star-btn--on {
+  color: var(--accent-warm);
+}
+.star-btn--on:hover {
+  color: var(--fg-dim);
+}
+.star-btn--busy {
+  opacity: 0.5;
+  cursor: progress;
+}
+.star-btn--sm {
+  font-size: 0.95rem;
+  padding: 0.05rem 0.3rem;
+}
+.star-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Non-starred Scenes (sidebar) */
+.scene-nav--off {
+  margin-top: 1.25rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--border);
+}
+.scene-nav__header {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+}
+.scene-nav__off-toggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.25rem;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  text-align: left;
+  cursor: pointer;
+  color: var(--fg-dim);
+  font: inherit;
+}
+.scene-nav__off-toggle:hover {
+  background: var(--bg-elev-2);
+  border-color: var(--border);
+  color: var(--fg);
+}
+.scene-nav__off-toggle .scene-nav__slug,
+.scene-nav__off-toggle .scene-nav__slugline {
+  grid-column: 1;
+}
+.scene-nav__star-hint {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: 1.15rem;
+  color: var(--fg-dim);
+}
+.scene-nav__off-toggle:hover .scene-nav__star-hint {
+  color: var(--accent-warm);
 }
 
 /* Top nav (sidebar) */

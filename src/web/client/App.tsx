@@ -4,6 +4,7 @@ import { SceneNavigator } from "./components/SceneNavigator.js";
 import { SceneView } from "./components/SceneView.js";
 import { LibraryPage } from "./components/LibraryPage.js";
 import { useHashRoute, type Route } from "./hash-route.js";
+import { toggleSceneStarred } from "./upload-client.js";
 
 type FetchState<T> =
   | { kind: "loading" }
@@ -54,12 +55,24 @@ export function App() {
     }
   }, [route.name]);
 
+  function handleMovieChanged(nextMovie: MovieDto): void {
+    setMovie({ kind: "ok", value: nextMovie });
+  }
+
   return (
     <div className="layout">
-      <Sidebar route={route} movie={movie} />
+      <Sidebar
+        route={route}
+        movie={movie}
+        onMovieChanged={handleMovieChanged}
+      />
       <main className="main">
         {route.name === "viewer" ? (
-          <ViewerMain movie={movie} onTakeUploaded={refreshMovie} />
+          <ViewerMain
+            movie={movie}
+            onTakeUploaded={refreshMovie}
+            onMovieChanged={handleMovieChanged}
+          />
         ) : (
           <LibraryMain library={library} onUploaded={refreshLibrary} />
         )}
@@ -71,9 +84,11 @@ export function App() {
 function Sidebar({
   route,
   movie,
+  onMovieChanged,
 }: {
   route: Route;
   movie: FetchState<MovieDto>;
+  onMovieChanged: (movie: MovieDto) => void;
 }) {
   return (
     <aside className="sidebar">
@@ -95,6 +110,10 @@ function Sidebar({
       {route.name === "viewer" && movie.kind === "ok" && (
         <>
           <SceneNavigator scenes={movie.value.scenes} />
+          <NonStarredScenes
+            movie={movie.value}
+            onMovieChanged={onMovieChanged}
+          />
           <div className="sidebar__meta">
             <div>
               <strong>{movie.value.scenes.length}</strong> starred scene
@@ -122,12 +141,59 @@ function Sidebar({
   );
 }
 
+/**
+ * Non-starred Scenes list — lets the director star a Scene back into the
+ * movie sequence without leaving the viewer. The main column shows only the
+ * starred (sequence) Scenes per CONTEXT.md ("영화 시퀀스 = `isStarred=true`인
+ * Scene들의 폴더명 prefix 정렬"), so this is the entry point for the inverse
+ * toggle.
+ */
+function NonStarredScenes({
+  movie,
+  onMovieChanged,
+}: {
+  movie: MovieDto;
+  onMovieChanged: (movie: MovieDto) => void;
+}) {
+  const offScenes = movie.allScenes.filter((s) => !s.isStarred);
+  if (offScenes.length === 0) return null;
+  async function turnOn(slug: string): Promise<void> {
+    const next = await toggleSceneStarred(slug, true);
+    onMovieChanged(next);
+  }
+  return (
+    <section className="scene-nav scene-nav--off" aria-label="Non-starred scenes">
+      <h2 className="scene-nav__header">Non-starred ({offScenes.length})</h2>
+      <ol className="scene-nav__list">
+        {offScenes.map((s) => (
+          <li key={s.slug} className="scene-nav__item">
+            <button
+              type="button"
+              className="scene-nav__off-toggle"
+              onClick={() => void turnOn(s.slug)}
+              title={`Add ${s.slug} to movie sequence`}
+            >
+              <span className="scene-nav__slug">{s.slug}</span>
+              <span className="scene-nav__slugline">{s.slugline}</span>
+              <span className="scene-nav__star-hint" aria-hidden="true">
+                ☆
+              </span>
+            </button>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 function ViewerMain({
   movie,
   onTakeUploaded,
+  onMovieChanged,
 }: {
   movie: FetchState<MovieDto>;
   onTakeUploaded: () => void;
+  onMovieChanged: (movie: MovieDto) => void;
 }) {
   if (movie.kind === "loading")
     return <div className="status">Loading project…</div>;
@@ -140,8 +206,8 @@ function ViewerMain({
   if (movie.value.scenes.length === 0) {
     return (
       <div className="status">
-        No starred scenes — add <code>isStarred: true</code> to a scene to
-        include it in the movie sequence.
+        No starred scenes — click ☆ next to a Non-starred scene in the sidebar
+        to add it to the movie sequence.
       </div>
     );
   }
@@ -152,6 +218,7 @@ function ViewerMain({
           key={scene.slug}
           scene={scene}
           onTakeUploaded={onTakeUploaded}
+          onMovieChanged={onMovieChanged}
         />
       ))}
     </>
