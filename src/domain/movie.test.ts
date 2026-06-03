@@ -62,6 +62,7 @@ describe("Take — immutable starred snapshot", () => {
       id: "t01",
       videoPath: "assets/takes/01.mp4",
       screenplayHash: "deadbeef",
+      createdAt: "2026-06-03T10:00:00.000Z",
     });
     expect(take.isStarred).toBe(false);
   });
@@ -71,9 +72,43 @@ describe("Take — immutable starred snapshot", () => {
       id: "t01",
       videoPath: "assets/takes/01.mp4",
       screenplayHash: "deadbeef",
+      createdAt: "2026-06-03T10:00:00.000Z",
       isStarred: true,
     });
     expect(take.isStarred).toBe(true);
+  });
+
+  it("requires createdAt (immutable provenance per CONTEXT.md)", () => {
+    expect(() =>
+      createTake({
+        id: "t01",
+        videoPath: "a.mp4",
+        screenplayHash: "x",
+        // @ts-expect-error — runtime check protects misuse from non-TS callers
+        createdAt: undefined,
+      }),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("rejects empty createdAt", () => {
+    expect(() =>
+      createTake({
+        id: "t01",
+        videoPath: "a.mp4",
+        screenplayHash: "x",
+        createdAt: "",
+      }),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("preserves createdAt as ISO string", () => {
+    const take = createTake({
+      id: "t01",
+      videoPath: "a.mp4",
+      screenplayHash: "x",
+      createdAt: "2026-06-03T10:00:00.000Z",
+    });
+    expect(take.createdAt).toBe("2026-06-03T10:00:00.000Z");
   });
 });
 
@@ -144,12 +179,14 @@ describe("Scene — invariants", () => {
       id: "t01",
       videoPath: "a.mp4",
       screenplayHash: "x",
+      createdAt: "2026-06-03T10:00:00.000Z",
       isStarred: true,
     });
     const starred2 = createTake({
       id: "t02",
       videoPath: "b.mp4",
       screenplayHash: "x",
+      createdAt: "2026-06-03T10:01:00.000Z",
       isStarred: true,
     });
     expect(() =>
@@ -162,12 +199,14 @@ describe("Scene — invariants", () => {
       id: "t01",
       videoPath: "a.mp4",
       screenplayHash: "x",
+      createdAt: "2026-06-03T10:00:00.000Z",
       isStarred: true,
     });
     const t2 = createTake({
       id: "t02",
       videoPath: "b.mp4",
       screenplayHash: "x",
+      createdAt: "2026-06-03T10:01:00.000Z",
     });
     const shot = createShot({
       ...VALID_SHOT_BASE,

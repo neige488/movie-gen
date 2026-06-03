@@ -73,6 +73,7 @@ function sceneToDto(scene: Scene): SceneDto {
         id: t.id,
         videoPath: t.videoPath,
         screenplayHash: t.screenplayHash,
+        createdAt: t.createdAt,
         isStarred: t.isStarred,
       })),
       syncStatus: syncByShotId.get(shot.id) ?? "orphan",

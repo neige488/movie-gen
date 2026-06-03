@@ -20,6 +20,8 @@ export interface TakeDto {
   id: string;
   videoPath: string;
   screenplayHash: string;
+  /** ISO 8601 timestamp of original upload. Immutable. */
+  createdAt: string;
   isStarred: boolean;
 }
 

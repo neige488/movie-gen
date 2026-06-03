@@ -32,6 +32,7 @@ export const takeFileSchema = z.object({
   id: z.string().min(1),
   videoPath: z.string().min(1),
   screenplayHash: z.string().min(1),
+  createdAt: z.string().min(1),
   isStarred: z.boolean().optional(),
 });
 

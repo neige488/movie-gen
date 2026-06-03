@@ -33,6 +33,7 @@ shots:
       - id: t01
         videoPath: takes/s02/02-take01.mp4
         screenplayHash: "78f6e9db5f8c2551c3c36f002703c70208fe503ac9dff07b6dc01b521fa6a153"
+        createdAt: "2026-05-02T15:30:00.000Z"
 
   - id: "03"
     prompt: "Static wide. Both characters frozen. Bulb flickers. Audio carries the sirens."
