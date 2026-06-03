@@ -8,6 +8,7 @@ import {
   segmentScreenplay,
 } from "../screenplay-segments.js";
 import { shotPaletteColor } from "../shot-palette.js";
+import { useEditorDirty } from "../live-reload.js";
 
 interface Props {
   sceneSlug: string;
@@ -55,6 +56,9 @@ export function ScreenplayEditor({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const taRef = useRef<HTMLTextAreaElement>(null);
+
+  // Defer external auto-reloads while we're in edit mode (Slice 9).
+  useEditorDirty(editing);
 
   // Reset the draft whenever we enter edit mode or the source text changes
   // from outside (e.g. a refresh).

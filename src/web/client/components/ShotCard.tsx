@@ -10,6 +10,7 @@ import type {
   ShotDto,
   TakeDto,
 } from "../../shared/dto.js";
+import { useEditorDirty } from "../live-reload.js";
 import {
   acknowledgeShotRequest,
   acknowledgeTakeRequest,
@@ -101,6 +102,8 @@ export function ShotCard({
   onMovieChanged,
 }: Props) {
   const [editing, setEditing] = useState(false);
+  // Defer external auto-reloads while the meta editor is open (Slice 9).
+  useEditorDirty(editing);
   const palette = shotPaletteColor(shot.id);
   const accentStyle = {
     borderLeftColor: palette.accent,
