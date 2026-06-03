@@ -31,7 +31,11 @@ import {
 } from "@adapter/asset-store.js";
 import { createProject, type Project } from "@domain/movie.js";
 import { projectToLibraryDto, projectToMovieDto } from "./dto-mapper.js";
-import { applyUpload, type UploadCommand } from "./upload-handler.js";
+import {
+  applyUpload,
+  UploadValidationError,
+  type UploadCommand,
+} from "./upload-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -170,7 +174,11 @@ async function main(): Promise<void> {
           res.json({ relativePath });
         },
         (err: Error) => {
-          if (err instanceof AssetStoreError) {
+          if (
+            err instanceof AssetStoreError ||
+            err instanceof UploadValidationError
+          ) {
+            // Client-actionable: bad slot input or unknown target object.
             res.status(400).json({ error: err.message });
           } else {
             console.error("[movie-gen] upload failed:", err);
