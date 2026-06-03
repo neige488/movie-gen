@@ -10,6 +10,7 @@
  *   characters/{name}/{look}/body-{0..2}.png
  *   locations/{name}/{refName}.png
  *   props/{name}/{refName}.png
+ *   videos/scenes/{sceneSlug}/shots/{shotId}/takes/{takeId}.{ext}
  *
  * Design choices (In-flight decisions, see PR description):
  *  - Slot identification: a discriminated union (`AssetSlot`). The store owns
@@ -21,8 +22,13 @@
  *    user knows.)
  *  - Path traversal: every input name is validated (`..`, separators forbid).
  *    `resolve()` re-checks the resolved absolute path stays under `assetsRoot`.
- *  - Extensions: lowercased; whitelist (png/jpg/jpeg/gif/webp). Unknown =>
- *    reject. Empty extension => default to `.png`.
+ *  - Extensions:
+ *      Image slots — lowercased whitelist (png/jpg/jpeg/gif/webp).
+ *                    Unknown => reject. Empty extension => default to `.png`.
+ *      Video slots (take-video) — lowercased whitelist (mp4/webm/mov).
+ *                    Unknown or missing extension => reject. The whitelist is
+ *                    strictly disjoint from the image one so an accidental
+ *                    image upload to a take slot fails loudly.
  *
  * The store does NOT update YAML — that is ProjectRepository's job. The web
  * handler calls `assetStore.upload()` then `projectRepository.save*()`.
@@ -56,7 +62,13 @@ export type AssetSlot =
       index: number;
     }
   | { kind: "location-ref"; location: string; refName: string }
-  | { kind: "prop-ref"; prop: string; refName: string };
+  | { kind: "prop-ref"; prop: string; refName: string }
+  | {
+      kind: "take-video";
+      sceneSlug: string;
+      shotId: string;
+      takeId: string;
+    };
 
 export interface AssetStore {
   /**
@@ -71,7 +83,7 @@ export interface AssetStore {
   readonly root: string;
 }
 
-const ALLOWED_EXTENSIONS = new Set([
+const ALLOWED_IMAGE_EXTENSIONS = new Set([
   "png",
   "jpg",
   "jpeg",
@@ -79,8 +91,17 @@ const ALLOWED_EXTENSIONS = new Set([
   "webp",
 ]);
 
+const ALLOWED_VIDEO_EXTENSIONS = new Set(["mp4", "webm", "mov"]);
+
 const FACE_SLOT_COUNT = 5;
 const BODY_SLOT_COUNT = 3;
+
+function isVideoSlot(slot: AssetSlot): slot is Extract<
+  AssetSlot,
+  { kind: "take-video" }
+> {
+  return slot.kind === "take-video";
+}
 
 const SAFE_NAME = /^[a-zA-Z0-9_.-]+$/;
 
@@ -101,16 +122,34 @@ export function createAssetStore(assetsRoot: string): AssetStore {
     }
   }
 
-  function normalizeExtension(originalFilename: string): string {
+  function normalizeImageExtension(originalFilename: string): string {
     const dot = originalFilename.lastIndexOf(".");
     if (dot === -1 || dot === originalFilename.length - 1) {
-      // No extension — default to png.
+      // No extension — default to png for image slots.
       return "png";
     }
     const ext = originalFilename.slice(dot + 1).toLowerCase();
-    if (!ALLOWED_EXTENSIONS.has(ext)) {
+    if (!ALLOWED_IMAGE_EXTENSIONS.has(ext)) {
       throw new AssetStoreError(
-        `unsupported extension ".${ext}" — allowed: ${[...ALLOWED_EXTENSIONS].join(", ")}`,
+        `unsupported extension ".${ext}" — allowed: ${[...ALLOWED_IMAGE_EXTENSIONS].join(", ")}`,
+      );
+    }
+    return ext;
+  }
+
+  function normalizeVideoExtension(originalFilename: string): string {
+    const dot = originalFilename.lastIndexOf(".");
+    if (dot === -1 || dot === originalFilename.length - 1) {
+      // For video slots we require an explicit, known extension — there is no
+      // sensible default, and silently choosing one would hide bugs.
+      throw new AssetStoreError(
+        `take video requires an extension; allowed: ${[...ALLOWED_VIDEO_EXTENSIONS].join(", ")}`,
+      );
+    }
+    const ext = originalFilename.slice(dot + 1).toLowerCase();
+    if (!ALLOWED_VIDEO_EXTENSIONS.has(ext)) {
+      throw new AssetStoreError(
+        `unsupported video extension ".${ext}" — allowed: ${[...ALLOWED_VIDEO_EXTENSIONS].join(", ")}`,
       );
     }
     return ext;
@@ -178,6 +217,22 @@ export function createAssetStore(assetsRoot: string): AssetStore {
           basename: `${slot.refName}.${ext}`,
         };
       }
+      case "take-video": {
+        assertSafeSegment(slot.sceneSlug, "scene slug");
+        assertSafeSegment(slot.shotId, "shot id");
+        assertSafeSegment(slot.takeId, "take id");
+        return {
+          dir: path.join(
+            "videos",
+            "scenes",
+            slot.sceneSlug,
+            "shots",
+            slot.shotId,
+            "takes",
+          ),
+          basename: `${slot.takeId}.${ext}`,
+        };
+      }
       default: {
         const exhaustive: never = slot;
         throw new AssetStoreError(
@@ -222,7 +277,9 @@ export function createAssetStore(assetsRoot: string): AssetStore {
     root,
 
     async upload(slot, originalFilename, data) {
-      const ext = normalizeExtension(originalFilename);
+      const ext = isVideoSlot(slot)
+        ? normalizeVideoExtension(originalFilename)
+        : normalizeImageExtension(originalFilename);
       const { dir, basename } = slotToTarget(slot, ext);
       const absDir = path.join(root, dir);
       await mkdir(absDir, { recursive: true });

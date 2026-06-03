@@ -144,6 +144,123 @@ describe("AssetStore.upload — location / prop reference", () => {
   });
 });
 
+describe("AssetStore.upload — take video", () => {
+  it("writes video under videos/scenes/{scene}/shots/{shot}/takes/{takeId}.{ext}", async () => {
+    const rel = await store.upload(
+      {
+        kind: "take-video",
+        sceneSlug: "s01-prologue",
+        shotId: "01",
+        takeId: "take-001",
+      },
+      "raw.mp4",
+      bytes("MP4-DATA"),
+    );
+    expect(rel).toBe(
+      "videos/scenes/s01-prologue/shots/01/takes/take-001.mp4",
+    );
+    const onDisk = path.join(assetsDir, rel);
+    expect(existsSync(onDisk)).toBe(true);
+    expect(readFileSync(onDisk, "utf8")).toBe("MP4-DATA");
+  });
+
+  it("accepts webm and mov extensions", async () => {
+    const r1 = await store.upload(
+      {
+        kind: "take-video",
+        sceneSlug: "s01",
+        shotId: "01",
+        takeId: "take-001",
+      },
+      "v.webm",
+      bytes("W"),
+    );
+    expect(r1).toBe("videos/scenes/s01/shots/01/takes/take-001.webm");
+    const r2 = await store.upload(
+      {
+        kind: "take-video",
+        sceneSlug: "s01",
+        shotId: "01",
+        takeId: "take-002",
+      },
+      "v.mov",
+      bytes("M"),
+    );
+    expect(r2).toBe("videos/scenes/s01/shots/01/takes/take-002.mov");
+  });
+
+  it("rejects unsupported video extension (e.g. .exe)", async () => {
+    await expect(
+      store.upload(
+        {
+          kind: "take-video",
+          sceneSlug: "s01",
+          shotId: "01",
+          takeId: "take-001",
+        },
+        "evil.exe",
+        bytes("E"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+  });
+
+  it("rejects image-only extension (.png) for take video", async () => {
+    // png is allowed for image slots but not for take-video — preserve the
+    // distinction so callers do not accidentally upload images as takes.
+    await expect(
+      store.upload(
+        {
+          kind: "take-video",
+          sceneSlug: "s01",
+          shotId: "01",
+          takeId: "take-001",
+        },
+        "not-a-video.png",
+        bytes("P"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+  });
+
+  it("rejects scene slug or shot id with path traversal", async () => {
+    await expect(
+      store.upload(
+        {
+          kind: "take-video",
+          sceneSlug: "../etc",
+          shotId: "01",
+          takeId: "take-001",
+        },
+        "x.mp4",
+        bytes("X"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+    await expect(
+      store.upload(
+        {
+          kind: "take-video",
+          sceneSlug: "s01",
+          shotId: "01/02",
+          takeId: "take-001",
+        },
+        "x.mp4",
+        bytes("X"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+    await expect(
+      store.upload(
+        {
+          kind: "take-video",
+          sceneSlug: "s01",
+          shotId: "01",
+          takeId: "../take",
+        },
+        "x.mp4",
+        bytes("X"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+  });
+});
+
 describe("AssetStore.upload — collision handling", () => {
   it("appends -2, -3 suffix when target exists", async () => {
     const slot: AssetSlot = {

@@ -17,21 +17,20 @@ export function App() {
     kind: "loading",
   });
 
-  useEffect(() => {
-    let cancelled = false;
+  function refreshMovie(): void {
     fetch("/api/movie")
       .then(async (r) => {
         if (!r.ok) throw new Error(`api returned ${r.status}`);
         return (await r.json()) as MovieDto;
       })
-      .then((value) => !cancelled && setMovie({ kind: "ok", value }))
-      .catch(
-        (err: Error) =>
-          !cancelled && setMovie({ kind: "error", message: err.message }),
+      .then((value) => setMovie({ kind: "ok", value }))
+      .catch((err: Error) =>
+        setMovie({ kind: "error", message: err.message }),
       );
-    return () => {
-      cancelled = true;
-    };
+  }
+
+  useEffect(() => {
+    refreshMovie();
   }, []);
 
   // Library is fetched on-demand the first time the route asks for it, then
@@ -60,7 +59,7 @@ export function App() {
       <Sidebar route={route} movie={movie} />
       <main className="main">
         {route.name === "viewer" ? (
-          <ViewerMain movie={movie} />
+          <ViewerMain movie={movie} onTakeUploaded={refreshMovie} />
         ) : (
           <LibraryMain library={library} onUploaded={refreshLibrary} />
         )}
@@ -123,7 +122,13 @@ function Sidebar({
   );
 }
 
-function ViewerMain({ movie }: { movie: FetchState<MovieDto> }) {
+function ViewerMain({
+  movie,
+  onTakeUploaded,
+}: {
+  movie: FetchState<MovieDto>;
+  onTakeUploaded: () => void;
+}) {
   if (movie.kind === "loading")
     return <div className="status">Loading project…</div>;
   if (movie.kind === "error")
@@ -143,7 +148,11 @@ function ViewerMain({ movie }: { movie: FetchState<MovieDto> }) {
   return (
     <>
       {movie.value.scenes.map((scene) => (
-        <SceneView key={scene.slug} scene={scene} />
+        <SceneView
+          key={scene.slug}
+          scene={scene}
+          onTakeUploaded={onTakeUploaded}
+        />
       ))}
     </>
   );

@@ -145,6 +145,7 @@ async function loadScene(slug: string, sceneDir: string): Promise<Scene> {
             id: t.id,
             videoPath: t.videoPath,
             screenplayHash: t.screenplayHash,
+            createdAt: t.createdAt,
             isStarred: t.isStarred,
           }),
         ),

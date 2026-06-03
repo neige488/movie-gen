@@ -1,12 +1,15 @@
 /**
- * Client-side helper for POST /api/assets/upload.
+ * Client-side helpers for upload endpoints.
  *
  * Mirrors the AssetSlot taxonomy from the server but kept as its own copy
  * here so the client bundle doesn't import server-only modules. The shapes
  * must match `AssetSlot` in `src/adapter/asset-store.ts`.
  */
 
-import type { UploadResponseDto } from "../shared/dto.js";
+import type {
+  TakeUploadResponseDto,
+  UploadResponseDto,
+} from "../shared/dto.js";
 
 export type AssetSlotSpec =
   | { kind: "character-headshot"; character: string }
@@ -48,4 +51,31 @@ export async function uploadAsset(
     throw new Error(message);
   }
   return (await res.json()) as UploadResponseDto;
+}
+
+export async function uploadTake(
+  sceneSlug: string,
+  shotId: string,
+  file: File,
+): Promise<TakeUploadResponseDto> {
+  const form = new FormData();
+  form.append("sceneSlug", sceneSlug);
+  form.append("shotId", shotId);
+  form.append("file", file);
+
+  const res = await fetch("/api/takes/upload", {
+    method: "POST",
+    body: form,
+  });
+  if (!res.ok) {
+    let message = `take upload failed (${res.status})`;
+    try {
+      const body = (await res.json()) as { error?: string };
+      if (body.error) message = body.error;
+    } catch {
+      // ignore
+    }
+    throw new Error(message);
+  }
+  return (await res.json()) as TakeUploadResponseDto;
 }

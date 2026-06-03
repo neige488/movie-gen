@@ -47,6 +47,12 @@ export interface Take {
   readonly id: string;
   readonly videoPath: string;
   readonly screenplayHash: string;
+  /**
+   * ISO 8601 timestamp when this Take was first uploaded. Immutable per
+   * CONTEXT.md ("Take is immutable") — once written, the tool never rewrites
+   * it. Required so the on-disk provenance is never silently invented.
+   */
+  readonly createdAt: string;
   readonly isStarred: boolean;
 }
 
@@ -54,6 +60,7 @@ export interface CreateTakeInput {
   id: string;
   videoPath: string;
   screenplayHash: string;
+  createdAt: string;
   isStarred?: boolean;
 }
 
@@ -63,10 +70,13 @@ export function createTake(input: CreateTakeInput): Take {
     throw new DomainInvariantError("Take.videoPath is required");
   if (!input.screenplayHash)
     throw new DomainInvariantError("Take.screenplayHash is required");
+  if (!input.createdAt)
+    throw new DomainInvariantError("Take.createdAt is required");
   return {
     id: input.id,
     videoPath: input.videoPath,
     screenplayHash: input.screenplayHash,
+    createdAt: input.createdAt,
     isStarred: input.isStarred ?? false,
   };
 }

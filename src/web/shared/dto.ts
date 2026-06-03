@@ -20,6 +20,8 @@ export interface TakeDto {
   id: string;
   videoPath: string;
   screenplayHash: string;
+  /** ISO 8601 timestamp of original upload. Immutable. */
+  createdAt: string;
   isStarred: boolean;
 }
 
@@ -129,4 +131,11 @@ export interface LibraryDto {
 export interface UploadResponseDto {
   /** Relative path under assets root, also written into YAML. */
   relativePath: string;
+}
+
+/** Response from POST /api/takes/upload */
+export interface TakeUploadResponseDto {
+  take: TakeDto;
+  sceneSlug: string;
+  shotId: string;
 }

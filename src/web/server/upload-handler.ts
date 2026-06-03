@@ -119,6 +119,13 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
       }
       return;
     }
+    case "take-video": {
+      // Takes go through their dedicated orchestrator (take-upload-handler).
+      // Reject here so a misrouted request fails fast with a clear message.
+      throw new UploadValidationError(
+        `take-video slot must use POST /api/takes/upload, not /api/assets/upload`,
+      );
+    }
     default: {
       const exhaustive: never = slot;
       throw new UploadValidationError(
@@ -172,6 +179,12 @@ async function applySlotToProject(
       );
       await deps.saveProp(deps.dataDir, updatedProp);
       return rebuildProject(deps, { ...project, props });
+    }
+    case "take-video": {
+      // Unreachable — validateSlotTarget rejects this slot kind upstream.
+      throw new UploadValidationError(
+        `take-video slot must use POST /api/takes/upload, not /api/assets/upload`,
+      );
     }
     default: {
       const exhaustive: never = slot;

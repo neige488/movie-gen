@@ -15,6 +15,7 @@ shots:
       - id: t01
         videoPath: takes/s01/01-take01.mp4
         screenplayHash: fcbcb8ecb9c6d392eaf568c4c2951b4f10be931588a7f84908bce2d127ec2bf0
+        createdAt: "2026-05-01T09:00:00.000Z"
         isStarred: true
 
   - id: "02"
