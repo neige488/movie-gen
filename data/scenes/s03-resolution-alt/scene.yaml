@@ -1,0 +1,5 @@
+# Non-starred alternate take of the resolution scene.
+# Kept as a flat folder per CONTEXT.md Scene model. Not part of the
+# movie sequence (isStarred: false), but its assets are preserved.
+slugline: "EXT. RIVERSIDE - DAWN (ALT)"
+isStarred: false

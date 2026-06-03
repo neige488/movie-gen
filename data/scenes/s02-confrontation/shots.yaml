@@ -1,0 +1,51 @@
+shots:
+  - id: "01"
+    prompt: "Wide shot, Character A walks through a doorway into a dimly lit warehouse. Character B stands in the background by a wooden table."
+    duration: 7
+    screenplayHash: "4409e940459b2abcb4d66775f3845fd5be89662a7108298346d65438a156f757"
+    characterRefs:
+      - character: character-a
+        look: street-jacket
+      - character: character-b
+        look: long-coat
+    locationRefs:
+      - location: warehouse
+        reference: doorway
+    propRefs:
+      - prop: notebook
+    takes: []
+
+  - id: "02"
+    prompt: "Medium two-shot over Character A's shoulder, Character B in focus across the table. Hard side-light from above."
+    duration: 5
+    screenplayHash: "78f6e9db5f8c2551c3c36f002703c70208fe503ac9dff07b6dc01b521fa6a153"
+    prevShotRef: "01"
+    characterRefs:
+      - character: character-a
+        look: street-jacket
+      - character: character-b
+        look: long-coat
+    locationRefs:
+      - location: warehouse
+        reference: table-overhead
+    propRefs: []
+    takes:
+      - id: t01
+        videoPath: takes/s02/02-take01.mp4
+        screenplayHash: "78f6e9db5f8c2551c3c36f002703c70208fe503ac9dff07b6dc01b521fa6a153"
+
+  - id: "03"
+    prompt: "Static wide. Both characters frozen. Bulb flickers. Audio carries the sirens."
+    duration: 9
+    screenplayHash: "44a6558ca23c5a1a6abc9b0c757a54c482acb72773b9e3d909c5f67a4262a310"
+    prevShotRef: "02"
+    characterRefs:
+      - character: character-a
+        look: street-jacket
+      - character: character-b
+        look: long-coat
+    locationRefs:
+      - location: warehouse
+        reference: wide
+    propRefs: []
+    takes: []

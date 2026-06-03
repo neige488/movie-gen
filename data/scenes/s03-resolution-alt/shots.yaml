@@ -1,0 +1,12 @@
+shots:
+  - id: "01"
+    prompt: "Wide tracking shot, Character A in silhouette walking along a misty riverbank at dawn."
+    duration: 10
+    screenplayHash: "f5227847d44eae23f4957ca4ea1f11480af7d9e63adbc94e3dc8ddd6c9aa1afd"
+    characterRefs:
+      - character: character-a
+        look: introspective
+    locationRefs:
+      - location: riverside
+    propRefs: []
+    takes: []
