@@ -15,7 +15,9 @@ import {
   saveCharacter,
   saveLocation,
   saveProp,
+  saveSceneShots,
 } from "./project-writer.js";
+import { createTake } from "@domain/movie.js";
 
 let dataDir: string;
 
@@ -220,6 +222,143 @@ references:
     );
     // Prompt preserved.
     expect(after.locations[0]!.references[0]!.prompt).toBe("wide shot");
+  });
+});
+
+describe("saveSceneShots — round-trip", () => {
+  it("appends a new Take to a Shot and reloads", async () => {
+    writeMinimalScene();
+
+    const before = await loadProject(dataDir);
+    const scene = before.scenes[0]!;
+    const shot = scene.shots[0]!;
+    expect(shot.takes).toHaveLength(0);
+
+    const newTake = createTake({
+      id: "take-001",
+      videoPath: "videos/scenes/s01-open/shots/01/takes/take-001.mp4",
+      screenplayHash: shot.screenplayHash,
+      createdAt: "2026-06-03T10:00:00.000Z",
+    });
+    await saveSceneShots(dataDir, scene.slug, [
+      { ...shot, takes: [...shot.takes, newTake] },
+    ]);
+
+    const after = await loadProject(dataDir);
+    const reloadedShot = after.scenes[0]!.shots[0]!;
+    expect(reloadedShot.takes).toHaveLength(1);
+    expect(reloadedShot.takes[0]!.id).toBe("take-001");
+    expect(reloadedShot.takes[0]!.videoPath).toBe(
+      "videos/scenes/s01-open/shots/01/takes/take-001.mp4",
+    );
+    expect(reloadedShot.takes[0]!.createdAt).toBe(
+      "2026-06-03T10:00:00.000Z",
+    );
+    expect(reloadedShot.takes[0]!.isStarred).toBe(false);
+  });
+
+  it("preserves Shot prompt / duration / refs / hash on round-trip", async () => {
+    // Write a scene with full Shot metadata and round-trip it through a takes
+    // append. The non-take fields must survive the rewrite untouched.
+    const sceneDir = path.join(dataDir, "scenes", "s02-rich");
+    mkdirSync(sceneDir, { recursive: true });
+    writeFileSync(
+      path.join(sceneDir, "scene.yaml"),
+      `slugline: "EXT. STREET - NIGHT"\nisStarred: true\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "screenplay.md"),
+      `<!-- shot:01 -->\nBody.\n<!-- /shot:01 -->\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "shots.yaml"),
+      [
+        `shots:`,
+        `  - id: "01"`,
+        `    prompt: "Wide shot, rain at night"`,
+        `    duration: 8`,
+        `    screenplayHash: "abc"`,
+        `    characterRefs: []`,
+        `    locationRefs:`,
+        `      - location: street`,
+        `        reference: corner`,
+        `    propRefs: []`,
+        `    takes: []`,
+        ``,
+      ].join("\n"),
+    );
+    writeLocationFile(
+      "street",
+      `name: street\nreferences:\n  - name: corner\n    prompt: "x"\n    image: street/corner.png\n`,
+    );
+
+    const before = await loadProject(dataDir);
+    const scene = before.scenes[0]!;
+    const shot = scene.shots[0]!;
+
+    const newTake = createTake({
+      id: "take-001",
+      videoPath: "videos/scenes/s02-rich/shots/01/takes/take-001.mp4",
+      screenplayHash: shot.screenplayHash,
+      createdAt: "2026-06-03T11:00:00.000Z",
+    });
+    await saveSceneShots(dataDir, scene.slug, [
+      { ...shot, takes: [...shot.takes, newTake] },
+    ]);
+
+    const after = await loadProject(dataDir);
+    const reloadedShot = after.scenes[0]!.shots[0]!;
+    expect(reloadedShot.prompt).toBe("Wide shot, rain at night");
+    expect(reloadedShot.duration).toBe(8);
+    expect(reloadedShot.screenplayHash).toBe("abc");
+    expect(reloadedShot.locationRefs).toHaveLength(1);
+    expect(reloadedShot.locationRefs[0]!.location).toBe("street");
+    expect(reloadedShot.locationRefs[0]!.reference).toBe("corner");
+    expect(reloadedShot.takes).toHaveLength(1);
+  });
+
+  it("preserves prevShotRef on round-trip when set", async () => {
+    const sceneDir = path.join(dataDir, "scenes", "s03-chain");
+    mkdirSync(sceneDir, { recursive: true });
+    writeFileSync(
+      path.join(sceneDir, "scene.yaml"),
+      `slugline: "INT. ROOM - DAY"\nisStarred: true\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "screenplay.md"),
+      `<!-- shot:01 -->\nA.\n<!-- /shot:01 -->\n<!-- shot:02 -->\nB.\n<!-- /shot:02 -->\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "shots.yaml"),
+      [
+        `shots:`,
+        `  - id: "01"`,
+        `    prompt: "first"`,
+        `    duration: 5`,
+        `    screenplayHash: "h1"`,
+        `    characterRefs: []`,
+        `    locationRefs: []`,
+        `    propRefs: []`,
+        `    takes: []`,
+        `  - id: "02"`,
+        `    prompt: "second"`,
+        `    duration: 5`,
+        `    screenplayHash: "h2"`,
+        `    prevShotRef: "01"`,
+        `    characterRefs: []`,
+        `    locationRefs: []`,
+        `    propRefs: []`,
+        `    takes: []`,
+        ``,
+      ].join("\n"),
+    );
+
+    const before = await loadProject(dataDir);
+    const scene = before.scenes[0]!;
+    await saveSceneShots(dataDir, scene.slug, scene.shots);
+
+    const after = await loadProject(dataDir);
+    expect(after.scenes[0]!.shots[1]!.prevShotRef).toBe("01");
   });
 });
 
