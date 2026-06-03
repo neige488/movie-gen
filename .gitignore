@@ -1,0 +1,23 @@
+# Local-only assets (per ADR 0001)
+# 이미지·영상 바이너리는 로컬에만, 메타데이터(yaml/md)만 git tracked
+assets/
+
+# Node / web tooling (기술 스택 확정 후 보강)
+node_modules/
+.next/
+dist/
+out/
+build/
+*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Env
+.env
+.env.local
+.env.*.local

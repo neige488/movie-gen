@@ -1,0 +1,123 @@
+# Movie Gen
+
+영화 제작 산출물 관리 웹 프로젝트. 각본·영상 프롬프트·캐릭터/로케이션/소품 레퍼런스를 한눈에 보고 관리하는 도구. 1 인스턴스 = 1 영화.
+
+## Locked decisions
+
+- **Authoring: hybrid two-tool.** 웹 앱은 **모든 산출물을 수정 가능한 풀-에디터** (read + edit + upload). 그러나 운영 원칙상 본격적·구조적 작성(새 Scene 구조, 새 Shot 정렬, Shot prompt 본격 작성 등 깊은 컨텍스트 필요)은 Claude Code(외부 LLM)에서 진행하고, 가벼운 수정·복사·starred 토글·에셋 업로드는 웹에서 한다. 두 도구가 같은 파일을 공유 (file watcher/새로고침으로 sync).
+  - _Why:_ 영화 컨셉노트·시나리오 아웃라인·과거 결정의 뉘앙스를 컨텍스트로 들고 작성해야 하므로 깊은 작업은 외부 LLM이 자연스러움. 단, 디렉터가 흐름을 끊지 않고 가벼운 수정·관리할 수 있어야 하므로 웹도 풀 편집 기능을 가진다.
+
+- **Git tracked vs local-only.**
+  - **Git tracked:** 각본, Shot prompt, Character/Location/Prop의 생성 프롬프트, 에셋 메타데이터(파일명·경로·설명·링크 관계).
+  - **Local only (`.gitignore`):** 실제 이미지/영상 바이너리. 산출물의 "포인터"만 git에 남고, 실물은 로컬에 둔다.
+
+- **Video generation engine: 씨댄스 2.0.**
+  - Shot 1회 생성 최대 15초. duration은 **4-15초** 사이로 매 Shot마다 지정.
+  - Scene 길이가 15초를 넘으면 직전 Shot의 starred Take를 ref로 받아 **chaining** (Scene 경계는 넘지 않음).
+
+- **Storage: file-based (YAML + Markdown).** 산출물은 파일로 저장한다. DB 미사용. 메타데이터 = YAML, 각본 본문 = Markdown. `data/`(git tracked) + `assets/`(local-only, `.gitignore`). 미래 DB 이행은 필요 시점에 import 스크립트로. 자세한 사유는 [ADR 0001](docs/adr/0001-file-based-storage.md).
+  - Scene = 폴더(`data/scenes/{slug}/`). 그 안에 `scene.yaml`, `screenplay.md`, `shots.yaml`.
+  - Character/Location/Prop = 도메인별 폴더, 객체당 단일 YAML 파일.
+  - 메타데이터에는 상대 파일명만 박음 (절대경로 금지 → 머신 이식성 보존).
+
+- **Branch policy.** `main` = 도구(Movie Gen) 개발 브랜치 — 코드 + `CONTEXT.md`/`docs/adr`/`docs/specs` 같은 도구 docs. 영화별 작업은 별도 브랜치(예: `ptsd`, `the-beach`)에서 진행하고 `data/`와 영화별 docs(`concept.md`, `scenario_outline.md` 등)를 거기에 둔다. 도구 업데이트는 main에서 영화 브랜치로 merge.
+  - _Why:_ 도구 발전과 영화 컨텐츠 발전이 다른 사이클·다른 리뷰 단위. main을 영화에서 독립적으로 유지해야 다음 영화에도 도구를 깨끗이 재사용할 수 있음.
+
+- **Scene model: flat folders + `isStarred` boolean.** Scene 사이의 "분기/대안 버전"은 별도 도메인 모델로 격상하지 않는다. 그냥 새 Scene 폴더를 추가한다(예: 웹의 "Scene 복사" 기능). 각 Scene이 `isStarred: true/false`로 메인 영화 시퀀스 포함 여부를 표시. **영화 시퀀스 = `isStarred: true`인 Scene들의 폴더명 prefix 정렬.** 이전 Scene의 Shot/Take 자산은 보존된다.
+
+- **Screenplay ↔ Shot mapping: HTML comment markers.** `screenplay.md` 본문 안에 `<!-- shot:NN -->` ... `<!-- /shot:NN -->` block으로 각 Shot이 각본의 어느 영역에 매핑되는지 표시. 마커는 Markdown 렌더링 시 안 보이며, 각본 수정 시 본문과 함께 따라간다.
+
+- **Sync via hash, not auto-decision.** 각본 수정 시 Shot·Take의 `screenplay_hash`(마커 블록 안 normalized text의 SHA-256)와 현재 각본을 비교해 **stale 시그널을 표시**할 뿐, 도구가 자동으로 결정하지 않는다. 결정(확인됨 / 재생성 / Shot 폐기)은 디렉터.
+  - **Take는 immutable.** 한 번 만든 Take를 도구가 자동 삭제·수정하지 않는다.
+  - **작은 수정** → hash 갱신("확인됨" 액션). **큰 수정** → 새 Scene 폴더로 분기.
+
+## Language
+
+**Project**:
+영화 한 편 분량의 작업 컨테이너. 본 도구의 1 인스턴스는 1 영화를 담는다.
+_Avoid_: Movie, Film
+
+**Scene**:
+시나리오 단위. 폴더 1개 = Scene 1개. 모든 Scene은 평등 — 분기/대안도 같은 위계.
+_Avoid_: Sequence, Variant, Slot
+
+**Slugline**:
+Scene 헤더. `INT./EXT. + LOCATION + TIME OF DAY` 형식. 예: `EXT. 횡단보도 - DAY`.
+
+**Screenplay**:
+Scene의 본문. 표준 시나리오 형식 텍스트 (action + dialogue + parenthetical). Markdown으로 저장.
+_Avoid_: Script
+
+**Screenplay marker**:
+Screenplay 본문에 박는 `<!-- shot:NN -->` ... `<!-- /shot:NN -->` HTML comment block. 어느 영역이 어느 Shot에 매핑되는지 표시. Markdown 렌더링 시 안 보임.
+
+**Shot**:
+AI 영상 생성 호출 1회 단위. `prompt` + `duration(4-15s)` + ref들(`characterRefs`, `locationRefs`, `propRefs`, `prevShotRef`) + `screenplay_hash`.
+_Avoid_: **Cut**(영화 편집 단위와 충돌 — 본 도메인에서 절대 사용 금지), Clip, GenShot
+
+**Take**:
+한 Shot을 실제로 생성/업로드한 결과 영상 1개. **Immutable.** 1 Shot → N Takes → 최대 1 starred. 재생성/재시도가 새 Take를 만든다. `screenplay_hash` 스냅샷을 가짐.
+_Avoid_: Attempt, Render
+
+**Screenplay hash**:
+마커 블록 안 normalized text(앞뒤 공백 trim + 줄바꿈 정규화)의 SHA-256. Shot/Take 양쪽에 박혀 sync 상태를 표시. 도구는 표시만, 결정은 디렉터.
+
+**isStarred** (on Scene):
+이 Scene이 메인 영화 시퀀스에 포함되는지 boolean. 영화 시퀀스 = `isStarred=true`인 Scene들의 폴더명 prefix 정렬.
+
+**isStarred** (on Take):
+해당 Shot의 채택된 Take. Shot당 최대 1개. Shot 사이 chaining 시 `prevShotRef`가 이 Take를 가리킨다.
+
+**Character**:
+영화 등장 인물. `name` + `headshot` + `looks[]`로 구성. 얼굴 ID(headshot)는 캐릭터 단위로 통일.
+
+**Headshot**:
+캐릭터의 얼굴 ID 이미지. **Character 단위**(의상 무관, 영화 전체에서 공통).
+_Avoid_: Portrait
+
+**Look**:
+캐릭터의 의상/스타일 변종. 한 캐릭터가 영화 중 여러 의상을 입을 수 있으므로 Look 단위로 분기. 의상별 BodyProfile + FaceProfile을 가진다.
+_Avoid_: Outfit, Costume, Wardrobe
+
+**BodyProfile**:
+신체/의상 ref **3분할** 이미지 세트. **Look 단위**.
+
+**FaceProfile**:
+얼굴 ref **5분할** 이미지 세트. **Look 단위**(의상 디테일이 클로즈업에 영향).
+
+**Location**:
+영화 로케이션. `name` + `references[]`(앵글별 N개).
+
+**Prop**:
+영화 소품(상징적 아이템). **1급 도메인**. `name` + `references[]`.
+_Avoid_: Item, Object
+
+**Reference (image ref)**:
+`{ name, prompt, image }` 단위. Location/Prop의 한 앵글. (Character의 headshot/bodyProfile/faceProfile은 별도 구조이므로 Reference 용어 안 씀.)
+
+**Chaining**:
+한 Scene 안에서 영상 길이가 15초를 넘어 여러 Shot으로 쪼개질 때, 다음 Shot이 직전 Shot의 starred Take를 ref로 받아 이어지는 메커니즘. Scene 경계는 넘지 않는다.
+_Avoid_: Linking, Continuation
+
+## Relationships
+
+- **Project**은 N개의 **Scene**(폴더), N개의 **Character**, N개의 **Location**, N개의 **Prop**을 가진다.
+- **Scene**은 1 **Slugline** + 1 **Screenplay** + N개의 **Shot** + `isStarred` boolean을 가진다.
+- **영화 시퀀스 = `isStarred=true`인 Scene들의 폴더명 prefix 정렬.** 같은 prefix가 여럿이어도 다 starred면 다 들어간다(디렉터 책임).
+- **Shot**은 1 `prompt` + 1 `duration` + 0..1 `prevShotRef`(같은 Scene 내) + N **Take** + 1 `screenplay_hash`를 가지며, 0..N **Character ref**(`{character, look}`), 0..N **Location** ref, 0..N **Prop** ref를 가진다.
+- **Shot**은 **Screenplay marker** 블록 1개 이상과 매핑된다 (한 Shot이 여러 블록 가능).
+- **Shot**의 **Take**들 중 최대 1개가 `isStarred=true`.
+- **Take**는 immutable. `screenplay_hash` 스냅샷을 가진다.
+- **Character**는 1 **Headshot** + N **Look**을 가진다.
+- **Look**은 1 **BodyProfile**(3 images) + 1 **FaceProfile**(5 images)을 가진다.
+- **Location**은 N **Reference**(앵글별)를 가진다.
+- **Prop**은 N **Reference**(앵글별)를 가진다.
+
+## Example dialogue
+
+> **Director:** "S2의 Shot 3에서 주인공의 의상이 'hoodie' Look으로 잡혀 있어?"
+> **Tool:** "맞음. Shot 3은 `s02-house/screenplay.md`의 `shot:03` 마커 블록과 매핑됨. 단, `screenplay_hash`가 stale — 어제 각본 본문이 수정됨. 재검토 필요할 수 있음."
+> **Director:** "표현만 다듬은 거야. Shot 확인됨으로 표시해."
+> **Tool:** "Shot 3의 `screenplay_hash` 갱신. 기존 Take들은 그대로 유지."
+> **Director:** "S5는 분위기를 다르게 가보고 싶어. 복사해서 darker 버전 만들어줘."
+> **Tool:** "`s05-confrontation`을 `s05-confrontation-darker`로 복사. 새 폴더의 `isStarred`는 false (기존 starred 유지)."
