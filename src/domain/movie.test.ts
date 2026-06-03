@@ -15,6 +15,11 @@ import {
   setSceneSlugline,
   setSceneScreenplay,
   setTakeStarred,
+  setShotPrompt,
+  setShotDuration,
+  setShotCharacterRefs,
+  setShotLocationRefs,
+  setShotPropRefs,
   DomainInvariantError,
 } from "./movie.js";
 
@@ -828,5 +833,353 @@ describe("setSceneScreenplay — Scene screenplay immutable update", () => {
     expect(() => setSceneScreenplay(project, "ghost", "anything")).toThrow(
       DomainInvariantError,
     );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Shot meta mutators — Slice 7 (Shot edit)
+// ---------------------------------------------------------------------------
+
+describe("setShotPrompt — Shot prompt immutable update", () => {
+  const mkShot = (id: string, prompt = "p") =>
+    createShot({ ...VALID_SHOT_BASE, id, prompt, duration: 5 });
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("replaces prompt and preserves other Shot fields", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", "old prompt")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrompt(project, "s01-a", "01", "new prompt");
+    const shot = next.scenes[0]!.shots[0]!;
+    expect(shot.prompt).toBe("new prompt");
+    expect(shot.duration).toBe(5);
+    expect(shot.id).toBe("01");
+  });
+
+  it("returns a new Project (immutability)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", "old")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrompt(project, "s01-a", "01", "new");
+    expect(next).not.toBe(project);
+    expect(project.scenes[0]!.shots[0]!.prompt).toBe("old");
+  });
+
+  it("throws if Scene slug unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotPrompt(project, "ghost", "01", "p")).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("throws if Shot id unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotPrompt(project, "s01-a", "99", "p")).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("rejects empty prompt (createShot invariant)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotPrompt(project, "s01-a", "01", "")).toThrow(
+      DomainInvariantError,
+    );
+  });
+});
+
+describe("setShotDuration — Shot duration immutable update", () => {
+  const mkShot = (id: string, duration = 5) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration });
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("replaces duration and preserves other Shot fields", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", 5)])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotDuration(project, "s01-a", "01", 12);
+    const shot = next.scenes[0]!.shots[0]!;
+    expect(shot.duration).toBe(12);
+    expect(shot.prompt).toBe("wide shot of street");
+  });
+
+  it("accepts boundary values 4 and 15", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", 5)])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(setShotDuration(project, "s01-a", "01", 4).scenes[0]!.shots[0]!.duration).toBe(4);
+    expect(setShotDuration(project, "s01-a", "01", 15).scenes[0]!.shots[0]!.duration).toBe(15);
+  });
+
+  it("rejects duration of 3 (below min)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", 5)])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotDuration(project, "s01-a", "01", 3)).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("rejects duration of 16 (above max)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", 5)])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotDuration(project, "s01-a", "01", 16)).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("rejects non-integer", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01", 5)])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotDuration(project, "s01-a", "01", 5.5)).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("throws if Shot id unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotDuration(project, "s01-a", "99", 6)).toThrow(
+      DomainInvariantError,
+    );
+  });
+});
+
+describe("setShotCharacterRefs — Shot characterRefs immutable update", () => {
+  const headshot = "character-a/headshot.png";
+  const mkLook = (name: string) =>
+    createLook({
+      name,
+      bodyProfile: createBodyProfile(["a.png", "b.png", "c.png"]),
+      faceProfile: createFaceProfile(["d.png", "e.png", "f.png", "g.png", "h.png"]),
+    });
+  const mkChar = (name: string, lookNames: string[]) =>
+    createCharacter({ name, headshot, looks: lookNames.map(mkLook) });
+  const mkShot = (id: string, refs: { character: string; look: string }[] = []) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5, characterRefs: refs });
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("replaces characterRefs", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [mkChar("character-a", ["look1", "look2"])],
+      locations: [],
+      props: [],
+    });
+    const next = setShotCharacterRefs(project, "s01-a", "01", [
+      { character: "character-a", look: "look1" },
+    ]);
+    expect(next.scenes[0]!.shots[0]!.characterRefs).toEqual([
+      { character: "character-a", look: "look1" },
+    ]);
+  });
+
+  it("can clear characterRefs", () => {
+    const project = createProject({
+      scenes: [
+        mkScene("s01-a", [mkShot("01", [{ character: "character-a", look: "look1" }])]),
+      ],
+      characters: [mkChar("character-a", ["look1"])],
+      locations: [],
+      props: [],
+    });
+    const next = setShotCharacterRefs(project, "s01-a", "01", []);
+    expect(next.scenes[0]!.shots[0]!.characterRefs).toEqual([]);
+  });
+
+  it("rejects ref to unknown Character (createProject invariant)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [mkChar("character-a", ["look1"])],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotCharacterRefs(project, "s01-a", "01", [
+        { character: "ghost", look: "look1" },
+      ]),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("rejects ref to unknown Look on existing Character", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [mkChar("character-a", ["look1"])],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotCharacterRefs(project, "s01-a", "01", [
+        { character: "character-a", look: "ghostLook" },
+      ]),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("throws if Shot id unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [mkChar("character-a", ["look1"])],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotCharacterRefs(project, "s01-a", "99", []),
+    ).toThrow(DomainInvariantError);
+  });
+});
+
+describe("setShotLocationRefs — Shot locationRefs immutable update", () => {
+  const mkShot = (id: string, refs: { location: string; reference?: string }[] = []) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5, locationRefs: refs });
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("replaces locationRefs", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [createLocation({ name: "room", references: [] })],
+      props: [],
+    });
+    const next = setShotLocationRefs(project, "s01-a", "01", [
+      { location: "room", reference: "wide" },
+    ]);
+    expect(next.scenes[0]!.shots[0]!.locationRefs).toEqual([
+      { location: "room", reference: "wide" },
+    ]);
+  });
+
+  it("accepts refs without a reference name (optional field)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [createLocation({ name: "room", references: [] })],
+      props: [],
+    });
+    const next = setShotLocationRefs(project, "s01-a", "01", [
+      { location: "room" },
+    ]);
+    expect(next.scenes[0]!.shots[0]!.locationRefs[0]!.location).toBe("room");
+    expect(next.scenes[0]!.shots[0]!.locationRefs[0]!.reference).toBeUndefined();
+  });
+
+  it("rejects ref to unknown Location", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [createLocation({ name: "room", references: [] })],
+      props: [],
+    });
+    expect(() =>
+      setShotLocationRefs(project, "s01-a", "01", [{ location: "ghost" }]),
+    ).toThrow(DomainInvariantError);
+  });
+});
+
+describe("setShotPropRefs — Shot propRefs immutable update", () => {
+  const mkShot = (id: string, refs: { prop: string; reference?: string }[] = []) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5, propRefs: refs });
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("replaces propRefs", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [createProp({ name: "lamp", references: [] })],
+    });
+    const next = setShotPropRefs(project, "s01-a", "01", [
+      { prop: "lamp", reference: "wide" },
+    ]);
+    expect(next.scenes[0]!.shots[0]!.propRefs).toEqual([
+      { prop: "lamp", reference: "wide" },
+    ]);
+  });
+
+  it("rejects ref to unknown Prop", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01")])],
+      characters: [],
+      locations: [],
+      props: [createProp({ name: "lamp", references: [] })],
+    });
+    expect(() =>
+      setShotPropRefs(project, "s01-a", "01", [{ prop: "ghost" }]),
+    ).toThrow(DomainInvariantError);
   });
 });

@@ -970,3 +970,264 @@ body {
   padding: 0.1rem 0.4rem 0.3rem;
   display: block;
 }
+
+/* ------------------------------------------------------------------------- */
+/* Shot meta editor (Slice 7) — inline edit UI on each ShotCard.              */
+/* ------------------------------------------------------------------------- */
+
+.shot {
+  /* Add a left accent rail so the card colour matches the same Shot's
+     screenplay marker block on the left. The colour itself is set inline
+     from `shotPaletteColor(shot.id)`. */
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+.shot__id {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+}
+.shot__edit-btn {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.12rem 0.55rem;
+  background: var(--bg-elev-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.shot__edit-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.shot-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0.2rem;
+}
+.shot-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.shot-editor__label {
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.shot-editor__textarea {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.55rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 4.5rem;
+}
+.shot-editor__textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.shot-editor__number {
+  width: 4rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.35rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.shot-editor__unit {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+}
+.shot-editor__row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+.shot-editor__save {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.18rem 0.6rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.shot-editor__save:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.shot-editor__error {
+  font-size: 0.7rem;
+  color: var(--warn);
+  font-family: var(--mono);
+}
+.shot-editor__hint {
+  font-size: 0.7rem;
+  color: var(--fg-dim);
+  font-style: italic;
+}
+
+.shot-editor__refs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.shot-editor__ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+.shot-editor__remove {
+  background: transparent;
+  border: none;
+  color: var(--fg-dim);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 0.2rem;
+  line-height: 1;
+}
+.shot-editor__remove:hover {
+  color: var(--warn);
+}
+.shot-editor__adder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+.shot-editor__select,
+.shot-editor__refname {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.shot-editor__refname {
+  width: 11rem;
+}
+.shot-editor__add {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.18rem 0.55rem;
+  background: var(--bg-elev-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.shot-editor__add:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.shot-editor__footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px dashed var(--border);
+  padding-top: 0.45rem;
+  margin-top: 0.25rem;
+}
+.shot-editor__done {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.18rem 0.7rem;
+  background: var(--good);
+  color: var(--bg);
+  border: 1px solid var(--good);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Marker visualization in the read-mode screenplay (Slice 7).                */
+/* ------------------------------------------------------------------------- */
+
+.scene__screenplay--marker-view {
+  /* Override the default flat block — we render our own segments. */
+  padding: 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.marker-block {
+  position: relative;
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem 0.55rem 1rem;
+  border-left: 4px solid transparent;
+}
+.marker-block--gap {
+  /* "마커 없음" — uncovered region. Subdued grey background so it reads
+     as "in-between text" without competing with shot blocks. */
+  background: rgba(154, 163, 178, 0.08);
+  border-left-color: rgba(154, 163, 178, 0.45);
+  color: var(--fg-dim);
+}
+.marker-block__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+.marker-block__label--gap {
+  color: var(--fg-dim);
+}
+.marker-block__body {
+  /* Markdown content keeps its existing rhythm. */
+}
+.marker-block__body p {
+  margin: 0 0 0.6rem;
+}
+.marker-block__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Marker mismatch banner ("yaml에 있지만 본문에 없는 Shot") */
+.scene__marker-warning {
+  background: rgba(247, 118, 142, 0.1);
+  border: 1px solid rgba(247, 118, 142, 0.45);
+  color: var(--warn);
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.scene__marker-missing-id {
+  background: rgba(247, 118, 142, 0.18);
+  padding: 0.05rem 0.45rem;
+  border-radius: 3px;
+  font-weight: 600;
+}

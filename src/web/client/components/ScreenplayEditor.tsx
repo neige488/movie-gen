@@ -3,34 +3,51 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { MovieDto } from "../../shared/dto.js";
 import { editSceneScreenplay } from "../upload-client.js";
+import {
+  missingMarkerShotIds,
+  segmentScreenplay,
+} from "../screenplay-segments.js";
+import { shotPaletteColor } from "../shot-palette.js";
 
 interface Props {
   sceneSlug: string;
   /** Raw screenplay markdown (with HTML comment markers). */
   screenplay: string;
+  /** Shot ids declared in shots.yaml — used to detect missing markers. */
+  shotIds: readonly string[];
   onMovieChanged: (movie: MovieDto) => void;
 }
 
 /**
  * Markdown editor for `screenplay.md`. Switches between two modes:
- *  - read:  rendered markdown (markers stripped, ReactMarkdown)
+ *  - read:  marker-aware visualization. Each shot block is rendered with a
+ *           tinted background + "Shot N" label in the Shot's palette colour;
+ *           uncovered prose (between marker pairs) shows a subdued grey "마커
+ *           없음" background. ReactMarkdown renders the body of each segment
+ *           so headings/dialogue still format normally.
  *  - edit:  raw textarea (markers visible — the director must preserve them)
  *
- * Decisions (PR In-flight #1, #4):
- *  - Plain textarea (no editor library). The Light edit slice is intentionally
- *    minimal; rich editing belongs in Claude Code.
- *  - Explicit Save button (no auto-save). A "dirty" indicator next to Save
- *    surfaces unsaved state.
- *  - Strict marker validation lives server-side; the client just renders any
+ * Decisions (PR In-flight #4, #5 — Slice 7):
+ *  - Marker block colour: hashed from shotId via `shotPaletteColor` — the
+ *    same hue used by the matching ShotCard's accent so the eye can match
+ *    screenplay region ↔ Shot card at a glance.
+ *  - Missing-marker visualization: subdued grey background, not a dotted
+ *    outline. Outlines fought with markdown's own border rules; a soft
+ *    background reads as "this prose belongs to no Shot" without screaming.
+ *  - Mismatch warning: a banner above the screenplay listing shotIds present
+ *    in shots.yaml but missing from the markdown ("⚠️ no marker block for
+ *    Shot N"). Surfaces what `validateMarkerConsistency` would reject on
+ *    save, but as a read-only hint.
+ *  - Plain textarea in edit mode (no editor library — same as Slice 5).
+ *  - Explicit Save button (no auto-save). Dirty indicator next to Save.
+ *  - Strict marker validation still lives server-side; client renders any
  *    400 error message verbatim.
  */
-function stripShotMarkers(text: string): string {
-  return text.replace(/<!--\s*\/?shot:[^\s]+\s*-->\n?/g, "");
-}
 
 export function ScreenplayEditor({
   sceneSlug,
   screenplay,
+  shotIds,
   onMovieChanged,
 }: Props) {
   const [editing, setEditing] = useState(false);
@@ -80,12 +97,69 @@ export function ScreenplayEditor({
   }
 
   if (!editing) {
+    const segments = segmentScreenplay(screenplay);
+    const missing = missingMarkerShotIds(segments, shotIds);
     return (
       <div className="scene__screenplay-block">
-        <div className="scene__screenplay">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {stripShotMarkers(screenplay)}
-          </ReactMarkdown>
+        {missing.length > 0 && (
+          <div
+            className="scene__marker-warning"
+            role="alert"
+            aria-live="polite"
+          >
+            ⚠️ shots.yaml에 있지만 본문에 마커가 없는 Shot:{" "}
+            {missing.map((id) => (
+              <span key={id} className="scene__marker-missing-id">
+                Shot {id}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="scene__screenplay scene__screenplay--marker-view">
+          {segments.map((seg, i) => {
+            if (seg.kind === "shot") {
+              const palette = shotPaletteColor(seg.shotId);
+              return (
+                <div
+                  key={`shot-${i}-${seg.shotId}`}
+                  className="marker-block"
+                  style={{
+                    backgroundColor: palette.background,
+                    borderLeftColor: palette.accent,
+                  }}
+                  data-shot-id={seg.shotId}
+                >
+                  <span
+                    className="marker-block__label"
+                    style={{ color: palette.accent }}
+                  >
+                    Shot {seg.shotId}
+                  </span>
+                  <div className="marker-block__body">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {seg.text}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={`gap-${i}`}
+                className="marker-block marker-block--gap"
+                title="마커 없음 — 어느 Shot에도 매핑되지 않은 영역"
+              >
+                <span className="marker-block__label marker-block__label--gap">
+                  마커 없음
+                </span>
+                <div className="marker-block__body">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {seg.text}
+                  </ReactMarkdown>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <button
           type="button"

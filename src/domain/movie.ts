@@ -557,6 +557,209 @@ export function setSceneScreenplay(
   });
 }
 
+// ---------------------------------------------------------------------------
+// Shot meta mutators — Slice 7 (Shot edit)
+//
+// All five share the same shape:
+//   1. find target Scene/Shot (throw on miss)
+//   2. rebuild the Shot via createShot — re-validates duration & invariants
+//   3. rebuild the Scene + Project via createScene/createProject — re-validates
+//      ref integrity (unknown character/look/location/prop reject)
+//
+// Returns a new Project; input is untouched. Other Shot fields are preserved
+// (screenplayHash, takes, prevShotRef, refs that are not the target field).
+// ---------------------------------------------------------------------------
+
+function rebuildShotIn(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  patch: (shot: Shot) => Shot,
+  caller: string,
+): Project {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) {
+    throw new DomainInvariantError(`${caller}: unknown Scene "${sceneSlug}"`);
+  }
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) {
+    throw new DomainInvariantError(
+      `${caller}: unknown Shot "${shotId}" in Scene "${sceneSlug}"`,
+    );
+  }
+  const nextShot = patch(shot);
+  const nextShots = scene.shots.map((s) => (s.id === shotId ? nextShot : s));
+  const nextScene = createScene({
+    slug: scene.slug,
+    slugline: scene.slugline,
+    screenplay: scene.screenplay,
+    isStarred: scene.isStarred,
+    shots: nextShots,
+  });
+  const nextScenes = project.scenes.map((s) =>
+    s.slug === sceneSlug ? nextScene : s,
+  );
+  return createProject({
+    scenes: nextScenes,
+    characters: project.characters,
+    locations: project.locations,
+    props: project.props,
+  });
+}
+
+/**
+ * Replace `Shot.prompt` (free-text). `createShot` re-validates the invariant
+ * "prompt is required" so empty value rejects. Other fields untouched.
+ */
+export function setShotPrompt(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  prompt: string,
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt,
+        duration: shot.duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: shot.prevShotRef,
+        characterRefs: shot.characterRefs,
+        locationRefs: shot.locationRefs,
+        propRefs: shot.propRefs,
+        takes: shot.takes,
+      }),
+    "setShotPrompt",
+  );
+}
+
+/**
+ * Replace `Shot.duration` (seconds). `createShot` re-validates the
+ * "[4, 15] integer seconds" invariant (씨댄스 2.0 engine limit per CONTEXT.md).
+ */
+export function setShotDuration(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  duration: number,
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt: shot.prompt,
+        duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: shot.prevShotRef,
+        characterRefs: shot.characterRefs,
+        locationRefs: shot.locationRefs,
+        propRefs: shot.propRefs,
+        takes: shot.takes,
+      }),
+    "setShotDuration",
+  );
+}
+
+/**
+ * Replace `Shot.characterRefs`. `createProject` re-validates reference
+ * integrity — refs to unknown Character or unknown Look reject.
+ */
+export function setShotCharacterRefs(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  refs: readonly CharacterRef[],
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt: shot.prompt,
+        duration: shot.duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: shot.prevShotRef,
+        characterRefs: refs,
+        locationRefs: shot.locationRefs,
+        propRefs: shot.propRefs,
+        takes: shot.takes,
+      }),
+    "setShotCharacterRefs",
+  );
+}
+
+/**
+ * Replace `Shot.locationRefs`. `createProject` re-validates — refs to unknown
+ * Location reject. The optional `reference` field (specific angle) is allowed
+ * to be any string; we don't validate it against `Location.references` (the
+ * domain model treats it as a freeform hint).
+ */
+export function setShotLocationRefs(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  refs: readonly LocationRef[],
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt: shot.prompt,
+        duration: shot.duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: shot.prevShotRef,
+        characterRefs: shot.characterRefs,
+        locationRefs: refs,
+        propRefs: shot.propRefs,
+        takes: shot.takes,
+      }),
+    "setShotLocationRefs",
+  );
+}
+
+/**
+ * Replace `Shot.propRefs`. `createProject` re-validates — refs to unknown
+ * Prop reject. The optional `reference` field is freeform (same rationale as
+ * `setShotLocationRefs`).
+ */
+export function setShotPropRefs(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  refs: readonly PropRef[],
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt: shot.prompt,
+        duration: shot.duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: shot.prevShotRef,
+        characterRefs: shot.characterRefs,
+        locationRefs: shot.locationRefs,
+        propRefs: refs,
+        takes: shot.takes,
+      }),
+    "setShotPropRefs",
+  );
+}
+
 /**
  * Acknowledge a Shot — refresh `Shot.screenplayHash` to the current marker
  * block hash. Per CONTEXT.md ("작은 수정 → hash 갱신 (\"확인됨\" 액션)").
