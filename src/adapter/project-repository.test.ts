@@ -118,18 +118,8 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    bodyProfile:
-      images:
-        - alice/hoodie/body-1.png
-        - alice/hoodie/body-2.png
-        - alice/hoodie/body-3.png
-    faceProfile:
-      images:
-        - alice/hoodie/face-1.png
-        - alice/hoodie/face-2.png
-        - alice/hoodie/face-3.png
-        - alice/hoodie/face-4.png
-        - alice/hoodie/face-5.png
+    faceImage: alice/hoodie/face.png
+    bodyImage: alice/hoodie/body.png
 `,
     );
 
@@ -155,8 +145,12 @@ references: []
     const project = await loadProject(dataDir);
     expect(project.characters.map((c) => c.name)).toEqual(["alice"]);
     expect(project.characters[0]!.looks).toHaveLength(1);
-    expect(project.characters[0]!.looks[0]!.bodyProfile.images).toHaveLength(3);
-    expect(project.characters[0]!.looks[0]!.faceProfile.images).toHaveLength(5);
+    expect(project.characters[0]!.looks[0]!.faceImage).toBe(
+      "alice/hoodie/face.png",
+    );
+    expect(project.characters[0]!.looks[0]!.bodyImage).toBe(
+      "alice/hoodie/body.png",
+    );
     expect(project.locations.map((l) => l.name)).toEqual(["kitchen"]);
     expect(project.props.map((p) => p.name)).toEqual(["knife"]);
   });
@@ -212,7 +206,7 @@ shots:
     await expect(loadProject(dataDir)).rejects.toThrow(/slugline/i);
   });
 
-  it("rejects BodyProfile with wrong image count", async () => {
+  it("rejects a look missing bodyImage", async () => {
     writeScene("s01-open", {
       sceneYaml: MIN_SCENE_YAML,
       screenplay: MIN_SCREENPLAY,
@@ -225,21 +219,11 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    bodyProfile:
-      images:
-        - alice/hoodie/body-1.png
-        - alice/hoodie/body-2.png
-    faceProfile:
-      images:
-        - alice/hoodie/face-1.png
-        - alice/hoodie/face-2.png
-        - alice/hoodie/face-3.png
-        - alice/hoodie/face-4.png
-        - alice/hoodie/face-5.png
+    faceImage: alice/hoodie/face.png
 `,
     );
 
-    await expect(loadProject(dataDir)).rejects.toThrow(/BodyProfile/i);
+    await expect(loadProject(dataDir)).rejects.toThrow(/bodyImage/i);
   });
 
   it("rejects Shot referencing a Character that does not exist", async () => {

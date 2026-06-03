@@ -102,8 +102,8 @@ function characterToLibrary(c: Project["characters"][number]): LibraryCharacterD
     headshot: c.headshot,
     looks: c.looks.map((l) => ({
       name: l.name,
-      bodyImages: [...l.bodyProfile.images],
-      faceImages: [...l.faceProfile.images],
+      faceImage: l.faceImage,
+      bodyImage: l.bodyImage,
     })),
   };
 }

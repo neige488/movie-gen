@@ -76,18 +76,8 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    bodyProfile:
-      images:
-        - alice/hoodie/body-0.png
-        - alice/hoodie/body-1.png
-        - alice/hoodie/body-2.png
-    faceProfile:
-      images:
-        - alice/hoodie/face-0.png
-        - alice/hoodie/face-1.png
-        - alice/hoodie/face-2.png
-        - alice/hoodie/face-3.png
-        - alice/hoodie/face-4.png
+    faceImage: alice/hoodie/face.png
+    bodyImage: alice/hoodie/body.png
 `;
 
 describe("saveCharacter — round-trip", () => {
@@ -108,7 +98,7 @@ describe("saveCharacter — round-trip", () => {
     expect(after.characters[0]!.headshot).toBe("alice/headshot-2.png");
   });
 
-  it("updates a face profile image at a specific index", async () => {
+  it("updates a look's faceImage and reloads", async () => {
     writeMinimalScene();
     writeCharacterFile("alice", ALICE_YAML);
 
@@ -116,53 +106,37 @@ describe("saveCharacter — round-trip", () => {
     const alice = before.characters[0]!;
     const hoodie = alice.looks[0]!;
 
-    const newFaceImages = [...hoodie.faceProfile.images];
-    newFaceImages[2] = "alice/hoodie/face-2-v2.png";
-
     await saveCharacter(dataDir, {
       ...alice,
-      looks: [
-        {
-          ...hoodie,
-          faceProfile: { images: newFaceImages },
-        },
-        ...alice.looks.slice(1),
-      ],
+      looks: [{ ...hoodie, faceImage: "alice/hoodie/face-v2.png" }],
     });
 
     const after = await loadProject(dataDir);
-    expect(after.characters[0]!.looks[0]!.faceProfile.images[2]).toBe(
-      "alice/hoodie/face-2-v2.png",
+    expect(after.characters[0]!.looks[0]!.faceImage).toBe(
+      "alice/hoodie/face-v2.png",
     );
-    // Other face images preserved.
-    expect(after.characters[0]!.looks[0]!.faceProfile.images[0]).toBe(
-      "alice/hoodie/face-0.png",
+    // bodyImage preserved.
+    expect(after.characters[0]!.looks[0]!.bodyImage).toBe(
+      "alice/hoodie/body.png",
     );
   });
 
-  it("updates a body profile image at a specific index", async () => {
+  it("updates a look's bodyImage and reloads", async () => {
     writeMinimalScene();
     writeCharacterFile("alice", ALICE_YAML);
 
     const before = await loadProject(dataDir);
     const alice = before.characters[0]!;
     const hoodie = alice.looks[0]!;
-    const newBodyImages = [...hoodie.bodyProfile.images];
-    newBodyImages[1] = "alice/hoodie/body-1-fresh.png";
 
     await saveCharacter(dataDir, {
       ...alice,
-      looks: [
-        {
-          ...hoodie,
-          bodyProfile: { images: newBodyImages },
-        },
-      ],
+      looks: [{ ...hoodie, bodyImage: "alice/hoodie/body-fresh.png" }],
     });
 
     const after = await loadProject(dataDir);
-    expect(after.characters[0]!.looks[0]!.bodyProfile.images[1]).toBe(
-      "alice/hoodie/body-1-fresh.png",
+    expect(after.characters[0]!.looks[0]!.bodyImage).toBe(
+      "alice/hoodie/body-fresh.png",
     );
   });
 });

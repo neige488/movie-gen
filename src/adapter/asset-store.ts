@@ -6,8 +6,8 @@
  * existing fixture style:
  *
  *   characters/{name}/headshot.png
- *   characters/{name}/{look}/face-{0..4}.png
- *   characters/{name}/{look}/body-{0..2}.png
+ *   characters/{name}/{look}/face.png   (single 5-panel split sheet)
+ *   characters/{name}/{look}/body.png   (single 3-panel split sheet)
  *   locations/{name}/{refName}.png
  *   props/{name}/{refName}.png
  *   videos/scenes/{sceneSlug}/shots/{shotId}/takes/{takeId}.{ext}
@@ -47,20 +47,8 @@ export class AssetStoreError extends Error {
 
 export type AssetSlot =
   | { kind: "character-headshot"; character: string }
-  | {
-      kind: "character-face";
-      character: string;
-      look: string;
-      /** 0..4 (5 face profile images per CONTEXT.md) */
-      index: number;
-    }
-  | {
-      kind: "character-body";
-      character: string;
-      look: string;
-      /** 0..2 (3 body profile images per CONTEXT.md) */
-      index: number;
-    }
+  | { kind: "character-face"; character: string; look: string }
+  | { kind: "character-body"; character: string; look: string }
   | { kind: "location-ref"; location: string; refName: string }
   | { kind: "prop-ref"; prop: string; refName: string }
   | {
@@ -92,9 +80,6 @@ const ALLOWED_IMAGE_EXTENSIONS = new Set([
 ]);
 
 const ALLOWED_VIDEO_EXTENSIONS = new Set(["mp4", "webm", "mov"]);
-
-const FACE_SLOT_COUNT = 5;
-const BODY_SLOT_COUNT = 3;
 
 function isVideoSlot(slot: AssetSlot): slot is Extract<
   AssetSlot,
@@ -170,35 +155,17 @@ export function createAssetStore(assetsRoot: string): AssetStore {
       case "character-face": {
         assertSafeSegment(slot.character, "character name");
         assertSafeSegment(slot.look, "look name");
-        if (
-          !Number.isInteger(slot.index) ||
-          slot.index < 0 ||
-          slot.index >= FACE_SLOT_COUNT
-        ) {
-          throw new AssetStoreError(
-            `face slot index must be 0..${FACE_SLOT_COUNT - 1} (got ${slot.index})`,
-          );
-        }
         return {
           dir: path.join("characters", slot.character, slot.look),
-          basename: `face-${slot.index}.${ext}`,
+          basename: `face.${ext}`,
         };
       }
       case "character-body": {
         assertSafeSegment(slot.character, "character name");
         assertSafeSegment(slot.look, "look name");
-        if (
-          !Number.isInteger(slot.index) ||
-          slot.index < 0 ||
-          slot.index >= BODY_SLOT_COUNT
-        ) {
-          throw new AssetStoreError(
-            `body slot index must be 0..${BODY_SLOT_COUNT - 1} (got ${slot.index})`,
-          );
-        }
         return {
           dir: path.join("characters", slot.character, slot.look),
-          basename: `body-${slot.index}.${ext}`,
+          basename: `body.${ext}`,
         };
       }
       case "location-ref": {

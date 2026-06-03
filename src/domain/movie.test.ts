@@ -3,8 +3,6 @@ import {
   createShot,
   createTake,
   createScene,
-  createBodyProfile,
-  createFaceProfile,
   createLook,
   createCharacter,
   createLocation,
@@ -228,40 +226,31 @@ describe("Scene — invariants", () => {
   });
 });
 
-describe("Look — BodyProfile (3 images) and FaceProfile (5 images)", () => {
-  it("BodyProfile requires exactly 3 images", () => {
-    expect(() => createBodyProfile(["a.png", "b.png"])).toThrow(
-      DomainInvariantError,
-    );
+describe("Look — single faceImage + bodyImage (pre-split sheets)", () => {
+  it("requires a name", () => {
     expect(() =>
-      createBodyProfile(["a.png", "b.png", "c.png", "d.png"]),
+      createLook({ name: "", faceImage: "f.png", bodyImage: "b.png" }),
     ).toThrow(DomainInvariantError);
-    expect(createBodyProfile(["a.png", "b.png", "c.png"]).images).toHaveLength(
-      3,
-    );
   });
 
-  it("FaceProfile requires exactly 5 images", () => {
-    expect(() => createFaceProfile(["a", "b", "c", "d"])).toThrow(
-      DomainInvariantError,
-    );
-    expect(() => createFaceProfile(["a", "b", "c", "d", "e", "f"])).toThrow(
-      DomainInvariantError,
-    );
-    expect(
-      createFaceProfile(["a", "b", "c", "d", "e"]).images,
-    ).toHaveLength(5);
+  it("requires faceImage and bodyImage", () => {
+    expect(() =>
+      createLook({ name: "hoodie", faceImage: "", bodyImage: "b.png" }),
+    ).toThrow(/faceImage/i);
+    expect(() =>
+      createLook({ name: "hoodie", faceImage: "f.png", bodyImage: "" }),
+    ).toThrow(/bodyImage/i);
   });
 
-  it("Look composes one BodyProfile and one FaceProfile", () => {
+  it("composes a faceImage and bodyImage", () => {
     const look = createLook({
       name: "hoodie",
-      bodyProfile: createBodyProfile(["b1", "b2", "b3"]),
-      faceProfile: createFaceProfile(["f1", "f2", "f3", "f4", "f5"]),
+      faceImage: "f.png",
+      bodyImage: "b.png",
     });
     expect(look.name).toBe("hoodie");
-    expect(look.bodyProfile.images).toHaveLength(3);
-    expect(look.faceProfile.images).toHaveLength(5);
+    expect(look.faceImage).toBe("f.png");
+    expect(look.bodyImage).toBe("b.png");
   });
 });
 
@@ -278,11 +267,7 @@ describe("Character — name + headshot + looks", () => {
 
   it("rejects duplicate look names", () => {
     const mkLook = (name: string) =>
-      createLook({
-        name,
-        bodyProfile: createBodyProfile(["b1", "b2", "b3"]),
-        faceProfile: createFaceProfile(["f1", "f2", "f3", "f4", "f5"]),
-      });
+      createLook({ name, faceImage: "f.png", bodyImage: "b.png" });
     expect(() =>
       createCharacter({
         name: "alice",
@@ -295,11 +280,7 @@ describe("Character — name + headshot + looks", () => {
 
 describe("Project — reference integrity", () => {
   const mkLook = (name: string) =>
-    createLook({
-      name,
-      bodyProfile: createBodyProfile(["b1", "b2", "b3"]),
-      faceProfile: createFaceProfile(["f1", "f2", "f3", "f4", "f5"]),
-    });
+    createLook({ name, faceImage: "f.png", bodyImage: "b.png" });
 
   const mkScene = (slug: string, isStarred: boolean, shot: ReturnType<typeof createShot>) =>
     createScene({
@@ -1005,11 +986,7 @@ describe("setShotDuration — Shot duration immutable update", () => {
 describe("setShotCharacterRefs — Shot characterRefs immutable update", () => {
   const headshot = "character-a/headshot.png";
   const mkLook = (name: string) =>
-    createLook({
-      name,
-      bodyProfile: createBodyProfile(["a.png", "b.png", "c.png"]),
-      faceProfile: createFaceProfile(["d.png", "e.png", "f.png", "g.png", "h.png"]),
-    });
+    createLook({ name, faceImage: "face.png", bodyImage: "body.png" });
   const mkChar = (name: string, lookNames: string[]) =>
     createCharacter({ name, headshot, looks: lookNames.map(mkLook) });
   const mkShot = (id: string, refs: { character: string; look: string }[] = []) =>

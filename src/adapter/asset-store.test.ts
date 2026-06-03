@@ -75,50 +75,30 @@ describe("AssetStore.upload — character headshot", () => {
 });
 
 describe("AssetStore.upload — look face/body slots", () => {
-  it("face slot index 0..4 writes to face-{index}.{ext}", async () => {
+  it("face slot writes the single 5-panel sheet to face.{ext}", async () => {
     const rel = await store.upload(
-      { kind: "character-face", character: "alice", look: "hoodie", index: 0 },
+      { kind: "character-face", character: "alice", look: "hoodie" },
       "f.png",
-      bytes("F0"),
+      bytes("F"),
     );
-    expect(rel).toBe("characters/alice/hoodie/face-0.png");
+    expect(rel).toBe("characters/alice/hoodie/face.png");
   });
 
-  it("body slot index 0..2 writes to body-{index}.{ext}", async () => {
+  it("body slot writes the single 3-panel sheet to body.{ext}", async () => {
     const rel = await store.upload(
-      { kind: "character-body", character: "alice", look: "hoodie", index: 2 },
+      { kind: "character-body", character: "alice", look: "hoodie" },
       "b.png",
-      bytes("B2"),
+      bytes("B"),
     );
-    expect(rel).toBe("characters/alice/hoodie/body-2.png");
+    expect(rel).toBe("characters/alice/hoodie/body.png");
   });
 
-  it("rejects face index outside [0,4]", async () => {
+  it("rejects a look name with path traversal", async () => {
     await expect(
       store.upload(
-        {
-          kind: "character-face",
-          character: "alice",
-          look: "hoodie",
-          index: 5,
-        },
+        { kind: "character-face", character: "alice", look: "../escape" },
         "f.png",
         bytes("F"),
-      ),
-    ).rejects.toThrow(AssetStoreError);
-  });
-
-  it("rejects body index outside [0,2]", async () => {
-    await expect(
-      store.upload(
-        {
-          kind: "character-body",
-          character: "alice",
-          look: "hoodie",
-          index: 3,
-        },
-        "b.png",
-        bytes("B"),
       ),
     ).rejects.toThrow(AssetStoreError);
   });

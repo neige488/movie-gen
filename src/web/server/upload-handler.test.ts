@@ -62,18 +62,8 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    bodyProfile:
-      images:
-        - alice/hoodie/body-0.png
-        - alice/hoodie/body-1.png
-        - alice/hoodie/body-2.png
-    faceProfile:
-      images:
-        - alice/hoodie/face-0.png
-        - alice/hoodie/face-1.png
-        - alice/hoodie/face-2.png
-        - alice/hoodie/face-3.png
-        - alice/hoodie/face-4.png
+    faceImage: alice/hoodie/face.png
+    bodyImage: alice/hoodie/body.png
 `;
 
 function writeCharacter(name: string, yaml: string): void {
@@ -185,7 +175,7 @@ describe("applyUpload — character headshot", () => {
 });
 
 describe("applyUpload — character face/body slots", () => {
-  it("updates the face image at the given index, leaving others untouched", async () => {
+  it("updates the look's faceImage, leaving bodyImage untouched", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
 
@@ -196,10 +186,9 @@ describe("applyUpload — character face/body slots", () => {
           kind: "character-face",
           character: "alice",
           look: "hoodie",
-          index: 2,
         },
         originalFilename: "f.png",
-        data: Buffer.from("F2"),
+        data: Buffer.from("FACE"),
       },
       assetStore: ctx.assetStore,
       dataDir,
@@ -209,15 +198,14 @@ describe("applyUpload — character face/body slots", () => {
       createProject,
     });
 
-    expect(result.relativePath).toBe("characters/alice/hoodie/face-2.png");
+    expect(result.relativePath).toBe("characters/alice/hoodie/face.png");
     const reloaded = await loadProject(dataDir);
-    const faces = reloaded.characters[0]!.looks[0]!.faceProfile.images;
-    expect(faces[2]).toBe("characters/alice/hoodie/face-2.png");
-    expect(faces[0]).toBe("alice/hoodie/face-0.png"); // unchanged
-    expect(faces[4]).toBe("alice/hoodie/face-4.png"); // unchanged
+    const look = reloaded.characters[0]!.looks[0]!;
+    expect(look.faceImage).toBe("characters/alice/hoodie/face.png");
+    expect(look.bodyImage).toBe("alice/hoodie/body.png"); // unchanged
   });
 
-  it("updates body image at the given index", async () => {
+  it("updates the look's bodyImage", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
 
@@ -228,10 +216,9 @@ describe("applyUpload — character face/body slots", () => {
           kind: "character-body",
           character: "alice",
           look: "hoodie",
-          index: 1,
         },
         originalFilename: "b.png",
-        data: Buffer.from("B1"),
+        data: Buffer.from("BODY"),
       },
       assetStore: ctx.assetStore,
       dataDir,
@@ -242,9 +229,9 @@ describe("applyUpload — character face/body slots", () => {
     });
 
     const reloaded = await loadProject(dataDir);
-    const bodies = reloaded.characters[0]!.looks[0]!.bodyProfile.images;
-    expect(bodies[1]).toBe("characters/alice/hoodie/body-1.png");
-    expect(bodies[0]).toBe("alice/hoodie/body-0.png"); // unchanged
+    const look = reloaded.characters[0]!.looks[0]!;
+    expect(look.bodyImage).toBe("characters/alice/hoodie/body.png");
+    expect(look.faceImage).toBe("alice/hoodie/face.png"); // unchanged
   });
 
   it("rejects upload targeting unknown character", async () => {
@@ -268,62 +255,6 @@ describe("applyUpload — character face/body slots", () => {
     ).rejects.toThrow(/character.*ghost/i);
   });
 
-  it("rejects an out-of-range face index without writing a file", async () => {
-    writeCharacter("alice", ALICE_YAML);
-    const ctx = await setupHandler();
-    await expect(
-      applyUpload({
-        project: ctx.project,
-        command: {
-          slot: {
-            kind: "character-face",
-            character: "alice",
-            look: "hoodie",
-            index: 7, // hoodie has 5 face images (0..4)
-          },
-          originalFilename: "x.png",
-          data: Buffer.from("X"),
-        },
-        assetStore: ctx.assetStore,
-        dataDir,
-        saveCharacter,
-        saveLocation,
-        saveProp,
-        createProject,
-      }),
-    ).rejects.toThrow(/face slot index 7 is out of range/i);
-    // No orphan binary leaked under the look directory.
-    expect(existsSync(path.join(assetsDir, "characters", "alice", "hoodie"))).toBe(
-      false,
-    );
-  });
-
-  it("rejects an out-of-range body index", async () => {
-    writeCharacter("alice", ALICE_YAML);
-    const ctx = await setupHandler();
-    await expect(
-      applyUpload({
-        project: ctx.project,
-        command: {
-          slot: {
-            kind: "character-body",
-            character: "alice",
-            look: "hoodie",
-            index: 5, // hoodie has 3 body images (0..2)
-          },
-          originalFilename: "x.png",
-          data: Buffer.from("X"),
-        },
-        assetStore: ctx.assetStore,
-        dataDir,
-        saveCharacter,
-        saveLocation,
-        saveProp,
-        createProject,
-      }),
-    ).rejects.toThrow(/body slot index 5 is out of range/i);
-  });
-
   it("rejects upload targeting unknown look", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
@@ -335,7 +266,6 @@ describe("applyUpload — character face/body slots", () => {
             kind: "character-face",
             character: "alice",
             look: "ghost-look",
-            index: 0,
           },
           originalFilename: "x.png",
           data: Buffer.from("X"),

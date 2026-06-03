@@ -21,9 +21,7 @@ import yaml from "js-yaml";
 import { ZodError } from "zod";
 import {
   DomainInvariantError,
-  createBodyProfile,
   createCharacter,
-  createFaceProfile,
   createLocation,
   createLook,
   createProject,
@@ -193,8 +191,8 @@ async function loadCharacters(dir: string): Promise<Character[]> {
       const looks = file.looks.map((l) =>
         createLook({
           name: l.name,
-          bodyProfile: createBodyProfile(l.bodyProfile.images),
-          faceProfile: createFaceProfile(l.faceProfile.images),
+          faceImage: l.faceImage,
+          bodyImage: l.bodyImage,
         }),
       );
       characters.push(
