@@ -132,3 +132,10 @@ export interface UploadResponseDto {
   /** Relative path under assets root, also written into YAML. */
   relativePath: string;
 }
+
+/** Response from POST /api/takes/upload */
+export interface TakeUploadResponseDto {
+  take: TakeDto;
+  sceneSlug: string;
+  shotId: string;
+}

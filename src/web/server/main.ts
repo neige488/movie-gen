@@ -23,6 +23,7 @@ import {
   saveCharacter,
   saveLocation,
   saveProp,
+  saveSceneShots,
 } from "@adapter/project-writer.js";
 import {
   createAssetStore,
@@ -36,6 +37,11 @@ import {
   UploadValidationError,
   type UploadCommand,
 } from "./upload-handler.js";
+import {
+  applyTakeUpload,
+  TakeUploadError,
+  type TakeUploadCommand,
+} from "./take-upload-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -45,7 +51,10 @@ const ASSETS_DIR =
   process.env.MOVIEGEN_ASSETS_DIR ?? path.join(PROJECT_ROOT, "assets");
 const PORT = Number(process.env.MOVIEGEN_PORT ?? 5174);
 
-const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB
+const MAX_IMAGE_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB — images
+// Take videos at ~15s max from 씨댄스 2.0 can run a few hundred MB. 500 MB
+// gives headroom without enabling truly pathological uploads.
+const MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024;
 
 async function main(): Promise<void> {
   console.log(`[movie-gen] loading project from ${DATA_DIR}`);
@@ -105,13 +114,14 @@ async function main(): Promise<void> {
     }
   });
 
-  // Upload endpoint. Multipart fields:
-  //   slot   = JSON-encoded AssetSlot
-  //   file   = the binary
+  // Image upload endpoint. Multipart fields:
+  //   slot   = JSON-encoded AssetSlot (image slots only — take-video is
+  //            rejected here by upload-handler and must use /api/takes/upload)
+  //   file   = the image binary
   app.post("/api/assets/upload", (req, res) => {
     const bb = Busboy({
       headers: req.headers,
-      limits: { files: 1, fileSize: MAX_UPLOAD_BYTES, fields: 5 },
+      limits: { files: 1, fileSize: MAX_IMAGE_UPLOAD_BYTES, fields: 5 },
     });
 
     let slotJson = "";
@@ -148,7 +158,9 @@ async function main(): Promise<void> {
       if (tooLarge) {
         res
           .status(413)
-          .json({ error: `file exceeds limit (${MAX_UPLOAD_BYTES} bytes)` });
+          .json({
+            error: `file exceeds limit (${MAX_IMAGE_UPLOAD_BYTES} bytes)`,
+          });
         return;
       }
       if (!slotJson || !fileBuf) {
@@ -191,6 +203,91 @@ async function main(): Promise<void> {
     req.pipe(bb);
   });
 
+  // Take video upload endpoint. Multipart fields:
+  //   sceneSlug = string
+  //   shotId    = string
+  //   file      = the video binary (mp4/webm/mov)
+  app.post("/api/takes/upload", (req, res) => {
+    const bb = Busboy({
+      headers: req.headers,
+      limits: { files: 1, fileSize: MAX_VIDEO_UPLOAD_BYTES, fields: 5 },
+    });
+
+    let sceneSlug = "";
+    let shotId = "";
+    let fileBuf: Buffer | null = null;
+    let fileName = "";
+    let aborted = false;
+    let tooLarge = false;
+
+    bb.on("field", (name, val) => {
+      if (name === "sceneSlug") sceneSlug = val;
+      else if (name === "shotId") shotId = val;
+    });
+
+    bb.on("file", (_name, stream, info) => {
+      fileName = info.filename ?? "";
+      const chunks: Buffer[] = [];
+      stream.on("data", (chunk: Buffer) => chunks.push(chunk));
+      stream.on("limit", () => {
+        tooLarge = true;
+        stream.resume();
+      });
+      stream.on("end", () => {
+        if (!tooLarge) fileBuf = Buffer.concat(chunks);
+      });
+    });
+
+    bb.on("error", (err: Error) => {
+      if (aborted) return;
+      aborted = true;
+      res.status(400).json({ error: err.message });
+    });
+
+    bb.on("close", () => {
+      if (aborted) return;
+      if (tooLarge) {
+        res
+          .status(413)
+          .json({
+            error: `file exceeds limit (${MAX_VIDEO_UPLOAD_BYTES} bytes)`,
+          });
+        return;
+      }
+      if (!sceneSlug || !shotId || !fileBuf) {
+        res.status(400).json({
+          error:
+            "missing 'sceneSlug', 'shotId', or 'file' (binary) in multipart body",
+        });
+        return;
+      }
+      const command: TakeUploadCommand = {
+        sceneSlug,
+        shotId,
+        originalFilename: fileName,
+        data: fileBuf,
+      };
+      void handleTakeUpload(command).then(
+        (dto) => {
+          res.json(dto);
+        },
+        (err: Error) => {
+          if (
+            err instanceof AssetStoreError ||
+            err instanceof TakeUploadError
+          ) {
+            res.status(400).json({ error: err.message });
+          } else {
+            console.error("[movie-gen] take upload failed:", err);
+            res.status(500).json({ error: err.message });
+          }
+        },
+      );
+    });
+
+    req.pipe(bb);
+  });
+
   async function handleUpload(command: UploadCommand): Promise<string> {
     const result = await applyUpload({
       project: currentProject,
@@ -204,6 +301,42 @@ async function main(): Promise<void> {
     });
     currentProject = result.project;
     return result.relativePath;
+  }
+
+  async function handleTakeUpload(
+    command: TakeUploadCommand,
+  ): Promise<{
+    take: {
+      id: string;
+      videoPath: string;
+      screenplayHash: string;
+      createdAt: string;
+      isStarred: boolean;
+    };
+    sceneSlug: string;
+    shotId: string;
+  }> {
+    const result = await applyTakeUpload({
+      project: currentProject,
+      command,
+      assetStore,
+      dataDir: DATA_DIR,
+      saveSceneShots,
+      createProject,
+      clock: () => new Date(),
+    });
+    currentProject = result.project;
+    return {
+      take: {
+        id: result.take.id,
+        videoPath: result.take.videoPath,
+        screenplayHash: result.take.screenplayHash,
+        createdAt: result.take.createdAt,
+        isStarred: result.take.isStarred,
+      },
+      sceneSlug: command.sceneSlug,
+      shotId: command.shotId,
+    };
   }
 
   app.listen(PORT, () => {
