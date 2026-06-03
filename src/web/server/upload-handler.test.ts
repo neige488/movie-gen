@@ -268,6 +268,62 @@ describe("applyUpload — character face/body slots", () => {
     ).rejects.toThrow(/character.*ghost/i);
   });
 
+  it("rejects an out-of-range face index without writing a file", async () => {
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+    await expect(
+      applyUpload({
+        project: ctx.project,
+        command: {
+          slot: {
+            kind: "character-face",
+            character: "alice",
+            look: "hoodie",
+            index: 7, // hoodie has 5 face images (0..4)
+          },
+          originalFilename: "x.png",
+          data: Buffer.from("X"),
+        },
+        assetStore: ctx.assetStore,
+        dataDir,
+        saveCharacter,
+        saveLocation,
+        saveProp,
+        createProject,
+      }),
+    ).rejects.toThrow(/face slot index 7 is out of range/i);
+    // No orphan binary leaked under the look directory.
+    expect(existsSync(path.join(assetsDir, "characters", "alice", "hoodie"))).toBe(
+      false,
+    );
+  });
+
+  it("rejects an out-of-range body index", async () => {
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+    await expect(
+      applyUpload({
+        project: ctx.project,
+        command: {
+          slot: {
+            kind: "character-body",
+            character: "alice",
+            look: "hoodie",
+            index: 5, // hoodie has 3 body images (0..2)
+          },
+          originalFilename: "x.png",
+          data: Buffer.from("X"),
+        },
+        assetStore: ctx.assetStore,
+        dataDir,
+        saveCharacter,
+        saveLocation,
+        saveProp,
+        createProject,
+      }),
+    ).rejects.toThrow(/body slot index 5 is out of range/i);
+  });
+
   it("rejects upload targeting unknown look", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();

@@ -85,9 +85,30 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
         );
       }
       if (slot.kind !== "character-headshot") {
-        if (!c.looks.some((l) => l.name === slot.look)) {
+        const look = c.looks.find((l) => l.name === slot.look);
+        if (!look) {
           throw new UploadValidationError(
             `unknown look "${slot.look}" on character "${slot.character}"`,
+          );
+        }
+        // Validate the slot index against the *actual* profile length before
+        // any file is written. This rejects out-of-range targets up front (no
+        // orphan binary) and — unlike the AssetStore's fixed 5/3 check —
+        // guards against a profile that somehow holds fewer images than
+        // expected, which would otherwise make mutateCharacter write a sparse
+        // array (null holes → reload failure).
+        const images =
+          slot.kind === "character-face"
+            ? look.faceProfile.images
+            : look.bodyProfile.images;
+        const label = slot.kind === "character-face" ? "face" : "body";
+        if (
+          !Number.isInteger(slot.index) ||
+          slot.index < 0 ||
+          slot.index >= images.length
+        ) {
+          throw new UploadValidationError(
+            `${label} slot index ${slot.index} is out of range for look "${slot.look}" (has ${images.length} images)`,
           );
         }
       }
@@ -227,16 +248,45 @@ function mutateCharacter(
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;
     if (slot.kind === "character-face") {
-      const images = [...l.faceProfile.images];
-      images[slot.index] = relativePath;
-      return { ...l, faceProfile: { images } };
+      return {
+        ...l,
+        faceProfile: {
+          images: setImageAt(l.faceProfile.images, slot.index, relativePath, "face"),
+        },
+      };
     } else {
-      const images = [...l.bodyProfile.images];
-      images[slot.index] = relativePath;
-      return { ...l, bodyProfile: { images } };
+      return {
+        ...l,
+        bodyProfile: {
+          images: setImageAt(l.bodyProfile.images, slot.index, relativePath, "body"),
+        },
+      };
     }
   });
   return { ...c, looks };
+}
+
+/**
+ * Replace the image at `index`, returning a dense copy. Throws rather than
+ * assigning past the end — `arr[i] = x` on an out-of-bounds index silently
+ * creates a sparse array (holes serialize to `null` and fail schema reload).
+ * `validateSlotTarget` already range-checks against the live project, so this
+ * is defense-in-depth for any future caller.
+ */
+function setImageAt(
+  images: readonly string[],
+  index: number,
+  value: string,
+  label: string,
+): string[] {
+  if (!Number.isInteger(index) || index < 0 || index >= images.length) {
+    throw new UploadValidationError(
+      `${label} slot index ${index} is out of range (profile has ${images.length} images)`,
+    );
+  }
+  const next = [...images];
+  next[index] = value;
+  return next;
 }
 
 function mutateLocation(
