@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { MovieDto } from "../../shared/dto.js";
 import { editSceneSlugline } from "../upload-client.js";
+import { useEditorDirty } from "../live-reload.js";
 
 interface Props {
   sceneSlug: string;
@@ -21,6 +22,9 @@ export function SluglineEditor({ sceneSlug, slugline, onMovieChanged }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Defer external auto-reloads while we're in edit mode (Slice 9).
+  useEditorDirty(editing);
 
   useEffect(() => {
     if (editing) {

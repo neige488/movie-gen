@@ -70,6 +70,10 @@ import {
   applyShotPropRefsEdit,
   ShotEditError,
 } from "./shot-edit-handler.js";
+import { startFileWatcher } from "@adapter/file-watcher.js";
+import { createEventBus } from "./event-bus.js";
+import { createReloadOrchestrator } from "./reload-orchestrator.js";
+import { attachSseHandler } from "./sse-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -111,6 +115,82 @@ async function main(): Promise<void> {
   // only {isStarred: boolean}. Upload endpoints use multipart and aren't
   // affected.
   app.use(express.json({ limit: "16kb" }));
+
+  // ─── File watcher + SSE (Slice 9) ──────────────────────────────────────
+  //
+  // Wire-up order matters:
+  //  1. Create the event bus first — both SSE clients and the reload
+  //     orchestrator hold references.
+  //  2. Attach the SSE endpoint so any client that connects during the
+  //     watcher's startup is already subscribed.
+  //  3. Create the orchestrator. Its `setProject` callback assigns into the
+  //     same `currentProject` binding that all the HTTP handlers close over.
+  //  4. Start the watcher last so we don't emit refreshes during the
+  //     handlers wiring window.
+  //
+  // Mutation endpoints (upload, edit, copy, …) ALSO write to disk → the
+  // watcher will fire on those too. That's harmless and actually useful:
+  //  - extra clients (e.g. a second browser tab) see the change immediately
+  //  - the orchestrator's coalescing guarantees we don't double-load
+  // The mutation endpoint's own reply already carries the fresh MovieDto so
+  // there's no extra round-trip for the originating client either.
+  //
+  // To run without the watcher (CI, debugging), set MOVIEGEN_WATCH=0.
+  const eventBus = createEventBus();
+  attachSseHandler(app, eventBus);
+  const orchestrator = createReloadOrchestrator({
+    loadProject: () => loadProject(DATA_DIR),
+    getProject: () => currentProject,
+    setProject: (p) => {
+      currentProject = p;
+    },
+    bus: eventBus,
+  });
+  let stopWatcher: (() => Promise<void>) | null = null;
+  if (process.env.MOVIEGEN_WATCH !== "0") {
+    try {
+      const watcher = await startFileWatcher(
+        DATA_DIR,
+        () => {
+          // The orchestrator does not throw — it captures errors into
+          // bus.publish("reload-failed") — so a bare fire-and-forget is safe.
+          void orchestrator.reload();
+        },
+        {
+          debounceMs: Number(process.env.MOVIEGEN_WATCH_DEBOUNCE_MS ?? 200),
+          onError: (err) => {
+            // Watcher-level errors (permission denied, ENOSPC inotify watches
+            // exhausted, etc.) are logged but do NOT crash the server.
+            console.error("[movie-gen] file-watcher error:", err.message);
+          },
+        },
+      );
+      stopWatcher = () => watcher.stop();
+      console.log(`[movie-gen] file-watcher active on ${DATA_DIR}`);
+    } catch (err) {
+      // Watcher boot failure is non-fatal — the server still serves data, it
+      // just won't auto-reload. This is exactly the graceful behavior the
+      // PRD asks for ("watcher 에러 시에도 서버는 계속 동작").
+      console.error(
+        "[movie-gen] file-watcher failed to start, continuing without auto-reload:",
+        (err as Error).message,
+      );
+    }
+  } else {
+    console.log("[movie-gen] file-watcher disabled (MOVIEGEN_WATCH=0)");
+  }
+
+  // Clean shutdown — close the watcher before exiting so chokidar doesn't
+  // leak the inotify/fsevents handle in long-lived dev sessions.
+  function shutdown(): void {
+    if (stopWatcher) {
+      void stopWatcher().finally(() => process.exit(0));
+    } else {
+      process.exit(0);
+    }
+  }
+  process.once("SIGINT", shutdown);
+  process.once("SIGTERM", shutdown);
 
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true });

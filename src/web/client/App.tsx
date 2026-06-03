@@ -5,6 +5,10 @@ import { SceneView } from "./components/SceneView.js";
 import { LibraryPage } from "./components/LibraryPage.js";
 import { useHashRoute, type Route } from "./hash-route.js";
 import { toggleSceneStarred } from "./upload-client.js";
+import {
+  LiveReloadProvider,
+  useLiveReloadStatus,
+} from "./live-reload.js";
 
 type FetchState<T> =
   | { kind: "loading" }
@@ -59,24 +63,66 @@ export function App() {
     setMovie({ kind: "ok", value: nextMovie });
   }
 
+  // The live-reload SSE handler refetches /api/movie and (if relevant)
+  // /api/library when the server announces an external change. We hand it
+  // a single refresh that updates both — the server's reload-failed event
+  // stays silent (the previous project is preserved server-side, so what
+  // we already have on screen is still valid).
+  function refreshAll(): void {
+    refreshMovie();
+    if (route.name === "library") refreshLibrary();
+  }
+
   return (
-    <div className="layout">
-      <Sidebar
-        route={route}
-        movie={movie}
-        onMovieChanged={handleMovieChanged}
-      />
-      <main className="main">
-        {route.name === "viewer" ? (
-          <ViewerMain
-            movie={movie}
-            onTakeUploaded={refreshMovie}
-            onMovieChanged={handleMovieChanged}
-          />
-        ) : (
-          <LibraryMain library={library} onUploaded={refreshLibrary} />
-        )}
-      </main>
+    <LiveReloadProvider refresh={refreshAll}>
+      <div className="layout">
+        <Sidebar
+          route={route}
+          movie={movie}
+          onMovieChanged={handleMovieChanged}
+        />
+        <main className="main">
+          {route.name === "viewer" ? (
+            <ViewerMain
+              movie={movie}
+              onTakeUploaded={refreshMovie}
+              onMovieChanged={handleMovieChanged}
+            />
+          ) : (
+            <LibraryMain library={library} onUploaded={refreshLibrary} />
+          )}
+        </main>
+        <DeferredRefreshToast />
+      </div>
+    </LiveReloadProvider>
+  );
+}
+
+/**
+ * Floating notification rendered when an external change arrived while an
+ * editor was open. The director can keep typing — when they close the editor
+ * the deferred refresh fires automatically. The "지금 새로고침" button forces
+ * the refresh now (the user explicitly chooses to drop any unsaved draft).
+ */
+function DeferredRefreshToast() {
+  const status = useLiveReloadStatus();
+  if (!status?.pending) return null;
+  return (
+    <div className="live-reload-toast" role="status" aria-live="polite">
+      <span className="live-reload-toast__icon" aria-hidden="true">
+        ↻
+      </span>
+      <span className="live-reload-toast__text">
+        다른 곳에서 변경됨 — 편집 중인 내용을 저장하거나 닫으면 자동으로
+        새로고침됩니다.
+      </span>
+      <button
+        type="button"
+        className="live-reload-toast__force"
+        onClick={status.forceRefresh}
+      >
+        지금 새로고침
+      </button>
     </div>
   );
 }
