@@ -89,6 +89,31 @@ export async function saveProp(dataDir: string, prop: Prop): Promise<void> {
 }
 
 /**
+ * Persist a Scene's `scene.yaml` (slugline + isStarred). Used by the starred
+ * toggle (slice #4) — `screenplay.md` and `shots.yaml` are not touched. The
+ * on-disk shape matches `sceneFileSchema`.
+ *
+ * The Scene's slug is implicit in the folder name and never written into
+ * scene.yaml itself.
+ */
+export async function saveSceneFile(
+  dataDir: string,
+  sceneSlug: string,
+  payload: { slugline: string; isStarred: boolean },
+): Promise<void> {
+  const dir = path.join(dataDir, "scenes", sceneSlug);
+  await mkdir(dir, { recursive: true });
+  await writeFile(
+    path.join(dir, "scene.yaml"),
+    yaml.dump(
+      { slugline: payload.slugline, isStarred: payload.isStarred },
+      { lineWidth: 120, noRefs: true },
+    ),
+    "utf8",
+  );
+}
+
+/**
  * Persist a Scene's shots.yaml. Used to append/modify Takes (slice #3) and
  * later Shot-prompt edits (slice #7). The screenplay.md and scene.yaml are
  * not touched here.

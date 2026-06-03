@@ -7,7 +7,13 @@
  */
 
 import { describe, expect, it, beforeEach, afterEach } from "vitest";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  rmSync,
+} from "node:fs";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import { loadProject } from "./project-repository.js";
@@ -15,6 +21,7 @@ import {
   saveCharacter,
   saveLocation,
   saveProp,
+  saveSceneFile,
   saveSceneShots,
 } from "./project-writer.js";
 import { createTake } from "@domain/movie.js";
@@ -359,6 +366,80 @@ describe("saveSceneShots — round-trip", () => {
 
     const after = await loadProject(dataDir);
     expect(after.scenes[0]!.shots[1]!.prevShotRef).toBe("01");
+  });
+});
+
+describe("saveSceneFile — round-trip (slug + slugline + isStarred only)", () => {
+  it("flips isStarred from true to false and reloads", async () => {
+    writeMinimalScene();
+    const before = await loadProject(dataDir);
+    const scene = before.scenes[0]!;
+    expect(scene.isStarred).toBe(true);
+
+    await saveSceneFile(dataDir, scene.slug, {
+      slugline: scene.slugline,
+      isStarred: false,
+    });
+
+    const after = await loadProject(dataDir);
+    expect(after.scenes[0]!.isStarred).toBe(false);
+    // Slugline preserved.
+    expect(after.scenes[0]!.slugline).toBe("INT. ROOM - DAY");
+    // Shots untouched.
+    expect(after.scenes[0]!.shots).toHaveLength(1);
+  });
+
+  it("flips isStarred from false to true and reloads", async () => {
+    const sceneDir = path.join(dataDir, "scenes", "s07-alt");
+    mkdirSync(sceneDir, { recursive: true });
+    writeFileSync(
+      path.join(sceneDir, "scene.yaml"),
+      `slugline: "EXT. PARK - DAY (ALT)"\nisStarred: false\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "screenplay.md"),
+      `<!-- shot:01 -->\nBody.\n<!-- /shot:01 -->\n`,
+    );
+    writeFileSync(
+      path.join(sceneDir, "shots.yaml"),
+      `shots:\n  - id: "01"\n    prompt: "x"\n    duration: 5\n    screenplayHash: "h"\n    characterRefs: []\n    locationRefs: []\n    propRefs: []\n    takes: []\n`,
+    );
+
+    const before = await loadProject(dataDir);
+    expect(before.scenes[0]!.isStarred).toBe(false);
+
+    await saveSceneFile(dataDir, "s07-alt", {
+      slugline: "EXT. PARK - DAY (ALT)",
+      isStarred: true,
+    });
+
+    const after = await loadProject(dataDir);
+    expect(after.scenes[0]!.isStarred).toBe(true);
+  });
+
+  it("does not touch screenplay.md or shots.yaml", async () => {
+    writeMinimalScene();
+    const sceneDir = path.join(dataDir, "scenes", "s01-open");
+    const screenplayBefore = readFileSync(
+      path.join(sceneDir, "screenplay.md"),
+      "utf8",
+    );
+    const shotsBefore = readFileSync(
+      path.join(sceneDir, "shots.yaml"),
+      "utf8",
+    );
+
+    await saveSceneFile(dataDir, "s01-open", {
+      slugline: "INT. ROOM - DAY",
+      isStarred: false,
+    });
+
+    expect(readFileSync(path.join(sceneDir, "screenplay.md"), "utf8")).toBe(
+      screenplayBefore,
+    );
+    expect(readFileSync(path.join(sceneDir, "shots.yaml"), "utf8")).toBe(
+      shotsBefore,
+    );
   });
 });
 
