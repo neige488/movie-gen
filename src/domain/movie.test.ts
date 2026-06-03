@@ -11,12 +11,14 @@ import {
   createProp,
   createProject,
   movieSequence,
+  resolveChainingTake,
   setSceneStarred,
   setSceneSlugline,
   setSceneScreenplay,
   setTakeStarred,
   setShotPrompt,
   setShotDuration,
+  setShotPrevShotRef,
   setShotCharacterRefs,
   setShotLocationRefs,
   setShotPropRefs,
@@ -1181,5 +1183,340 @@ describe("setShotPropRefs — Shot propRefs immutable update", () => {
     expect(() =>
       setShotPropRefs(project, "s01-a", "01", [{ prop: "ghost" }]),
     ).toThrow(DomainInvariantError);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Slice 8 — Chaining
+//
+// setShotPrevShotRef: Shot.prevShotRef immutable update. The on-disk ref stores
+// only the previous Shot's id; what video it actually points at is derived by
+// resolveChainingTake (starred Take of the previous Shot) so that a director
+// changing the starred Take automatically flows through to the chain target.
+//
+// Domain invariants exercised here:
+//  - same-Scene only (createScene rejects refs outside the Scene)
+//  - earlier-Shot only (createScene rejects forward refs, including self)
+//  - null clears the chain (no chaining)
+// ---------------------------------------------------------------------------
+
+describe("setShotPrevShotRef — Shot prevShotRef immutable update", () => {
+  const mkShot = (id: string, prevShotRef?: string) =>
+    createShot({ ...VALID_SHOT_BASE, id, duration: 5, prevShotRef });
+
+  const mkScene = (slug: string, shots: ReturnType<typeof mkShot>[]) =>
+    createScene({
+      slug,
+      slugline: "INT. ROOM - DAY",
+      screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+      isStarred: true,
+      shots,
+    });
+
+  it("sets prevShotRef to an earlier Shot in the same Scene", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrevShotRef(project, "s01-a", "02", "01");
+    expect(next.scenes[0]!.shots[1]!.prevShotRef).toBe("01");
+  });
+
+  it("clears prevShotRef with null", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02", "01")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrevShotRef(project, "s01-a", "02", null);
+    expect(next.scenes[0]!.shots[1]!.prevShotRef).toBeUndefined();
+  });
+
+  it("rejects pointing to a Shot that is later in the same Scene (forward ref)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotPrevShotRef(project, "s01-a", "01", "02"),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("rejects pointing at itself", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotPrevShotRef(project, "s01-a", "02", "02"),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("rejects pointing at an unknown Shot id in the same Scene", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() =>
+      setShotPrevShotRef(project, "s01-a", "02", "99"),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("rejects pointing at a Shot in a different Scene (Scene boundary)", () => {
+    const project = createProject({
+      scenes: [
+        mkScene("s01-a", [mkShot("01")]),
+        mkScene("s02-b", [mkShot("01"), mkShot("02")]),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    // "01" exists in both Scenes — but trying to set Shot 02 in s02-b to point
+    // at "01" must use s02-b's own Shot 01. Pointing at s01-a's Shot 01 is
+    // impossible by id alone (the id "01" exists in s02-b), but pointing at a
+    // Shot id that exists *only* in another Scene must reject.
+    const ghost = "z-not-in-s02-b";
+    expect(() =>
+      setShotPrevShotRef(project, "s02-b", "02", ghost),
+    ).toThrow(DomainInvariantError);
+  });
+
+  it("preserves other Shot fields (prompt, duration, takes) when updating prevShotRef", () => {
+    const t1 = createTake({
+      id: "t01",
+      videoPath: "a.mp4",
+      screenplayHash: "h",
+      createdAt: "2026-06-03T10:00:00.000Z",
+      isStarred: true,
+    });
+    const project = createProject({
+      scenes: [
+        createScene({
+          slug: "s01-a",
+          slugline: "INT. ROOM - DAY",
+          screenplay: "x",
+          isStarred: true,
+          shots: [
+            createShot({ ...VALID_SHOT_BASE, id: "01", duration: 5, takes: [t1] }),
+            createShot({ ...VALID_SHOT_BASE, id: "02", prompt: "two", duration: 12 }),
+          ],
+        }),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrevShotRef(project, "s01-a", "02", "01");
+    const shot2 = next.scenes[0]!.shots[1]!;
+    expect(shot2.prevShotRef).toBe("01");
+    expect(shot2.prompt).toBe("two");
+    expect(shot2.duration).toBe(12);
+    // Shot 01's starred Take untouched.
+    expect(next.scenes[0]!.shots[0]!.takes[0]!.isStarred).toBe(true);
+  });
+
+  it("returns a new Project (immutability of input)", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrevShotRef(project, "s01-a", "02", "01");
+    expect(next).not.toBe(project);
+    expect(project.scenes[0]!.shots[1]!.prevShotRef).toBeUndefined();
+  });
+
+  it("throws if Scene slug unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotPrevShotRef(project, "ghost", "02", "01")).toThrow(
+      DomainInvariantError,
+    );
+  });
+
+  it("throws if Shot id unknown", () => {
+    const project = createProject({
+      scenes: [mkScene("s01-a", [mkShot("01"), mkShot("02")])],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    expect(() => setShotPrevShotRef(project, "s01-a", "99", "01")).toThrow(
+      DomainInvariantError,
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// resolveChainingTake — derive the "chaining video" for a Shot.
+//
+// Per CONTEXT.md: Shot.prevShotRef points at the *id* of the previous Shot.
+// The actual video used as the chaining ref is always the previous Shot's
+// starred Take (so toggling starred automatically follows through without any
+// explicit propagation). Returns null on three "no chaining target" cases:
+//   - the Shot has no prevShotRef
+//   - the prev Shot has no starred Take
+//   - the Shot itself is unknown in the Scene (defensive)
+// ---------------------------------------------------------------------------
+
+describe("resolveChainingTake — derive starred Take of prevShotRef", () => {
+  const mkTake = (id: string, isStarred = false) =>
+    createTake({
+      id,
+      videoPath: `assets/takes/${id}.mp4`,
+      screenplayHash: "h",
+      createdAt: "2026-06-03T10:00:00.000Z",
+      isStarred,
+    });
+
+  it("returns null when the Shot has no prevShotRef", () => {
+    const scene = createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [
+        createShot({ ...VALID_SHOT_BASE, id: "01", duration: 5 }),
+      ],
+    });
+    expect(resolveChainingTake(scene, "01")).toBeNull();
+  });
+
+  it("returns the starred Take of the previous Shot when one exists", () => {
+    const starredTake = mkTake("t02", true);
+    const scene = createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [
+        createShot({
+          ...VALID_SHOT_BASE,
+          id: "01",
+          duration: 5,
+          takes: [mkTake("t01"), starredTake],
+        }),
+        createShot({
+          ...VALID_SHOT_BASE,
+          id: "02",
+          duration: 5,
+          prevShotRef: "01",
+        }),
+      ],
+    });
+    const resolved = resolveChainingTake(scene, "02");
+    expect(resolved).not.toBeNull();
+    expect(resolved!.id).toBe("t02");
+    expect(resolved!.isStarred).toBe(true);
+  });
+
+  it("returns null when the previous Shot has no starred Take", () => {
+    const scene = createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [
+        createShot({
+          ...VALID_SHOT_BASE,
+          id: "01",
+          duration: 5,
+          takes: [mkTake("t01"), mkTake("t02")], // none starred
+        }),
+        createShot({
+          ...VALID_SHOT_BASE,
+          id: "02",
+          duration: 5,
+          prevShotRef: "01",
+        }),
+      ],
+    });
+    expect(resolveChainingTake(scene, "02")).toBeNull();
+  });
+
+  it("returns null when the previous Shot has no Takes at all", () => {
+    const scene = createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [
+        createShot({ ...VALID_SHOT_BASE, id: "01", duration: 5 }),
+        createShot({
+          ...VALID_SHOT_BASE,
+          id: "02",
+          duration: 5,
+          prevShotRef: "01",
+        }),
+      ],
+    });
+    expect(resolveChainingTake(scene, "02")).toBeNull();
+  });
+
+  it("auto-follows when starred Take changes (derive, no propagation needed)", () => {
+    // Build a scene with two takes on Shot 01, only the first starred.
+    const t1 = mkTake("t01", true);
+    const t2 = mkTake("t02");
+    let project = createProject({
+      scenes: [
+        createScene({
+          slug: "s01-a",
+          slugline: "X",
+          screenplay: "y",
+          isStarred: true,
+          shots: [
+            createShot({
+              ...VALID_SHOT_BASE,
+              id: "01",
+              duration: 5,
+              takes: [t1, t2],
+            }),
+            createShot({
+              ...VALID_SHOT_BASE,
+              id: "02",
+              duration: 5,
+              prevShotRef: "01",
+            }),
+          ],
+        }),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    // Initial: starred is t01.
+    expect(resolveChainingTake(project.scenes[0]!, "02")!.id).toBe("t01");
+
+    // Flip starred to t02 — without any chaining-specific propagation, the
+    // resolved chaining Take must follow automatically because Shot 02 only
+    // stores prevShotRef="01", never the Take id.
+    project = setTakeStarred(project, "s01-a", "01", "t02", true);
+    expect(resolveChainingTake(project.scenes[0]!, "02")!.id).toBe("t02");
+  });
+
+  it("returns null for an unknown Shot id (defensive)", () => {
+    const scene = createScene({
+      slug: "s01-a",
+      slugline: "X",
+      screenplay: "y",
+      isStarred: true,
+      shots: [createShot({ ...VALID_SHOT_BASE, id: "01", duration: 5 })],
+    });
+    expect(resolveChainingTake(scene, "ghost")).toBeNull();
   });
 });

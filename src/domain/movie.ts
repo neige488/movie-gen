@@ -730,6 +730,77 @@ export function setShotLocationRefs(
 }
 
 /**
+ * Replace `Shot.prevShotRef` — Slice 8 (Chaining). The argument is `null` to
+ * clear the chain or the id of an earlier Shot in the **same Scene**. The
+ * "same Scene + earlier" invariant is enforced by `createScene` (which runs
+ * inside `rebuildShotIn`) — no extra validation here. Other Shot fields are
+ * preserved untouched (prompt, duration, refs, takes, screenplayHash).
+ *
+ * Per CONTEXT.md: "prevShotRef는 '직전 Shot의 id'만 저장 — 어느 Take를 가리킬지는
+ * 도메인 로직이 항상 starred Take로 resolve" (see `resolveChainingTake`).
+ *
+ * Notes:
+ *  - Pointing at the Shot itself is rejected by the createScene invariant
+ *    (a Shot can't be earlier than itself).
+ *  - Pointing across Scenes is also rejected (the lookup is scoped to the
+ *    Scene's `shots` array).
+ *  - Pointing forward (a later Shot in the same Scene) is rejected for the
+ *    same reason.
+ */
+export function setShotPrevShotRef(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+  prevShotRef: string | null,
+): Project {
+  return rebuildShotIn(
+    project,
+    sceneSlug,
+    shotId,
+    (shot) =>
+      createShot({
+        id: shot.id,
+        prompt: shot.prompt,
+        duration: shot.duration,
+        screenplayHash: shot.screenplayHash,
+        prevShotRef: prevShotRef ?? undefined,
+        characterRefs: shot.characterRefs,
+        locationRefs: shot.locationRefs,
+        propRefs: shot.propRefs,
+        takes: shot.takes,
+      }),
+    "setShotPrevShotRef",
+  );
+}
+
+/**
+ * Resolve the chaining target Take for a Shot inside a Scene.
+ *
+ * Per CONTEXT.md ("Chaining"): when a Shot has `prevShotRef`, the chaining
+ * video is **always the previous Shot's starred Take**. The previous Shot's
+ * id is the only thing stored on disk — never the Take id — so that toggling
+ * which Take is starred automatically follows through to all chained Shots
+ * without any explicit propagation.
+ *
+ * Returns the starred Take, or `null` in these "no chaining target" cases:
+ *  - the Shot has no `prevShotRef` (no chain),
+ *  - the previous Shot has no starred Take (UI surfaces a warning),
+ *  - the Shot id itself is unknown in this Scene (defensive — should not
+ *    happen for well-formed DTOs but we don't want to throw on a derive).
+ *
+ * The Shot.prevShotRef → same-Scene invariant is enforced at construction
+ * (`createScene`), so the lookup is always scoped to the input Scene's shots.
+ */
+export function resolveChainingTake(scene: Scene, shotId: string): Take | null {
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) return null;
+  if (shot.prevShotRef === undefined) return null;
+  const prev = scene.shots.find((s) => s.id === shot.prevShotRef);
+  if (!prev) return null;
+  return prev.takes.find((t) => t.isStarred) ?? null;
+}
+
+/**
  * Replace `Shot.propRefs`. `createProject` re-validates — refs to unknown
  * Prop reject. The optional `reference` field is freeform (same rationale as
  * `setShotLocationRefs`).
