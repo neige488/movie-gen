@@ -23,6 +23,7 @@ import {
   saveCharacter,
   saveLocation,
   saveProp,
+  saveSceneFile,
   saveSceneShots,
 } from "@adapter/project-writer.js";
 import {
@@ -42,6 +43,11 @@ import {
   TakeUploadError,
   type TakeUploadCommand,
 } from "./take-upload-handler.js";
+import {
+  applyToggleSceneStarred,
+  applyToggleTakeStarred,
+  StarredToggleError,
+} from "./starred-toggle-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -79,6 +85,10 @@ async function main(): Promise<void> {
 
   const assetStore = createAssetStore(ASSETS_DIR);
   const app = express();
+  // JSON parser scoped to small payloads — the starred-toggle endpoints carry
+  // only {isStarred: boolean}. Upload endpoints use multipart and aren't
+  // affected.
+  app.use(express.json({ limit: "16kb" }));
 
   app.get("/api/health", (_req, res) => {
     res.json({ ok: true });
@@ -287,6 +297,79 @@ async function main(): Promise<void> {
 
     req.pipe(bb);
   });
+
+  // Scene starred toggle. Body: {"isStarred": boolean}. Returns updated MovieDto.
+  app.post("/api/scenes/:slug/starred", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { isStarred?: unknown };
+    if (typeof body?.isStarred !== "boolean") {
+      res
+        .status(400)
+        .json({ error: "request body must be {isStarred: boolean}" });
+      return;
+    }
+    void applyToggleSceneStarred({
+      project: currentProject,
+      sceneSlug: slug,
+      isStarred: body.isStarred,
+      dataDir: DATA_DIR,
+      saveSceneFile,
+      createProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToMovieDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof StarredToggleError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] scene starred toggle failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // Take starred toggle. Body: {"isStarred": boolean}. Returns updated MovieDto.
+  // The handler auto-OFFs any sibling starred Take in the same Shot to honor
+  // the domain invariant (CONTEXT.md "Take.isStarred: Shot당 최대 1개").
+  app.post(
+    "/api/scenes/:slug/shots/:shotId/takes/:takeId/starred",
+    (req, res) => {
+      const { slug, shotId, takeId } = req.params;
+      const body = req.body as { isStarred?: unknown };
+      if (typeof body?.isStarred !== "boolean") {
+        res
+          .status(400)
+          .json({ error: "request body must be {isStarred: boolean}" });
+        return;
+      }
+      void applyToggleTakeStarred({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        takeId,
+        isStarred: body.isStarred,
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }).then(
+        (result) => {
+          currentProject = result.project;
+          res.json(projectToMovieDto(currentProject));
+        },
+        (err: Error) => {
+          if (err instanceof StarredToggleError) {
+            res.status(400).json({ error: err.message });
+          } else {
+            console.error("[movie-gen] take starred toggle failed:", err);
+            res.status(500).json({ error: err.message });
+          }
+        },
+      );
+    },
+  );
 
   async function handleUpload(command: UploadCommand): Promise<string> {
     const result = await applyUpload({

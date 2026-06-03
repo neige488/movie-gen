@@ -77,11 +77,21 @@ export interface PropDto {
   name: string;
 }
 
+export interface AllSceneEntryDto {
+  slug: string;
+  slugline: string;
+  isStarred: boolean;
+}
+
 export interface MovieDto {
   /** Scenes in canonical movie order (isStarred + slug-prefix sort). */
   scenes: SceneDto[];
-  /** All scenes (including non-starred) by slug for diagnostics. */
-  allScenes: { slug: string; isStarred: boolean }[];
+  /**
+   * All scenes (including non-starred) by slug — used by the sidebar so the
+   * director can toggle non-starred Scenes back into the movie sequence
+   * without leaving the viewer.
+   */
+  allScenes: AllSceneEntryDto[];
   characters: CharacterDto[];
   locations: LocationDto[];
   props: PropDto[];
