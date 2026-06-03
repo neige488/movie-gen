@@ -4,7 +4,7 @@
 
 import { parseShotMarkers } from "@domain/marker-parser.js";
 import { movieSequence, type Project, type Scene } from "@domain/movie.js";
-import { evaluateSceneSync } from "@domain/sync-evaluator.js";
+import { evaluateSceneSync, evaluateTakeSync } from "@domain/sync-evaluator.js";
 import type {
   LibraryCharacterDto,
   LibraryDto,
@@ -76,6 +76,7 @@ function sceneToDto(scene: Scene): SceneDto {
         screenplayHash: t.screenplayHash,
         createdAt: t.createdAt,
         isStarred: t.isStarred,
+        syncStatus: evaluateTakeSync(scene, shot.id, t.id),
       })),
       syncStatus: syncByShotId.get(shot.id) ?? "orphan",
     })),
