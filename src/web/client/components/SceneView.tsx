@@ -112,6 +112,7 @@ export function SceneView({ scene, movie, onTakeUploaded, onMovieChanged }: Prop
               <ShotCard
                 key={shot.id}
                 shot={shot}
+                sceneShots={scene.shots}
                 sceneSlug={scene.slug}
                 characters={movie.characters}
                 locations={movie.locations}
