@@ -22,6 +22,7 @@
 import {
   setShotPrompt,
   setShotDuration,
+  setShotPrevShotRef,
   setShotCharacterRefs,
   setShotLocationRefs,
   setShotPropRefs,
@@ -154,6 +155,28 @@ export async function applyShotLocationRefsEdit(
 ): Promise<ShotEditResult> {
   return runShotEdit(deps, (project) =>
     setShotLocationRefs(project, deps.sceneSlug, deps.shotId, deps.refs),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// applyShotPrevShotRefEdit — Slice 8 (Chaining)
+//
+// `prevShotRef: string | null` — string sets the chain, null clears it.
+// The domain mutator (setShotPrevShotRef) handles all invariants via the same
+// `rebuildShotIn` helper used by Slice 7 mutators; no extra validation here.
+// Persistence goes through saveSceneShots (shots.yaml only — scene.yaml and
+// screenplay.md untouched).
+// ---------------------------------------------------------------------------
+
+export interface ApplyShotPrevShotRefEditDeps extends CommonDeps {
+  prevShotRef: string | null;
+}
+
+export async function applyShotPrevShotRefEdit(
+  deps: ApplyShotPrevShotRefEditDeps,
+): Promise<ShotEditResult> {
+  return runShotEdit(deps, (project) =>
+    setShotPrevShotRef(project, deps.sceneSlug, deps.shotId, deps.prevShotRef),
   );
 }
 

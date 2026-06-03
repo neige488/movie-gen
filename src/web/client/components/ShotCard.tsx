@@ -16,6 +16,7 @@ import {
   editShotCharacterRefs,
   editShotDuration,
   editShotLocationRefs,
+  editShotPrevShotRef,
   editShotPrompt,
   editShotPropRefs,
   toggleTakeStarred,
@@ -26,12 +27,38 @@ import { StarButton } from "./StarButton.js";
 
 interface Props {
   shot: ShotDto;
+  /**
+   * All Shots in the parent Scene. Used (a) to populate the prevShotRef
+   * dropdown with earlier Shots, and (b) to derive the chaining-target Take
+   * for the warning badge. Mirrors the domain's `resolveChainingTake` rule:
+   * the chaining target is the previous Shot's *starred Take*, never a
+   * specific Take id stored on disk, so a starred toggle auto-follows.
+   */
+  sceneShots: readonly ShotDto[];
   sceneSlug: string;
   characters: readonly CharacterDto[];
   locations: readonly LocationDto[];
   props: readonly PropDto[];
   onTakeUploaded: () => void;
   onMovieChanged: (movie: MovieDto) => void;
+}
+
+/**
+ * Resolve the chaining target Take for a Shot from the Scene's shot list.
+ * Mirrors `resolveChainingTake` in the domain — the client derives this
+ * locally so the wire DTO stays compact (no extra `chainingTake` field).
+ *
+ * Returns `null` when the Shot has no `prevShotRef`, when the previous Shot
+ * is unknown, or when it has no starred Take.
+ */
+function findChainingTake(
+  sceneShots: readonly ShotDto[],
+  shot: ShotDto,
+): TakeDto | null {
+  if (shot.prevShotRef === undefined) return null;
+  const prev = sceneShots.find((s) => s.id === shot.prevShotRef);
+  if (!prev) return null;
+  return prev.takes.find((t) => t.isStarred) ?? null;
 }
 
 /**
@@ -65,6 +92,7 @@ const ACCEPT_VIDEO = "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov";
 
 export function ShotCard({
   shot,
+  sceneShots,
   sceneSlug,
   characters,
   locations,
@@ -95,6 +123,15 @@ export function ShotCard({
     });
   }
 
+  // Chaining: badge in the header when chained, plus warning in the body when
+  // the previous Shot has no starred Take (the chain target is missing).
+  const chainingTake =
+    shot.prevShotRef !== undefined
+      ? findChainingTake(sceneShots, shot)
+      : null;
+  const chainTargetMissing =
+    shot.prevShotRef !== undefined && chainingTake === null;
+
   return (
     <article className="shot" data-shot-id={shot.id} style={accentStyle}>
       <header className="shot__header">
@@ -108,6 +145,19 @@ export function ShotCard({
         <span className={`shot__status shot__status--${shot.syncStatus}`}>
           {SHOT_STATUS_LABEL[shot.syncStatus]}
         </span>
+        {shot.prevShotRef !== undefined && (
+          <span
+            className={`shot__chain-badge${chainTargetMissing ? " shot__chain-badge--warn" : ""}`}
+            title={
+              chainTargetMissing
+                ? `Shot ${shot.prevShotRef} has no starred Take — chaining 대상 영상 없음`
+                : `Chained from Shot ${shot.prevShotRef} (uses its starred Take)`
+            }
+          >
+            ⛓ chain: Shot {shot.prevShotRef}
+            {chainTargetMissing && " ⚠️"}
+          </span>
+        )}
         <ShotAcknowledgeButton
           shot={shot}
           sceneSlug={sceneSlug}
@@ -128,6 +178,7 @@ export function ShotCard({
       {editing ? (
         <ShotMetaEditor
           shot={shot}
+          sceneShots={sceneShots}
           sceneSlug={sceneSlug}
           characters={characters}
           locations={locations}
@@ -138,9 +189,9 @@ export function ShotCard({
       ) : (
         <>
           <p className="shot__prompt">{shot.prompt}</p>
-          {shot.prevShotRef !== undefined && (
-            <div className="shot__prev">
-              chained from Shot {shot.prevShotRef}
+          {chainTargetMissing && (
+            <div className="shot__chain-warning" role="alert">
+              ⚠️ chaining 대상 영상 없음 — Shot {shot.prevShotRef}에 starred Take가 없습니다.
             </div>
           )}
           {chips.length > 0 && (
@@ -185,6 +236,7 @@ export function ShotCard({
 
 function ShotMetaEditor({
   shot,
+  sceneShots,
   sceneSlug,
   characters,
   locations,
@@ -193,6 +245,7 @@ function ShotMetaEditor({
   onMovieChanged,
 }: {
   shot: ShotDto;
+  sceneShots: readonly ShotDto[];
   sceneSlug: string;
   characters: readonly CharacterDto[];
   locations: readonly LocationDto[];
@@ -209,6 +262,12 @@ function ShotMetaEditor({
       />
       <DurationEditor
         shot={shot}
+        sceneSlug={sceneSlug}
+        onMovieChanged={onMovieChanged}
+      />
+      <PrevShotRefEditor
+        shot={shot}
+        sceneShots={sceneShots}
         sceneSlug={sceneSlug}
         onMovieChanged={onMovieChanged}
       />
@@ -239,6 +298,92 @@ function ShotMetaEditor({
         >
           Done
         </button>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * PrevShotRefEditor — dropdown of earlier Shots in the same Scene (+ "(none)").
+ *
+ * Slice 8. The domain enforces:
+ *   - same Scene only (we filter the options to this Scene's shots)
+ *   - earlier-Shot only (we filter to shots that appear before `shot.id` in
+ *     the Scene's shot order — matches the domain invariant in createScene)
+ *
+ * Persists via PUT /api/scenes/:slug/shots/:shotId/prev-shot-ref. The body's
+ * `prevShotRef` is `null` for the "(none)" option to clear the chain.
+ *
+ * Auto-saves on change (no separate Save button) because:
+ *  - the input is a small dropdown, not free text
+ *  - the user just changed exactly one value, so we mirror toggle semantics
+ *  - the server rebuilds the full MovieDto so the UI refreshes the chain
+ *    badge + warning on the parent ShotCard in the same tick.
+ */
+function PrevShotRefEditor({
+  shot,
+  sceneShots,
+  sceneSlug,
+  onMovieChanged,
+}: {
+  shot: ShotDto;
+  sceneShots: readonly ShotDto[];
+  sceneSlug: string;
+  onMovieChanged: (movie: MovieDto) => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+
+  // Earlier-Shot options — everything before this Shot in the Scene's shot
+  // order (matches createScene's "earlier" definition).
+  const selfIndex = sceneShots.findIndex((s) => s.id === shot.id);
+  const earlierShots = selfIndex >= 0 ? sceneShots.slice(0, selfIndex) : [];
+
+  async function onChange(
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): Promise<void> {
+    const raw = e.target.value;
+    const next = raw === "" ? null : raw;
+    setBusy(true);
+    setErr(null);
+    try {
+      const m = await editShotPrevShotRef(sceneSlug, shot.id, next);
+      onMovieChanged(m);
+    } catch (e2) {
+      setErr((e2 as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="shot-editor__field">
+      <label className="shot-editor__label" htmlFor={`prevref-${shot.id}`}>
+        Chain from (prevShotRef)
+      </label>
+      <div className="shot-editor__row">
+        {earlierShots.length === 0 ? (
+          <span className="shot-editor__hint">
+            No earlier Shot in this Scene to chain from.
+          </span>
+        ) : (
+          <select
+            id={`prevref-${shot.id}`}
+            className="shot-editor__select"
+            value={shot.prevShotRef ?? ""}
+            onChange={(e) => void onChange(e)}
+            disabled={busy}
+            aria-label="Chain from earlier Shot"
+          >
+            <option value="">(none)</option>
+            {earlierShots.map((s) => (
+              <option key={s.id} value={s.id}>
+                Shot {s.id}
+              </option>
+            ))}
+          </select>
+        )}
+        {err && <span className="shot-editor__error">{err}</span>}
       </div>
     </div>
   );

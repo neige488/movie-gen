@@ -297,6 +297,29 @@ export async function editShotPropRefs(
   return (await res.json()) as MovieDto;
 }
 
+/**
+ * Set / clear a Shot's `prevShotRef` (chaining) — Slice 8. Pass `null` to
+ * remove the chain. The server enforces the same-Scene + earlier-Shot
+ * invariant via the domain (createScene) so an invalid ref returns 400 with
+ * the domain message verbatim.
+ */
+export async function editShotPrevShotRef(
+  sceneSlug: string,
+  shotId: string,
+  prevShotRef: string | null,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/prev-shot-ref`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ prevShotRef }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot prev-shot-ref edit failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,

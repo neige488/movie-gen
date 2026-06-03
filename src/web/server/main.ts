@@ -66,6 +66,7 @@ import {
   applyShotDurationEdit,
   applyShotCharacterRefsEdit,
   applyShotLocationRefsEdit,
+  applyShotPrevShotRefEdit,
   applyShotPropRefsEdit,
   ShotEditError,
 } from "./shot-edit-handler.js";
@@ -596,6 +597,32 @@ async function main(): Promise<void> {
         sceneSlug: slug,
         shotId,
         refs: refs as { location: string; reference?: string }[],
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
+    );
+  });
+
+  // Shot prevShotRef (chaining) — Slice 8. Body: {"prevShotRef": string | null}.
+  // null clears the chain. Domain enforces same-Scene + earlier-Shot via the
+  // createScene invariant inside setShotPrevShotRef.
+  app.put("/api/scenes/:slug/shots/:shotId/prev-shot-ref", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { prevShotRef?: unknown };
+    const raw = body?.prevShotRef;
+    if (raw !== null && typeof raw !== "string") {
+      res.status(400).json({
+        error: "request body must be {prevShotRef: string | null}",
+      });
+      return;
+    }
+    runShotEdit(res, () =>
+      applyShotPrevShotRefEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        prevShotRef: raw,
         dataDir: DATA_DIR,
         saveSceneShots,
         createProject,
