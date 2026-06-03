@@ -206,6 +206,97 @@ export async function acknowledgeTakeRequest(
   return (await res.json()) as MovieDto;
 }
 
+/**
+ * Shot meta edit (Slice 7) — per-field PUT endpoints. Each returns the full
+ * MovieDto so the App can replace state in one tick. Errors surface the
+ * server's `error` field verbatim (e.g. domain invariant violations like
+ * "duration must be within [4, 15]" or "unknown Look").
+ */
+export async function editShotPrompt(
+  sceneSlug: string,
+  shotId: string,
+  prompt: string,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/prompt`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot prompt edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function editShotDuration(
+  sceneSlug: string,
+  shotId: string,
+  duration: number,
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/duration`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ duration }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot duration edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function editShotCharacterRefs(
+  sceneSlug: string,
+  shotId: string,
+  refs: { character: string; look: string }[],
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/character-refs`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ refs }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot character-refs edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function editShotLocationRefs(
+  sceneSlug: string,
+  shotId: string,
+  refs: { location: string; reference?: string }[],
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/location-refs`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ refs }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot location-refs edit failed");
+  return (await res.json()) as MovieDto;
+}
+
+export async function editShotPropRefs(
+  sceneSlug: string,
+  shotId: string,
+  refs: { prop: string; reference?: string }[],
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/shots/${encodeURIComponent(shotId)}/prop-refs`,
+    {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ refs }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "shot prop-refs edit failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,

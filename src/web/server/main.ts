@@ -61,6 +61,14 @@ import {
   applyAcknowledgeTake,
   AcknowledgeError,
 } from "./acknowledge-handler.js";
+import {
+  applyShotPromptEdit,
+  applyShotDurationEdit,
+  applyShotCharacterRefsEdit,
+  applyShotLocationRefsEdit,
+  applyShotPropRefsEdit,
+  ShotEditError,
+} from "./shot-edit-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, "../../..");
@@ -450,6 +458,184 @@ async function main(): Promise<void> {
           res.status(500).json({ error: err.message });
         }
       },
+    );
+  });
+
+  // --- Shot meta edit (Slice 7) -------------------------------------------
+  //
+  // Five per-field endpoints. Mirrors the per-field split from Slice 5
+  // (slugline / screenplay), keeping the wiring uniform — one HTTP endpoint
+  // per domain mutator. All return the full updated MovieDto so the client
+  // refresh is a single round-trip.
+
+  type ShotEditRunner = () => Promise<{ project: Project }>;
+  function runShotEdit(res: express.Response, runner: ShotEditRunner): void {
+    void runner().then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToMovieDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof ShotEditError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] shot edit failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  }
+
+  app.put("/api/scenes/:slug/shots/:shotId/prompt", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { prompt?: unknown };
+    if (typeof body?.prompt !== "string") {
+      res.status(400).json({ error: "request body must be {prompt: string}" });
+      return;
+    }
+    runShotEdit(res, () =>
+      applyShotPromptEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        prompt: body.prompt as string,
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
+    );
+  });
+
+  app.put("/api/scenes/:slug/shots/:shotId/duration", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { duration?: unknown };
+    if (typeof body?.duration !== "number" || !Number.isFinite(body.duration)) {
+      res
+        .status(400)
+        .json({ error: "request body must be {duration: number}" });
+      return;
+    }
+    runShotEdit(res, () =>
+      applyShotDurationEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        duration: body.duration as number,
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
+    );
+  });
+
+  app.put("/api/scenes/:slug/shots/:shotId/character-refs", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { refs?: unknown };
+    const refs = body?.refs;
+    if (!Array.isArray(refs)) {
+      res.status(400).json({
+        error:
+          "request body must be {refs: {character: string, look: string}[]}",
+      });
+      return;
+    }
+    // Shape check — domain rejects unknown refs via createProject, but we
+    // pre-validate the wire shape so a malformed payload returns 400 cleanly.
+    for (const r of refs) {
+      if (
+        typeof r?.character !== "string" ||
+        typeof r?.look !== "string"
+      ) {
+        res.status(400).json({
+          error: "each ref requires {character: string, look: string}",
+        });
+        return;
+      }
+    }
+    runShotEdit(res, () =>
+      applyShotCharacterRefsEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        refs: refs as { character: string; look: string }[],
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
+    );
+  });
+
+  app.put("/api/scenes/:slug/shots/:shotId/location-refs", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { refs?: unknown };
+    const refs = body?.refs;
+    if (!Array.isArray(refs)) {
+      res.status(400).json({
+        error:
+          "request body must be {refs: {location: string, reference?: string}[]}",
+      });
+      return;
+    }
+    for (const r of refs) {
+      if (typeof r?.location !== "string") {
+        res
+          .status(400)
+          .json({ error: "each ref requires {location: string}" });
+        return;
+      }
+      if (r.reference !== undefined && typeof r.reference !== "string") {
+        res
+          .status(400)
+          .json({ error: "ref.reference must be string when provided" });
+        return;
+      }
+    }
+    runShotEdit(res, () =>
+      applyShotLocationRefsEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        refs: refs as { location: string; reference?: string }[],
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
+    );
+  });
+
+  app.put("/api/scenes/:slug/shots/:shotId/prop-refs", (req, res) => {
+    const { slug, shotId } = req.params;
+    const body = req.body as { refs?: unknown };
+    const refs = body?.refs;
+    if (!Array.isArray(refs)) {
+      res.status(400).json({
+        error:
+          "request body must be {refs: {prop: string, reference?: string}[]}",
+      });
+      return;
+    }
+    for (const r of refs) {
+      if (typeof r?.prop !== "string") {
+        res.status(400).json({ error: "each ref requires {prop: string}" });
+        return;
+      }
+      if (r.reference !== undefined && typeof r.reference !== "string") {
+        res
+          .status(400)
+          .json({ error: "ref.reference must be string when provided" });
+        return;
+      }
+    }
+    runShotEdit(res, () =>
+      applyShotPropRefsEdit({
+        project: currentProject,
+        sceneSlug: slug,
+        shotId,
+        refs: refs as { prop: string; reference?: string }[],
+        dataDir: DATA_DIR,
+        saveSceneShots,
+        createProject,
+      }),
     );
   });
 

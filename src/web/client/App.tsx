@@ -217,6 +217,7 @@ function ViewerMain({
         <SceneView
           key={scene.slug}
           scene={scene}
+          movie={movie.value}
           onTakeUploaded={onTakeUploaded}
           onMovieChanged={onMovieChanged}
         />

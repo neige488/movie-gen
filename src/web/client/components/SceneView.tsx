@@ -8,11 +8,13 @@ import { copySceneRequest, toggleSceneStarred } from "../upload-client.js";
 
 interface Props {
   scene: SceneDto;
+  /** Library meta — forwarded to ShotCard for ref pickers (Slice 7). */
+  movie: MovieDto;
   onTakeUploaded: () => void;
   onMovieChanged: (movie: MovieDto) => void;
 }
 
-export function SceneView({ scene, onTakeUploaded, onMovieChanged }: Props) {
+export function SceneView({ scene, movie, onTakeUploaded, onMovieChanged }: Props) {
   const [copyBusy, setCopyBusy] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
 
@@ -99,6 +101,7 @@ export function SceneView({ scene, onTakeUploaded, onMovieChanged }: Props) {
         <ScreenplayEditor
           sceneSlug={scene.slug}
           screenplay={scene.screenplay}
+          shotIds={scene.shots.map((s) => s.id)}
           onMovieChanged={onMovieChanged}
         />
         <aside className="scene__shots">
@@ -110,6 +113,9 @@ export function SceneView({ scene, onTakeUploaded, onMovieChanged }: Props) {
                 key={shot.id}
                 shot={shot}
                 sceneSlug={scene.slug}
+                characters={movie.characters}
+                locations={movie.locations}
+                props={movie.props}
                 onTakeUploaded={onTakeUploaded}
                 onMovieChanged={onMovieChanged}
               />
