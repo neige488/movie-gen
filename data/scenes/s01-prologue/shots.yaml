@@ -1,0 +1,33 @@
+shots:
+  - id: "01"
+    prompt: "Close-up of Character A at a wooden desk, single warm desk lamp, rain-streaked window in background. Holding a pen, motionless."
+    duration: 6
+    screenplayHash: "fcbcb8ecb9c6d392eaf568c4c2951b4f10be931588a7f84908bce2d127ec2bf0"
+    characterRefs:
+      - character: character-a
+        look: introspective
+    locationRefs:
+      - location: small-apartment
+        reference: desk-corner
+    propRefs:
+      - prop: notebook
+    takes:
+      - id: t01
+        videoPath: takes/s01/01-take01.mp4
+        screenplayHash: fcbcb8ecb9c6d392eaf568c4c2951b4f10be931588a7f84908bce2d127ec2bf0
+        createdAt: "2026-05-01T09:00:00.000Z"
+        isStarred: true
+
+  - id: "02"
+    prompt: "Slow tracking shot following Character A from chair to window, city lights bokeh through rain."
+    duration: 8
+    screenplayHash: "3d45b1a3573ba1e2e8941f73a31a1f54a79ba5853700a2289e93055ac50ec007"
+    prevShotRef: "01"
+    characterRefs:
+      - character: character-a
+        look: introspective
+    locationRefs:
+      - location: small-apartment
+        reference: window-side
+    propRefs: []
+    takes: []

@@ -1,9 +1,53 @@
 ---
 feature: movie-gen
-milestone:  # git/gh 설정 후 채움
+milestone: 1
 base_branch: main
 merge_strategy: per-slice
-slices: []
+slices:
+  - id: 1
+    issue: 1
+    title: "Foundation + Scene Viewer"
+    type: feature-e2e
+  - id: 2
+    issue: 2
+    title: "Asset Library + 이미지 업로드"
+    type: feature-e2e
+    blocked_by: [1]
+  - id: 3
+    issue: 3
+    title: "Take 업로드 + 플레이어"
+    type: feature-e2e
+    blocked_by: [1]
+  - id: 4
+    issue: 7
+    title: "Starred 토글 (Take + Scene)"
+    type: feature-e2e
+    blocked_by: [1, 3]
+  - id: 5
+    issue: 4
+    title: "Light edit (Scene 복사 + screenplay + slugline)"
+    type: feature-e2e
+    blocked_by: [1]
+  - id: 6
+    issue: 5
+    title: "Sync 시그널 + 확인됨 액션"
+    type: feature-e2e
+    blocked_by: [1]
+  - id: 7
+    issue: 8
+    title: "Shot 메타 편집 + Marker 시각화"
+    type: feature-e2e
+    blocked_by: [1, 6]
+  - id: 8
+    issue: 9
+    title: "Chaining 자동화"
+    type: behavior-change
+    blocked_by: [4, 7]
+  - id: 9
+    issue: 6
+    title: "File watcher + 자동 reload"
+    type: feature-e2e
+    blocked_by: [1]
 ---
 
 # Movie Gen PRD

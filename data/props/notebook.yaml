@@ -1,0 +1,8 @@
+name: notebook
+references:
+  - name: closed
+    prompt: "A leather-bound notebook, closed, on a wooden surface."
+    image: notebook/closed.png
+  - name: open
+    prompt: "Same notebook, open, blank pages visible, pen resting on it."
+    image: notebook/open.png
