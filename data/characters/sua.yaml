@@ -1,0 +1,42 @@
+name: sua
+headshot: sua/headshot.png
+looks:
+  - name: accident-day
+    bodyProfile:
+      images:
+        - sua/accident-day/body-front.png
+        - sua/accident-day/body-side.png
+        - sua/accident-day/body-back.png
+    faceProfile:
+      images:
+        - sua/accident-day/face-front.png
+        - sua/accident-day/face-left.png
+        - sua/accident-day/face-right.png
+        - sua/accident-day/face-up.png
+        - sua/accident-day/face-down.png
+  - name: uniform
+    bodyProfile:
+      images:
+        - sua/uniform/body-front.png
+        - sua/uniform/body-side.png
+        - sua/uniform/body-back.png
+    faceProfile:
+      images:
+        - sua/uniform/face-front.png
+        - sua/uniform/face-left.png
+        - sua/uniform/face-right.png
+        - sua/uniform/face-up.png
+        - sua/uniform/face-down.png
+  - name: traveler-braid
+    bodyProfile:
+      images:
+        - sua/traveler-braid/body-front.png
+        - sua/traveler-braid/body-side.png
+        - sua/traveler-braid/body-back.png
+    faceProfile:
+      images:
+        - sua/traveler-braid/face-front.png
+        - sua/traveler-braid/face-left.png
+        - sua/traveler-braid/face-right.png
+        - sua/traveler-braid/face-up.png
+        - sua/traveler-braid/face-down.png

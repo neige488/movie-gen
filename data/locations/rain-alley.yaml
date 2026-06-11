@@ -1,0 +1,5 @@
+name: rain-alley
+references:
+  - name: evening-rain
+    prompt: Narrow Korean residential alley in steady evening rain, wet asphalt reflecting a single streetlamp, low walls, intimate scale. Photorealistic location reference, no people, cinematic 35mm look.
+    image: rain-alley/evening-rain.png

@@ -1,0 +1,11 @@
+shots:
+  - id: '01'
+    prompt: Interior of a car driving a Swiss alpine road. The driver's face is never shown — only hands on the wheel and snow-capped mountains drifting past the windshield. No radio, no voice. The road curves down toward a turquoise lake. Anonymous, serene, slightly unreal. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    duration: 10
+    screenplayHash: f7da7681ac9179fa0d27e522f859bd2fd04e8a3402d5f8de658e66eb0ee8ff6d
+    characterRefs: []
+    locationRefs:
+      - location: swiss-road
+        reference: mountain-drive
+    propRefs: []
+    takes: []

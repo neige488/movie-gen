@@ -1,0 +1,15 @@
+shots:
+  - id: '01'
+    prompt: 'MIRROR-B: the same bench, the same side framing as the lap-reading scene — positions reversed. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) lies with his head on SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers)''s lap, curled, shoulders shaking with silent crying. She strokes his hair slowly, her face calm and unreadable — no sorrow, no comfort, nothing to read. Grey sky, cold light, the city mute below. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 12
+    screenplayHash: 9caa6208e193031ad68e4ee5ffbff421ae279cc5d67d4b2dc4f03a106c2fee05
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: overcast
+    propRefs: []
+    takes: []

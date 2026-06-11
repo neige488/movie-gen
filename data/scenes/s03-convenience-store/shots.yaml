@@ -1,0 +1,30 @@
+shots:
+  - id: '01'
+    prompt: 'Korean convenience store window seats at night, warm fluorescent glow. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) with cup ramyeon; SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) nibbles a samgak-gimbap in tiny bites, one milk carton beside it. Korean dialogue: JIHOON: "그거 하나로 저녁이 돼?" SUA: "천천히 먹으면 오래가." JIHOON: "그게 무슨 말이야." SUA: "빨리 먹으면 없어지잖아." Matter-of-fact sweetness, natural lip sync. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 12
+    screenplayHash: bd5ed16524b65768bb629acc6efe613c39642b42805832103c6b92f762e453e1
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: convenience-store
+        reference: window-seat
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: 'He quietly slides his cup ramyeon toward her. She laughs and pushes it right back: "내 거 천천히 먹을 거야." Small warm beat, window reflections of the street. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 7
+    screenplayHash: f9cb7bd8035f1c1996ddbdb971fb86f0025de3fda02b5fa7d1b22250c9f30156
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: convenience-store
+        reference: window-seat
+    propRefs: []
+    takes: []

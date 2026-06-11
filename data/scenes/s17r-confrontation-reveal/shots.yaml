@@ -1,0 +1,15 @@
+shots:
+  - id: '01'
+    prompt: 'EXACT same blocking, framing and Korean dialogue as the confrontation scene — but the girl is now visibly a DIFFERENT person (a stranger classmate, rounder face, frightened): JIHOON: "너지. 어디 숨겼어." GIRL: "…뭐?" JIHOON: "말을 해." GIRL: "무슨 말인지 모르겠는데…" JIHOON: "꺼져. 다시는 내 앞에 나타나지 마." The reveal: he was screaming at a stranger all along. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 13
+    screenplayHash: ee32afe2e318990d42621bacc13ccd60ed919babe865fdf15f910f693e0015cb
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: classmate-girl
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []

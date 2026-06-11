@@ -1,0 +1,11 @@
+shots:
+  - id: '01'
+    prompt: 'Close shot: a hand opens the faded red hillside postbox and takes the letters inside. The owner of the hand is never shown — only hand, letters, postbox. Ambiguous time of day. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 6
+    screenplayHash: d97cffd825a95f7948c0fb20700107ee14aa9615e56ac90ad568409ca1e0994e
+    characterRefs: []
+    locationRefs:
+      - location: hill-bench
+        reference: day-city-view
+    propRefs: []
+    takes: []

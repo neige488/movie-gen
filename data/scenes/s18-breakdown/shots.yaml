@@ -1,0 +1,40 @@
+shots:
+  - id: '01'
+    prompt: 'Night hallway outside a teenager''s room, monitor glow in the door gap. MOTHER (late 40s, apron) knocks with a tray: "지훈아. 밥 먹어." No answer, game sounds inside. "지훈아—" Then a violent CRASH from inside, something breaking. Her face freezes. We stay OUTSIDE the door. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 9
+    screenplayHash: e2f3ffdc88543c89ab626193bd0a734c918363a48f9b20743d540d2278dff065
+    characterRefs:
+      - character: jihoon-mother
+        look: default
+    locationRefs:
+      - location: jihoon-home
+        reference: hallway
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: 'The door opens: the monitor lies face-down on the floor; JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) is collapsed under the desk, clutching his chest, hyperventilating. JIHOON, gasping: "엄마… 나 숨을… 숨을 못 쉬겠어." Raw, no music feel, handheld. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 10
+    screenplayHash: bc332a2e6db07c62bc6da419dfabb06ffcb60de796613a2251fdc93dbfad21f0
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: jihoon-mother
+        look: default
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs: []
+    takes: []
+  - id: '03'
+    prompt: 'Flashback shards, half a second each: a brake screech over white sky; a book falling through air; a single red sneaker rolling on asphalt; the boy running down an alley clutching a book; a uniformed girl hurrying away seen from behind. Hard cut to black. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 6
+    screenplayHash: cc29dfdd2296c7c8679d7f9bcca7e2adca90ea422eafaeac3601abf856a2cc06
+    prevShotRef: '02'
+    characterRefs: []
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs:
+      - prop: poetry-book
+    takes: []

@@ -1,0 +1,27 @@
+shots:
+  - id: '01'
+    prompt: JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) sprints down a narrow Korean alley and bursts onto a quiet 4-lane neighborhood crosswalk. The pedestrian light is red, no cars. Without slowing he steps onto the road. Urgent handheld energy, midday. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 6
+    screenplayHash: 233831a16fd9c8440dbb255a4f8be6452850a68ee1181280308c6d24d979b59d
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: Slow motion. As the running boy passes, the camera drifts past SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) sitting at the roadside reading a worn poetry book — her face at a three-quarter angle, serene, unaware. The red pedestrian signal glows soft at the frame edge. Time stretched, dreamlike clarity. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    duration: 8
+    screenplayHash: c0c53324afe6fad2a98957a494b4bbb8de4c8308c278b8034a1d036bfd3f7f23
+    prevShotRef: '01'
+    characterRefs:
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: crosswalk
+        reference: signal-red
+    propRefs:
+      - prop: poetry-book
+    takes: []

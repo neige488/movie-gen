@@ -1,0 +1,32 @@
+shots:
+  - id: '01'
+    prompt: 'Side-angle two-shot, locked frame: an old wooden bench on a hillside, city hazy below. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) lies with her head on JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack)''s lap, reading her poetry book. Korean dialogue: JIHOON: "다리 저려." SUA: "한 장만 더." JIHOON: "아까도 그랬잖아." SUA: "아깐 두 장이었고." Warm midday sun. (MIRROR-A: this exact bench, framing reused in the reversed scene.) Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 10
+    screenplayHash: 5e05758bb66d8f7e7aaf5d8d6d2713aa068f6b7a39fc7998f4de1619a5cacbe4
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: day-city-view
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: Close on JIHOON pretending to sigh while the corner of his mouth betrays a smile; wind flutters the book's pages on her chest. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    duration: 5
+    screenplayHash: 067c3d66d92bd0e53013293b97c0127657c44f70ad594465f9dc0b60224dd8c0
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: day-city-view
+    propRefs:
+      - prop: poetry-book
+    takes: []

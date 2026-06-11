@@ -1,0 +1,5 @@
+name: snack-bar
+references:
+  - name: interior
+    prompt: 'Small old Korean bunsik snack restaurant interior: steel tables, red stools, menu sheets on the wall, steam from the kitchen, daylight through the glass door. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: snack-bar/interior.png

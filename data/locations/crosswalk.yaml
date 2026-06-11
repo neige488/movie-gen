@@ -1,0 +1,11 @@
+name: crosswalk
+references:
+  - name: day-wide
+    prompt: A quiet 4-lane crosswalk in a Korean residential neighborhood at midday. Small local shops with hand-painted Korean signage (no corporate brands), pedestrian signal showing red on the far side, no bus stop visible. Clear warm daylight. Photorealistic location reference, no people, cinematic 35mm look.
+    image: crosswalk/day-wide.png
+  - name: signal-red
+    prompt: Close framing of a Korean pedestrian traffic light showing red, soft afternoon backlight, shallow depth, neighborhood street blurred behind. Photorealistic location reference, no people, cinematic 35mm look.
+    image: crosswalk/signal-red.png
+  - name: dusk
+    prompt: The same 4-lane Korean neighborhood crosswalk at dusk, signal glowing red across the street, long shadows, empty road. Photorealistic location reference, no people, cinematic 35mm look.
+    image: crosswalk/dusk.png

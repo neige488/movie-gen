@@ -1,0 +1,30 @@
+shots:
+  - id: '01'
+    prompt: 'An old apartment playground at dusk, a swing creaking. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) sits on a swing, pushing the sand with her toes. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) stands at the entrance, face crumpling at the sight of her. Korean dialogue: SUA, as if nothing happened: "늦었네." JIHOON, throat tight: "…어." SUA nods at the next swing: "앉아." She offers no comfort — she is simply there, unchanged. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 10
+    screenplayHash: e6fdf2889fb7fad51fafc82817f8c15324dc5ddc37820ba57a1b7505051a5413
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: playground
+        reference: dusk-swings
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: He sits on the swing beside her. For a long while they just sway, not speaking, two slow pendulums out of sync in the fading light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    duration: 8
+    screenplayHash: 15b5db96f045bfe83bdad0801e872d9f6278b8323e4b9bc40227b0c0506773e0
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: playground
+        reference: dusk-swings
+    propRefs: []
+    takes: []

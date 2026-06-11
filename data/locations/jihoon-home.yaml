@@ -1,0 +1,8 @@
+name: jihoon-home
+references:
+  - name: bedroom
+    prompt: 'A Korean teenage boy''s bedroom at night: gaming desk with monitor glow, single bed, study books piled, window with thin curtains, street light leaking in. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: jihoon-home/bedroom.png
+  - name: hallway
+    prompt: Apartment hallway outside a teenager's room at night, warm kitchen light from one end, door slightly ajar with monitor glow in the gap. A managed, newer Korean apartment interior. Photorealistic location reference, no people, cinematic 35mm look.
+    image: jihoon-home/hallway.png

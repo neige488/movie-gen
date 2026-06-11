@@ -1,0 +1,5 @@
+name: side-street
+references:
+  - name: school-route
+    prompt: A narrow Korean side street on a school commute route, parked cars, low shops, mid-afternoon, a slight bend where a bicycle and a car could meet. Photorealistic location reference, no people, cinematic 35mm look.
+    image: side-street/school-route.png

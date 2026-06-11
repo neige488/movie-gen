@@ -1,0 +1,32 @@
+shots:
+  - id: '01'
+    prompt: 'Night, teenage bedroom lit by a desk lamp. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) pores over tiny handwritten margin notes in the worn poetry book. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) sits on the edge of the bed behind him. Korean dialogue: SUA: "요즘 너, 그 책만 봐." JIHOON: "…돌려줘야 되니까. 주인 찾아서." SUA: "그 여자가 마음에 드는 거야?" JIHOON: "무슨 소리야." SUA: "너 요즘 이상해. 진짜 이상해." Frame it like a boy arguing with himself — her presence soft, almost part of the lamplight. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 13
+    screenplayHash: 97e230a106c91502568963160a7a97d882721235a87c1dccbf03d89e3f72254c
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: 'JIHOON, eyes still on the book: "잠깐만. 이것만 보고." SUA, voice wavering: "그만해. 그만 좀 해…" JIHOON snaps, shouting: "좀 내버려 둬!" Silence. When he finally turns around, the room is empty — the bed undisturbed. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 11
+    screenplayHash: 083348292ed586c8fc7fb19a38c445caab5ca34c7f81194698cc50a04e6af71f
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs:
+      - prop: poetry-book
+    takes: []

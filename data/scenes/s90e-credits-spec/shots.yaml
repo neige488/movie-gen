@@ -1,0 +1,10 @@
+shots:
+  - id: '01'
+    prompt: 'Credits interludes: macro close-ups of handwritten pencil notes in a poetry book''s margins, shallow focus, one line at a time (live-action plates, text by director); intercut with moments of the girl vanishing from frames we have seen before. Black, sparse, no narration. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 10
+    screenplayHash: 4f9e9ae662eeef92a5e19b8fd1c9bf8e4ea709bc01ffe4cbec713aff0cf3715f
+    characterRefs: []
+    locationRefs: []
+    propRefs:
+      - prop: poetry-book
+    takes: []

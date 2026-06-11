@@ -237,11 +237,37 @@
 - 권고 개수 4개 내외, 획득 순서와 **변곡점**(환상이 처음 금 가는 파편이 몇 번째인가)이 관계 곡선의 무게중심 [OPEN].
 - ⚠️ 결핍을 주제로 격상 금지 (concept 7-4 감독 제동).
 
+## data/scenes/ 매핑 (MVP 폴더화 완료 — 2026-06-11)
+
+전 씬이 `data/scenes/`에 각본(구어체 대사)+Shot 분해+생성 프롬프트로 구체화됨. 별표(★)=메인 시퀀스(isStarred).
+
+| 인벤토리 | 폴더 | | 인벤토리 | 폴더 |
+|---|---|---|---|---|
+| OP-A | s00a-op-seed-crosswalk | | C-14② | s15b-snackbar ★ |
+| OP-B | s00b-op-swiss-roadtrip | | C-14③ | s15c-empty-desk ★ |
+| OP-C | s00c-op-late-run | | C-16 | s16-bench-lap-reversed ★ |
+| C-01 | s01-redlight-banter ★ | | C-17 | s17-confrontation ★ |
+| C-02 | s02-classroom-window ★ | | C-17리빌 | s17r-confrontation-reveal |
+| C-03 | s03-convenience-store ★ | | C-18 | s18-breakdown ★ |
+| C-04 | s04-rain-alley ★ | | C-18b | s19-doctor ★ |
+| C-05 | s05-bus-stop ★ | | C-19 | s20-playground ★ |
+| C-06 | s06-bench-lap-reading ★ | | C-20 | s21-accident-fragments |
+| C-07 | s07-mailbox-letters ★ | | C-21 | s22-reunion ★ |
+| last seen #2 | s07b-mailbox-hand | | C-22 | s23-finding-home ★ |
+| C-08 | s08-swiss-promise ★ | | C-23 | s24-suas-home ★ |
+| C-09F/R | s09-amusement-park ★ / s09r | | C-24 | s25-hospital ★ |
+| C-10F/R | s10-ice-rink ★ / s10r | | END-A | s90a-ending-crosswalk |
+| C-11 | s11-sleepless ★ | | END-B | s90b-ending-interlaken |
+| C-12 | s12-minor-accident ★ | | END-B' | s90c-pairs-montage |
+| C-13 | s13-back-figure ★ | | END-C | s90d-cookie-redlight |
+| C-15 | s14-jealousy ★ | | END-D | s90e-credits-spec |
+| C-14① | s15a-empty-places ★ | | | |
+
 ## 제작 우선순위 제안 (다음 단계)
 
-1. **메모 텍스트 확정 (미결 5)** — 2막의 척추. 이것 없이는 C-03~05 출처 짝과 질투 방아쇠가 안 닫힘.
-2. **공통 씬부터 생성** — 인벤토리 28씬 중 A/B 전용은 오프닝·엔딩뿐. 나머지 전부 축 무관하게 진행 가능.
-3. 씬 인벤토리 → `data/scenes/` 폴더화 (Scene/Shot 분해)는 이 문서 검토 후 별도 단계로.
+1. **메모 텍스트 확정 (미결 5)** — 2막의 척추. C-03~05 출처 짝과 질투 방아쇠가 여기 걸림. (MVP 각본의 잠정 대사는 작성됨 — 메모 확정 후 역정합 검수)
+2. **캐릭터/로케 레퍼런스 이미지 생성** — `data/characters/PROMPTS.md` + 각 location YAML의 reference prompt로 시트 생성 → `assets/`에 배치.
+3. **공통 씬부터 영상 생성** — A/B 전용은 오프닝·엔딩뿐. 나머지 전부 축 무관하게 진행 가능.
 
 ---
 

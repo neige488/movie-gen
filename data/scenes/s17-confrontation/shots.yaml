@@ -1,0 +1,40 @@
+shots:
+  - id: '01'
+    prompt: Lunchtime classroom. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) wakes from a desk nap — the poetry book is gone. He tears through the drawer, dumps his backpack. Nothing. Rising panic, handheld. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 7
+    screenplayHash: 3b52e6cbef6c21179e60e37523008dd748635f0c41fe9973a56cb48f1904e075
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: 'JIHOON (18, Korean high school boy, soft features, black hair, school uniform) strides to the back of the classroom and squares up to a bob-haired girl in uniform — played here by SUA (18, Korean girl, chin-length black bob, Korean school uniform with skirt) (THE TRAP: on first viewing she reads as Sua). Korean dialogue: JIHOON: "너지. 어디 숨겼어." GIRL, bewildered: "…뭐?" JIHOON: "말을 해." GIRL, backing away: "무슨 말인지 모르겠는데…" JIHOON, cold: "꺼져. 다시는 내 앞에 나타나지 마." He never says a name. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 13
+    screenplayHash: 3294e65e1d767f5775a65fdd6ba5c822fb0874ea42f3e4a3e6823c9a8040883c
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []
+  - id: '03'
+    prompt: 'Separate cutaway: two classmates at the front rise, faces stiff. FRIEND: "야, 너 미쳤어?" The room has gone silent, everyone staring. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 5
+    screenplayHash: 548b4eb482d012579b42de62695ffce337ab72f5a4f13d203c69455d19158572
+    prevShotRef: '02'
+    characterRefs: []
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []

@@ -1,0 +1,11 @@
+name: hill-bench
+references:
+  - name: day-city-view
+    prompt: An old weathered wooden bench on a hillside path in a Korean daldongne (hillside village), beside a faded red postbox with peeling paint. The city spreads below in haze. Warm afternoon. Photorealistic location reference, no people, cinematic 35mm look.
+    image: hill-bench/day-city-view.png
+  - name: sunset
+    prompt: The same old wooden bench and faded red postbox on the hillside at sunset, sky in orange-pink, city lights beginning below. Photorealistic location reference, no people, cinematic 35mm look.
+    image: hill-bench/sunset.png
+  - name: overcast
+    prompt: The same bench and postbox under a flat grey overcast sky, cold light, wind in the grass, city muted below. Photorealistic location reference, no people, cinematic 35mm look.
+    image: hill-bench/overcast.png

@@ -1,0 +1,5 @@
+name: bus-stop
+references:
+  - name: dusk
+    prompt: 'Small Korean neighborhood bus stop at dusk: simple bench and pole sign (no corporate ads), warm low sun, quiet two-lane road. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: bus-stop/dusk.png

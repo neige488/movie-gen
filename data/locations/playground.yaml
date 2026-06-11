@@ -1,0 +1,5 @@
+name: playground
+references:
+  - name: dusk-swings
+    prompt: 'An old Korean apartment-block playground at dusk: two worn swings, faded paint, sand ground, long shadows, empty. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: playground/dusk-swings.png

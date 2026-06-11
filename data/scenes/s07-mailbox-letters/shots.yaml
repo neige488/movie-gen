@@ -1,0 +1,30 @@
+shots:
+  - id: '01'
+    prompt: 'Beside the hillside bench, a faded red postbox with peeling paint. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) holds a folded letter. Korean dialogue: SUA: "여기 아무도 안 오는 거 알지?" JIHOON: "근데 우체통은 왜 있냐." SUA: "그러니까. 근데 있잖아 — 편지 넣어두면, 한 번씩 누가 싹 가져가." Side two-shot, warm light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 9
+    screenplayHash: c91744fedfe7caad49bc1165b63e41c708188bf0282f31a680d3dd32d20627dc
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: day-city-view
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: 'She slips the letter into the postbox. JIHOON: "…누가?" SUA: "몰라. 나 꿀꿀할 때마다 여기 와서 편지 써서 넣거든. 그럼 꼭… 누가 들어주는 거 같단 말이야." JIHOON: "답장은 오고?" SUA, thinking a beat, grinning: "그건 욕심이지." Lovely on first watch; devastating on second. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 13
+    screenplayHash: 556b2c1b920e1ff27c130f61a07c841a138bb746f26aa580a98fea8939f1e559
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: day-city-view
+    propRefs: []
+    takes: []

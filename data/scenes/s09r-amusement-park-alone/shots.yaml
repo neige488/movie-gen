@@ -1,0 +1,14 @@
+shots:
+  - id: '01'
+    prompt: The same carousel, same framing as the couple version — but JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) rides alone among small children and their parents, a worn poetry book in one hand. He does not smile. Same flawless daylight, now quietly wrong. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 8
+    screenplayHash: f6e314cea3c25accee8625297ca96581ef9fef7830f608da216cf9d033c34254
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+    locationRefs:
+      - location: amusement-park
+        reference: carousel
+    propRefs:
+      - prop: poetry-book
+    takes: []

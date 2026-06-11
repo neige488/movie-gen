@@ -1,0 +1,13 @@
+shots:
+  - id: '01'
+    prompt: Night. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) lies in bed eyes open, staring at the ceiling. Through the window, a traffic light cycles on the wall — red, green, red again — washing the room in faint color. He does not sleep. Static camera, long quiet. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 9
+    screenplayHash: f77f77bc765507f80ceefe77ab27dbdc7720c1a7ae06ef0c7af931732bd399ed
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs: []
+    takes: []

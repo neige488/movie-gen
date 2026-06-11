@@ -1,0 +1,5 @@
+name: school-office
+references:
+  - name: teachers-room
+    prompt: Korean high school teachers' office, stacked papers and binders, late afternoon light, one desk with an open student-records ledger. Photorealistic location reference, no people, cinematic 35mm look.
+    image: school-office/teachers-room.png

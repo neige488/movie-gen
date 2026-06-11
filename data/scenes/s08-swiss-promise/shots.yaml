@@ -1,0 +1,31 @@
+shots:
+  - id: '01'
+    prompt: 'Sunset on the hillside bench, same side framing. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) lies on JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack)''s lap, closes the book on her chest. Korean dialogue: SUA: "있잖아. 나 가고 싶은 데 생겼다?" JIHOON: "어딘데." SUA: "호수가 있고, 뒤에 눈 쌓인 산이 있어. 물이 무슨… 물감 풀어놓은 것 같애." JIHOON: "그런 데가 어딨어." SUA: "있대, 진짜. 책에서 봤어." Orange-pink sky. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 13
+    screenplayHash: fb65015b7191eca6d28fe58506f83dc90a3b29337e4f934dc3af8cf650810c8a
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: sunset
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: 'JIHOON: "…가자 그럼. 나중에." She tilts her head back to look up at him: "약속한 거다?" JIHOON: "어. 약속." Her upside-down smile fills the lower frame, city lights waking below. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    duration: 8
+    screenplayHash: 588e00e1e0785a369e3cee2d79040f5cc002358f0362a0b0dba33f970c1c5d96
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: sunset
+    propRefs: []
+    takes: []

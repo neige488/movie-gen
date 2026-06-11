@@ -1,0 +1,30 @@
+shots:
+  - id: '01'
+    prompt: 'A small old Korean bunsik snack bar. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) and SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) sit across from each other. The owner sets down ONE water cup, looks only at the boy. Korean dialogue: OWNER: "뭐 줄까?" JIHOON: "떡볶이 이인분이요." OWNER, an odd beat: "…그래, 많이 먹어." First read: a busy ajumma. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    duration: 9
+    screenplayHash: 2067662d425144ea4a5f6e877774784480ec9aa8460ba27b8114341961ca5de4
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: snack-bar
+        reference: interior
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: SUA chatters at the menu — "나 순대도. 아, 근데 순대는 좀 그런가." — while chopsticks are laid at the boy's place only. Nobody acknowledges her. The camera holds the asymmetry without comment. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 9
+    screenplayHash: 303d188126b7e0e07e138dfc6ca3d8aeca5b7f95ceff5c30897aeb978b050d17
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: snack-bar
+        reference: interior
+    propRefs: []
+    takes: []

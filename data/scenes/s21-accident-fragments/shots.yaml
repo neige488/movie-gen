@@ -1,0 +1,41 @@
+shots:
+  - id: '01'
+    prompt: Slow motion, raw realistic grade (NOT the warm fantasy look). JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) sprints across the red-light crosswalk, swerving past SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) who reads at the roadside. As he passes, his head turns slightly — her profile. She never looks up from the book. Harsh daylight, desaturated. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 7
+    screenplayHash: d2627ec0fc5dd4e389c65c83a619e9ea207e6894a7fc17048a4d9c97917ff62e
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: Across the road now, JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) slows after a few steps — recognition hits. That face. He turns around. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 4
+    screenplayHash: ee8b6ff35981da058339333d3eb62bda12a68bcaddf7574dda75c1a16f320e41
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs: []
+    takes: []
+  - id: '03'
+    prompt: A brake SCREECH over empty white sky. A book spinning in the air. A single red canvas sneaker rolling to a stop on the asphalt. Hard cut. The impact itself is never shown. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 5
+    screenplayHash: bb255e62dc637fbeb82e07da6ed0d05edc8b00636c934221033ea556c1690aed
+    prevShotRef: '02'
+    characterRefs: []
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs:
+      - prop: poetry-book
+    takes: []

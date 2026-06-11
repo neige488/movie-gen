@@ -1,0 +1,5 @@
+name: school-hallway
+references:
+  - name: window-row
+    prompt: Korean high school corridor in afternoon light, a row of classroom windows looking into a classroom, waxed floor reflections, dust in sunbeams. Photorealistic location reference, no people, cinematic 35mm look.
+    image: school-hallway/window-row.png

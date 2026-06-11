@@ -1,0 +1,28 @@
+shots:
+  - id: '01'
+    prompt: Dusk. On a low planter ledge a girl in Korean school uniform sits with her BACK to camera, reading. Across the street JIHOON (18, Korean high school boy, soft features, black hair, school uniform) stops mid-step, the worn poetry book in his hand. Her face is never visible. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 7
+    screenplayHash: ffdeff9ef8f019d072e724996c3e5cbcee4c6a55d9607f1267afa9d25ef0d8ee
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: crosswalk
+        reference: dusk
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '02'
+    prompt: He takes one step toward her — a pedestrian signal begins to beep, sharp and rhythmic. His body locks rigid, knuckles whitening on the book. When the frame returns to the ledge, the girl is gone. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    duration: 7
+    screenplayHash: deefb553bf378d9d6f5696603eb49d86dbcb68260dae91dc2b484b6eeaad85e5
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: crosswalk
+        reference: dusk
+    propRefs:
+      - prop: poetry-book
+    takes: []

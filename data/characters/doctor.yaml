@@ -1,0 +1,16 @@
+name: doctor
+headshot: doctor/headshot.png
+looks:
+  - name: default
+    bodyProfile:
+      images:
+        - doctor/default/body-front.png
+        - doctor/default/body-side.png
+        - doctor/default/body-back.png
+    faceProfile:
+      images:
+        - doctor/default/face-front.png
+        - doctor/default/face-left.png
+        - doctor/default/face-right.png
+        - doctor/default/face-up.png
+        - doctor/default/face-down.png

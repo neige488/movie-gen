@@ -1,0 +1,5 @@
+name: swiss-road
+references:
+  - name: mountain-drive
+    prompt: 'View from inside a car driving a Swiss alpine road: snow-capped mountains through the windshield, the road curving down toward a turquoise lake, no other cars. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: swiss-road/mountain-drive.png
