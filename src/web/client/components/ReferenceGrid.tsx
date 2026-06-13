@@ -1,5 +1,6 @@
 import type { ImageReferenceDto } from "../../shared/dto.js";
 import { ImageSlot } from "./ImageSlot.js";
+import { PromptBlock } from "./PromptBlock.js";
 
 interface Props {
   kind: "location" | "prop";
@@ -43,9 +44,7 @@ export function ReferenceGrid({ kind, name, references, onUploaded }: Props) {
                 label={r.name}
                 onUploaded={onUploaded}
               />
-              <div className="ref__prompt" title={r.prompt}>
-                {r.prompt}
-              </div>
+              <PromptBlock prompt={r.prompt} />
             </div>
           ))}
         </div>
