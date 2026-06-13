@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: Same rink, same light. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) skates alone in long, expert strides — effortless, expressionless. At the rink's edge a worn poetry book rests on the boards. The grace that was a half-second flicker is now the whole truth. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Same rink, same light. Jihoon skates alone in long, expert strides — effortless, expressionless. At the rink''s edge a worn poetry book rests on the boards. The grace that was a half-second flicker is now the whole truth. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 9
     screenplayHash: 64199fe9b87b9e33921612b58f06f0716b3e41d117aa9410eda22c3a08457776
     characterRefs:

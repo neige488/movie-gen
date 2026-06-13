@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Evening rain in a narrow Korean alley, one umbrella shared. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) hugs her poetry book to her chest; the umbrella keeps tilting toward the book. Korean dialogue: JIHOON: "너보다 책이 더 중요하냐?" SUA: "책은 젖으면 티 나잖아." JIHOON: "사람은?" SUA: "사람은 말리면 돼." Wet asphalt reflections, intimate side tracking shot. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Evening rain in a narrow Korean alley, one umbrella shared. Sua hugs her poetry book to her chest; the umbrella keeps tilting toward the book. Korean dialogue: JIHOON: "너보다 책이 더 중요하냐?" SUA: "책은 젖으면 티 나잖아." JIHOON: "사람은?" SUA: "사람은 말리면 돼." Wet asphalt reflections, intimate side tracking shot. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 12
     screenplayHash: a21fd01b1efb26b9872aeba3781ece7ee6f07820dcb60fce49356814d6422391
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: He laughs in disbelief and tilts the umbrella further over her. His own shoulder slowly darkens with rain. Quiet, warm, a little sad if you look twice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    prompt: 'He laughs in disbelief and tilts the umbrella further over her. His own shoulder slowly darkens with rain. Quiet, warm, a little sad if you look twice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 5ce7aa93fbf434a81888d881749112b6e713112a17dd72fc956330898567dcf0
     prevShotRef: '01'

@@ -1,11 +1,11 @@
 name: sua-home
 references:
   - name: corridor-apartment
-    prompt: Exterior of an old Korean corridor-type (bokdo-sik) apartment building, weathered concrete, exposed walkways with laundry, afternoon haze. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: Exterior of an older corridor-type (bokdo-sik) apartment building in Nowon-gu — 1980s-90s stock, well-maintained but plainly older than the surrounding new towers. Clean exposed walkways, afternoon light. (Deliberate quiet contrast with Jihoon's newer complex — NOT a slum.) 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: sua-home/corridor-apartment.png
   - name: front-door
-    prompt: 'Third-floor open-air corridor of an old Korean apartment: worn front door, dim corridor light, city visible past the railing. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 'Open-air corridor of the older Nowon apartment: a plain but clean front door, even corridor light, the academy district visible past the railing. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: sua-home/front-door.png
   - name: entry-glimpse
-    prompt: 'View through a half-open Korean apartment front door into a small dim entryway: shoe cabinet with a framed photo on top and a pair of red canvas sneakers placed neatly beside it. Shallow depth. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 'View through a half-open Korean apartment front door into a small tidy entryway: a shoe cabinet with a framed photo on top and a pair of red canvas sneakers placed neatly beside it. Shallow depth. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: sua-home/entry-glimpse.png

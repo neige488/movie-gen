@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'A modest Korean amusement park on a flawless clear day. Before the carousel, Korean dialogue: SUA: "나 이런 데 처음 와 봐." JIHOON: "거짓말하지 마." SUA, looking up at the horses: "진짜야. …좋다." Her face lit with quiet wonder. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'A modest Korean amusement park on a flawless clear day. Before the carousel, Korean dialogue: SUA: "나 이런 데 처음 와 봐." JIHOON: "거짓말하지 마." SUA, looking up at the horses: "진짜야. …좋다." Her face lit with quiet wonder. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 9
     screenplayHash: 8ca1fbef3d22c85fd53f1979343b0d392103d6da4caba19fda8a19013d9e0da3
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: The two ride the carousel side by side; SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) laughs freely, pastel horses rising and falling. The afternoon is somehow too perfect, light a touch dreamlike. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    prompt: 'The two ride the carousel side by side; Sua laughs freely, pastel horses rising and falling. The afternoon is somehow too perfect, light a touch dreamlike. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: c046ee3b51e6b9910ae39bb95b42311aed47cd43568805d73f57342d6be798e1
     prevShotRef: '01'

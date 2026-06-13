@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Small Korean neighborhood bus stop at dusk. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) reads on the bench; JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) beside her keeps stealing glances. Korean dialogue: JIHOON: "맨날 뭘 그렇게 읽냐?" SUA: "집에 가는 이야기." JIHOON: "그게 재밌어?" SUA: "집에 가는 게 제일 어려운 사람도 있잖아." Low golden light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Small Korean neighborhood bus stop at dusk. Sua reads on the bench; Jihoon beside her keeps stealing glances. Korean dialogue: JIHOON: "맨날 뭘 그렇게 읽냐?" SUA: "집에 가는 이야기." JIHOON: "그게 재밌어?" SUA: "집에 가는 게 제일 어려운 사람도 있잖아." Low golden light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 12
     screenplayHash: b385f14e41948d978f776abb52e9266a690d31d2ef1f8b6452c3456ff797fef4
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: 'A bus stops, waits, leaves. Neither moves. JIHOON: "…안 타?" SUA, turning a page: "다음 거." The bus''s tail lights drift away in the dusk. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'A bus stops, waits, leaves. Neither moves. JIHOON: "…안 타?" SUA, turning a page: "다음 거." The bus''s tail lights drift away in the dusk. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: 1d0e459b22d6225fcda4657a184b56869b9108172d2fbc500baacba8f552eaf2
     prevShotRef: '01'

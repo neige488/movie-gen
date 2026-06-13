@@ -1,11 +1,11 @@
 name: hill-bench
 references:
   - name: day-city-view
-    prompt: An old weathered wooden bench on a hillside path in a Korean daldongne (hillside village), beside a faded red postbox with peeling paint. The city spreads below in haze. Warm afternoon. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: A wooden bench in a tidy hillside neighborhood park at the foot of Bulamsan/Suraksan in Nowon-gu, beside a single old-style red postbox (a deliberate vintage detail in an otherwise well-kept park). Modern apartment towers and the academy district spread below. Warm afternoon. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: hill-bench/day-city-view.png
   - name: sunset
-    prompt: The same old wooden bench and faded red postbox on the hillside at sunset, sky in orange-pink, city lights beginning below. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: The same bench and old red postbox in the hillside park at sunset, sky in orange-pink, the Nowon apartment skyline lighting up below. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: hill-bench/sunset.png
   - name: overcast
-    prompt: The same bench and postbox under a flat grey overcast sky, cold light, wind in the grass, city muted below. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: The same bench and postbox under a flat grey overcast sky, cold light, wind in the grass, the city muted below. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: hill-bench/overcast.png

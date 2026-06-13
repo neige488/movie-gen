@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'A silent montage: each two-shot from the happy scenes dissolves into the SAME framing with the boy alone — bench reading, convenience store, carousel, ice rink. No dialogue, no music cue baked in. The compositions must match the couple versions exactly. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'A silent montage: each two-shot from the happy scenes dissolves into the SAME framing with the boy alone — bench reading, convenience store, carousel, ice rink. No dialogue, no music cue baked in. The compositions must match the couple versions exactly. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 12
     screenplayHash: 04830c70c37113bf123890c9be8154d89e474cf1c0f05d5ab70ed8450263896e
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'Final piece: the rain alley — one umbrella, JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) walking alone beneath it, perfectly dry on both shoulders. The umbrella never tilts. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Final piece: the rain alley — one umbrella, Jihoon walking alone beneath it, perfectly dry on both shoulders. The umbrella never tilts. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: 02ceaacd309a600efa1db6bb8872f3626e86dc600a912c3e032430e58650de40
     prevShotRef: '01'

@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) arrives panting at a quiet Korean neighborhood crosswalk, red light, no cars. One foot already steps off the curb. Beside him SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) looks up from her worn poetry book. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.
+    prompt: 'Jihoon arrives panting at a quiet Korean neighborhood crosswalk, red light, no cars. One foot already steps off the curb. Beside him Sua looks up from her worn poetry book. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: b7bf85bbf2b37611ca206a201f028c9f633a4abde2967209a123b92e61d1a903
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: 'Two-shot at the crosswalk, warm afternoon. Playful banter in Korean. SUA: "너 또 빨간불에 건너려 했지?" JIHOON: "아니거든." SUA: "거짓말." JIHOON: "넌 어떻게 맨날 알아?" SUA: "네가 맨날 그러니까." He laughs, mock-offended. Natural Korean lip sync, bright teen chemistry. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Two-shot at the crosswalk, warm afternoon. Playful banter in Korean. SUA: "너 또 빨간불에 건너려 했지?" JIHOON: "아니거든." SUA: "거짓말." JIHOON: "넌 어떻게 맨날 알아?" SUA: "네가 맨날 그러니까." He laughs, mock-offended. Natural Korean lip sync, bright teen chemistry. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 12
     screenplayHash: acc2f6f4b47361277eb577780746d417d4f19af70a20d96fbb1a5b8e7c632faa
     prevShotRef: '01'
@@ -30,7 +30,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: 'Wide shot: the light turns green and the two cross side by side, small talk continuing soundlessly, warm golden afternoon. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Wide shot: the light turns green and the two cross side by side, small talk continuing soundlessly, warm golden afternoon. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 5
     screenplayHash: fca9a0a26825ac48aa7de9f82502bb0e18f29141acba0291f0eaac22e4af323c
     prevShotRef: '02'

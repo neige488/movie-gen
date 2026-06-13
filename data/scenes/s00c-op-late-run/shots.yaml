@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: A Korean teenager's bedroom, morning. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) slams his game quiet and scrambles to leave — hoodie thrown over uniform, backpack zipper half open, one hoodie drawstring hanging longer than the other. Hurried, lived-in detail. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'A Korean teenager''s bedroom, morning. Jihoon slams his game quiet and scrambles to leave — hoodie thrown over uniform, backpack zipper half open, one hoodie drawstring hanging longer than the other. Hurried, lived-in detail. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 63d26aa0a53377a20c6884ff4665f3ea9251406f821a342a6976b90d9cb58fc8
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) bursts out of a narrow Korean alley at a run, breath ragged, urgent. Morning light, handheld follow. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Jihoon bursts out of a narrow Korean alley at a run, breath ragged, urgent. Morning light, handheld follow. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 5
     screenplayHash: fe75452b24ed6f4b62a716b04a87b5747bab913d6bdfa2c9777d7c53759818f7
     prevShotRef: '01'

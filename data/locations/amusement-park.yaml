@@ -1,5 +1,5 @@
 name: amusement-park
 references:
   - name: carousel
-    prompt: A modest Korean amusement park carousel on a perfect clear day, pastel horses, gentle flags, slightly dreamlike over-perfect sunlight. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: A clean modern Korean amusement park carousel on a perfect clear day, pastel horses, gentle flags, slightly dreamlike over-perfect sunlight. Photorealistic location reference, no people, cinematic 35mm look.
     image: amusement-park/carousel.png

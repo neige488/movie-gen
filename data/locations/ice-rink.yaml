@@ -1,5 +1,5 @@
 name: ice-rink
 references:
   - name: indoor
-    prompt: Indoor ice rink in Korea, pale blue ice, soft diffuse ceiling light, low boards with worn paint, a few distant skaters' trails on the ice. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: A clean modern indoor ice rink in Korea, pale blue ice, soft diffuse ceiling light, tidy boards, a few distant skaters' trails on the ice. Photorealistic location reference, no people, cinematic 35mm look.
     image: ice-rink/indoor.png

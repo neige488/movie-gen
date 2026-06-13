@@ -1,8 +1,8 @@
 name: classroom
 references:
   - name: midday
-    prompt: Korean high school classroom at lunchtime, desks slightly disordered, bright window light, green chalkboard. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: Modern Korean high school classroom at lunchtime, tidy desks, bright window light, digital whiteboard. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: classroom/midday.png
   - name: empty-desk
-    prompt: Korean high school classroom, one desk by the window conspicuously empty with its chair placed upside down on top, thin dust on the desktop, students' belongings on every other desk. Quiet, slightly desaturated. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: Modern Korean high school classroom, one desk by the window conspicuously empty with its chair placed upside down on top, thin dust on the desktop, students' belongings on every other desk. Quiet, slightly desaturated. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: classroom/empty-desk.png

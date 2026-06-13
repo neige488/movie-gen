@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: The same carousel, same framing as the couple version — but JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) rides alone among small children and their parents, a worn poetry book in one hand. He does not smile. Same flawless daylight, now quietly wrong. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'The same carousel, same framing as the couple version — but Jihoon rides alone among small children and their parents, a worn poetry book in one hand. He does not smile. Same flawless daylight, now quietly wrong. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: f6e314cea3c25accee8625297ca96581ef9fef7830f608da216cf9d033c34254
     characterRefs:

@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'MIRROR-B: the same bench, the same side framing as the lap-reading scene — positions reversed. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) lies with his head on SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers)''s lap, curled, shoulders shaking with silent crying. She strokes his hair slowly, her face calm and unreadable — no sorrow, no comfort, nothing to read. Grey sky, cold light, the city mute below. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'MIRROR-B: the same bench, the same side framing as the lap-reading scene — positions reversed. Jihoon lies with his head on Sua''s lap, curled, shoulders shaking with silent crying. She strokes his hair slowly, her face calm and unreadable — no sorrow, no comfort, nothing to read. Grey sky, cold light, the city mute below. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 12
     screenplayHash: 9caa6208e193031ad68e4ee5ffbff421ae279cc5d67d4b2dc4f03a106c2fee05
     characterRefs:

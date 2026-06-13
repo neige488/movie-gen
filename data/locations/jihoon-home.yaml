@@ -1,8 +1,8 @@
 name: jihoon-home
 references:
   - name: bedroom
-    prompt: 'A Korean teenage boy''s bedroom at night: gaming desk with monitor glow, single bed, study books piled, window with thin curtains, street light leaking in. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 'A Korean teenage boy''s bedroom at night in a newer well-kept apartment: gaming desk with monitor glow, single bed, study books piled, window with thin curtains, city light leaking in. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: jihoon-home/bedroom.png
   - name: hallway
-    prompt: Apartment hallway outside a teenager's room at night, warm kitchen light from one end, door slightly ajar with monitor glow in the gap. A managed, newer Korean apartment interior. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 'Hallway outside a teenager''s room at night in a modern, well-kept Korean apartment (newer large complex): warm kitchen light from one end, door slightly ajar with monitor glow in the gap. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: jihoon-home/hallway.png

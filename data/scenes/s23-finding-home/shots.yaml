@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Afternoon, unfamiliar hillside lanes. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) walks half a step ahead of JIHOON (18, Korean high school boy, soft features, black hair, school uniform) who checks a scrap of paper. Korean dialogue: JIHOON: "이 동네 맞아?" SUA: "이쪽이야." JIHOON: "…와 본 적 있어?" SUA, the briefest hitch in her step, not turning around: "그냥, 알 것 같아." Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Afternoon, unfamiliar hillside lanes. Sua walks half a step ahead of Jihoon who checks a scrap of paper. Korean dialogue: JIHOON: "이 동네 맞아?" SUA: "이쪽이야." JIHOON: "…와 본 적 있어?" SUA, the briefest hitch in her step, not turning around: "그냥, 알 것 같아." Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 11
     screenplayHash: 1acb4b5dae634dcfd151fa08c5694b0132e9df939a17b1061091b4bd92b154ef
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'They stop before an old corridor-type apartment block. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) stands very still, looking up at it. SUA, quietly: "…여기다." Weathered concrete, laundry lines, afternoon haze. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'They stop before an old corridor-type apartment block. Sua stands very still, looking up at it. SUA, quietly: "…여기다." Weathered concrete, laundry lines, afternoon haze. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 54499fd668c542d56119a797d01a91ab77dec53c62f081d7b8bb0d34180f26c0
     prevShotRef: '01'

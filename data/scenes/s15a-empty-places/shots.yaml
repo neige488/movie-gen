@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: The hillside bench in the exact framing of the happy scenes — but JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) sits alone, the space beside him empty. Overcast flat light. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'The hillside bench in the exact framing of the happy scenes — but Jihoon sits alone, the space beside him empty. Overcast flat light. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 356696ffe16fd7a3e37c4a2baa468337ab8a67af7b541412caf68fb990777a64
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'Convenience store window seat, same angle as before: one cup ramyeon, the opposite stool empty. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) eats without looking up. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Convenience store window seat, same angle as before: one cup ramyeon, the opposite stool empty. Jihoon eats without looking up. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 5
     screenplayHash: c92017a0eea1c7dc53c7d08845cfe6e91623423047fe00e1582ec3389f99370b
     characterRefs:
@@ -24,7 +24,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: 'The bus stop, same framing: JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) alone on the bench. A bus stops, waits, leaves. He does not board. Dusk drains to grey. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'The bus stop, same framing: Jihoon alone on the bench. A bus stops, waits, leaves. He does not board. Dusk drains to grey. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 9ebe50a6c22cfe0c72b427d0ef0b7648cefb158265ab28396df0688ecbb9371c
     characterRefs:

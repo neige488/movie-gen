@@ -1,5 +1,5 @@
 name: convenience-store
 references:
   - name: window-seat
-    prompt: 'Korean convenience store at night seen from inside: window counter seats, warm fluorescent light, shelves of snacks, rain-flecked glass, neighborhood street outside. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 'Modern Korean convenience store (CU/GS25 style) at night seen from inside: window counter seats, clean bright lighting, well-stocked shelves, rain-flecked glass, academy-district street outside. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: convenience-store/window-seat.png

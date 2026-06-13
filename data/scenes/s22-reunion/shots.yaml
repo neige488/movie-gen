@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Classroom. On JIHOON (18, Korean high school boy, soft features, black hair, school uniform)''s desk, a small pencil doodle: a lake with mountains behind it. He stares, then bolts upright. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Classroom. On Jihoon''s desk, a small pencil doodle: a lake with mountains behind it. He stares, then bolts upright. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 6d52ee010c8f94013d9c336150e1ff8084a6fc8b726c8a535802e2c182324acf
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'He runs down the corridor past the window — the empty desk flashes by. A passing student to a friend, barely audible, cut off: "…야, 너 그 얘기 못 들었어? 옆 반에—" Jihoon is already gone, refusing to hear the end. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'He runs down the corridor past the window — the empty desk flashes by. A passing student to a friend, barely audible, cut off: "…야, 너 그 얘기 못 들었어? 옆 반에—" Jihoon is already gone, refusing to hear the end. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: 4aebf4274c90c6d59455f6f1935e2a4cd7237b6fb117991eaefc13cd8c04f9c2
     prevShotRef: '01'
@@ -25,7 +25,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: 'The hillside bench. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) sits waiting in her usual clothes. Korean dialogue: SUA: "왔어?" JIHOON, catching his breath: "미안해. …너 괜찮은 거야?" SUA: "이제 괜찮아." Soft warm light returning for the first time in a while. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'The hillside bench. Sua sits waiting in her usual clothes. Korean dialogue: SUA: "왔어?" JIHOON, catching his breath: "미안해. …너 괜찮은 거야?" SUA: "이제 괜찮아." Soft warm light returning for the first time in a while. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 10
     screenplayHash: fa50d2b9bd5b01a03d7ac5ba4bb57f8732f067c07b2db94d9ed225068fceeed3
     prevShotRef: '02'
@@ -40,7 +40,7 @@ shots:
     propRefs: []
     takes: []
   - id: '04'
-    prompt: 'She opens the faded red postbox and lifts out the worn poetry book, holding it a moment. SUA: "이 책… 이제 돌려주러 갈까?" A gentle finality in her voice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'She opens the faded red postbox and lifts out the worn poetry book, holding it a moment. SUA: "이 책… 이제 돌려주러 갈까?" A gentle finality in her voice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: 103f836fe373f885c3b068ae620ecc8d15a9a9f9373dcae325b40c0276d8adff
     prevShotRef: '03'
@@ -54,7 +54,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '05'
-    prompt: 'Insert: the teachers'' office. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) flips through a student records ledger in secret; his hand stops at one name (not shown clearly). At the corridor''s end, SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) quietly watches him do it. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Insert: the teachers'' office. Jihoon flips through a student records ledger in secret; his hand stops at one name (not shown clearly). At the corridor''s end, Sua quietly watches him do it. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: 66bc7aef72bff90e842adbd093bd11486e72e45500e033712161cca1f85891c7
     prevShotRef: '04'

@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Indoor ice rink, pale blue ice. SUA (18, Korean girl, chin-length black bob with straight bangs, oversized oatmeal-beige knit cardigan over white pointed-collar shirt, navy ankle pants, white ankle socks, red canvas sneakers) skates backward with easy grace, pulling JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) by both hands while his legs wobble. Korean dialogue: SUA: "무릎! 무릎을 굽히라니까?" JIHOON: "굽히고 있어!" SUA: "그게 굽힌 거야?" Bright laughter echoing. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Indoor ice rink, pale blue ice. Sua skates backward with easy grace, pulling Jihoon by both hands while his legs wobble. Korean dialogue: SUA: "무릎! 무릎을 굽히라니까?" JIHOON: "굽히고 있어!" SUA: "그게 굽힌 거야?" Bright laughter echoing. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 10
     screenplayHash: 532582dbc169e7b79dcada8530e8940d3c71e4080390f9af2080233666ce681c
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'He lurches hard; she bursts out laughing. For half a second — blink and you miss it — his feet find perfect balance and glide cleanly, then wobble again. SUA, delighted: "봐, 되잖아!" (The competent flicker must NOT be emphasized; play it as accident.) Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'He lurches hard; she bursts out laughing. For half a second — blink and you miss it — his feet find perfect balance and glide cleanly, then wobble again. SUA, delighted: "봐, 되잖아!" (The competent flicker must NOT be emphasized; play it as accident.) Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 9
     screenplayHash: fcf9bbe112432e605412be28be2c8c88a4c5735573e8c8566831c05313fc482d
     prevShotRef: '01'

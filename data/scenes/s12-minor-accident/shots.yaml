@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: A narrow Korean side street on a school route. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) walks alone. A short screech — a car flinches to avoid a bicycle, and a girl in school uniform at the roadside falls on her backside, her book tumbling onto the asphalt. Sudden but minor; nobody is hurt. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'A clean academy-district side street. Jihoon walks alone. A short screech — a car flinches to avoid a bicycle, and an incidental schoolgirl at the roadside falls on her backside, her book tumbling onto the asphalt. Sudden but minor; nobody is hurt. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: 6a9f637d0d0c2df1aae086b669891144da339c56f9cc39706c43e5c770941ee9
     characterRefs:
@@ -13,7 +13,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: The girl springs up, brushes her uniform skirt, and hurries away without looking back. The driver half-lowers a window, then just drives off. The street is ordinary again in seconds. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'The schoolgirl springs up, brushes herself off, and hurries away without looking back. The driver half-lowers a window, then just drives off. The street is ordinary again in seconds. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 5
     screenplayHash: 9b5e8cd705200e0ffd2ffd36b9868761d74d87af55328a295d3aa5b858f72ab7
     prevShotRef: '01'
@@ -24,7 +24,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: JIHOON (18, Korean high school boy, soft features, black hair, school uniform) picks up the fallen book and calls after her — "저기—! …책." — but the street is empty. He stands a moment too long, blank, his thumb rubbing the worn cover. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Jihoon picks up the fallen book and calls after her — "저기—! …책." — but the street is empty. He stands a moment too long, blank, his thumb rubbing the worn cover. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: 050c8b78eaafa6571aef7ca772c6144a5bc4a2ce27925441e0b21ae679a52ca3
     prevShotRef: '02'

@@ -1,5 +1,5 @@
 name: rain-alley
 references:
   - name: evening-rain
-    prompt: Narrow Korean residential alley in steady evening rain, wet asphalt reflecting a single streetlamp, low walls, intimate scale. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: Narrow clean street between modern low-rise commercial buildings in a Nowon academy district, steady evening rain, wet asphalt reflecting tidy storefront lights and academy signage. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: rain-alley/evening-rain.png

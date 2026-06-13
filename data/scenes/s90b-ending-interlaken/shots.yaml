@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'Interlaken, a grassy hill path above the turquoise lake. JIHOON (early 20s now, light travel jacket) finishes a phone call: "응, 엄마. 나 괜찮아. …진짜 괜찮다니까." Bright alpine day, wind. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'Interlaken, a grassy hill path above the turquoise lake. Jihoon finishes a phone call: "응, 엄마. 나 괜찮아. …진짜 괜찮다니까." Bright alpine day, wind. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: a664936c99ce591420fda15ad1ce3e218735421e55bc95470f763a03ffd94817
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'He pockets the phone and climbs. Above him: an old weathered wooden bench, uncannily like the one in Seoul. A woman sits on it — long hair in a single braid to mid-back, traveler''s clothes, face unseen. JIHOON, half to himself as he walks: "…여기 오고 싶다 그랬잖아." Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'He pockets the phone and climbs. Above him: a wooden bench, uncannily like the one in Seoul. A woman sits on it, face unseen. Jihoon, half to himself as he walks: "…여기 오고 싶다 그랬잖아." Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 9
     screenplayHash: 8f2c64d2908b851d3d5b95d285b0e6b242872f922272796755f6ca3af0ec9f08
     prevShotRef: '01'
@@ -27,7 +27,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: 'He approaches the bench. The woman begins to turn her head — and the camera cuts away before her face resolves: the lake, the snow peaks, wind in the grass. Hold on the landscape. Whether she is real is never answered. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic.'
+    prompt: 'He approaches the bench. The woman begins to turn her head — and the camera cuts away before her face resolves: the lake, the snow peaks, wind in the grass. Hold on the landscape. Whether she is real is never answered. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 10
     screenplayHash: d248c43ee87b62345f0c61a0d9a6855c23b87afb0efe0ab81dad71cd4381ee6e
     prevShotRef: '02'

@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: The same corridor window as the early glances — but now the desk by the window is empty, its chair upside down on top, a thin film of dust. Students inside flow around it without touching it. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) watches through the glass. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'The same corridor window as the early glances — but now the desk by the window is empty, its chair upside down on top, a thin film of dust. Students inside flow around it without touching it. Jihoon watches through the glass. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: 55df8d7aad0fb604542f257b56f0c03ed28fd79aaadee8de53ef133007f13bb6
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: His gaze stays on the empty desk a beat too long — something almost surfaces in his face — then the school bell rings. He shakes his head and walks on. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'His gaze stays on the empty desk a beat too long — something almost surfaces in his face — then the school bell rings. He shakes his head and walks on. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: 324d501ccbc8bc68d9e46ccb780761711dce70bda4a0f20eede7bb593d26e829
     prevShotRef: '01'

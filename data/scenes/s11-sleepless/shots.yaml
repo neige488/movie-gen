@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: Night. JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack) lies in bed eyes open, staring at the ceiling. Through the window, a traffic light cycles on the wall — red, green, red again — washing the room in faint color. He does not sleep. Static camera, long quiet. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Night. Jihoon lies in bed eyes open, staring at the ceiling. Through the window, a traffic light cycles on the wall — red, green, red again — washing the room in faint color. He does not sleep. Static camera, long quiet. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 9
     screenplayHash: f77f77bc765507f80ceefe77ab27dbdc7720c1a7ae06ef0c7af931732bd399ed
     characterRefs:

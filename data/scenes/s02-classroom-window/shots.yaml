@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: Korean high school corridor, break time. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) walks past classroom windows; inside, SUA (18, Korean girl, chin-length black bob, Korean school uniform with skirt) reads alone at her desk. His pace slows almost imperceptibly. Soft realistic daylight. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Korean high school corridor, break time. Jihoon walks past classroom windows; inside, Sua reads alone at her desk. His pace slows almost imperceptibly. Soft realistic daylight. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 7
     screenplayHash: ea35cd48f73802d9b0ef4b172f79d9eed40304d05afe7347c8da4178daf686ed
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: 'Days later, same corridor, same window: SUA (18, Korean girl, chin-length black bob, Korean school uniform with skirt) reading. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) now takes this hallway on purpose, stealing a glance without stopping. Quiet repetition. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'Days later, same corridor, same window: Sua reading. Jihoon now takes this hallway on purpose, stealing a glance without stopping. Quiet repetition. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 5
     screenplayHash: b89e04745f88b5f8922b3e72df670fde4f19a8bb570f76619b106d1edcdd9b65
     prevShotRef: '01'
@@ -30,7 +30,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: Through the classroom window SUA (18, Korean girl, chin-length black bob, Korean school uniform with skirt) lifts her head — eye contact, one beat. JIHOON (18, Korean high school boy, soft features, black hair, school uniform) snaps his gaze away and walks fast, ears flushing red. Held realistic tone, no music feel. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.
+    prompt: 'Through the classroom window Sua lifts her head — eye contact, one beat. Jihoon snaps his gaze away and walks fast, ears flushing red. Held realistic tone, no music feel. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 6
     screenplayHash: ac4e09ffb5a2f8232f1468488df26b66fdbe3c33509b27100e96ad3d986645b1
     prevShotRef: '02'

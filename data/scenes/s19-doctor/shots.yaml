@@ -1,6 +1,6 @@
 shots:
   - id: '01'
-    prompt: 'A plain Korean psychiatric consultation room. DOCTOR (50s, glasses, white coat) across from JIHOON (18, Korean high school boy, grey hoodie over uniform shirt, half-zipped backpack), mother beside him. DOCTOR, slowly, over the chart: "최근에… 어떤 사고를 목격하셨나요?" The boy doesn''t answer; his fingertips tremble on his knees. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'A plain Korean psychiatric consultation room. DOCTOR (50s, glasses, white coat) across from Jihoon, mother beside him. DOCTOR, slowly, over the chart: "최근에… 어떤 사고를 목격하셨나요?" The boy doesn''t answer; his fingertips tremble on his knees. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 8
     screenplayHash: 2cba28275681d3f9638b56fdd4c18f233968ffed097689626b1efb9ba753870e
     characterRefs:
@@ -16,7 +16,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: 'DOCTOR, to the mother, calm and kind: "외상 후 스트레스라고 합니다. 큰 충격을 겪고 나면, 그 순간이 자꾸 되돌아옵니다. 소리로도 오고, 잠으로도 오고… 본인이 막을 수 없었던 일인데도, 마음은 자꾸 자기 탓을 하거든요." MOTHER, taking her son''s hand: "얘가 그냥 본 것뿐인데도… 그래요?" DOCTOR: "본 것만으로도, 옵니다." Even, factual warmth; the word ''목격'' lands as truth and trap at once. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic.'
+    prompt: 'DOCTOR, to the mother, calm and kind: "외상 후 스트레스라고 합니다. 큰 충격을 겪고 나면, 그 순간이 자꾸 되돌아옵니다. 소리로도 오고, 잠으로도 오고… 본인이 막을 수 없었던 일인데도, 마음은 자꾸 자기 탓을 하거든요." MOTHER, taking her son''s hand: "얘가 그냥 본 것뿐인데도… 그래요?" DOCTOR: "본 것만으로도, 옵니다." Even, factual warmth; the word ''목격'' lands as truth and trap at once. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
     duration: 14
     screenplayHash: cb8fae43b8d5a787f38452fa3263e896890e19c20569352107041f9d5e355c8e
     prevShotRef: '01'
