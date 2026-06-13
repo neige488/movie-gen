@@ -630,7 +630,7 @@ body {
 /* Reference grid (Location / Prop) */
 .card__refs {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 0.85rem;
 }
 .ref {
@@ -638,14 +638,58 @@ body {
   flex-direction: column;
   gap: 0.3rem;
 }
-.ref__prompt {
+
+/* Prompt block: clamped text + 더보기/접기 + 복사 (Asset Library) */
+.prompt-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.prompt-block__text {
   font-size: 0.72rem;
   color: var(--fg-dim);
-  line-height: 1.4;
+  line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.prompt-block__text--expanded {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+  white-space: pre-wrap;
+  color: var(--fg);
+  background: var(--bg-elev-2);
+  border-radius: 5px;
+  padding: 0.5rem 0.6rem;
+  user-select: text;
+}
+.prompt-block__actions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.prompt-block__toggle,
+.prompt-block__copy {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  padding: 0.15rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.prompt-block__toggle:hover,
+.prompt-block__copy:hover {
+  color: var(--fg);
+  background: var(--bg-elev-2);
+  border-color: var(--accent);
+}
+.prompt-block__copy {
+  margin-left: auto;
 }
 
 /* ImageSlot */
