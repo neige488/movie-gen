@@ -81,10 +81,10 @@ _Avoid_: Portrait
 _Avoid_: Outfit, Costume, Wardrobe
 
 **BodyProfile**:
-신체/의상 ref **3분할** 이미지 세트. **Look 단위**.
+신체/의상 ref. **3분할로 이미 나뉜 시트 이미지 1장**(개별 파일 3개가 아님). **Look 단위**. Look에 `bodyImage`(상대 경로)로 저장.
 
 **FaceProfile**:
-얼굴 ref **5분할** 이미지 세트. **Look 단위**(의상 디테일이 클로즈업에 영향).
+얼굴 ref. **5분할로 이미 나뉜 시트 이미지 1장**(개별 파일 5개가 아님). **Look 단위**(의상 디테일이 클로즈업에 영향). Look에 `faceImage`(상대 경로)로 저장.
 
 **Location**:
 영화 로케이션. `name` + `references[]`(앵글별 N개).
@@ -110,7 +110,7 @@ _Avoid_: Linking, Continuation
 - **Shot**의 **Take**들 중 최대 1개가 `isStarred=true`.
 - **Take**는 immutable. `screenplay_hash` 스냅샷을 가진다.
 - **Character**는 1 **Headshot** + N **Look**을 가진다.
-- **Look**은 1 **BodyProfile**(3 images) + 1 **FaceProfile**(5 images)을 가진다.
+- **Look**은 1 **faceImage**(5분할 시트 1장) + 1 **bodyImage**(3분할 시트 1장)을 가진다 — 각각 단일 이미지.
 - **Location**은 N **Reference**(앵글별)를 가진다.
 - **Prop**은 N **Reference**(앵글별)를 가진다.
 

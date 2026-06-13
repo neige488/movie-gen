@@ -17,6 +17,10 @@ export default defineConfig({
     host: true,
     proxy: {
       "/api": "http://localhost:5174",
+      // Binary assets are served by the Express server, not Vite. Without this
+      // the browser's <img src="/assets/..."> falls through to Vite's SPA
+      // fallback (index.html), so uploaded/existing images never render in dev.
+      "/assets": "http://localhost:5174",
     },
   },
   build: {

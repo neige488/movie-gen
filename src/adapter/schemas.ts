@@ -53,18 +53,12 @@ export const shotsFileSchema = z.object({
 });
 export type ShotsFile = z.infer<typeof shotsFileSchema>;
 
-export const bodyProfileFileSchema = z.object({
-  images: z.array(z.string().min(1)),
-});
-
-export const faceProfileFileSchema = z.object({
-  images: z.array(z.string().min(1)),
-});
-
 export const lookFileSchema = z.object({
   name: z.string().min(1),
-  bodyProfile: bodyProfileFileSchema,
-  faceProfile: faceProfileFileSchema,
+  // Each profile is a single pre-split sheet image (face = 5 panels, body = 3),
+  // stored as a relative asset path — same shape as Character.headshot.
+  faceImage: z.string().min(1),
+  bodyImage: z.string().min(1),
 });
 
 export const characterFileSchema = z.object({

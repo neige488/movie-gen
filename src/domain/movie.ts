@@ -11,8 +11,7 @@
  * - Shot.duration ∈ [4, 15] integer seconds (씨댄스 2.0 engine limit)
  * - Shot.takes: at most one isStarred=true
  * - Scene: unique Shot ids, prevShotRef points to an earlier Shot in same Scene
- * - BodyProfile: exactly 3 images
- * - FaceProfile: exactly 5 images
+ * - Look: faceImage + bodyImage required (each a single pre-split sheet image)
  * - Character: at least one Look, unique Look names
  */
 
@@ -238,56 +237,41 @@ export function createScene(input: CreateSceneInput): Scene {
 }
 
 // ---------------------------------------------------------------------------
-// BodyProfile / FaceProfile / Look / Character
+// Look / Character
 // ---------------------------------------------------------------------------
 
-const BODY_PROFILE_COUNT = 3;
-const FACE_PROFILE_COUNT = 5;
-
-export interface BodyProfile {
-  readonly images: readonly string[];
-}
-
-export function createBodyProfile(images: readonly string[]): BodyProfile {
-  if (images.length !== BODY_PROFILE_COUNT) {
-    throw new DomainInvariantError(
-      `BodyProfile requires exactly ${BODY_PROFILE_COUNT} images (got ${images.length})`,
-    );
-  }
-  return { images };
-}
-
-export interface FaceProfile {
-  readonly images: readonly string[];
-}
-
-export function createFaceProfile(images: readonly string[]): FaceProfile {
-  if (images.length !== FACE_PROFILE_COUNT) {
-    throw new DomainInvariantError(
-      `FaceProfile requires exactly ${FACE_PROFILE_COUNT} images (got ${images.length})`,
-    );
-  }
-  return { images };
-}
-
+/**
+ * FaceProfile / BodyProfile (per CONTEXT.md ubiquitous language) are each a
+ * SINGLE reference image already divided into panels — face = 5-panel split
+ * sheet, body = 3-panel split sheet. They live flat on the Look as
+ * `faceImage` / `bodyImage` (relative asset paths), mirroring
+ * `Character.headshot`. The panel split is baked into the image, so there is
+ * no per-panel count to enforce here.
+ */
 export interface Look {
   readonly name: string;
-  readonly bodyProfile: BodyProfile;
-  readonly faceProfile: FaceProfile;
+  /** Face reference — single 5-panel split sheet (relative asset path). */
+  readonly faceImage: string;
+  /** Body reference — single 3-panel split sheet (relative asset path). */
+  readonly bodyImage: string;
 }
 
 export interface CreateLookInput {
   name: string;
-  bodyProfile: BodyProfile;
-  faceProfile: FaceProfile;
+  faceImage: string;
+  bodyImage: string;
 }
 
 export function createLook(input: CreateLookInput): Look {
   if (!input.name) throw new DomainInvariantError("Look.name is required");
+  if (!input.faceImage)
+    throw new DomainInvariantError(`Look[${input.name}].faceImage is required`);
+  if (!input.bodyImage)
+    throw new DomainInvariantError(`Look[${input.name}].bodyImage is required`);
   return {
     name: input.name,
-    bodyProfile: input.bodyProfile,
-    faceProfile: input.faceProfile,
+    faceImage: input.faceImage,
+    bodyImage: input.bodyImage,
   };
 }
 

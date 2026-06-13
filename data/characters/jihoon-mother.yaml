@@ -2,15 +2,5 @@ name: jihoon-mother
 headshot: jihoon-mother/headshot.png
 looks:
   - name: default
-    bodyProfile:
-      images:
-        - jihoon-mother/default/body-front.png
-        - jihoon-mother/default/body-side.png
-        - jihoon-mother/default/body-back.png
-    faceProfile:
-      images:
-        - jihoon-mother/default/face-front.png
-        - jihoon-mother/default/face-left.png
-        - jihoon-mother/default/face-right.png
-        - jihoon-mother/default/face-up.png
-        - jihoon-mother/default/face-down.png
+    faceImage: jihoon-mother/default/face.png
+    bodyImage: jihoon-mother/default/body.png

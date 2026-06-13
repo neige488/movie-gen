@@ -226,15 +226,9 @@ function mutateCharacter(
   }
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;
-    if (slot.kind === "character-face") {
-      const images = [...l.faceProfile.images];
-      images[slot.index] = relativePath;
-      return { ...l, faceProfile: { images } };
-    } else {
-      const images = [...l.bodyProfile.images];
-      images[slot.index] = relativePath;
-      return { ...l, bodyProfile: { images } };
-    }
+    return slot.kind === "character-face"
+      ? { ...l, faceImage: relativePath }
+      : { ...l, bodyImage: relativePath };
   });
   return { ...c, looks };
 }

@@ -6,9 +6,6 @@ interface Props {
   onUploaded: () => void;
 }
 
-const FACE_SLOTS = 5;
-const BODY_SLOTS = 3;
-
 export function CharacterCard({ character, onUploaded }: Props) {
   return (
     <article className="card card--character">
@@ -33,42 +30,32 @@ export function CharacterCard({ character, onUploaded }: Props) {
         {character.looks.map((look) => (
           <div key={look.name} className="look">
             <h4 className="look__name">{look.name}</h4>
-            <div className="look__group">
-              <div className="look__group-label">Face ({FACE_SLOTS})</div>
-              <div className="look__row">
-                {Array.from({ length: FACE_SLOTS }, (_, i) => (
-                  <ImageSlot
-                    key={`face-${i}`}
-                    slot={{
-                      kind: "character-face",
-                      character: character.name,
-                      look: look.name,
-                      index: i,
-                    }}
-                    imagePath={look.faceImages[i] ?? ""}
-                    label={`face-${i}`}
-                    onUploaded={onUploaded}
-                  />
-                ))}
+            <div className="look__row">
+              <div className="look__group">
+                <div className="look__group-label">Face (5-panel sheet)</div>
+                <ImageSlot
+                  slot={{
+                    kind: "character-face",
+                    character: character.name,
+                    look: look.name,
+                  }}
+                  imagePath={look.faceImage}
+                  label="face"
+                  onUploaded={onUploaded}
+                />
               </div>
-            </div>
-            <div className="look__group">
-              <div className="look__group-label">Body ({BODY_SLOTS})</div>
-              <div className="look__row">
-                {Array.from({ length: BODY_SLOTS }, (_, i) => (
-                  <ImageSlot
-                    key={`body-${i}`}
-                    slot={{
-                      kind: "character-body",
-                      character: character.name,
-                      look: look.name,
-                      index: i,
-                    }}
-                    imagePath={look.bodyImages[i] ?? ""}
-                    label={`body-${i}`}
-                    onUploaded={onUploaded}
-                  />
-                ))}
+              <div className="look__group">
+                <div className="look__group-label">Body (3-panel sheet)</div>
+                <ImageSlot
+                  slot={{
+                    kind: "character-body",
+                    character: character.name,
+                    look: look.name,
+                  }}
+                  imagePath={look.bodyImage}
+                  label="body"
+                  onUploaded={onUploaded}
+                />
               </div>
             </div>
           </div>

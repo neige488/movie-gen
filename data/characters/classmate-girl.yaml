@@ -2,15 +2,5 @@ name: classmate-girl
 headshot: classmate-girl/headshot.png
 looks:
   - name: uniform
-    bodyProfile:
-      images:
-        - classmate-girl/uniform/body-front.png
-        - classmate-girl/uniform/body-side.png
-        - classmate-girl/uniform/body-back.png
-    faceProfile:
-      images:
-        - classmate-girl/uniform/face-front.png
-        - classmate-girl/uniform/face-left.png
-        - classmate-girl/uniform/face-right.png
-        - classmate-girl/uniform/face-up.png
-        - classmate-girl/uniform/face-down.png
+    faceImage: classmate-girl/uniform/face.png
+    bodyImage: classmate-girl/uniform/body.png

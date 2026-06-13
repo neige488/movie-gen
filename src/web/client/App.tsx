@@ -39,9 +39,16 @@ export function App() {
   }, []);
 
   // Library is fetched on-demand the first time the route asks for it, then
-  // refetched whenever the library page re-mounts (after an upload).
+  // refetched after each upload / external change.
+  //
+  // We only flip to the "loading" state when we have nothing to show yet
+  // (initial load or after an error). On a refresh-over-existing-data we keep
+  // the current value so <LibraryPage> stays mounted — otherwise it unmounts,
+  // the active tab resets to "characters", and a "Loading…" flash appears on
+  // every post-upload refresh. Keeping it mounted also lets the just-uploaded
+  // image swap in place and preserves the per-slot "uploaded" confirmation.
   function refreshLibrary(): void {
-    setLibrary({ kind: "loading" });
+    setLibrary((prev) => (prev.kind === "ok" ? prev : { kind: "loading" }));
     fetch("/api/library")
       .then(async (r) => {
         if (!r.ok) throw new Error(`api returned ${r.status}`);

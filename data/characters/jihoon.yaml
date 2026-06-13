@@ -2,41 +2,11 @@ name: jihoon
 headshot: jihoon/headshot.png
 looks:
   - name: uniform
-    bodyProfile:
-      images:
-        - jihoon/uniform/body-front.png
-        - jihoon/uniform/body-side.png
-        - jihoon/uniform/body-back.png
-    faceProfile:
-      images:
-        - jihoon/uniform/face-front.png
-        - jihoon/uniform/face-left.png
-        - jihoon/uniform/face-right.png
-        - jihoon/uniform/face-up.png
-        - jihoon/uniform/face-down.png
+    faceImage: jihoon/uniform/face.png
+    bodyImage: jihoon/uniform/body.png
   - name: hoodie
-    bodyProfile:
-      images:
-        - jihoon/hoodie/body-front.png
-        - jihoon/hoodie/body-side.png
-        - jihoon/hoodie/body-back.png
-    faceProfile:
-      images:
-        - jihoon/hoodie/face-front.png
-        - jihoon/hoodie/face-left.png
-        - jihoon/hoodie/face-right.png
-        - jihoon/hoodie/face-up.png
-        - jihoon/hoodie/face-down.png
+    faceImage: jihoon/hoodie/face.png
+    bodyImage: jihoon/hoodie/body.png
   - name: adult-traveler
-    bodyProfile:
-      images:
-        - jihoon/adult-traveler/body-front.png
-        - jihoon/adult-traveler/body-side.png
-        - jihoon/adult-traveler/body-back.png
-    faceProfile:
-      images:
-        - jihoon/adult-traveler/face-front.png
-        - jihoon/adult-traveler/face-left.png
-        - jihoon/adult-traveler/face-right.png
-        - jihoon/adult-traveler/face-up.png
-        - jihoon/adult-traveler/face-down.png
+    faceImage: jihoon/adult-traveler/face.png
+    bodyImage: jihoon/adult-traveler/body.png

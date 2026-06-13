@@ -38,8 +38,8 @@ export async function saveCharacter(
     headshot: character.headshot,
     looks: character.looks.map((l) => ({
       name: l.name,
-      bodyProfile: { images: [...l.bodyProfile.images] },
-      faceProfile: { images: [...l.faceProfile.images] },
+      faceImage: l.faceImage,
+      bodyImage: l.bodyImage,
     })),
   };
   await writeFile(

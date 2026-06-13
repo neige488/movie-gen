@@ -118,10 +118,10 @@ export interface ImageReferenceDto {
 
 export interface LookDto {
   name: string;
-  /** 3 entries, possibly empty strings when a slot is unfilled. */
-  bodyImages: string[];
-  /** 5 entries, possibly empty strings when a slot is unfilled. */
-  faceImages: string[];
+  /** Face reference — single 5-panel split sheet (relative asset path). */
+  faceImage: string;
+  /** Body reference — single 3-panel split sheet (relative asset path). */
+  bodyImage: string;
 }
 
 export interface LibraryCharacterDto {
