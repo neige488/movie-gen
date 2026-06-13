@@ -20,8 +20,9 @@
   - Character/Location/Prop = 도메인별 폴더, 객체당 단일 YAML 파일.
   - 메타데이터에는 상대 파일명만 박음 (절대경로 금지 → 머신 이식성 보존).
 
-- **Branch policy.** `main` = 도구(Movie Gen) 개발 브랜치 — 코드 + `CONTEXT.md`/`docs/adr`/`docs/specs` 같은 도구 docs. 영화별 작업은 별도 브랜치(예: `ptsd`, `the-beach`)에서 진행하고 `data/`와 영화별 docs(`concept.md`, `scenario_outline.md` 등)를 거기에 둔다. 도구 업데이트는 main에서 영화 브랜치로 merge.
+- **Branch policy.** `main` = 도구(Movie Gen) 개발 브랜치 — 코드 + `CONTEXT.md`/`docs/adr`/`docs/specs` 같은 도구 docs. 영화별 작업은 별도 브랜치(예: `ptsd`, `the-beach`)에서 진행하고 `data/`와 영화별 docs를 거기에 둔다. 도구 업데이트는 main에서 영화 브랜치로 merge.
   - _Why:_ 도구 발전과 영화 컨텐츠 발전이 다른 사이클·다른 리뷰 단위. main을 영화에서 독립적으로 유지해야 다음 영화에도 도구를 깨끗이 재사용할 수 있음.
+  - **docs 소유권 규칙:** 영화별 docs(`concept.md`, `scenario-outline.md`, `handover.md` 등)는 영화 브랜치의 `docs/project/`에 둔다. main은 `docs/project/`를 절대 만들지 않고, 영화 브랜치는 도구 docs(`docs/adr`/`docs/specs`)를 수정하지 않는다 → main→영화 브랜치 merge가 구조적으로 충돌 없음.
 
 - **Scene model: flat folders + `isStarred` boolean.** Scene 사이의 "분기/대안 버전"은 별도 도메인 모델로 격상하지 않는다. 그냥 새 Scene 폴더를 추가한다(예: 웹의 "Scene 복사" 기능). 각 Scene이 `isStarred: true/false`로 메인 영화 시퀀스 포함 여부를 표시. **영화 시퀀스 = `isStarred: true`인 Scene들의 폴더명 prefix 정렬.** 이전 Scene의 Shot/Take 자산은 보존된다.
 
