@@ -22,6 +22,7 @@ import {
   setShotPropRefs,
   DomainInvariantError,
 } from "./movie.js";
+import { createMovieArrangement } from "./movie-arrangement.js";
 
 const VALID_SHOT_BASE = {
   id: "01",
@@ -657,7 +658,7 @@ describe("movieSequence — isStarred scenes sorted by slug prefix", () => {
     expect(movieSequence(project).map((s) => s.slug)).toEqual(["s01-a"]);
   });
 
-  it("sorts starred scenes by slug ascending (folder prefix)", () => {
+  it("sorts starred scenes by slug ascending (folder prefix) when no arrangement is given", () => {
     const project = createProject({
       scenes: [
         mkScene("s03-c", true),
@@ -671,6 +672,54 @@ describe("movieSequence — isStarred scenes sorted by slug prefix", () => {
     expect(movieSequence(project).map((s) => s.slug)).toEqual([
       "s01-a",
       "s02-b",
+      "s03-c",
+    ]);
+  });
+
+  it("orders by the arrangement's linear sequence (NOT slug) when given one", () => {
+    const project = createProject({
+      scenes: [
+        mkScene("s01-a", true),
+        mkScene("s02-b", true),
+        mkScene("s03-c", true),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    // Manifest order deliberately disagrees with slug order.
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s03-c"] },
+      { id: 2, scenes: ["s01-a"] },
+      { id: 3, scenes: ["s02-b"] },
+    ]);
+    expect(movieSequence(project, arrangement).map((s) => s.slug)).toEqual([
+      "s03-c",
+      "s01-a",
+      "s02-b",
+    ]);
+  });
+
+  it("filters out non-starred scenes while preserving manifest order", () => {
+    const project = createProject({
+      scenes: [
+        mkScene("s01-a", true),
+        mkScene("s02-b", false),
+        mkScene("s03-c", true),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a", "s02-b"] },
+      { id: 2, scenes: ["s03-c"] },
+      { id: 3, scenes: [] },
+    ]);
+    // s02-b keeps its manifest slot but is filtered out of the visible
+    // sequence because it is not starred.
+    expect(movieSequence(project, arrangement).map((s) => s.slug)).toEqual([
+      "s01-a",
       "s03-c",
     ]);
   });
