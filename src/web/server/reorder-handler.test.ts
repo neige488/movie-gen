@@ -1,10 +1,11 @@
 /**
  * Reorder handler — integration tests against real temp data/.
  *
- * applyReorderScene moves a Scene one step earlier/later within its OWN act
- * (cross-act moves are the BS2 canvas's job — issue #21 — and are out of
- * scope here). It rewrites data/movie.yaml atomically and rebuilds the
- * in-memory Project so /api/movie reflects the new order.
+ * applyReorderScene moves a Scene one step earlier/later in the linear
+ * sequence: within its act when there's room, and across the act boundary at
+ * the edges (first of an act ↑ → end of the previous act; last ↓ → start of
+ * the next). It rewrites data/movie.yaml atomically and rebuilds the in-memory
+ * Project so /api/movie reflects the new order.
  *
  * Mirrors the starred-toggle-handler test pattern: write temp scenes, load
  * the real Project + arrangement, apply, assert both the manifest on disk and
@@ -82,7 +83,7 @@ function readManifestActs(): { id: number; scenes: string[] }[] {
   return raw.acts;
 }
 
-describe("applyReorderScene — move within an act", () => {
+describe("applyReorderScene — move within and across acts", () => {
   it("moves a Scene one step earlier (direction=up) and persists the manifest", async () => {
     writeScene("s01-a");
     writeScene("s02-b");
@@ -169,9 +170,19 @@ describe("applyReorderScene — move within an act", () => {
     expect(result.arrangement.scenesInAct(1)).toEqual(["s01-a", "s02-b"]);
   });
 
-  it("is a no-op when moving the last Scene down (clamped, stays put)", async () => {
+  it("moves the LAST Scene of an act DOWN into the start of the next act", async () => {
     writeScene("s01-a");
     writeScene("s02-b");
+    writeScene("s03-c");
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: [s01-a, s02-b]
+  - id: 2
+    scenes: [s03-c]
+  - id: 3
+    scenes: []
+`);
     const project = await loadProject(dataDir);
     const arrangement = await loadArrangement(dataDir);
 
@@ -185,21 +196,55 @@ describe("applyReorderScene — move within an act", () => {
       loadProject,
     });
 
-    expect(result.arrangement.scenesInAct(1)).toEqual(["s01-a", "s02-b"]);
+    // s02-b crossed from the end of act 1 to the start of act 2.
+    expect(result.arrangement.scenesInAct(1)).toEqual(["s01-a"]);
+    expect(result.arrangement.scenesInAct(2)).toEqual(["s02-b", "s03-c"]);
+    const acts = readManifestActs();
+    expect(acts[0]!.scenes).toEqual(["s01-a"]);
+    expect(acts[1]!.scenes).toEqual(["s02-b", "s03-c"]);
   });
 
-  it("stays within its own act — never crosses an act boundary (that's #21)", async () => {
+  it("moves the FIRST Scene of an act UP into the end of the previous act", async () => {
     writeScene("s01-a");
     writeScene("s02-b");
-    // s01-a alone in act 1; moving it down must NOT spill into act 2.
+    writeScene("s03-c");
     writeManifest(`
 acts:
   - id: 1
     scenes: [s01-a]
   - id: 2
-    scenes: [s02-b]
+    scenes: [s02-b, s03-c]
   - id: 3
     scenes: []
+`);
+    const project = await loadProject(dataDir);
+    const arrangement = await loadArrangement(dataDir);
+
+    const result = await applyReorderScene({
+      project,
+      arrangement,
+      sceneSlug: "s02-b",
+      direction: "up",
+      dataDir,
+      saveArrangement,
+      loadProject,
+    });
+
+    // s02-b crossed from the start of act 2 to the end of act 1.
+    expect(result.arrangement.scenesInAct(1)).toEqual(["s01-a", "s02-b"]);
+    expect(result.arrangement.scenesInAct(2)).toEqual(["s03-c"]);
+  });
+
+  it("is a no-op when moving the last Scene of act 3 down (nothing later)", async () => {
+    writeScene("s01-a");
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: []
+  - id: 2
+    scenes: []
+  - id: 3
+    scenes: [s01-a]
 `);
     const project = await loadProject(dataDir);
     const arrangement = await loadArrangement(dataDir);
@@ -214,9 +259,8 @@ acts:
       loadProject,
     });
 
-    // Clamped at the end of act 1 — still in act 1.
-    expect(result.arrangement.scenesInAct(1)).toEqual(["s01-a"]);
-    expect(result.arrangement.scenesInAct(2)).toEqual(["s02-b"]);
+    expect(result.arrangement.scenesInAct(3)).toEqual(["s01-a"]);
+    expect(result.arrangement.scenesInAct(1)).toEqual([]);
   });
 
   it("reorders a non-starred Scene too (it keeps its manifest slot)", async () => {
