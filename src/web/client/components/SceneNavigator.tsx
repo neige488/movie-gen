@@ -1,9 +1,17 @@
-import { useState } from "react";
-import type { MovieDto, SceneDto } from "../../shared/dto.js";
+import { Fragment, useState } from "react";
+import type { CanvasActDto, MovieDto, SceneDto } from "../../shared/dto.js";
 import { reorderScene } from "../upload-client.js";
+
+const ACT_TITLES: Record<1 | 2 | 3, string> = { 1: "1막", 2: "2막", 3: "3막" };
 
 interface Props {
   scenes: SceneDto[];
+  /**
+   * The BS2 acts (manifest grouping). When supplied, an act header is inserted
+   * before the first Scene of each act so the linear list shows where the acts
+   * break — mirroring the canvas. Optional: omit for a plain list.
+   */
+  acts?: CanvasActDto[];
   /**
    * Called with the updated MovieDto after a successful reorder so the App can
    * refresh the sequence. When omitted the up/down controls are hidden (the
@@ -13,7 +21,12 @@ interface Props {
   onMovieChanged?: (movie: MovieDto) => void;
 }
 
-export function SceneNavigator({ scenes, onMovieChanged }: Props) {
+export function SceneNavigator({ scenes, acts, onMovieChanged }: Props) {
+  // slug → act id, so we can drop an act header at each boundary in the list.
+  const actOf = new Map<string, 1 | 2 | 3>();
+  for (const a of acts ?? []) {
+    for (const slug of a.sceneSlugs) actOf.set(slug, a.id);
+  }
   // Slug currently being reordered — disables its controls so a director can't
   // fire overlapping reorders (the server is the SSOT; we wait for its reply).
   const [busySlug, setBusySlug] = useState<string | null>(null);
@@ -39,8 +52,19 @@ export function SceneNavigator({ scenes, onMovieChanged }: Props) {
   return (
     <nav className="scene-nav" aria-label="Scenes">
       <ol className="scene-nav__list">
-        {scenes.map((scene, index) => (
-          <li key={scene.slug} className="scene-nav__item">
+        {scenes.map((scene, index) => {
+          const act = actOf.get(scene.slug);
+          const prevAct =
+            index > 0 ? actOf.get(scenes[index - 1]!.slug) : undefined;
+          const showActHeader = act !== undefined && act !== prevAct;
+          return (
+          <Fragment key={scene.slug}>
+            {showActHeader && (
+              <li className="scene-nav__act" aria-hidden="true">
+                {ACT_TITLES[act]}
+              </li>
+            )}
+          <li className="scene-nav__item">
             <a className="scene-nav__link" href={`#scene-${scene.slug}`}>
               <span className="scene-nav__slug">{scene.slug}</span>
               <span className="scene-nav__slugline">{scene.slugline}</span>
@@ -78,7 +102,9 @@ export function SceneNavigator({ scenes, onMovieChanged }: Props) {
               </div>
             )}
           </li>
-        ))}
+          </Fragment>
+          );
+        })}
       </ol>
     </nav>
   );
