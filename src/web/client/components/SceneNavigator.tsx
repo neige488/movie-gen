@@ -20,9 +20,22 @@ interface Props {
    * state setter to update).
    */
   onMovieChanged?: (movie: MovieDto) => void;
+  /**
+   * When supplied, clicking a Scene calls this (instead of the `#scene-<slug>`
+   * jump) — used by the Canvas view to select the Scene and show its detail
+   * below the canvas. `selectedSlug` highlights the current one.
+   */
+  onSelectScene?: (slug: string) => void;
+  selectedSlug?: string | null;
 }
 
-export function SceneNavigator({ scenes, acts, onMovieChanged }: Props) {
+export function SceneNavigator({
+  scenes,
+  acts,
+  onMovieChanged,
+  onSelectScene,
+  selectedSlug,
+}: Props) {
   // Slug currently being reordered — disables its controls so a director can't
   // fire overlapping reorders (the server is the SSOT; we wait for its reply).
   const [busySlug, setBusySlug] = useState<string | null>(null);
@@ -56,7 +69,18 @@ export function SceneNavigator({ scenes, acts, onMovieChanged }: Props) {
   ) {
     return (
       <li key={scene.slug} className="scene-nav__item">
-        <a className="scene-nav__link" href={`#scene-${scene.slug}`}>
+        <a
+          className={`scene-nav__link${
+            selectedSlug === scene.slug ? " scene-nav__link--selected" : ""
+          }`}
+          href={`#scene-${scene.slug}`}
+          onClick={(e) => {
+            if (onSelectScene) {
+              e.preventDefault();
+              onSelectScene(scene.slug);
+            }
+          }}
+        >
           <span className="scene-nav__slug">{scene.slug}</span>
           <span className="scene-nav__slugline">{scene.slugline}</span>
           <span className="scene-nav__count">
