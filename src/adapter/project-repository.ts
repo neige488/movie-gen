@@ -36,6 +36,7 @@ import {
   type Scene,
 } from "@domain/movie.js";
 import { parseShotMarkers } from "@domain/marker-parser.js";
+import { loadArrangement } from "./movie-manifest-repository.js";
 import {
   characterFileSchema,
   locationFileSchema,
@@ -73,8 +74,20 @@ export async function loadProject(dataDir: string): Promise<Project> {
   const locations = await loadLocations(path.join(dataDir, "locations"));
   const props = await loadProps(path.join(dataDir, "props"));
 
+  // Scene ORDER is owned by the manifest (ADR 0002), not the folder-name
+  // prefix. Load the arrangement (migrating + reconciling on the way) and
+  // sort the scenes into its linear sequence so every consumer — /api/movie,
+  // the sidebar's allScenes, dto-mapper — agrees with the single SSOT.
+  const arrangement = await loadArrangement(dataDir);
+  const orderedScenes = orderByArrangement(scenes, arrangement);
+
   try {
-    return createProject({ scenes, characters, locations, props });
+    return createProject({
+      scenes: orderedScenes,
+      characters,
+      locations,
+      props,
+    });
   } catch (err) {
     if (err instanceof DomainInvariantError) {
       throw new ProjectLoadError(`reference integrity: ${err.message}`);
@@ -96,9 +109,39 @@ async function loadScenes(scenesDir: string): Promise<Scene[]> {
     if (!s.isDirectory()) continue;
     scenes.push(await loadScene(entry, sceneDir));
   }
-  // Stable order by slug (folder prefix); movie sequence filtering happens
-  // later via movieSequence(project).
-  return scenes.sort((a, b) => a.slug.localeCompare(b.slug));
+  // No slug-prefix sort here (ADR 0002 — the folder prefix no longer owns
+  // order). loadProject reorders the scenes by the manifest's linear sequence
+  // via orderByArrangement.
+  return scenes;
+}
+
+/**
+ * Reorder loaded scenes to follow the arrangement's linear sequence
+ * (act1 ++ act2 ++ act3 flatten). The arrangement is already reconciled
+ * against the folders (orphan folders appended to act 1, dangling slugs
+ * dropped) so every loaded slug should appear in the sequence; any scene that
+ * somehow isn't placed is appended at the end (deterministic, by slug) so we
+ * never silently drop a Scene the repository read from disk.
+ */
+function orderByArrangement(
+  scenes: readonly Scene[],
+  arrangement: { linearSequence(): readonly string[] },
+): Scene[] {
+  const bySlug = new Map(scenes.map((s) => [s.slug, s]));
+  const ordered: Scene[] = [];
+  const placed = new Set<string>();
+  for (const slug of arrangement.linearSequence()) {
+    const scene = bySlug.get(slug);
+    if (scene && !placed.has(slug)) {
+      ordered.push(scene);
+      placed.add(slug);
+    }
+  }
+  // Safety net: any scene not in the sequence (shouldn't happen post-reconcile).
+  const leftovers = scenes
+    .filter((s) => !placed.has(s.slug))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+  return [...ordered, ...leftovers];
 }
 
 async function loadScene(slug: string, sceneDir: string): Promise<Scene> {

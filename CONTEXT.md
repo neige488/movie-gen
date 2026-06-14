@@ -17,6 +17,7 @@
 
 - **Storage: file-based (YAML + Markdown).** 산출물은 파일로 저장한다. DB 미사용. 메타데이터 = YAML, 각본 본문 = Markdown. `data/`(git tracked) + `assets/`(local-only, `.gitignore`). 미래 DB 이행은 필요 시점에 import 스크립트로. 자세한 사유는 [ADR 0001](docs/adr/0001-file-based-storage.md).
   - Scene = 폴더(`data/scenes/{slug}/`). 그 안에 `scene.yaml`, `screenplay.md`, `shots.yaml`.
+  - **Scene 순서 + 막 구조 = `data/movie.yaml`** (`acts:` → 3 막별 slug 리스트). 도메인 폴더 밖, `data/` 루트에 둔다.
   - Character/Location/Prop = 도메인별 폴더, 객체당 단일 YAML 파일.
   - 메타데이터에는 상대 파일명만 박음 (절대경로 금지 → 머신 이식성 보존).
 
@@ -24,7 +25,14 @@
   - _Why:_ 도구 발전과 영화 컨텐츠 발전이 다른 사이클·다른 리뷰 단위. main을 영화에서 독립적으로 유지해야 다음 영화에도 도구를 깨끗이 재사용할 수 있음.
   - **docs 소유권 규칙:** 영화별 docs(`concept.md`, `scenario-outline.md`, `handover.md` 등)는 영화 브랜치의 `docs/project/`에 둔다. main은 `docs/project/`를 절대 만들지 않고, 영화 브랜치는 도구 docs(`docs/adr`/`docs/specs`)를 수정하지 않는다 → main→영화 브랜치 merge가 구조적으로 충돌 없음.
 
-- **Scene model: flat folders + `isStarred` boolean.** Scene 사이의 "분기/대안 버전"은 별도 도메인 모델로 격상하지 않는다. 그냥 새 Scene 폴더를 추가한다(예: 웹의 "Scene 복사" 기능). 각 Scene이 `isStarred: true/false`로 메인 영화 시퀀스 포함 여부를 표시. **영화 시퀀스 = `isStarred: true`인 Scene들의 폴더명 prefix 정렬.** 이전 Scene의 Shot/Take 자산은 보존된다.
+- **Scene model: flat folders + `isStarred` boolean.** Scene 사이의 "분기/대안 버전"은 별도 도메인 모델로 격상하지 않는다. 그냥 새 Scene 폴더를 추가한다(예: 웹의 "Scene 복사" 기능). 각 Scene이 `isStarred: true/false`로 메인 영화 시퀀스 포함 여부를 표시. **영화 시퀀스 = Scene 순서 매니페스트에서 `isStarred: true`인 Scene만 필터** (순서 SSOT는 아래 "Scene ordering" 결정 참조). 이전 Scene의 Shot/Take 자산은 보존된다.
+
+- **Scene ordering & act 구조: 중앙 매니페스트 (`data/movie.yaml`).** Scene 순서 + 막(Act) 배치의 단일 출처는 `data/movie.yaml`의 `acts:` 구조 — 3개 막(`id: 1|2|3`)이 각각 순서 있는 Scene slug 리스트를 가진다. **모든** Scene(starred + non-starred)이 정확히 한 막에 속한다. **선형 영화 순서 = act1 ++ act2 ++ act3 flatten 후 `isStarred=true` 필터.** 막은 BS2상 순차적·연속적이므로 한 막의 모든 Scene이 다음 막보다 앞선다(순서≠막 불일치가 구조적으로 불가). 폴더명 prefix(`s01-`)는 **더 이상 순서를 결정하지 않으며** 사람이 읽는 안정적 slug일 뿐. 순서/막 변경 = 이 파일 재작성(atomic). **진입점 둘:** 기존 Scenes 뷰의 전후 이동, BS2 캔버스의 드래그(막 row 간 이동 = 막 재배치, 막 안 이동 = 순서). 둘 다 같은 매니페스트를 건드린다. non-starred Scene(복사본·대안)도 매니페스트에 자리를 가지므로 starred 토글 시 그 자리에 슬롯인. **초기 마이그레이션:** 매니페스트가 없으면 기존 모든 Scene을 1막에 넣고 생성, 디렉터가 재분배.
+  - _Why:_ 순서·막은 개별 Scene의 내재 속성이 아니라 Movie 배열의 전역 관계 → 한 파일에 모으면 도메인('Movie는 3 Act, 각 Act는 Scene 리스트')과 1:1, 재정렬이 폴더 rename/N개 `scene.yaml` 재작성 없이 atomic, 막=연속구간 불변식이 표현 자체로 보장됨. 폴더 rename은 slug 참조를 깨므로 회피.
+
+- **BS2 canvas: 파생 시각화 뷰 (저장 아님).** 캔버스는 3개 막 row로 나뉘고, 각 row에 Blake Snyder Beat Sheet의 비트가 **고정 비율 가이드(눈금자)**로 표시된다(비트 폭 = Blake 페이지 비율 → 비트마다 다름). Scene은 막 안에서 **균등/인덱스 폭** 블록으로 배치(분량 무시 — 디렉터 선택). **비트 소속은 저장하지 않는다** — 막 안 위치에서 눈으로 가늠하는 가이드일 뿐(Scene↔Beat 할당 개념 없음). 막 배치만 디렉터가 수동 결정. 캔버스 드래그 = 매니페스트 재작성.
+  - **비트 구성(15개, Blake 110p 기준 고정·비편집):** 1막 row = 1.오프닝 이미지 … 5.토론 / 2막 row = 6.2막 진입 … 12.영혼의 어두운 밤 / 3막 row = 13.3막 진입 … 15.마지막 이미지.
+  - **분량 X-ray는 범위 밖(향후):** 실제 Shot duration 합으로 씬 폭을 그리는 '분량 배분 진단'은 의도적으로 MVP에서 제외. 현재는 개수 기준 균등 배치.
 
 - **Screenplay ↔ Shot mapping: HTML comment markers.** `screenplay.md` 본문 안에 `<!-- shot:NN -->` ... `<!-- /shot:NN -->` block으로 각 Shot이 각본의 어느 영역에 매핑되는지 표시. 마커는 Markdown 렌더링 시 안 보이며, 각본 수정 시 본문과 함께 따라간다.
 
@@ -41,6 +49,22 @@ _Avoid_: Movie, Film
 **Scene**:
 시나리오 단위. 폴더 1개 = Scene 1개. 모든 Scene은 평등 — 분기/대안도 같은 위계.
 _Avoid_: Sequence, Variant, Slot
+
+**Scene manifest** (= Movie manifest):
+`data/movie.yaml`. `acts:` → 3개 막(`id: 1|2|3`)별 순서 있는 Scene slug 리스트. Scene 순서 + 막 배치의 단일 출처(SSOT). 폴더명 prefix 정렬을 대체. 재정렬·막 이동은 이 파일만 재작성. 선형 순서 = 3 막 flatten.
+_Avoid_: Playlist, Index, per-scene `order`/`beat` 필드(채택 안 함)
+
+**Act** (막):
+영화의 3대 구조 단위(1막/2막/3막). BS2상 순차적·연속적. Movie 매니페스트의 `acts`로 표현. 각 Scene은 정확히 한 Act에 속한다. 디렉터가 캔버스에서 수동 배치.
+_Avoid_: Part, Section
+
+**Beat** (비트):
+Blake Snyder Beat Sheet(BS2)의 15개 구조 비트(오프닝 이미지 … 마지막 이미지). 비트 폭 = Blake 페이지 비율 = 분량 배분 가이드. **캔버스의 시각 눈금자일 뿐 Scene에 저장하지 않는다** (Scene↔Beat 할당 개념 없음).
+_Avoid_: Scene에 `beat` 필드 두기
+
+**BS2 canvas** (비트 시트 캔버스):
+3개 막 row + 비트 가이드 위에 Scene을 배치·재정렬하는 시각 뷰. 매니페스트의 파생 표현이자 순서/막의 또 다른 편집 진입점(Scenes 뷰와 동일 SSOT).
+_Avoid_: Beat sheet(코드 식별자로는 BS2/canvas 사용)
 
 **Slugline**:
 Scene 헤더. `INT./EXT. + LOCATION + TIME OF DAY` 형식. 예: `EXT. 횡단보도 - DAY`.
@@ -64,7 +88,7 @@ _Avoid_: Attempt, Render
 마커 블록 안 normalized text(앞뒤 공백 trim + 줄바꿈 정규화)의 SHA-256. Shot/Take 양쪽에 박혀 sync 상태를 표시. 도구는 표시만, 결정은 디렉터. 한 Shot ID에 마커 블록이 여러 개 있으면 각 블록의 normalized text를 빈 줄(`\n\n`)로 join한 뒤 한 번에 해시. "확인됨" 액션은 Shot 단일 갱신 또는 Take 단일 갱신 — 도구는 두 hash를 독립 관리.
 
 **isStarred** (on Scene):
-이 Scene이 메인 영화 시퀀스에 포함되는지 boolean. 영화 시퀀스 = `isStarred=true`인 Scene들의 폴더명 prefix 정렬.
+이 Scene이 메인 영화 시퀀스에 포함되는지 boolean. 영화 시퀀스 = Scene 매니페스트(`data/movie.yaml`) 순서에서 `isStarred=true`인 Scene만 필터. 순서 자체는 매니페스트가 소유하고, isStarred는 시퀀스/캔버스 포함 여부만 결정.
 
 **isStarred** (on Take):
 해당 Shot의 채택된 Take. Shot당 최대 1개. Shot 사이 chaining 시 `prevShotRef`가 이 Take를 가리킨다.
@@ -104,7 +128,8 @@ _Avoid_: Linking, Continuation
 
 - **Project**은 N개의 **Scene**(폴더), N개의 **Character**, N개의 **Location**, N개의 **Prop**을 가진다.
 - **Scene**은 1 **Slugline** + 1 **Screenplay** + N개의 **Shot** + `isStarred` boolean을 가진다.
-- **영화 시퀀스 = `isStarred=true`인 Scene들의 폴더명 prefix 정렬.** 같은 prefix가 여럿이어도 다 starred면 다 들어간다(디렉터 책임).
+- **Movie**는 정확히 3개의 **Act**(1막/2막/3막)를 가지며, 각 Act는 순서 있는 **Scene** 리스트를 가진다. 각 Scene은 정확히 한 Act에 속한다.
+- **영화 시퀀스 = Scene 매니페스트(`data/movie.yaml`의 `acts` flatten) 순서에서 `isStarred=true`인 Scene만 필터.** 매니페스트는 모든 Scene을 3개 막으로 그룹지어 담고, isStarred가 시퀀스/캔버스 포함을 결정(디렉터 책임).
 - **Shot**은 1 `prompt` + 1 `duration` + 0..1 `prevShotRef`(같은 Scene 내) + N **Take** + 1 `screenplay_hash`를 가지며, 0..N **Character ref**(`{character, look}`), 0..N **Location** ref, 0..N **Prop** ref를 가진다.
 - **Shot**은 **Screenplay marker** 블록 1개 이상과 매핑된다 (한 Shot이 여러 블록 가능).
 - **Shot**의 **Take**들 중 최대 1개가 `isStarred=true`.

@@ -114,6 +114,49 @@ body {
   color: var(--fg-dim);
 }
 
+/* Scene reorder controls (Slice #19) — up/down within the movie sequence. */
+.scene-nav__item {
+  position: relative;
+}
+.scene-nav__reorder {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.scene-nav__item:hover .scene-nav__reorder,
+.scene-nav__reorder:focus-within {
+  opacity: 1;
+}
+.scene-nav__move {
+  width: 1.4rem;
+  height: 0.95rem;
+  line-height: 1;
+  padding: 0;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elev-2);
+  color: var(--fg-dim);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.scene-nav__move:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.scene-nav__move:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 /* Main column */
 .main {
   padding: 2rem 2.5rem 6rem;
@@ -1345,4 +1388,144 @@ body {
 .live-reload-toast__force:hover {
   background: rgba(121, 184, 255, 0.32);
   color: #fff;
+}
+
+/* ── BS2 Canvas (read-only, slice #20) ─────────────────────────────────── */
+.canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.canvas__header {
+  margin-bottom: 0.25rem;
+}
+.canvas__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+  color: var(--fg);
+}
+.canvas__subtitle {
+  margin: 0;
+  color: var(--fg-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 60ch;
+}
+
+.canvas-act {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-elev);
+  padding: 0.85rem 1rem 1rem;
+}
+.canvas-act__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.canvas-act__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.canvas-act__count {
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+}
+
+/* Beat ruler — proportional ticks (Blake page spans). */
+.canvas-act__ruler {
+  display: flex;
+  width: 100%;
+  height: 2.2rem;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 0.55rem;
+}
+.canvas-beat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 0.25rem;
+  background: var(--bg-elev-2);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+.canvas-beat:last-child {
+  border-right: none;
+}
+.canvas-beat:nth-child(even) {
+  background: color-mix(in srgb, var(--bg-elev-2) 70%, var(--accent) 8%);
+}
+.canvas-beat__label {
+  font-size: 0.66rem;
+  color: var(--fg-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Scene blocks — equal width (length ignored, per PRD). */
+.canvas-act__scenes {
+  display: flex;
+  width: 100%;
+  gap: 0.3rem;
+  min-height: 3rem;
+  border-radius: 5px;
+  transition: background 0.12s, box-shadow 0.12s;
+}
+/* Drop target highlight while a Scene is dragged over this act row (#21). */
+.canvas-act__scenes--drop {
+  background: color-mix(in srgb, var(--bg-elev-2) 70%, var(--accent) 18%);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.canvas-act__empty {
+  color: var(--fg-dim);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 0.75rem 0;
+}
+.canvas-scene {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color 0.12s, background 0.12s;
+}
+.canvas-scene:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--bg-elev-2) 80%, var(--accent) 14%);
+}
+/* Draggable Scene block (#21) — grab cursor + dim the block being dragged. */
+.canvas-scene[draggable="true"] {
+  cursor: grab;
+}
+.canvas-scene--dragging {
+  opacity: 0.4;
+}
+.canvas-scene__slug {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.canvas-scene__slugline {
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
