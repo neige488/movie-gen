@@ -102,6 +102,16 @@ body {
   margin-top: 0;
   border-top: none;
 }
+/* Placeholder under an act that has no Scenes yet — keeps the act visible as a
+   reachable ▲/▼ cross target. */
+.scene-nav__act-empty {
+  list-style: none;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--fg-dim);
+  padding: 0.3rem 0.65rem 0.4rem;
+  opacity: 0.7;
+}
 .scene-nav__link {
   display: flex;
   flex-direction: column;

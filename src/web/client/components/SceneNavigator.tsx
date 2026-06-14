@@ -7,9 +7,10 @@ const ACT_TITLES: Record<1 | 2 | 3, string> = { 1: "1막", 2: "2막", 3: "3막" 
 interface Props {
   scenes: SceneDto[];
   /**
-   * The BS2 acts (manifest grouping). When supplied, an act header is inserted
-   * before the first Scene of each act so the linear list shows where the acts
-   * break — mirroring the canvas. Optional: omit for a plain list.
+   * The BS2 acts (manifest grouping). When supplied, the list is grouped under
+   * 1막/2막/3막 headers — **including empty acts**, so the director can see (and
+   * cross ▲/▼ into) acts that have no Scenes yet. Optional: omit for a plain
+   * flat list (no headers).
    */
   acts?: CanvasActDto[];
   /**
@@ -22,11 +23,6 @@ interface Props {
 }
 
 export function SceneNavigator({ scenes, acts, onMovieChanged }: Props) {
-  // slug → act id, so we can drop an act header at each boundary in the list.
-  const actOf = new Map<string, 1 | 2 | 3>();
-  for (const a of acts ?? []) {
-    for (const slug of a.sceneSlugs) actOf.set(slug, a.id);
-  }
   // Slug currently being reordered — disables its controls so a director can't
   // fire overlapping reorders (the server is the SSOT; we wait for its reply).
   const [busySlug, setBusySlug] = useState<string | null>(null);
@@ -48,63 +44,96 @@ export function SceneNavigator({ scenes, acts, onMovieChanged }: Props) {
   }
 
   const canReorder = onMovieChanged !== undefined;
+  const sceneBySlug = new Map(scenes.map((s) => [s.slug, s]));
 
+  // One Scene row + its reorder controls. `upDisabled`/`downDisabled` mark the
+  // only true no-ops (act-1 first ↑ / act-3 last ↓); every other position can
+  // move — within its act, or across the boundary into the adjacent act.
+  function sceneItem(
+    scene: SceneDto,
+    upDisabled: boolean,
+    downDisabled: boolean,
+  ) {
+    return (
+      <li key={scene.slug} className="scene-nav__item">
+        <a className="scene-nav__link" href={`#scene-${scene.slug}`}>
+          <span className="scene-nav__slug">{scene.slug}</span>
+          <span className="scene-nav__slugline">{scene.slugline}</span>
+          <span className="scene-nav__count">
+            {scene.shots.length} shot
+            {scene.shots.length === 1 ? "" : "s"}
+          </span>
+        </a>
+        {canReorder && (
+          <div
+            className="scene-nav__reorder"
+            role="group"
+            aria-label={`Reorder ${scene.slug}`}
+          >
+            <button
+              type="button"
+              className="scene-nav__move scene-nav__move--up"
+              onClick={() => void move(scene.slug, "up")}
+              disabled={upDisabled || busySlug !== null}
+              title="Move earlier"
+              aria-label={`Move ${scene.slug} earlier`}
+            >
+              ▲
+            </button>
+            <button
+              type="button"
+              className="scene-nav__move scene-nav__move--down"
+              onClick={() => void move(scene.slug, "down")}
+              disabled={downDisabled || busySlug !== null}
+              title="Move later"
+              aria-label={`Move ${scene.slug} later`}
+            >
+              ▼
+            </button>
+          </div>
+        )}
+      </li>
+    );
+  }
+
+  // Grouped rendering — every act gets a header, even empty ones, so the act
+  // structure is always visible and an empty act is a reachable ▼/▲ target.
+  if (acts && acts.length > 0) {
+    return (
+      <nav className="scene-nav" aria-label="Scenes">
+        <ol className="scene-nav__list">
+          {acts.map((act) => (
+            <Fragment key={act.id}>
+              <li className="scene-nav__act" aria-hidden="true">
+                {ACT_TITLES[act.id]}
+              </li>
+              {act.sceneSlugs.length === 0 ? (
+                <li className="scene-nav__act-empty">— 씬 없음 —</li>
+              ) : (
+                act.sceneSlugs.map((slug, idxInAct) => {
+                  const scene = sceneBySlug.get(slug);
+                  if (!scene) return null;
+                  return sceneItem(
+                    scene,
+                    act.id === 1 && idxInAct === 0,
+                    act.id === 3 && idxInAct === act.sceneSlugs.length - 1,
+                  );
+                })
+              )}
+            </Fragment>
+          ))}
+        </ol>
+      </nav>
+    );
+  }
+
+  // Fallback: plain flat list (no act grouping available).
   return (
     <nav className="scene-nav" aria-label="Scenes">
       <ol className="scene-nav__list">
-        {scenes.map((scene, index) => {
-          const act = actOf.get(scene.slug);
-          const prevAct =
-            index > 0 ? actOf.get(scenes[index - 1]!.slug) : undefined;
-          const showActHeader = act !== undefined && act !== prevAct;
-          return (
-          <Fragment key={scene.slug}>
-            {showActHeader && (
-              <li className="scene-nav__act" aria-hidden="true">
-                {ACT_TITLES[act]}
-              </li>
-            )}
-          <li className="scene-nav__item">
-            <a className="scene-nav__link" href={`#scene-${scene.slug}`}>
-              <span className="scene-nav__slug">{scene.slug}</span>
-              <span className="scene-nav__slugline">{scene.slugline}</span>
-              <span className="scene-nav__count">
-                {scene.shots.length} shot
-                {scene.shots.length === 1 ? "" : "s"}
-              </span>
-            </a>
-            {canReorder && (
-              <div
-                className="scene-nav__reorder"
-                role="group"
-                aria-label={`Reorder ${scene.slug}`}
-              >
-                <button
-                  type="button"
-                  className="scene-nav__move scene-nav__move--up"
-                  onClick={() => void move(scene.slug, "up")}
-                  disabled={index === 0 || busySlug !== null}
-                  title="Move earlier"
-                  aria-label={`Move ${scene.slug} earlier`}
-                >
-                  ▲
-                </button>
-                <button
-                  type="button"
-                  className="scene-nav__move scene-nav__move--down"
-                  onClick={() => void move(scene.slug, "down")}
-                  disabled={index === scenes.length - 1 || busySlug !== null}
-                  title="Move later"
-                  aria-label={`Move ${scene.slug} later`}
-                >
-                  ▼
-                </button>
-              </div>
-            )}
-          </li>
-          </Fragment>
-          );
-        })}
+        {scenes.map((scene, index) =>
+          sceneItem(scene, index === 0, index === scenes.length - 1),
+        )}
       </ol>
     </nav>
   );
