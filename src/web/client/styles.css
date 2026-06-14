@@ -1461,10 +1461,25 @@ body {
   font-weight: 600;
   color: var(--accent);
 }
-.canvas-act__pages {
+/* Per-act metrics: 추천(BS2 page share) vs 실제(actual Scene duration share). */
+.canvas-act__metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
   font-size: 0.72rem;
   color: var(--fg-dim);
   font-family: var(--mono);
+}
+.canvas-act__metric strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.canvas-act__metric--actual strong {
+  color: var(--accent-warm);
+}
+.canvas-act__metric-sub {
+  font-size: 0.64rem;
+  opacity: 0.75;
 }
 .canvas-act__count {
   font-size: 0.75rem;

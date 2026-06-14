@@ -45,6 +45,15 @@ function pageLabel(beat: BeatDto): string {
     : `p.${beat.startPage}-${beat.endPage}`;
 }
 
+/** Format a duration in seconds as "45s" / "1m 30s" / "2m". */
+function fmtDuration(seconds: number): string {
+  if (seconds <= 0) return "0s";
+  const m = Math.floor(seconds / 60);
+  const s = Math.round(seconds % 60);
+  if (m === 0) return `${s}s`;
+  return s === 0 ? `${m}m` : `${m}m ${s}s`;
+}
+
 /** Edge-aware horizontal transform for a point's name (keeps edge labels in view). */
 function pointNameTransform(leftPct: number): string {
   if (leftPct <= 10) return "translateX(0)";
@@ -116,6 +125,19 @@ export function BS2Canvas({
   // (The label still shows each act's share of the whole movie — pagePct.)
   const maxSpan = Math.max(1, ...acts.map((a) => a.pageEnd - a.pageStart));
 
+  // Actual length per act = sum of its Scenes' Shot durations (seconds). Shown
+  // next to the recommended (Blake page) share so the director sees an act
+  // that's over/under-weight relative to BS2 ("분량 배분" X-ray).
+  const sceneDuration = new Map(
+    movie.scenes.map((s) => [
+      s.slug,
+      s.shots.reduce((acc, sh) => acc + sh.duration, 0),
+    ]),
+  );
+  const actDuration = (a: CanvasActDto): number =>
+    a.sceneSlugs.reduce((acc, slug) => acc + (sceneDuration.get(slug) ?? 0), 0);
+  const totalDuration = acts.reduce((acc, a) => acc + actDuration(a), 0);
+
   async function commitMove(
     slug: string,
     toActId: 1 | 2 | 3,
@@ -156,6 +178,8 @@ export function BS2Canvas({
           key={act.id}
           act={act}
           maxSpan={maxSpan}
+          actualDuration={actDuration(act)}
+          actualPct={totalDuration > 0 ? (actDuration(act) / totalDuration) * 100 : 0}
           sluglineBySlug={sluglineBySlug}
           canDrag={canDrag}
           onSelectScene={onSelectScene}
@@ -178,6 +202,8 @@ export function BS2Canvas({
 function ActRow({
   act,
   maxSpan,
+  actualDuration,
+  actualPct,
   sluglineBySlug,
   canDrag,
   onSelectScene,
@@ -190,6 +216,10 @@ function ActRow({
 }: {
   act: CanvasActDto;
   maxSpan: number;
+  /** Actual length of this act = sum of its Scenes' Shot durations (seconds). */
+  actualDuration: number;
+  /** Actual share of the movie's total duration, in percent. */
+  actualPct: number;
   sluglineBySlug: Map<string, string>;
   canDrag: boolean;
   onSelectScene?: (slug: string) => void;
@@ -254,8 +284,20 @@ function ActRow({
     <section className="canvas-act" aria-label={`${ACT_TITLES[act.id]} row`}>
       <div className="canvas-act__label">
         <span className="canvas-act__title">{ACT_TITLES[act.id]}</span>
-        <span className="canvas-act__pages">
-          {act.pageEnd - act.pageStart}p · {Math.round(act.pagePct)}%
+        <span className="canvas-act__metric" title="BS2 추천 분량 (Blake 페이지 비율)">
+          추천 <strong>{Math.round(act.pagePct)}%</strong>
+          <span className="canvas-act__metric-sub">
+            {act.pageStart}–{act.pageEnd}p
+          </span>
+        </span>
+        <span
+          className="canvas-act__metric canvas-act__metric--actual"
+          title="이 막에 배치된 Scene들의 실제 분량 (Shot duration 합) / 전체 대비 비율"
+        >
+          실제 <strong>{Math.round(actualPct)}%</strong>
+          <span className="canvas-act__metric-sub">
+            {fmtDuration(actualDuration)}
+          </span>
         </span>
         <span className="canvas-act__count">
           {act.sceneSlugs.length} scene
