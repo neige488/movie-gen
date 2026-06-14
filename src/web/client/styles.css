@@ -112,6 +112,40 @@ body {
   padding: 0.3rem 0.65rem 0.4rem;
   opacity: 0.7;
 }
+/* Empty act as a drag drop target. */
+.scene-nav__act-empty--drop {
+  color: var(--accent);
+  opacity: 1;
+  outline: 1px dashed var(--accent);
+  outline-offset: -2px;
+  border-radius: 5px;
+}
+/* Drag-and-drop reorder (sidebar) — grab cursor, dim the dragged row, and a
+   single insertion line at the drop position (before a row, or an act's end). */
+.scene-nav__link[draggable="true"] {
+  cursor: grab;
+}
+.scene-nav__item--dragging {
+  opacity: 0.4;
+}
+.scene-nav__item--drop-before::before,
+.scene-nav__item--drop-after::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+  z-index: 2;
+}
+.scene-nav__item--drop-before::before {
+  top: -2px;
+}
+.scene-nav__item--drop-after::after {
+  bottom: 1px;
+}
 .scene-nav__link {
   display: flex;
   flex-direction: column;
@@ -1431,10 +1465,40 @@ body {
 .canvas__header {
   margin-bottom: 0.25rem;
 }
+.canvas__header-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
 .canvas__title {
   margin: 0 0 0.35rem;
   font-size: 1.25rem;
   color: var(--fg);
+}
+/* Movie total-length control in the canvas header. */
+.canvas-total {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+.canvas-total__input {
+  width: 4rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+.canvas-total__input:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 .canvas__subtitle {
   margin: 0;
@@ -1461,10 +1525,25 @@ body {
   font-weight: 600;
   color: var(--accent);
 }
-.canvas-act__pages {
+/* Per-act metrics: 추천(BS2 page share) vs 실제(actual Scene duration share). */
+.canvas-act__metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
   font-size: 0.72rem;
   color: var(--fg-dim);
   font-family: var(--mono);
+}
+.canvas-act__metric strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.canvas-act__metric--actual strong {
+  color: var(--accent-warm);
+}
+.canvas-act__metric-sub {
+  font-size: 0.64rem;
+  opacity: 0.75;
 }
 .canvas-act__count {
   font-size: 0.75rem;

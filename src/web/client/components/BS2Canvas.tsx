@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { BeatDto, CanvasActDto, MovieDto } from "../../shared/dto.js";
-import { moveSceneToAct } from "../upload-client.js";
+import { moveSceneToAct, setMovieTotalPages } from "../upload-client.js";
 
 /**
  * BS2 Canvas — draggable (slice #21, built on #20's read view).
@@ -38,11 +38,23 @@ const ACT_TITLES: Record<1 | 2 | 3, string> = {
   3: "3막",
 };
 
-/** Human page-range label for a beat: "p.12" (point) or "p.12-25" (span). */
-function pageLabel(beat: BeatDto): string {
-  return beat.startPage === beat.endPage
-    ? `p.${beat.startPage}`
-    : `p.${beat.startPage}-${beat.endPage}`;
+/**
+ * Human page-range label for a beat, scaled to the movie's total length:
+ * "p.12" (point) or "p.12-25" (span). `scale` = totalPages / 110.
+ */
+function pageLabel(beat: BeatDto, scale = 1): string {
+  const a = Math.round(beat.startPage * scale);
+  const b = Math.round(beat.endPage * scale);
+  return a === b ? `p.${a}` : `p.${a}-${b}`;
+}
+
+/** Format a duration in seconds as "45s" / "1m 30s" / "2m". */
+function fmtDuration(seconds: number): string {
+  if (seconds <= 0) return "0s";
+  const m = Math.floor(seconds / 60);
+  const s = Math.round(seconds % 60);
+  if (m === 0) return `${s}s`;
+  return s === 0 ? `${m}m` : `${m}m ${s}s`;
 }
 
 /** Edge-aware horizontal transform for a point's name (keeps edge labels in view). */
@@ -50,6 +62,44 @@ function pointNameTransform(leftPct: number): string {
   if (leftPct <= 10) return "translateX(0)";
   if (leftPct >= 90) return "translateX(-100%)";
   return "translateX(-50%)";
+}
+
+/** Number input for the movie's total length (BS2 pages). Commits on blur / Enter. */
+function TotalPagesControl({
+  totalPages,
+  onCommit,
+}: {
+  totalPages: number;
+  onCommit: (n: number) => void;
+}) {
+  const [val, setVal] = useState(String(totalPages));
+  // Re-seed when the server-confirmed value changes (e.g. external reload).
+  useEffect(() => setVal(String(totalPages)), [totalPages]);
+  const commit = () => {
+    const n = parseInt(val, 10);
+    if (Number.isInteger(n) && n >= 1 && n !== totalPages) onCommit(n);
+    else setVal(String(totalPages)); // revert invalid / unchanged
+  };
+  return (
+    <label
+      className="canvas-total"
+      title="영화 총 분량 (BS2 페이지 ≈ 분). 추천 페이지 번호가 이 값으로 스케일됩니다 — 비율은 그대로."
+    >
+      총 분량
+      <input
+        type="number"
+        min={1}
+        className="canvas-total__input"
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+        }}
+      />
+      p
+    </label>
+  );
 }
 
 /** Currently-hovered beat + viewport anchor (for the fixed tooltip). */
@@ -111,10 +161,30 @@ export function BS2Canvas({
 
   const totalStarred = acts.reduce((acc, a) => acc + a.sceneSlugs.length, 0);
 
-  // The longest act fills the full width; shorter acts scale relative to it
-  // (max-normalized), so the length differences show without wasting space.
-  // (The label still shows each act's share of the whole movie — pagePct.)
-  const maxSpan = Math.max(1, ...acts.map((a) => a.pageEnd - a.pageStart));
+  // Displayed beat page numbers scale to the movie's total length (default 110).
+  const pageScale = movie.totalPages / 110;
+
+  async function commitTotalPages(n: number): Promise<void> {
+    if (!onMovieChanged) return;
+    try {
+      onMovieChanged(await setMovieTotalPages(n));
+    } catch (err) {
+      console.warn("[total pages]", (err as Error).message);
+    }
+  }
+
+  // Actual length per act = sum of its Scenes' Shot durations (seconds). Shown
+  // next to the recommended (Blake page) share so the director sees an act
+  // that's over/under-weight relative to BS2 ("분량 배분" X-ray).
+  const sceneDuration = new Map(
+    movie.scenes.map((s) => [
+      s.slug,
+      s.shots.reduce((acc, sh) => acc + sh.duration, 0),
+    ]),
+  );
+  const actDuration = (a: CanvasActDto): number =>
+    a.sceneSlugs.reduce((acc, slug) => acc + (sceneDuration.get(slug) ?? 0), 0);
+  const totalDuration = acts.reduce((acc, a) => acc + actDuration(a), 0);
 
   async function commitMove(
     slug: string,
@@ -142,7 +212,15 @@ export function BS2Canvas({
   return (
     <div className="canvas">
       <header className="canvas__header">
-        <h2 className="canvas__title">BS2 캔버스</h2>
+        <div className="canvas__header-top">
+          <h2 className="canvas__title">BS2 캔버스</h2>
+          {canDrag && (
+            <TotalPagesControl
+              totalPages={movie.totalPages}
+              onCommit={(n) => void commitTotalPages(n)}
+            />
+          )}
+        </div>
         <p className="canvas__subtitle">
           starred Scene {totalStarred}개가 1/2/3막에 어떻게 분포하는지, 각 막의
           비트 가이드 위 어디쯤에 떨어지는지 봅니다.
@@ -155,7 +233,9 @@ export function BS2Canvas({
         <ActRow
           key={act.id}
           act={act}
-          maxSpan={maxSpan}
+          pageScale={pageScale}
+          actualDuration={actDuration(act)}
+          actualPct={totalDuration > 0 ? (actDuration(act) / totalDuration) * 100 : 0}
           sluglineBySlug={sluglineBySlug}
           canDrag={canDrag}
           onSelectScene={onSelectScene}
@@ -177,7 +257,9 @@ export function BS2Canvas({
 
 function ActRow({
   act,
-  maxSpan,
+  pageScale,
+  actualDuration,
+  actualPct,
   sluglineBySlug,
   canDrag,
   onSelectScene,
@@ -189,7 +271,12 @@ function ActRow({
   onDropAtEnd,
 }: {
   act: CanvasActDto;
-  maxSpan: number;
+  /** Displayed page numbers are multiplied by this (= totalPages / 110). */
+  pageScale: number;
+  /** Actual length of this act = sum of its Scenes' Shot durations (seconds). */
+  actualDuration: number;
+  /** Actual share of the movie's total duration, in percent. */
+  actualPct: number;
   sluglineBySlug: Map<string, string>;
   canDrag: boolean;
   onSelectScene?: (slug: string) => void;
@@ -247,15 +334,25 @@ function ActRow({
   const points = act.beats.filter((b) => b.kind === "point");
   const pointTier = new Map(points.map((b, i) => [b.number, i % 2]));
 
-  // Row width is max-normalized: the longest act = 100%, others relative to it.
-  const rowWidthPct = ((act.pageEnd - act.pageStart) / maxSpan) * 100;
-
   return (
     <section className="canvas-act" aria-label={`${ACT_TITLES[act.id]} row`}>
       <div className="canvas-act__label">
         <span className="canvas-act__title">{ACT_TITLES[act.id]}</span>
-        <span className="canvas-act__pages">
-          {act.pageEnd - act.pageStart}p · {Math.round(act.pagePct)}%
+        <span className="canvas-act__metric" title="BS2 추천 분량 (Blake 페이지 비율)">
+          추천 <strong>{Math.round(act.pagePct)}%</strong>
+          <span className="canvas-act__metric-sub">
+            {Math.round(act.pageStart * pageScale)}–
+            {Math.round(act.pageEnd * pageScale)}p
+          </span>
+        </span>
+        <span
+          className="canvas-act__metric canvas-act__metric--actual"
+          title="이 막에 배치된 Scene들의 실제 분량 (Shot duration 합) / 전체 대비 비율"
+        >
+          실제 <strong>{Math.round(actualPct)}%</strong>
+          <span className="canvas-act__metric-sub">
+            {fmtDuration(actualDuration)}
+          </span>
         </span>
         <span className="canvas-act__count">
           {act.sceneSlugs.length} scene
@@ -263,10 +360,9 @@ function ActRow({
         </span>
       </div>
 
-      {/* Body width is max-normalized — the longest act (act 2) fills the full
-          width, shorter acts scale relative to it — so length differences show
-          without wasting space. The label still reports each act's movie share. */}
-      <div className="canvas-act__body" style={{ width: `${rowWidthPct}%` }}>
+      {/* Every act row is full width — the recommended vs actual labels above
+          carry the length comparison, so the row itself needn't be scaled. */}
+      <div className="canvas-act__body">
         {/* Point names above the ruler, positioned at each point's page, on two
             staggered tiers so adjacent moments don't collide. */}
         <div className="canvas-act__pointnames" role="presentation">
@@ -296,7 +392,7 @@ function ActRow({
               key={beat.number}
               className="canvas-beat-span"
               style={{ left: `${beat.leftPct}%`, width: `${beat.widthPct}%` }}
-              aria-label={`${beat.number}. ${beat.label} (${pageLabel(beat)}) — ${beat.description}`}
+              aria-label={`${beat.number}. ${beat.label} (${pageLabel(beat, pageScale)}) — ${beat.description}`}
               onMouseEnter={(e) => showTip(beat, e)}
               onMouseLeave={hideTip}
             >
@@ -308,7 +404,7 @@ function ActRow({
               key={beat.number}
               className="canvas-beat-point"
               style={{ left: `${beat.leftPct}%` }}
-              aria-label={`${beat.number}. ${beat.label} (${pageLabel(beat)}) — ${beat.description}`}
+              aria-label={`${beat.number}. ${beat.label} (${pageLabel(beat, pageScale)}) — ${beat.description}`}
               onMouseEnter={(e) => showTip(beat, e)}
               onMouseLeave={hideTip}
             >
@@ -407,7 +503,9 @@ function ActRow({
         >
           <div className="canvas-beat-tip__head">
             {tip.beat.number}. {tip.beat.label}
-            <span className="canvas-beat-tip__page">{pageLabel(tip.beat)}</span>
+            <span className="canvas-beat-tip__page">
+              {pageLabel(tip.beat, pageScale)}
+            </span>
           </div>
           <div className="canvas-beat-tip__desc">{tip.beat.description}</div>
         </div>

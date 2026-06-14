@@ -198,4 +198,20 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
     expect(a2!.pagePct).toBeGreaterThan(a1!.pagePct + a3!.pagePct);
     expect(a2!.pagePct).toBeCloseTo((60 / 109) * 100, 6);
   });
+
+  it("carries totalPages (defaults to 110, passes through a custom value)", () => {
+    const project = createProject({
+      scenes: [scene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+    expect(projectToMovieDto(project, arrangement).totalPages).toBe(110);
+    expect(projectToMovieDto(project, arrangement, 90).totalPages).toBe(90);
+  });
 });

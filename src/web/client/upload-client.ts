@@ -361,6 +361,19 @@ export async function moveSceneToAct(
   return (await res.json()) as MovieDto;
 }
 
+/** Set the movie's total length in BS2 pages (≈ minutes). Returns updated MovieDto. */
+export async function setMovieTotalPages(
+  totalPages: number,
+): Promise<MovieDto> {
+  const res = await fetch(`/api/movie/total-pages`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ totalPages }),
+  });
+  if (!res.ok) throw await asError(res, "set total pages failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,

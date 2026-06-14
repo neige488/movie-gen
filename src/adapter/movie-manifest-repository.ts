@@ -51,12 +51,19 @@ export class MovieManifestError extends Error {
 
 const MANIFEST_FILENAME = "movie.yaml";
 
+/** Blake's BS2 page basis — the default total when the manifest doesn't set one. */
+export const DEFAULT_TOTAL_PAGES = 110;
+
 const actFileSchema = z.object({
   id: z.number().int(),
   scenes: z.array(z.string().min(1)).default([]),
 });
 
 const manifestFileSchema = z.object({
+  // The movie's total length in BS2 pages (≈ minutes). Optional; defaults to
+  // DEFAULT_TOTAL_PAGES. Only rescales the displayed beat page numbers — the
+  // proportions are scale-invariant.
+  totalPages: z.number().int().positive().optional(),
   acts: z.array(actFileSchema),
 });
 
@@ -138,16 +145,59 @@ export async function loadArrangement(
 }
 
 /**
+ * The movie's total length in BS2 pages (≈ minutes). Read from `movie.yaml`'s
+ * `totalPages`; defaults to DEFAULT_TOTAL_PAGES when absent/missing/invalid (a
+ * bad value never fails boot — it just falls back to Blake's 110). Tolerant by
+ * design since it only rescales displayed page numbers.
+ */
+export async function loadTotalPages(dataDir: string): Promise<number> {
+  const manifestPath = path.join(dataDir, MANIFEST_FILENAME);
+  let raw: unknown;
+  try {
+    raw = yaml.load(await readFile(manifestPath, "utf8"));
+  } catch {
+    return DEFAULT_TOTAL_PAGES;
+  }
+  const tp = (raw as { totalPages?: unknown } | null)?.totalPages;
+  return typeof tp === "number" && Number.isInteger(tp) && tp > 0
+    ? tp
+    : DEFAULT_TOTAL_PAGES;
+}
+
+/**
  * Persist the arrangement to `data/movie.yaml` with an atomic write: serialize,
  * write to a sibling temp file, then rename over the target. Per ADR 0001,
  * last-write-wins (single-user assumption) — but the rename guarantees the
- * file is never observed half-written.
+ * file is never observed half-written. Preserves the existing `totalPages`
+ * (read first) so a reorder never wipes the movie's length setting.
  */
 export async function saveArrangement(
   dataDir: string,
   arrangement: MovieArrangement,
 ): Promise<void> {
+  await writeManifest(dataDir, await loadTotalPages(dataDir), arrangement);
+}
+
+/**
+ * Persist a new `totalPages` while keeping the current (reconciled) acts. Loads
+ * the arrangement first so the on-disk acts stay consistent, then atomic-writes.
+ */
+export async function saveTotalPages(
+  dataDir: string,
+  totalPages: number,
+): Promise<void> {
+  const arrangement = await loadArrangement(dataDir);
+  await writeManifest(dataDir, totalPages, arrangement);
+}
+
+/** Atomic write of the full manifest ({ totalPages, acts }). */
+async function writeManifest(
+  dataDir: string,
+  totalPages: number,
+  arrangement: MovieArrangement,
+): Promise<void> {
   const payload = {
+    totalPages,
     acts: arrangement.toActs().map((a) => ({ id: a.id, scenes: [...a.scenes] })),
   };
   const text = yaml.dump(payload, { lineWidth: 120, noRefs: true });
