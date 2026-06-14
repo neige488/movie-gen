@@ -179,6 +179,36 @@ acts:
     ]);
   });
 
+  it("lands before the anchor on a FORWARD same-act drag (remove-then-insert shift)", async () => {
+    // All four in act 1. Drag s01-a forward to BEFORE s03-c. The director's
+    // intent is [s02-b, s01-a, s03-c, s04-d]; without shift compensation the
+    // block would overshoot to AFTER s03-c.
+    writeScene("s01-a");
+    writeScene("s02-b");
+    writeScene("s03-c");
+    writeScene("s04-d");
+    const project = await loadProject(dataDir);
+    const arrangement = await loadArrangement(dataDir);
+
+    const result = await applyMoveScene({
+      project,
+      arrangement,
+      sceneSlug: "s01-a",
+      toActId: 1,
+      beforeSlug: "s03-c",
+      dataDir,
+      saveArrangement,
+      loadProject,
+    });
+
+    expect(result.arrangement.scenesInAct(1)).toEqual([
+      "s02-b",
+      "s01-a",
+      "s03-c",
+      "s04-d",
+    ]);
+  });
+
   it("keeps an interleaved non-starred Scene in its relative slot on a row-end drop", async () => {
     writeScene("s01-a", true);
     writeScene("s02-n", false); // non-starred — invisible on the canvas

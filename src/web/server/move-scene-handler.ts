@@ -73,7 +73,12 @@ export async function applyMoveScene(
 
   let toIndex: number;
   try {
-    toIndex = resolveCanvasDropIndex(targetActSlugs, starred, beforeSlug);
+    toIndex = resolveCanvasDropIndex(
+      targetActSlugs,
+      starred,
+      beforeSlug,
+      sceneSlug,
+    );
   } catch (err) {
     if (err instanceof CanvasMoveError) throw new MoveSceneError(err.message);
     throw err;
