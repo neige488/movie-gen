@@ -2,10 +2,12 @@
  * Map domain Project to wire DTO consumed by the SPA.
  */
 
+import { beatsForAct, type ActId } from "@domain/beat-sheet.js";
 import { parseShotMarkers } from "@domain/marker-parser.js";
 import { movieSequence, type Project, type Scene } from "@domain/movie.js";
 import { evaluateSceneSync, evaluateTakeSync } from "@domain/sync-evaluator.js";
 import type {
+  CanvasActDto,
   LibraryCharacterDto,
   LibraryDto,
   LibraryLocationDto,
@@ -13,6 +15,16 @@ import type {
   MovieDto,
   SceneDto,
 } from "../shared/dto.js";
+
+/**
+ * Minimal structural view of MovieArrangement the mapper needs. Kept narrow
+ * (just the readers) so unit fixtures can pass a stub without rehydrating the
+ * full aggregate.
+ */
+interface ArrangementView {
+  linearSequence(): readonly string[];
+  scenesInAct?(actId: ActId): readonly string[];
+}
 
 /**
  * Build the wire DTO. The optional `arrangement` is the Scene-ordering SSOT
@@ -25,7 +37,7 @@ import type {
  */
 export function projectToMovieDto(
   project: Project,
-  arrangement?: { linearSequence(): readonly string[] },
+  arrangement?: ArrangementView,
 ): MovieDto {
   const sequenced = movieSequence(project, arrangement);
   return {
@@ -35,6 +47,9 @@ export function projectToMovieDto(
       slugline: s.slugline,
       isStarred: s.isStarred,
     })),
+    ...(arrangement?.scenesInAct
+      ? { acts: buildCanvasActs(project, arrangement) }
+      : {}),
     characters: project.characters.map((c) => ({
       name: c.name,
       headshot: c.headshot,
@@ -43,6 +58,37 @@ export function projectToMovieDto(
     locations: project.locations.map((l) => ({ name: l.name })),
     props: project.props.map((p) => ({ name: p.name })),
   };
+}
+
+/**
+ * Build the BS2 canvas view (read-only, slice #20): 3 act rows, each with its
+ * ordered *starred* Scene slugs and its beat ruler. Act membership + order come
+ * from the manifest (`arrangement.scenesInAct`, ADR 0002); non-starred Scenes
+ * are filtered out because the canvas shows only the movie sequence (PRD). The
+ * beat ruler is the fixed BS2 definition (BeatSheet domain) — a visual guide
+ * only, never a Scene assignment.
+ */
+function buildCanvasActs(
+  project: Project,
+  arrangement: ArrangementView,
+): CanvasActDto[] {
+  const starred = new Set(
+    project.scenes.filter((s) => s.isStarred).map((s) => s.slug),
+  );
+  const acts: ActId[] = [1, 2, 3];
+  return acts.map((id) => ({
+    id,
+    sceneSlugs: (arrangement.scenesInAct!(id) ?? []).filter((slug) =>
+      starred.has(slug),
+    ),
+    beats: beatsForAct(id).map((b) => ({
+      number: b.number,
+      label: b.label,
+      startPage: b.startPage,
+      endPage: b.endPage,
+      widthPct: b.widthPct,
+    })),
+  }));
 }
 
 function sceneToDto(scene: Scene): SceneDto {
