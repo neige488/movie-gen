@@ -122,8 +122,11 @@ export function createMovieArrangement(
         );
       }
       // Build the next acts: remove the slug wherever it lives, then insert.
+      // Local mutable shape — ActInput.scenes is readonly (public input
+      // contract), but we splice into these working arrays before handing
+      // them to the validating factory.
       let found = false;
-      const next: ActInput[] = frozen.map((a) => {
+      const next: { id: ActId; scenes: string[] }[] = frozen.map((a) => {
         const filtered = a.scenes.filter((s) => {
           if (s === slug) {
             found = true;
@@ -178,8 +181,9 @@ export function reconcileArrangement(
   const folderSet = new Set(folderSlugs);
   const manifestSet = new Set(manifest.linearSequence());
 
-  // Drop dangling slugs from each act.
-  const acts: ActInput[] = manifest.toActs().map((a) => ({
+  // Drop dangling slugs from each act. Local mutable shape (see moveScene) so
+  // we can push orphans before the validating factory takes over.
+  const acts: { id: ActId; scenes: string[] }[] = manifest.toActs().map((a) => ({
     id: a.id,
     scenes: a.scenes.filter((s) => folderSet.has(s)),
   }));
