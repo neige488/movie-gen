@@ -22,6 +22,12 @@ export function App() {
   const [library, setLibrary] = useState<FetchState<LibraryDto>>({
     kind: "loading",
   });
+  // Selected Scene for the Canvas view's detail panel. Lifted here so the
+  // sidebar scene list and the canvas blocks select the same Scene — clicking
+  // either, in the canvas view, shows the detail below the canvas.
+  const [selectedSceneSlug, setSelectedSceneSlug] = useState<string | null>(
+    null,
+  );
 
   function refreshMovie(): void {
     fetch("/api/movie")
@@ -88,6 +94,8 @@ export function App() {
           route={route}
           movie={movie}
           onMovieChanged={handleMovieChanged}
+          selectedSlug={selectedSceneSlug}
+          onSelectScene={setSelectedSceneSlug}
         />
         <main className="main">
           {route.name === "viewer" ? (
@@ -97,7 +105,13 @@ export function App() {
               onMovieChanged={handleMovieChanged}
             />
           ) : route.name === "canvas" ? (
-            <CanvasMain movie={movie} onMovieChanged={handleMovieChanged} />
+            <CanvasMain
+              movie={movie}
+              onTakeUploaded={refreshMovie}
+              onMovieChanged={handleMovieChanged}
+              selectedSlug={selectedSceneSlug}
+              onSelectScene={setSelectedSceneSlug}
+            />
           ) : (
             <LibraryMain library={library} onUploaded={refreshLibrary} />
           )}
@@ -141,11 +155,18 @@ function Sidebar({
   route,
   movie,
   onMovieChanged,
+  selectedSlug,
+  onSelectScene,
 }: {
   route: Route;
   movie: FetchState<MovieDto>;
   onMovieChanged: (movie: MovieDto) => void;
+  selectedSlug: string | null;
+  onSelectScene: (slug: string) => void;
 }) {
+  // In the canvas view, a sidebar scene click selects (shows the detail below
+  // the canvas) instead of jumping; in the viewer it stays a #scene jump link.
+  const onCanvas = route.name === "canvas";
   return (
     <aside className="sidebar">
       <h1 className="sidebar__title">Movie Gen</h1>
@@ -176,6 +197,8 @@ function Sidebar({
             scenes={movie.value.scenes}
             acts={movie.value.acts}
             onMovieChanged={onMovieChanged}
+            onSelectScene={onCanvas ? onSelectScene : undefined}
+            selectedSlug={onCanvas ? selectedSlug : null}
           />
           <NonStarredScenes
             movie={movie.value}
@@ -295,10 +318,18 @@ function ViewerMain({
 
 function CanvasMain({
   movie,
+  onTakeUploaded,
   onMovieChanged,
+  selectedSlug,
+  onSelectScene,
 }: {
   movie: FetchState<MovieDto>;
+  onTakeUploaded: () => void;
   onMovieChanged: (movie: MovieDto) => void;
+  /** Selected Scene (lifted to App) — set by either a canvas block or the
+   *  sidebar scene list; its detail (SceneView) renders below the canvas. */
+  selectedSlug: string | null;
+  onSelectScene: (slug: string) => void;
 }) {
   if (movie.kind === "loading")
     return <div className="status">Loading project…</div>;
@@ -308,7 +339,32 @@ function CanvasMain({
         Failed to load project: {movie.message}
       </div>
     );
-  return <BS2Canvas movie={movie.value} onMovieChanged={onMovieChanged} />;
+
+  const selectedScene =
+    selectedSlug !== null
+      ? (movie.value.scenes.find((s) => s.slug === selectedSlug) ?? null)
+      : null;
+
+  return (
+    <>
+      <BS2Canvas
+        movie={movie.value}
+        onMovieChanged={onMovieChanged}
+        onSelectScene={onSelectScene}
+        selectedSlug={selectedSlug}
+      />
+      {selectedScene && (
+        <div className="canvas-scene-detail">
+          <SceneView
+            scene={selectedScene}
+            movie={movie.value}
+            onTakeUploaded={onTakeUploaded}
+            onMovieChanged={onMovieChanged}
+          />
+        </div>
+      )}
+    </>
+  );
 }
 
 function LibraryMain({
