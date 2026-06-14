@@ -145,7 +145,7 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
     expect(dto.acts![0]!.sceneSlugs).toEqual(["s03-c", "s01-a", "s02-b"]);
   });
 
-  it("attaches the BS2 beat ruler to each act (15 beats, sums to 100%)", () => {
+  it("attaches the positioned BS2 beat ruler to each act (15 beats, point+span)", () => {
     const project = createProject({
       scenes: [scene("s01-a", true)],
       characters: [],
@@ -161,11 +161,41 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
     const dto = projectToMovieDto(project, arrangement);
     const allBeats = dto.acts!.flatMap((a) => a.beats);
     expect(allBeats).toHaveLength(15);
-    for (const act of dto.acts!) {
-      const sum = act.beats.reduce((acc, b) => acc + b.widthPct, 0);
-      expect(sum).toBeCloseTo(100, 6);
+    // Beats are positioned on each act's page timeline (0 ≤ left, left+width ≤ 100);
+    // point beats carry width 0, span beats a positive width.
+    for (const beat of allBeats) {
+      expect(beat.leftPct).toBeGreaterThanOrEqual(0);
+      expect(beat.leftPct + beat.widthPct).toBeLessThanOrEqual(100 + 1e-9);
+      expect(beat.kind === "point" ? beat.widthPct === 0 : beat.widthPct > 0).toBe(
+        true,
+      );
     }
-    // Act 1 ruler starts at 오프닝 이미지.
+    // Act 1 ruler starts at 오프닝 이미지 (a point at the timeline origin).
     expect(dto.acts![0]!.beats[0]!.label).toBe("오프닝 이미지");
+    expect(dto.acts![0]!.beats[0]!.kind).toBe("point");
+    expect(dto.acts![0]!.beats[0]!.leftPct).toBeCloseTo(0, 6);
+  });
+
+  it("scales each act to its page range (act 2 is the long one, ~55%)", () => {
+    const project = createProject({
+      scenes: [scene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+
+    const [a1, a2, a3] = projectToMovieDto(project, arrangement).acts!;
+    expect([a1!.pageStart, a1!.pageEnd]).toEqual([1, 25]);
+    expect([a2!.pageStart, a2!.pageEnd]).toEqual([25, 85]);
+    expect([a3!.pageStart, a3!.pageEnd]).toEqual([85, 110]);
+    // pagePct sums to 100 and act 2 dominates.
+    expect(a1!.pagePct + a2!.pagePct + a3!.pagePct).toBeCloseTo(100, 6);
+    expect(a2!.pagePct).toBeGreaterThan(a1!.pagePct + a3!.pagePct);
+    expect(a2!.pagePct).toBeCloseTo((60 / 109) * 100, 6);
   });
 });

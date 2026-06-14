@@ -2,7 +2,7 @@
  * Map domain Project to wire DTO consumed by the SPA.
  */
 
-import { beatsForAct, type ActId } from "@domain/beat-sheet.js";
+import { actPageRange, beatsForAct, type ActId } from "@domain/beat-sheet.js";
 import { parseShotMarkers } from "@domain/marker-parser.js";
 import { movieSequence, type Project, type Scene } from "@domain/movie.js";
 import { evaluateSceneSync, evaluateTakeSync } from "@domain/sync-evaluator.js";
@@ -76,19 +76,33 @@ function buildCanvasActs(
     project.scenes.filter((s) => s.isStarred).map((s) => s.slug),
   );
   const acts: ActId[] = [1, 2, 3];
-  return acts.map((id) => ({
-    id,
-    sceneSlugs: (arrangement.scenesInAct!(id) ?? []).filter((slug) =>
-      starred.has(slug),
-    ),
-    beats: beatsForAct(id).map((b) => ({
-      number: b.number,
-      label: b.label,
-      startPage: b.startPage,
-      endPage: b.endPage,
-      widthPct: b.widthPct,
-    })),
-  }));
+  const ranges = new Map(acts.map((id) => [id, actPageRange(id)] as const));
+  const totalSpan = acts.reduce((acc, id) => {
+    const r = ranges.get(id)!;
+    return acc + (r.end - r.start);
+  }, 0);
+  return acts.map((id) => {
+    const r = ranges.get(id)!;
+    return {
+      id,
+      sceneSlugs: (arrangement.scenesInAct!(id) ?? []).filter((slug) =>
+        starred.has(slug),
+      ),
+      beats: beatsForAct(id).map((b) => ({
+        number: b.number,
+        label: b.label,
+        description: b.description,
+        startPage: b.startPage,
+        endPage: b.endPage,
+        kind: b.kind,
+        leftPct: b.leftPct,
+        widthPct: b.widthPct,
+      })),
+      pageStart: r.start,
+      pageEnd: r.end,
+      pagePct: ((r.end - r.start) / totalSpan) * 100,
+    };
+  });
 }
 
 function sceneToDto(scene: Scene): SceneDto {
