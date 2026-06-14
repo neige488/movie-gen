@@ -120,11 +120,6 @@ export function BS2Canvas({
 
   const totalStarred = acts.reduce((acc, a) => acc + a.sceneSlugs.length, 0);
 
-  // The longest act fills the full width; shorter acts scale relative to it
-  // (max-normalized), so the length differences show without wasting space.
-  // (The label still shows each act's share of the whole movie — pagePct.)
-  const maxSpan = Math.max(1, ...acts.map((a) => a.pageEnd - a.pageStart));
-
   // Actual length per act = sum of its Scenes' Shot durations (seconds). Shown
   // next to the recommended (Blake page) share so the director sees an act
   // that's over/under-weight relative to BS2 ("분량 배분" X-ray).
@@ -177,7 +172,6 @@ export function BS2Canvas({
         <ActRow
           key={act.id}
           act={act}
-          maxSpan={maxSpan}
           actualDuration={actDuration(act)}
           actualPct={totalDuration > 0 ? (actDuration(act) / totalDuration) * 100 : 0}
           sluglineBySlug={sluglineBySlug}
@@ -201,7 +195,6 @@ export function BS2Canvas({
 
 function ActRow({
   act,
-  maxSpan,
   actualDuration,
   actualPct,
   sluglineBySlug,
@@ -215,7 +208,6 @@ function ActRow({
   onDropAtEnd,
 }: {
   act: CanvasActDto;
-  maxSpan: number;
   /** Actual length of this act = sum of its Scenes' Shot durations (seconds). */
   actualDuration: number;
   /** Actual share of the movie's total duration, in percent. */
@@ -277,9 +269,6 @@ function ActRow({
   const points = act.beats.filter((b) => b.kind === "point");
   const pointTier = new Map(points.map((b, i) => [b.number, i % 2]));
 
-  // Row width is max-normalized: the longest act = 100%, others relative to it.
-  const rowWidthPct = ((act.pageEnd - act.pageStart) / maxSpan) * 100;
-
   return (
     <section className="canvas-act" aria-label={`${ACT_TITLES[act.id]} row`}>
       <div className="canvas-act__label">
@@ -305,10 +294,9 @@ function ActRow({
         </span>
       </div>
 
-      {/* Body width is max-normalized — the longest act (act 2) fills the full
-          width, shorter acts scale relative to it — so length differences show
-          without wasting space. The label still reports each act's movie share. */}
-      <div className="canvas-act__body" style={{ width: `${rowWidthPct}%` }}>
+      {/* Every act row is full width — the recommended vs actual labels above
+          carry the length comparison, so the row itself needn't be scaled. */}
+      <div className="canvas-act__body">
         {/* Point names above the ruler, positioned at each point's page, on two
             staggered tiers so adjacent moments don't collide. */}
         <div className="canvas-act__pointnames" role="presentation">
