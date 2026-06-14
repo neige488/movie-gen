@@ -72,5 +72,100 @@ describe("projectToMovieDto — manifest ordering", () => {
     });
     const dto = projectToMovieDto(project);
     expect(dto.scenes.map((s) => s.slug)).toEqual(["s01-a", "s02-b"]);
+    // No arrangement → no canvas acts.
+    expect(dto.acts).toBeUndefined();
+  });
+});
+
+describe("projectToMovieDto — BS2 canvas acts", () => {
+  it("groups starred scenes into 3 act rows by the arrangement", () => {
+    const project = createProject({
+      scenes: [
+        scene("s01-a", true),
+        scene("s02-b", true),
+        scene("s03-c", true),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a"] },
+      { id: 2, scenes: ["s02-b"] },
+      { id: 3, scenes: ["s03-c"] },
+    ]);
+
+    const dto = projectToMovieDto(project, arrangement);
+    expect(dto.acts).toBeDefined();
+    expect(dto.acts!.map((a) => a.id)).toEqual([1, 2, 3]);
+    expect(dto.acts![0]!.sceneSlugs).toEqual(["s01-a"]);
+    expect(dto.acts![1]!.sceneSlugs).toEqual(["s02-b"]);
+    expect(dto.acts![2]!.sceneSlugs).toEqual(["s03-c"]);
+  });
+
+  it("excludes non-starred scenes from the canvas acts (manifest still carries them)", () => {
+    const project = createProject({
+      scenes: [scene("s01-a", true), scene("s02-b", false)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    // Both scenes live in act 1 in the manifest, but only the starred one
+    // shows on the canvas.
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a", "s02-b"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+
+    const dto = projectToMovieDto(project, arrangement);
+    expect(dto.acts![0]!.sceneSlugs).toEqual(["s01-a"]);
+    expect(dto.acts![1]!.sceneSlugs).toEqual([]);
+    expect(dto.acts![2]!.sceneSlugs).toEqual([]);
+  });
+
+  it("preserves manifest order of starred scenes within an act", () => {
+    const project = createProject({
+      scenes: [
+        scene("s01-a", true),
+        scene("s02-b", true),
+        scene("s03-c", true),
+      ],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s03-c", "s01-a", "s02-b"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+
+    const dto = projectToMovieDto(project, arrangement);
+    expect(dto.acts![0]!.sceneSlugs).toEqual(["s03-c", "s01-a", "s02-b"]);
+  });
+
+  it("attaches the BS2 beat ruler to each act (15 beats, sums to 100%)", () => {
+    const project = createProject({
+      scenes: [scene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+
+    const dto = projectToMovieDto(project, arrangement);
+    const allBeats = dto.acts!.flatMap((a) => a.beats);
+    expect(allBeats).toHaveLength(15);
+    for (const act of dto.acts!) {
+      const sum = act.beats.reduce((acc, b) => acc + b.widthPct, 0);
+      expect(sum).toBeCloseTo(100, 6);
+    }
+    // Act 1 ruler starts at 오프닝 이미지.
+    expect(dto.acts![0]!.beats[0]!.label).toBe("오프닝 이미지");
   });
 });

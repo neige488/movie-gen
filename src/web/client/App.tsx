@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { LibraryDto, MovieDto } from "../shared/dto.js";
 import { SceneNavigator } from "./components/SceneNavigator.js";
 import { SceneView } from "./components/SceneView.js";
+import { BS2Canvas } from "./components/BS2Canvas.js";
 import { LibraryPage } from "./components/LibraryPage.js";
 import { useHashRoute, type Route } from "./hash-route.js";
 import { toggleSceneStarred } from "./upload-client.js";
@@ -95,6 +96,8 @@ export function App() {
               onTakeUploaded={refreshMovie}
               onMovieChanged={handleMovieChanged}
             />
+          ) : route.name === "canvas" ? (
+            <CanvasMain movie={movie} />
           ) : (
             <LibraryMain library={library} onUploaded={refreshLibrary} />
           )}
@@ -154,13 +157,20 @@ function Sidebar({
           Scenes
         </a>
         <a
+          className={`topnav__link ${route.name === "canvas" ? "topnav__link--active" : ""}`}
+          href="#/canvas"
+        >
+          Canvas
+        </a>
+        <a
           className={`topnav__link ${route.name === "library" ? "topnav__link--active" : ""}`}
           href="#/library"
         >
           Library
         </a>
       </nav>
-      {route.name === "viewer" && movie.kind === "ok" && (
+      {(route.name === "viewer" || route.name === "canvas") &&
+        movie.kind === "ok" && (
         <>
           <SceneNavigator
             scenes={movie.value.scenes}
@@ -280,6 +290,18 @@ function ViewerMain({
       ))}
     </>
   );
+}
+
+function CanvasMain({ movie }: { movie: FetchState<MovieDto> }) {
+  if (movie.kind === "loading")
+    return <div className="status">Loading project…</div>;
+  if (movie.kind === "error")
+    return (
+      <div className="status status--error">
+        Failed to load project: {movie.message}
+      </div>
+    );
+  return <BS2Canvas movie={movie.value} />;
 }
 
 function LibraryMain({

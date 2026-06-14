@@ -92,8 +92,38 @@ export interface AllSceneEntryDto {
   isStarred: boolean;
 }
 
+/**
+ * One BS2 beat as a visual ruler tick on the canvas. Mirrors the BeatSheet
+ * domain `Beat` minus the act id (which is implied by the enclosing
+ * `CanvasActDto`). `widthPct` is the beat's share of its act row (per-act
+ * widths sum to 100). Beats are a visual guide only — Scenes are not assigned
+ * to beats.
+ */
+export interface BeatDto {
+  number: number;
+  label: string;
+  startPage: number;
+  endPage: number;
+  widthPct: number;
+}
+
+/**
+ * One act row of the BS2 canvas: the act id, the ordered starred Scene slugs
+ * placed in this act (non-starred Scenes are excluded — the canvas shows only
+ * the movie sequence), and the act's beat ruler. Scene order matches the
+ * manifest (ADR 0002); the canvas draws each Scene as an equal-width block
+ * (length ignored, per PRD).
+ */
+export interface CanvasActDto {
+  id: 1 | 2 | 3;
+  /** Ordered starred Scene slugs in this act (manifest order). */
+  sceneSlugs: string[];
+  /** This act's BS2 beats as a proportional ruler. */
+  beats: BeatDto[];
+}
+
 export interface MovieDto {
-  /** Scenes in canonical movie order (isStarred + slug-prefix sort). */
+  /** Scenes in canonical movie order (manifest linear order, starred only). */
   scenes: SceneDto[];
   /**
    * All scenes (including non-starred) by slug — used by the sidebar so the
@@ -101,6 +131,13 @@ export interface MovieDto {
    * without leaving the viewer.
    */
   allScenes: AllSceneEntryDto[];
+  /**
+   * The BS2 canvas view (read-only, slice #20): 3 act rows, each with its
+   * ordered starred Scene slugs + beat ruler. Derived from the same manifest
+   * SSOT as `scenes`. Omitted when no arrangement is threaded (unit fixtures);
+   * the canvas route then has nothing to render.
+   */
+  acts?: CanvasActDto[];
   characters: CharacterDto[];
   locations: LocationDto[];
   props: PropDto[];
