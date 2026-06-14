@@ -200,7 +200,11 @@ function ActRow({
   onDropBefore: (beforeSlug: string) => void;
   onDropAtEnd: () => void;
 }) {
-  const [isOver, setIsOver] = useState(false);
+  // Where a dragged Scene would land in THIS act row: { index, x } — index is
+  // 0..N (N = the very end), x is the insertion line's offset (px from the
+  // row's left edge). null = not the current drop target. Only the row under
+  // the cursor shows a single insertion line (no whole-row highlight).
+  const [drop, setDrop] = useState<{ index: number; x: number } | null>(null);
   // Hovered beat for the tooltip (null = none). Anchored to the beat's rect.
   const [tip, setTip] = useState<BeatTip | null>(null);
 
@@ -209,6 +213,28 @@ function ActRow({
     setTip({ beat, x: r.left + r.width / 2, y: r.top });
   };
   const hideTip = () => setTip(null);
+
+  // Cursor → insertion point: before the first block whose midpoint is past the
+  // cursor, else after the last (the end). The line sits in the gap at that
+  // boundary, so the director sees exactly where the drop lands — including the
+  // act's very start (0) and very end (N).
+  function dropTargetFrom(
+    container: HTMLElement,
+    clientX: number,
+  ): { index: number; x: number } {
+    const rect = container.getBoundingClientRect();
+    const blocks = Array.from(container.children).filter((el) =>
+      el.classList.contains("canvas-scene"),
+    ) as HTMLElement[];
+    for (let i = 0; i < blocks.length; i++) {
+      const b = blocks[i]!.getBoundingClientRect();
+      if (clientX < b.left + b.width / 2) {
+        return { index: i, x: b.left - rect.left - 1 };
+      }
+    }
+    const last = blocks[blocks.length - 1]?.getBoundingClientRect();
+    return { index: blocks.length, x: last ? last.right - rect.left + 1 : 0 };
+  }
 
   // Equal-width Scene blocks: each block owns 1/N of the row (length ignored).
   const blockWidthPct =
@@ -223,12 +249,6 @@ function ActRow({
 
   // Row width is max-normalized: the longest act = 100%, others relative to it.
   const rowWidthPct = ((act.pageEnd - act.pageStart) / maxSpan) * 100;
-
-  const allowDrop = (e: React.DragEvent) => {
-    if (!canDrag || !drag) return;
-    e.preventDefault(); // mark as a valid drop target
-    e.dataTransfer.dropEffect = "move";
-  };
 
   return (
     <section className="canvas-act" aria-label={`${ACT_TITLES[act.id]} row`}>
@@ -297,30 +317,40 @@ function ActRow({
           ))}
         </div>
 
-      {/* Scene blocks — equal width, manifest order. The whole row is a drop
-          zone: dropping over a block lands BEFORE it; dropping on the row's
-          empty area lands at the END of the row. */}
+      {/* Scene blocks — equal width, manifest order. The container is the drop
+          zone: a single insertion line follows the cursor to the nearest gap
+          (incl. the very start and end), and the drop lands exactly there. */}
       <div
-        className={`canvas-act__scenes${
-          isOver ? " canvas-act__scenes--drop" : ""
-        }`}
-        onDragOver={allowDrop}
-        onDragEnter={(e) => {
+        className="canvas-act__scenes"
+        onDragOver={(e) => {
           if (!canDrag || !drag) return;
           e.preventDefault();
-          setIsOver(true);
+          e.dataTransfer.dropEffect = "move";
+          setDrop(dropTargetFrom(e.currentTarget, e.clientX));
         }}
         onDragLeave={(e) => {
-          // Only clear when the pointer actually leaves the row (not a child).
-          if (e.currentTarget === e.target) setIsOver(false);
+          // Clear only when the pointer leaves the row (not crossing a child).
+          if (e.currentTarget === e.target) setDrop(null);
         }}
         onDrop={(e) => {
           if (!canDrag || !drag) return;
           e.preventDefault();
-          setIsOver(false);
-          onDropAtEnd(); // dropping on the row background = end of the row
+          const target = drop ?? dropTargetFrom(e.currentTarget, e.clientX);
+          setDrop(null);
+          if (target.index < act.sceneSlugs.length) {
+            onDropBefore(act.sceneSlugs[target.index]!); // before that block
+          } else {
+            onDropAtEnd(); // the very end
+          }
         }}
       >
+        {drop && (
+          <div
+            className="canvas-scene-insert"
+            style={{ left: `${drop.x}px` }}
+            aria-hidden="true"
+          />
+        )}
         {act.sceneSlugs.length === 0 ? (
           <div className="canvas-act__empty">
             {canDrag && drag
@@ -333,7 +363,9 @@ function ActRow({
               key={slug}
               className={`canvas-scene${
                 drag?.slug === slug ? " canvas-scene--dragging" : ""
-              }${selectedSlug === slug ? " canvas-scene--selected" : ""}`}
+              }${
+                selectedSlug === slug && !drag ? " canvas-scene--selected" : ""
+              }`}
               style={{ width: `${blockWidthPct}%` }}
               href={`#scene-${slug}`}
               title={sluglineBySlug.get(slug) ?? slug}
@@ -352,14 +384,9 @@ function ActRow({
                 e.dataTransfer.setData("text/plain", slug);
                 onDragStart(slug);
               }}
-              onDragEnd={() => onDragEnd()}
-              onDragOver={allowDrop}
-              onDrop={(e) => {
-                if (!canDrag || !drag) return;
-                e.preventDefault();
-                e.stopPropagation(); // don't bubble to the row's end-drop
-                setIsOver(false);
-                onDropBefore(slug); // land before this block
+              onDragEnd={() => {
+                setDrop(null);
+                onDragEnd();
               }}
             >
               <span className="canvas-scene__slug">{slug}</span>
