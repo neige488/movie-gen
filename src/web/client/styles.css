@@ -1632,6 +1632,18 @@ body {
 .canvas-scene--dragging {
   opacity: 0.4;
 }
+/* Selected Scene block — its detail is shown below the canvas. */
+.canvas-scene--selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--bg-elev-2) 65%, var(--accent) 28%);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+/* Selected-Scene detail panel below the canvas — reuses SceneView. */
+.canvas-scene-detail {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
 .canvas-scene__slug {
   font-family: var(--mono);
   font-size: 0.74rem;

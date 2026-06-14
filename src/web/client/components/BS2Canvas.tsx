@@ -72,9 +72,22 @@ interface Props {
    * (drag is disabled) — e.g. if a parent has no movie state setter.
    */
   onMovieChanged?: (movie: MovieDto) => void;
+  /**
+   * Called when a Scene block is clicked. The parent shows the Scene's detail
+   * (the same SceneView used in the Scenes tab) below the canvas. When omitted,
+   * the block falls back to its `#scene-<slug>` jump link.
+   */
+  onSelectScene?: (slug: string) => void;
+  /** Currently-selected Scene slug (highlights its block). */
+  selectedSlug?: string | null;
 }
 
-export function BS2Canvas({ movie, onMovieChanged }: Props) {
+export function BS2Canvas({
+  movie,
+  onMovieChanged,
+  onSelectScene,
+  selectedSlug,
+}: Props) {
   const acts = movie.acts;
   // Slug being dragged (null = idle). Also gates overlapping moves.
   const [drag, setDrag] = useState<DragState | null>(null);
@@ -145,6 +158,8 @@ export function BS2Canvas({ movie, onMovieChanged }: Props) {
           maxSpan={maxSpan}
           sluglineBySlug={sluglineBySlug}
           canDrag={canDrag}
+          onSelectScene={onSelectScene}
+          selectedSlug={selectedSlug}
           drag={drag}
           onDragStart={(slug) => setDrag({ slug })}
           onDragEnd={() => setDrag(null)}
@@ -165,6 +180,8 @@ function ActRow({
   maxSpan,
   sluglineBySlug,
   canDrag,
+  onSelectScene,
+  selectedSlug,
   drag,
   onDragStart,
   onDragEnd,
@@ -175,6 +192,8 @@ function ActRow({
   maxSpan: number;
   sluglineBySlug: Map<string, string>;
   canDrag: boolean;
+  onSelectScene?: (slug: string) => void;
+  selectedSlug?: string | null;
   drag: DragState | null;
   onDragStart: (slug: string) => void;
   onDragEnd: () => void;
@@ -314,11 +333,19 @@ function ActRow({
               key={slug}
               className={`canvas-scene${
                 drag?.slug === slug ? " canvas-scene--dragging" : ""
-              }`}
+              }${selectedSlug === slug ? " canvas-scene--selected" : ""}`}
               style={{ width: `${blockWidthPct}%` }}
               href={`#scene-${slug}`}
               title={sluglineBySlug.get(slug) ?? slug}
               draggable={canDrag}
+              onClick={(e) => {
+                // Click (not drag) selects the Scene so the parent can show its
+                // detail below. Without a handler, fall back to the hash jump.
+                if (onSelectScene) {
+                  e.preventDefault();
+                  onSelectScene(slug);
+                }
+              }}
               onDragStart={(e) => {
                 if (!canDrag) return;
                 e.dataTransfer.effectAllowed = "move";

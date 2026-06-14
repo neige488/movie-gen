@@ -97,7 +97,11 @@ export function App() {
               onMovieChanged={handleMovieChanged}
             />
           ) : route.name === "canvas" ? (
-            <CanvasMain movie={movie} onMovieChanged={handleMovieChanged} />
+            <CanvasMain
+              movie={movie}
+              onTakeUploaded={refreshMovie}
+              onMovieChanged={handleMovieChanged}
+            />
           ) : (
             <LibraryMain library={library} onUploaded={refreshLibrary} />
           )}
@@ -295,11 +299,17 @@ function ViewerMain({
 
 function CanvasMain({
   movie,
+  onTakeUploaded,
   onMovieChanged,
 }: {
   movie: FetchState<MovieDto>;
+  onTakeUploaded: () => void;
   onMovieChanged: (movie: MovieDto) => void;
 }) {
+  // Clicking a Scene block selects it; we show its detail (reusing SceneView,
+  // the same component the Scenes tab renders) below the canvas.
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+
   if (movie.kind === "loading")
     return <div className="status">Loading project…</div>;
   if (movie.kind === "error")
@@ -308,7 +318,32 @@ function CanvasMain({
         Failed to load project: {movie.message}
       </div>
     );
-  return <BS2Canvas movie={movie.value} onMovieChanged={onMovieChanged} />;
+
+  const selectedScene =
+    selectedSlug !== null
+      ? (movie.value.scenes.find((s) => s.slug === selectedSlug) ?? null)
+      : null;
+
+  return (
+    <>
+      <BS2Canvas
+        movie={movie.value}
+        onMovieChanged={onMovieChanged}
+        onSelectScene={setSelectedSlug}
+        selectedSlug={selectedSlug}
+      />
+      {selectedScene && (
+        <div className="canvas-scene-detail">
+          <SceneView
+            scene={selectedScene}
+            movie={movie.value}
+            onTakeUploaded={onTakeUploaded}
+            onMovieChanged={onMovieChanged}
+          />
+        </div>
+      )}
+    </>
+  );
 }
 
 function LibraryMain({
