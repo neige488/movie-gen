@@ -154,6 +154,11 @@ export interface MovieDto {
    * the canvas route then has nothing to render.
    */
   acts?: CanvasActDto[];
+  /**
+   * The movie's total length in BS2 pages (≈ minutes; default 110). Only
+   * rescales the displayed beat page numbers — proportions are scale-invariant.
+   */
+  totalPages: number;
   characters: CharacterDto[];
   locations: LocationDto[];
   props: PropDto[];

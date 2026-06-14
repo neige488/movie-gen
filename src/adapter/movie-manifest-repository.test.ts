@@ -13,7 +13,10 @@ import { tmpdir } from "node:os";
 import yaml from "js-yaml";
 import {
   loadArrangement,
+  loadTotalPages,
   saveArrangement,
+  saveTotalPages,
+  DEFAULT_TOTAL_PAGES,
   MovieManifestError,
 } from "./movie-manifest-repository.js";
 import { createMovieArrangement } from "@domain/movie-arrangement.js";
@@ -212,5 +215,101 @@ acts:
     scenes: []
 `);
     await expect(loadArrangement(dataDir)).rejects.toThrow(/duplicate/i);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// totalPages — the movie's BS2 length (default 110)
+// ---------------------------------------------------------------------------
+
+describe("totalPages", () => {
+  it("defaults to 110 when the manifest is absent or omits it", async () => {
+    expect(await loadTotalPages(dataDir)).toBe(DEFAULT_TOTAL_PAGES);
+    makeSceneFolder("s01-a");
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: [s01-a]
+  - id: 2
+    scenes: []
+  - id: 3
+    scenes: []
+`);
+    expect(await loadTotalPages(dataDir)).toBe(110);
+  });
+
+  it("reads an explicit totalPages from the manifest", async () => {
+    makeSceneFolder("s01-a");
+    writeManifest(`
+totalPages: 90
+acts:
+  - id: 1
+    scenes: [s01-a]
+  - id: 2
+    scenes: []
+  - id: 3
+    scenes: []
+`);
+    expect(await loadTotalPages(dataDir)).toBe(90);
+  });
+
+  it("falls back to 110 on an invalid totalPages (never fails boot)", async () => {
+    writeManifest(`
+totalPages: -5
+acts:
+  - id: 1
+    scenes: []
+  - id: 2
+    scenes: []
+  - id: 3
+    scenes: []
+`);
+    expect(await loadTotalPages(dataDir)).toBe(DEFAULT_TOTAL_PAGES);
+  });
+
+  it("saveTotalPages persists the value while keeping the acts", async () => {
+    makeSceneFolder("s01-a");
+    makeSceneFolder("s02-b");
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: [s01-a]
+  - id: 2
+    scenes: [s02-b]
+  - id: 3
+    scenes: []
+`);
+    await saveTotalPages(dataDir, 88);
+
+    expect(await loadTotalPages(dataDir)).toBe(88);
+    const raw = readManifest() as {
+      totalPages: number;
+      acts: { id: number; scenes: string[] }[];
+    };
+    expect(raw.totalPages).toBe(88);
+    expect(raw.acts[0]!.scenes).toEqual(["s01-a"]);
+    expect(raw.acts[1]!.scenes).toEqual(["s02-b"]);
+  });
+
+  it("saveArrangement preserves an existing totalPages (a reorder never wipes it)", async () => {
+    makeSceneFolder("s01-a");
+    makeSceneFolder("s02-b");
+    writeManifest(`
+totalPages: 95
+acts:
+  - id: 1
+    scenes: [s01-a, s02-b]
+  - id: 2
+    scenes: []
+  - id: 3
+    scenes: []
+`);
+    // Simulate a reorder: load, move, save via saveArrangement.
+    const arrangement = await loadArrangement(dataDir);
+    await saveArrangement(dataDir, arrangement.moveScene("s02-b", 1, 0));
+
+    expect(await loadTotalPages(dataDir)).toBe(95);
+    const raw = readManifest() as { totalPages: number };
+    expect(raw.totalPages).toBe(95);
   });
 });

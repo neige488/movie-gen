@@ -28,6 +28,7 @@ acts:
     scenes: [s03-resolution-alt]
 ```
 
+- (후속) 매니페스트는 영화 단위 설정 `totalPages`(BS2 총 분량, 기본 110)도 담는다. `saveArrangement`는 기존 `totalPages`를 읽어 보존하므로 재정렬이 이 값을 지우지 않는다.
 - **모든** Scene(starred + non-starred)이 정확히 한 막에 속한다.
 - **선형 영화 순서 = act1 ++ act2 ++ act3 flatten 후 `isStarred=true` 필터.** isStarred(scene.yaml)는 시퀀스/캔버스 포함 여부만 결정하고, 순서 자체는 매니페스트가 소유.
 - 막은 순차적·연속적이므로 "순서≠막" 불일치가 표현 자체로 불가능하다.

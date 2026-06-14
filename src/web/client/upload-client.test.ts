@@ -15,6 +15,7 @@ import { reorderScene, moveSceneToAct } from "./upload-client.js";
 const EMPTY_MOVIE: MovieDto = {
   scenes: [],
   allScenes: [],
+  totalPages: 110,
   characters: [],
   locations: [],
   props: [],
