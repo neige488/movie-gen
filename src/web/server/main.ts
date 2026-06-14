@@ -76,6 +76,7 @@ import {
   ShotEditError,
 } from "./shot-edit-handler.js";
 import { applyReorderScene, ReorderError } from "./reorder-handler.js";
+import { applyMoveScene, MoveSceneError } from "./move-scene-handler.js";
 import { startFileWatcher } from "@adapter/file-watcher.js";
 import { createEventBus } from "./event-bus.js";
 import { createReloadOrchestrator } from "./reload-orchestrator.js";
@@ -911,6 +912,59 @@ async function main(): Promise<void> {
           res.status(400).json({ error: err.message });
         } else {
           console.error("[movie-gen] scene reorder failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // --- Scene move (BS2 canvas drag, Slice #21) ----------------------------
+  //
+  // Move a Scene to an arbitrary act + visible drop position via canvas drag.
+  // Body: {"toActId": 1|2|3, "beforeSlug": string | null}. `beforeSlug` is the
+  // starred slug to land BEFORE, or null for the end of that act's visible row.
+  // Unlike /reorder (Scenes-view ▲/▼, same-act one-step), this allows CROSS-act
+  // moves — the act-sequential invariant is enforced by the domain
+  // (MovieArrangement.moveScene). Rewrites the manifest atomically and rebuilds
+  // the Project so the new placement survives a refresh.
+  app.post("/api/scenes/:slug/move", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { toActId?: unknown; beforeSlug?: unknown };
+    if (body?.toActId !== 1 && body?.toActId !== 2 && body?.toActId !== 3) {
+      res
+        .status(400)
+        .json({ error: "request body must include toActId of 1, 2, or 3" });
+      return;
+    }
+    if (
+      body.beforeSlug !== null &&
+      typeof body.beforeSlug !== "string"
+    ) {
+      res
+        .status(400)
+        .json({ error: "beforeSlug must be a string or null" });
+      return;
+    }
+    void applyMoveScene({
+      project: currentProject,
+      arrangement: currentArrangement,
+      sceneSlug: slug,
+      toActId: body.toActId,
+      beforeSlug: body.beforeSlug,
+      dataDir: DATA_DIR,
+      saveArrangement,
+      loadProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        currentArrangement = result.arrangement;
+        res.json(projectToMovieDto(currentProject, currentArrangement));
+      },
+      (err: Error) => {
+        if (err instanceof MoveSceneError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] scene move failed:", err);
           res.status(500).json({ error: err.message });
         }
       },

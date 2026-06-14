@@ -97,7 +97,7 @@ export function App() {
               onMovieChanged={handleMovieChanged}
             />
           ) : route.name === "canvas" ? (
-            <CanvasMain movie={movie} />
+            <CanvasMain movie={movie} onMovieChanged={handleMovieChanged} />
           ) : (
             <LibraryMain library={library} onUploaded={refreshLibrary} />
           )}
@@ -292,7 +292,13 @@ function ViewerMain({
   );
 }
 
-function CanvasMain({ movie }: { movie: FetchState<MovieDto> }) {
+function CanvasMain({
+  movie,
+  onMovieChanged,
+}: {
+  movie: FetchState<MovieDto>;
+  onMovieChanged: (movie: MovieDto) => void;
+}) {
   if (movie.kind === "loading")
     return <div className="status">Loading project…</div>;
   if (movie.kind === "error")
@@ -301,7 +307,7 @@ function CanvasMain({ movie }: { movie: FetchState<MovieDto> }) {
         Failed to load project: {movie.message}
       </div>
     );
-  return <BS2Canvas movie={movie.value} />;
+  return <BS2Canvas movie={movie.value} onMovieChanged={onMovieChanged} />;
 }
 
 function LibraryMain({

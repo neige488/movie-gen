@@ -10,7 +10,7 @@
 
 import { describe, expect, it, afterEach, vi } from "vitest";
 import type { MovieDto } from "../shared/dto.js";
-import { reorderScene } from "./upload-client.js";
+import { reorderScene, moveSceneToAct } from "./upload-client.js";
 
 const EMPTY_MOVIE: MovieDto = {
   scenes: [],
@@ -72,6 +72,61 @@ describe("reorderScene", () => {
 
     await expect(reorderScene("ghost", "up")).rejects.toThrow(
       /unknown scene/,
+    );
+  });
+});
+
+describe("moveSceneToAct", () => {
+  it("POSTs to /api/scenes/:slug/move with {toActId, beforeSlug}", async () => {
+    const calls: { url: string; init: RequestInit }[] = [];
+    globalThis.fetch = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      calls.push({ url: String(url), init: init ?? {} });
+      return new Response(JSON.stringify(EMPTY_MOVIE), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }) as unknown as typeof fetch;
+
+    const result = await moveSceneToAct("s02-b", 3, "s05-e");
+
+    expect(result).toEqual(EMPTY_MOVIE);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]!.url).toBe("/api/scenes/s02-b/move");
+    expect(calls[0]!.init.method).toBe("POST");
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({
+      toActId: 3,
+      beforeSlug: "s05-e",
+    });
+  });
+
+  it("sends beforeSlug=null for an end-of-row drop and url-encodes the slug", async () => {
+    const calls: { url: string; init: RequestInit }[] = [];
+    globalThis.fetch = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      calls.push({ url: String(url), init: init ?? {} });
+      return new Response(JSON.stringify(EMPTY_MOVIE), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }) as unknown as typeof fetch;
+
+    await moveSceneToAct("s01 weird/slug", 1, null);
+    expect(calls[0]!.url).toBe("/api/scenes/s01%20weird%2Fslug/move");
+    expect(JSON.parse(calls[0]!.init.body as string)).toEqual({
+      toActId: 1,
+      beforeSlug: null,
+    });
+  });
+
+  it("throws the server's error message on a non-ok response", async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(JSON.stringify({ error: "invalid act id 9" }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      });
+    }) as unknown as typeof fetch;
+
+    await expect(moveSceneToAct("s01-a", 1, null)).rejects.toThrow(
+      /invalid act id/,
     );
   });
 });

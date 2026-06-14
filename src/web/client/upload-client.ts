@@ -334,6 +334,33 @@ export async function reorderScene(
   return (await res.json()) as MovieDto;
 }
 
+/**
+ * Move a Scene to an act + visible drop position — BS2 canvas drag (Slice #21).
+ * Hits POST /api/scenes/:slug/move, which rewrites the manifest
+ * (data/movie.yaml) atomically (allowing CROSS-act moves, unlike reorderScene's
+ * same-act ▲/▼) and returns the full updated MovieDto so the caller refreshes
+ * the canvas + sequence in one round-trip.
+ *
+ * `toActId` is the destination act (1, 2, or 3). `beforeSlug` is the starred
+ * slug the dragged block was dropped *before*, or null for the end of that
+ * act's visible row — the server resolves it to a manifest index so interleaved
+ * non-starred Scenes keep their slots. The server is authoritative (no
+ * optimistic UI), consistent with the other mutation helpers.
+ */
+export async function moveSceneToAct(
+  sceneSlug: string,
+  toActId: 1 | 2 | 3,
+  beforeSlug: string | null,
+): Promise<MovieDto> {
+  const res = await fetch(`/api/scenes/${encodeURIComponent(sceneSlug)}/move`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ toActId, beforeSlug }),
+  });
+  if (!res.ok) throw await asError(res, "scene move failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,
