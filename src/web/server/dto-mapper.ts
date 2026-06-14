@@ -14,8 +14,20 @@ import type {
   SceneDto,
 } from "../shared/dto.js";
 
-export function projectToMovieDto(project: Project): MovieDto {
-  const sequenced = movieSequence(project);
+/**
+ * Build the wire DTO. The optional `arrangement` is the Scene-ordering SSOT
+ * (`data/movie.yaml`, per ADR 0002): when supplied, `MovieDto.scenes` is the
+ * arrangement's linear order (act1 ++ act2 ++ act3 flatten) filtered to the
+ * starred Scenes. When omitted (unit fixtures / legacy callers) it falls back
+ * to the slug-prefix sort baked into `movieSequence`. The production server
+ * always threads the arrangement so the manifest is the single source of
+ * truth for order.
+ */
+export function projectToMovieDto(
+  project: Project,
+  arrangement?: { linearSequence(): readonly string[] },
+): MovieDto {
+  const sequenced = movieSequence(project, arrangement);
   return {
     scenes: sequenced.map(sceneToDto),
     allScenes: project.scenes.map((s) => ({
