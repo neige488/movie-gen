@@ -288,3 +288,83 @@ describe("loadProject — screenplay/shot consistency", () => {
     expect(project.scenes[0]!.shots).toHaveLength(1);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Scene ordering — manifest is the SSOT (ADR 0002), NOT the folder-name prefix.
+// loadProject orders project.scenes by data/movie.yaml's linear sequence
+// (act1 ++ act2 ++ act3 flatten), reconciling drift on the way.
+// ---------------------------------------------------------------------------
+
+function writeManifest(text: string): void {
+  writeFileSync(path.join(dataDir, "movie.yaml"), text);
+}
+
+describe("loadProject — manifest ordering (ADR 0002)", () => {
+  it("orders scenes by the manifest's linear sequence, not by slug", async () => {
+    for (const slug of ["s01-a", "s02-b", "s03-c"]) {
+      writeScene(slug, {
+        sceneYaml: MIN_SCENE_YAML,
+        screenplay: MIN_SCREENPLAY,
+        shotsYaml: MIN_SHOT_YAML,
+      });
+    }
+    // Deliberately non-alphabetical order across acts.
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: [s03-c]
+  - id: 2
+    scenes: [s01-a]
+  - id: 3
+    scenes: [s02-b]
+`);
+
+    const project = await loadProject(dataDir);
+    expect(project.scenes.map((s) => s.slug)).toEqual([
+      "s03-c",
+      "s01-a",
+      "s02-b",
+    ]);
+  });
+
+  it("falls back to slug order when no manifest exists (migration into act 1)", async () => {
+    for (const slug of ["s02-b", "s01-a"]) {
+      writeScene(slug, {
+        sceneYaml: MIN_SCENE_YAML,
+        screenplay: MIN_SCREENPLAY,
+        shotsYaml: MIN_SHOT_YAML,
+      });
+    }
+    // No movie.yaml — migration places all scenes in act 1 in folder-slug order.
+    const project = await loadProject(dataDir);
+    expect(project.scenes.map((s) => s.slug)).toEqual(["s01-a", "s02-b"]);
+  });
+
+  it("appends an orphan folder (missing from manifest) to the end of the sequence", async () => {
+    for (const slug of ["s01-a", "s02-b", "s03-new"]) {
+      writeScene(slug, {
+        sceneYaml: MIN_SCENE_YAML,
+        screenplay: MIN_SCREENPLAY,
+        shotsYaml: MIN_SHOT_YAML,
+      });
+    }
+    writeManifest(`
+acts:
+  - id: 1
+    scenes: [s02-b]
+  - id: 2
+    scenes: [s01-a]
+  - id: 3
+    scenes: []
+`);
+
+    const project = await loadProject(dataDir);
+    // s03-new is reconciled to the end of act 1 → appears after s02-b but
+    // before act 2's s01-a in the flattened linear order.
+    expect(project.scenes.map((s) => s.slug)).toEqual([
+      "s02-b",
+      "s03-new",
+      "s01-a",
+    ]);
+  });
+});
