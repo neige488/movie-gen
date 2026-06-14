@@ -112,6 +112,40 @@ body {
   padding: 0.3rem 0.65rem 0.4rem;
   opacity: 0.7;
 }
+/* Empty act as a drag drop target. */
+.scene-nav__act-empty--drop {
+  color: var(--accent);
+  opacity: 1;
+  outline: 1px dashed var(--accent);
+  outline-offset: -2px;
+  border-radius: 5px;
+}
+/* Drag-and-drop reorder (sidebar) — grab cursor, dim the dragged row, and a
+   single insertion line at the drop position (before a row, or an act's end). */
+.scene-nav__link[draggable="true"] {
+  cursor: grab;
+}
+.scene-nav__item--dragging {
+  opacity: 0.4;
+}
+.scene-nav__item--drop-before::before,
+.scene-nav__item--drop-after::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+  z-index: 2;
+}
+.scene-nav__item--drop-before::before {
+  top: -2px;
+}
+.scene-nav__item--drop-after::after {
+  bottom: 1px;
+}
 .scene-nav__link {
   display: flex;
   flex-direction: column;
