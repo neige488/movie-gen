@@ -175,4 +175,27 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
     expect(dto.acts![0]!.beats[0]!.kind).toBe("point");
     expect(dto.acts![0]!.beats[0]!.leftPct).toBeCloseTo(0, 6);
   });
+
+  it("scales each act to its page range (act 2 is the long one, ~55%)", () => {
+    const project = createProject({
+      scenes: [scene("s01-a", true)],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const arrangement = createMovieArrangement([
+      { id: 1, scenes: ["s01-a"] },
+      { id: 2, scenes: [] },
+      { id: 3, scenes: [] },
+    ]);
+
+    const [a1, a2, a3] = projectToMovieDto(project, arrangement).acts!;
+    expect([a1!.pageStart, a1!.pageEnd]).toEqual([1, 25]);
+    expect([a2!.pageStart, a2!.pageEnd]).toEqual([25, 85]);
+    expect([a3!.pageStart, a3!.pageEnd]).toEqual([85, 110]);
+    // pagePct sums to 100 and act 2 dominates.
+    expect(a1!.pagePct + a2!.pagePct + a3!.pagePct).toBeCloseTo(100, 6);
+    expect(a2!.pagePct).toBeGreaterThan(a1!.pagePct + a3!.pagePct);
+    expect(a2!.pagePct).toBeCloseTo((60 / 109) * 100, 6);
+  });
 });

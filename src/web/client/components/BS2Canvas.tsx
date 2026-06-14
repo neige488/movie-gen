@@ -45,6 +45,13 @@ function pageLabel(beat: BeatDto): string {
     : `p.${beat.startPage}-${beat.endPage}`;
 }
 
+/** Edge-aware horizontal transform for a point's name (keeps edge labels in view). */
+function pointNameTransform(leftPct: number): string {
+  if (leftPct <= 10) return "translateX(0)";
+  if (leftPct >= 90) return "translateX(-100%)";
+  return "translateX(-50%)";
+}
+
 /** Currently-hovered beat + viewport anchor (for the fixed tooltip). */
 interface BeatTip {
   beat: BeatDto;
@@ -180,6 +187,13 @@ function ActRow({
   const blockWidthPct =
     act.sceneSlugs.length > 0 ? 100 / act.sceneSlugs.length : 0;
 
+  // Beats split by kind. Span beats render as proportional bars; point beats as
+  // pins, with their names shown above on two staggered tiers (by point order)
+  // so adjacent moments (e.g. 오프닝/주제 명시) don't collide.
+  const spans = act.beats.filter((b) => b.kind === "span");
+  const points = act.beats.filter((b) => b.kind === "point");
+  const pointTier = new Map(points.map((b, i) => [b.number, i % 2]));
+
   const allowDrop = (e: React.DragEvent) => {
     if (!canDrag || !drag) return;
     e.preventDefault(); // mark as a valid drop target
@@ -190,19 +204,43 @@ function ActRow({
     <section className="canvas-act" aria-label={`${ACT_TITLES[act.id]} row`}>
       <div className="canvas-act__label">
         <span className="canvas-act__title">{ACT_TITLES[act.id]}</span>
+        <span className="canvas-act__pages">
+          {act.pageEnd - act.pageStart}p · {Math.round(act.pagePct)}%
+        </span>
         <span className="canvas-act__count">
           {act.sceneSlugs.length} scene
           {act.sceneSlugs.length === 1 ? "" : "s"}
         </span>
       </div>
 
-      {/* Beat ruler — beats positioned on the act's page timeline. Span beats
-          (page ranges) render as proportional bars; point beats (single-page
-          moments) as zero-width markers at their page. Hover any beat for its
-          full name + description (narrow beats clip their inline label). */}
-      <div className="canvas-act__ruler" role="presentation">
-        {act.beats.map((beat) =>
-          beat.kind === "span" ? (
+      {/* The body's width is the act's share of the movie's page length, so the
+          acts' real length differences show (act 2 ≈ 55%, acts 1/3 ≈ 22%/23%). */}
+      <div className="canvas-act__body" style={{ width: `${act.pagePct}%` }}>
+        {/* Point names above the ruler, positioned at each point's page, on two
+            staggered tiers so adjacent moments don't collide. */}
+        <div className="canvas-act__pointnames" role="presentation">
+          {points.map((beat) => (
+            <span
+              key={beat.number}
+              className="canvas-point-name"
+              style={{
+                left: `${beat.leftPct}%`,
+                top: `${(pointTier.get(beat.number) ?? 0) * 0.85}rem`,
+                transform: pointNameTransform(beat.leftPct),
+              }}
+              onMouseEnter={(e) => showTip(beat, e)}
+              onMouseLeave={hideTip}
+            >
+              {beat.label}
+            </span>
+          ))}
+        </div>
+
+        {/* Beat ruler — span beats as proportional bars, point beats as pins,
+            both positioned on the act's page timeline. Hover any beat for its
+            full name + description. */}
+        <div className="canvas-act__ruler" role="presentation">
+          {spans.map((beat) => (
             <div
               key={beat.number}
               className="canvas-beat-span"
@@ -213,7 +251,8 @@ function ActRow({
             >
               <span className="canvas-beat-span__label">{beat.label}</span>
             </div>
-          ) : (
+          ))}
+          {points.map((beat) => (
             <div
               key={beat.number}
               className="canvas-beat-point"
@@ -222,26 +261,10 @@ function ActRow({
               onMouseEnter={(e) => showTip(beat, e)}
               onMouseLeave={hideTip}
             >
-              <span className="canvas-beat-point__num">{beat.number}</span>
               <span className="canvas-beat-point__pin" />
             </div>
-          ),
-        )}
-      </div>
-
-      {tip && (
-        <div
-          className="canvas-beat-tip"
-          role="tooltip"
-          style={{ left: tip.x, top: tip.y }}
-        >
-          <div className="canvas-beat-tip__head">
-            {tip.beat.number}. {tip.beat.label}
-            <span className="canvas-beat-tip__page">{pageLabel(tip.beat)}</span>
-          </div>
-          <div className="canvas-beat-tip__desc">{tip.beat.description}</div>
+          ))}
         </div>
-      )}
 
       {/* Scene blocks — equal width, manifest order. The whole row is a drop
           zone: dropping over a block lands BEFORE it; dropping on the row's
@@ -307,7 +330,22 @@ function ActRow({
             </a>
           ))
         )}
+        </div>
       </div>
+
+      {tip && (
+        <div
+          className="canvas-beat-tip"
+          role="tooltip"
+          style={{ left: tip.x, top: tip.y }}
+        >
+          <div className="canvas-beat-tip__head">
+            {tip.beat.number}. {tip.beat.label}
+            <span className="canvas-beat-tip__page">{pageLabel(tip.beat)}</span>
+          </div>
+          <div className="canvas-beat-tip__desc">{tip.beat.description}</div>
+        </div>
+      )}
     </section>
   );
 }

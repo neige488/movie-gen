@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ALL_BEATS, actOfBeat, beatsForAct } from "./beat-sheet.js";
+import {
+  ALL_BEATS,
+  actOfBeat,
+  actPageRange,
+  beatsForAct,
+} from "./beat-sheet.js";
 
 // ---------------------------------------------------------------------------
 // The BeatSheet is the fixed BS2 (Blake Snyder Beat Sheet) definition: 15
@@ -19,7 +24,7 @@ describe("BeatSheet — the 15 fixed beats", () => {
       "기폭제",
       "토론",
       "2막 진입",
-      "B스토리",
+      "B스토리 시작",
       "재미와 놀이",
       "중간점",
       "악당이 다가오다",
@@ -72,6 +77,18 @@ describe("BeatSheet — act grouping", () => {
     expect(actOfBeat(13)).toBe(3);
     expect(actOfBeat(15)).toBe(3);
   });
+
+  it("exposes each act's page range (act 2 is the long one)", () => {
+    expect(actPageRange(1)).toEqual({ start: 1, end: 25 });
+    expect(actPageRange(2)).toEqual({ start: 25, end: 85 });
+    expect(actPageRange(3)).toEqual({ start: 85, end: 110 });
+    // Act 2 spans more pages than acts 1 and 3 combined.
+    const span = (a: 1 | 2 | 3) => {
+      const r = actPageRange(a);
+      return r.end - r.start;
+    };
+    expect(span(2)).toBeGreaterThan(span(1) + span(3));
+  });
 });
 
 describe("BeatSheet — point vs span classification", () => {
@@ -94,7 +111,7 @@ describe("BeatSheet — point vs span classification", () => {
       "주제 명시",
       "기폭제",
       "2막 진입",
-      "B스토리",
+      "B스토리 시작",
       "중간점",
       "절망의 순간",
       "3막 진입",
