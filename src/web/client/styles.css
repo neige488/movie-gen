@@ -86,6 +86,22 @@ body {
   margin: 0;
   padding: 0;
 }
+/* Act boundary header inside the scene list — mirrors the canvas acts so the
+   linear sequence shows where 1막/2막/3막 break. */
+.scene-nav__act {
+  list-style: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  padding: 0.3rem 0.2rem 0.25rem;
+  margin: 0.5rem 0 0.15rem;
+  border-top: 1px solid var(--border);
+}
+.scene-nav__list > .scene-nav__act:first-child {
+  margin-top: 0;
+  border-top: none;
+}
 .scene-nav__link {
   display: flex;
   flex-direction: column;

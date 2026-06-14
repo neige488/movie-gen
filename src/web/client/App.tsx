@@ -174,6 +174,7 @@ function Sidebar({
         <>
           <SceneNavigator
             scenes={movie.value.scenes}
+            acts={movie.value.acts}
             onMovieChanged={onMovieChanged}
           />
           <NonStarredScenes
