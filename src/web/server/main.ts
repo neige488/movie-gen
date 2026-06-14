@@ -20,6 +20,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadProject, ProjectLoadError } from "@adapter/project-repository.js";
 import {
+  loadArrangement,
+  saveArrangement,
+} from "@adapter/movie-manifest-repository.js";
+import type { MovieArrangement } from "@domain/movie-arrangement.js";
+import {
   saveCharacter,
   saveLocation,
   saveProp,
@@ -70,6 +75,7 @@ import {
   applyShotPropRefsEdit,
   ShotEditError,
 } from "./shot-edit-handler.js";
+import { applyReorderScene, ReorderError } from "./reorder-handler.js";
 import { startFileWatcher } from "@adapter/file-watcher.js";
 import { createEventBus } from "./event-bus.js";
 import { createReloadOrchestrator } from "./reload-orchestrator.js";
@@ -93,8 +99,13 @@ async function main(): Promise<void> {
   console.log(`[movie-gen] assets root: ${ASSETS_DIR}`);
 
   let currentProject: Project;
+  // Scene-ordering SSOT (ADR 0002). Held alongside the Project so the
+  // dto-mapper can thread the manifest order and the reorder endpoint can
+  // mutate from the current arrangement without an extra disk read.
+  let currentArrangement: MovieArrangement;
   try {
     currentProject = await loadProject(DATA_DIR);
+    currentArrangement = await loadArrangement(DATA_DIR);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -139,7 +150,15 @@ async function main(): Promise<void> {
   const eventBus = createEventBus();
   attachSseHandler(app, eventBus);
   const orchestrator = createReloadOrchestrator({
-    loadProject: () => loadProject(DATA_DIR),
+    // Reload BOTH the Project and the arrangement so an external change to
+    // data/movie.yaml (or a Scene folder) is reflected in the order too. The
+    // arrangement load is folded into loadProject's promise so the swap stays
+    // atomic — setProject only fires after both have resolved.
+    loadProject: async () => {
+      const next = await loadProject(DATA_DIR);
+      currentArrangement = await loadArrangement(DATA_DIR);
+      return next;
+    },
     getProject: () => currentProject,
     setProject: (p) => {
       currentProject = p;
@@ -197,7 +216,7 @@ async function main(): Promise<void> {
   });
 
   app.get("/api/movie", (_req, res) => {
-    res.json(projectToMovieDto(currentProject));
+    res.json(projectToMovieDto(currentProject, currentArrangement));
   });
 
   app.get("/api/library", (_req, res) => {
@@ -420,7 +439,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject));
+        res.json(projectToMovieDto(currentProject, currentArrangement));
       },
       (err: Error) => {
         if (err instanceof StarredToggleError) {
@@ -459,7 +478,7 @@ async function main(): Promise<void> {
       }).then(
         (result) => {
           currentProject = result.project;
-          res.json(projectToMovieDto(currentProject));
+          res.json(projectToMovieDto(currentProject, currentArrangement));
         },
         (err: Error) => {
           if (err instanceof StarredToggleError) {
@@ -495,7 +514,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject));
+        res.json(projectToMovieDto(currentProject, currentArrangement));
       },
       (err: Error) => {
         if (err instanceof LightEditError) {
@@ -529,7 +548,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject));
+        res.json(projectToMovieDto(currentProject, currentArrangement));
       },
       (err: Error) => {
         if (err instanceof LightEditError) {
@@ -554,7 +573,7 @@ async function main(): Promise<void> {
     void runner().then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject));
+        res.json(projectToMovieDto(currentProject, currentArrangement));
       },
       (err: Error) => {
         if (err instanceof ShotEditError) {
@@ -763,7 +782,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject));
+        res.json(projectToMovieDto(currentProject, currentArrangement));
       },
       (err: Error) => {
         if (err instanceof AcknowledgeError) {
@@ -793,7 +812,7 @@ async function main(): Promise<void> {
       }).then(
         (result) => {
           currentProject = result.project;
-          res.json(projectToMovieDto(currentProject));
+          res.json(projectToMovieDto(currentProject, currentArrangement));
         },
         (err: Error) => {
           if (err instanceof AcknowledgeError) {
@@ -826,10 +845,14 @@ async function main(): Promise<void> {
       copyScene,
       loadProject,
     }).then(
-      (result) => {
+      async (result) => {
         currentProject = result.project;
+        // The copy added a new Scene folder → reconcile placed it at the end
+        // of act 1. Refresh the in-memory arrangement so the MovieDto order
+        // includes the new Scene's manifest slot.
+        currentArrangement = await loadArrangement(DATA_DIR);
         res.json({
-          movie: projectToMovieDto(currentProject),
+          movie: projectToMovieDto(currentProject, currentArrangement),
           newSlug: result.newSlug,
         });
       },
@@ -847,6 +870,47 @@ async function main(): Promise<void> {
           res.status(500).json({ error: err.message });
         } else {
           console.error("[movie-gen] scene copy failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
+  });
+
+  // --- Scene reorder (Slice #19) ------------------------------------------
+  //
+  // Move a Scene one step earlier/later within its act in the manifest
+  // (data/movie.yaml). Body: {"direction": "up" | "down"}. Returns the updated
+  // MovieDto. Cross-act moves are the BS2 canvas's job (#21) — this endpoint
+  // clamps within the Scene's own act. Mutates the manifest atomically and
+  // rebuilds the Project so the new order survives a refresh.
+  app.post("/api/scenes/:slug/reorder", (req, res) => {
+    const slug = req.params.slug;
+    const body = req.body as { direction?: unknown };
+    if (body?.direction !== "up" && body?.direction !== "down") {
+      res
+        .status(400)
+        .json({ error: 'request body must be {direction: "up" | "down"}' });
+      return;
+    }
+    void applyReorderScene({
+      project: currentProject,
+      arrangement: currentArrangement,
+      sceneSlug: slug,
+      direction: body.direction,
+      dataDir: DATA_DIR,
+      saveArrangement,
+      loadProject,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        currentArrangement = result.arrangement;
+        res.json(projectToMovieDto(currentProject, currentArrangement));
+      },
+      (err: Error) => {
+        if (err instanceof ReorderError) {
+          res.status(400).json({ error: err.message });
+        } else {
+          console.error("[movie-gen] scene reorder failed:", err);
           res.status(500).json({ error: err.message });
         }
       },

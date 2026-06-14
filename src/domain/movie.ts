@@ -414,13 +414,35 @@ export function createProject(input: {
 }
 
 /**
- * Movie sequence = isStarred scenes sorted by folder-slug prefix.
- * Per CONTEXT.md: "영화 시퀀스 = `isStarred=true`인 Scene들의 폴더명 prefix 정렬."
+ * Movie sequence = the starred Scenes, in order.
+ *
+ * Per ADR 0002 the ORDER is owned by the `data/movie.yaml` manifest, not the
+ * folder-name prefix. When an `arrangement` is supplied the linear order is
+ * `arrangement.linearSequence()` (act1 ++ act2 ++ act3 flatten) filtered to
+ * the starred Scenes. Scenes that are in the project but absent from the
+ * arrangement are dropped (the adapter reconciles so this should not normally
+ * happen); scenes in the arrangement but absent from the project are skipped.
+ *
+ * When NO arrangement is supplied (legacy callers / unit fixtures) it falls
+ * back to the previous behavior — slug-prefix sort — so existing tests and any
+ * caller that has not yet adopted the manifest keep a stable, deterministic
+ * order. The production path (dto-mapper) always threads the arrangement.
  */
-export function movieSequence(project: Project): readonly Scene[] {
-  return [...project.scenes]
-    .filter((s) => s.isStarred)
-    .sort((a, b) => a.slug.localeCompare(b.slug));
+export function movieSequence(
+  project: Project,
+  arrangement?: { linearSequence(): readonly string[] },
+): readonly Scene[] {
+  const starred = project.scenes.filter((s) => s.isStarred);
+  if (!arrangement) {
+    return starred.sort((a, b) => a.slug.localeCompare(b.slug));
+  }
+  const bySlug = new Map(starred.map((s) => [s.slug, s]));
+  const out: Scene[] = [];
+  for (const slug of arrangement.linearSequence()) {
+    const scene = bySlug.get(slug);
+    if (scene) out.push(scene);
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
