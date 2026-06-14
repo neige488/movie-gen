@@ -127,6 +127,12 @@ body {
   background: var(--bg-elev-2);
   border-color: var(--border);
 }
+/* Selected in the Canvas view — its detail is shown below the canvas. */
+.scene-nav__link--selected,
+.scene-nav__link--selected:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--bg-elev-2) 65%, var(--accent) 28%);
+}
 .scene-nav__slug {
   font-family: var(--mono);
   font-size: 0.75rem;
