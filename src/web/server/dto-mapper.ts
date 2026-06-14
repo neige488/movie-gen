@@ -38,6 +38,7 @@ interface ArrangementView {
 export function projectToMovieDto(
   project: Project,
   arrangement?: ArrangementView,
+  totalPages = 110,
 ): MovieDto {
   const sequenced = movieSequence(project, arrangement);
   return {
@@ -50,6 +51,7 @@ export function projectToMovieDto(
     ...(arrangement?.scenesInAct
       ? { acts: buildCanvasActs(project, arrangement) }
       : {}),
+    totalPages,
     characters: project.characters.map((c) => ({
       name: c.name,
       headshot: c.headshot,

@@ -1465,10 +1465,40 @@ body {
 .canvas__header {
   margin-bottom: 0.25rem;
 }
+.canvas__header-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
 .canvas__title {
   margin: 0 0 0.35rem;
   font-size: 1.25rem;
   color: var(--fg);
+}
+/* Movie total-length control in the canvas header. */
+.canvas-total {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+.canvas-total__input {
+  width: 4rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+.canvas-total__input:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 .canvas__subtitle {
   margin: 0;

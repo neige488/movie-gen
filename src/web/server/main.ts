@@ -21,7 +21,9 @@ import { fileURLToPath } from "node:url";
 import { loadProject, ProjectLoadError } from "@adapter/project-repository.js";
 import {
   loadArrangement,
+  loadTotalPages,
   saveArrangement,
+  saveTotalPages,
 } from "@adapter/movie-manifest-repository.js";
 import type { MovieArrangement } from "@domain/movie-arrangement.js";
 import {
@@ -104,9 +106,13 @@ async function main(): Promise<void> {
   // dto-mapper can thread the manifest order and the reorder endpoint can
   // mutate from the current arrangement without an extra disk read.
   let currentArrangement: MovieArrangement;
+  // Movie length in BS2 pages (≈ minutes; default 110). Rescales displayed beat
+  // page numbers only — see movie-manifest-repository.
+  let currentTotalPages: number;
   try {
     currentProject = await loadProject(DATA_DIR);
     currentArrangement = await loadArrangement(DATA_DIR);
+    currentTotalPages = await loadTotalPages(DATA_DIR);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -120,6 +126,11 @@ async function main(): Promise<void> {
     }
     throw err;
   }
+
+  // Build the MovieDto from the current in-memory state (project + arrangement
+  // + totalPages). Used by every endpoint that returns the movie.
+  const movieDto = () =>
+    projectToMovieDto(currentProject, currentArrangement, currentTotalPages);
 
   const assetStore = createAssetStore(ASSETS_DIR);
   const app = express();
@@ -158,6 +169,7 @@ async function main(): Promise<void> {
     loadProject: async () => {
       const next = await loadProject(DATA_DIR);
       currentArrangement = await loadArrangement(DATA_DIR);
+      currentTotalPages = await loadTotalPages(DATA_DIR);
       return next;
     },
     getProject: () => currentProject,
@@ -217,7 +229,7 @@ async function main(): Promise<void> {
   });
 
   app.get("/api/movie", (_req, res) => {
-    res.json(projectToMovieDto(currentProject, currentArrangement));
+    res.json(movieDto());
   });
 
   app.get("/api/library", (_req, res) => {
@@ -440,7 +452,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof StarredToggleError) {
@@ -479,7 +491,7 @@ async function main(): Promise<void> {
       }).then(
         (result) => {
           currentProject = result.project;
-          res.json(projectToMovieDto(currentProject, currentArrangement));
+          res.json(movieDto());
         },
         (err: Error) => {
           if (err instanceof StarredToggleError) {
@@ -515,7 +527,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof LightEditError) {
@@ -549,7 +561,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof LightEditError) {
@@ -574,7 +586,7 @@ async function main(): Promise<void> {
     void runner().then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof ShotEditError) {
@@ -783,7 +795,7 @@ async function main(): Promise<void> {
     }).then(
       (result) => {
         currentProject = result.project;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof AcknowledgeError) {
@@ -813,7 +825,7 @@ async function main(): Promise<void> {
       }).then(
         (result) => {
           currentProject = result.project;
-          res.json(projectToMovieDto(currentProject, currentArrangement));
+          res.json(movieDto());
         },
         (err: Error) => {
           if (err instanceof AcknowledgeError) {
@@ -853,7 +865,7 @@ async function main(): Promise<void> {
         // includes the new Scene's manifest slot.
         currentArrangement = await loadArrangement(DATA_DIR);
         res.json({
-          movie: projectToMovieDto(currentProject, currentArrangement),
+          movie: movieDto(),
           newSlug: result.newSlug,
         });
       },
@@ -905,7 +917,7 @@ async function main(): Promise<void> {
       (result) => {
         currentProject = result.project;
         currentArrangement = result.arrangement;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof ReorderError) {
@@ -958,7 +970,7 @@ async function main(): Promise<void> {
       (result) => {
         currentProject = result.project;
         currentArrangement = result.arrangement;
-        res.json(projectToMovieDto(currentProject, currentArrangement));
+        res.json(movieDto());
       },
       (err: Error) => {
         if (err instanceof MoveSceneError) {
@@ -967,6 +979,33 @@ async function main(): Promise<void> {
           console.error("[movie-gen] scene move failed:", err);
           res.status(500).json({ error: err.message });
         }
+      },
+    );
+  });
+
+  // --- Movie total length ---------------------------------------------------
+  //
+  // Set the movie's total length in BS2 pages (≈ minutes). Body:
+  // {"totalPages": number}. Default is 110 (Blake). Only rescales displayed
+  // beat page numbers — proportions are unchanged. Persisted to data/movie.yaml
+  // (preserving the acts) so it survives a refresh. Returns the updated MovieDto.
+  app.post("/api/movie/total-pages", (req, res) => {
+    const body = req.body as { totalPages?: unknown };
+    const n = body?.totalPages;
+    if (typeof n !== "number" || !Number.isInteger(n) || n < 1 || n > 100000) {
+      res.status(400).json({
+        error: "request body must be {totalPages: integer 1..100000}",
+      });
+      return;
+    }
+    void saveTotalPages(DATA_DIR, n).then(
+      () => {
+        currentTotalPages = n;
+        res.json(movieDto());
+      },
+      (err: Error) => {
+        console.error("[movie-gen] set total-pages failed:", err);
+        res.status(500).json({ error: err.message });
       },
     );
   });
