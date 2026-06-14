@@ -84,8 +84,11 @@ function buildCanvasActs(
     beats: beatsForAct(id).map((b) => ({
       number: b.number,
       label: b.label,
+      description: b.description,
       startPage: b.startPage,
       endPage: b.endPage,
+      kind: b.kind,
+      leftPct: b.leftPct,
       widthPct: b.widthPct,
     })),
   }));
