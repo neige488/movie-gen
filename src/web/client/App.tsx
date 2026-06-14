@@ -162,7 +162,10 @@ function Sidebar({
       </nav>
       {route.name === "viewer" && movie.kind === "ok" && (
         <>
-          <SceneNavigator scenes={movie.value.scenes} />
+          <SceneNavigator
+            scenes={movie.value.scenes}
+            onMovieChanged={onMovieChanged}
+          />
           <NonStarredScenes
             movie={movie.value}
             onMovieChanged={onMovieChanged}

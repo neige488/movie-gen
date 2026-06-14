@@ -310,6 +310,30 @@ export async function editShotPrevShotRef(
   return (await res.json()) as MovieDto;
 }
 
+/**
+ * Reorder a Scene one step earlier ("up") or later ("down") in the movie
+ * sequence — Slice #19. Hits POST /api/scenes/:slug/reorder, which rewrites
+ * the manifest (data/movie.yaml) atomically and returns the full updated
+ * MovieDto so the caller refreshes the sequence in one round-trip. The server
+ * is authoritative (no optimistic UI) so the order always matches the
+ * persisted manifest, consistent with the other mutation helpers here.
+ */
+export async function reorderScene(
+  sceneSlug: string,
+  direction: "up" | "down",
+): Promise<MovieDto> {
+  const res = await fetch(
+    `/api/scenes/${encodeURIComponent(sceneSlug)}/reorder`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ direction }),
+    },
+  );
+  if (!res.ok) throw await asError(res, "scene reorder failed");
+  return (await res.json()) as MovieDto;
+}
+
 export async function uploadTake(
   sceneSlug: string,
   shotId: string,
