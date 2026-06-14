@@ -1429,10 +1429,41 @@ body {
   font-weight: 600;
   color: var(--accent);
 }
+.canvas-act__pages {
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+}
 .canvas-act__count {
   font-size: 0.75rem;
   color: var(--fg-dim);
   font-family: var(--mono);
+}
+/* Act body — width = the act's page-length share (set inline), so shorter acts
+   render as shorter rows. */
+.canvas-act__body {
+  box-sizing: border-box;
+}
+/* Point names strip above the ruler — two staggered tiers of absolutely
+   positioned names so adjacent moments don't collide. */
+.canvas-act__pointnames {
+  position: relative;
+  height: 1.7rem;
+  margin-bottom: 0.2rem;
+}
+.canvas-point-name {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 0.6rem;
+  line-height: 0.8rem;
+  color: var(--fg-dim);
+  padding: 0 0.18rem;
+  border-radius: 3px;
+  cursor: help;
+}
+.canvas-point-name:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--bg-elev-2) 70%, var(--accent) 25%);
 }
 
 /* Beat ruler — positioned on the act's page timeline. Span beats are
@@ -1475,38 +1506,25 @@ body {
   text-overflow: ellipsis;
   padding: 0 0.3rem;
 }
-/* Point beat — a marker at its page position (left set inline, centered). */
+/* Point beat — a pin at its page position (left set inline). The name is shown
+   in the pointnames strip above; the pin marks the exact page. A ~10px-wide
+   transparent box centers a 2px pin and gives a comfortable hover target. */
 .canvas-beat-point {
   position: absolute;
   top: -3px;
   bottom: -3px;
-  width: 0;
+  width: 10px;
   transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   z-index: 2;
   cursor: help;
 }
-.canvas-beat-point__num {
-  font-size: 0.56rem;
-  line-height: 1;
-  color: var(--bg);
-  background: var(--accent);
-  border-radius: 999px;
-  min-width: 0.92rem;
-  height: 0.92rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0.14rem;
-}
 .canvas-beat-point__pin {
-  flex: 1;
   width: 2px;
+  height: 100%;
   background: var(--accent);
 }
-.canvas-beat-point:hover .canvas-beat-point__num,
 .canvas-beat-point:hover .canvas-beat-point__pin {
   background: var(--accent-warm);
 }

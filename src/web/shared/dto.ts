@@ -125,8 +125,17 @@ export interface CanvasActDto {
   id: 1 | 2 | 3;
   /** Ordered starred Scene slugs in this act (manifest order). */
   sceneSlugs: string[];
-  /** This act's BS2 beats as a proportional ruler. */
+  /** This act's BS2 beats positioned on its page timeline. */
   beats: BeatDto[];
+  /** Act's page range (Blake 110p basis) — e.g. act 1 = 1..25. */
+  pageStart: number;
+  pageEnd: number;
+  /**
+   * Act's share of the movie's page length, in percent. The canvas scales each
+   * act row's width to this so the acts' real length differences are visible
+   * (act 2 ≈ 55%, acts 1/3 ≈ 22%/23%).
+   */
+  pagePct: number;
 }
 
 export interface MovieDto {

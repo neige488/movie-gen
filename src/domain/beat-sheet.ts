@@ -88,7 +88,7 @@ const BEAT_SEEDS: readonly BeatSeed[] = [
   { number: 5, label: "토론", description: "\"이 길을 갈 건가?\" 내적 토론.", act: 1, startPage: 12, endPage: 25 },
   // ── Act 2: 2막 진입 ~ 영혼의 어두운 밤 (beats 6–12) ──
   { number: 6, label: "2막 진입", description: "주인공의 선택. 새로운 세계로.", act: 2, startPage: 25, endPage: 25 },
-  { number: 7, label: "B스토리", description: "A스토리의 테마를 다른 각도로 비추는 거울.", act: 2, startPage: 30, endPage: 30 },
+  { number: 7, label: "B스토리 시작", description: "A스토리와 나란히 달리는 두 번째 이야기(흔히 러브라인)가 들어오는 지점. 영화의 테마를 나르며 2막 내내 A스토리와 함께 진행된다.", act: 2, startPage: 30, endPage: 30 },
   { number: 8, label: "재미와 놀이", description: "콘셉트가 약속한 것을 보여주는 시간.", act: 2, startPage: 30, endPage: 55 },
   { number: 9, label: "중간점", description: "가짜 승리 or 가짜 패배. 전환점.", act: 2, startPage: 55, endPage: 55 },
   { number: 10, label: "악당이 다가오다", description: "모든 것이 조여옴.", act: 2, startPage: 55, endPage: 75 },
@@ -143,6 +143,16 @@ export const ALL_BEATS: readonly Beat[] = (() => {
 /** The beats belonging to a given act, in canonical order. */
 export function beatsForAct(actId: ActId): readonly Beat[] {
   return ALL_BEATS.filter((b) => b.act === actId);
+}
+
+/**
+ * An act's page range on Blake's 110p basis (act 1 → [1,25], act 2 → [25,85],
+ * act 3 → [85,110]). The canvas scales each act row's width to its page span so
+ * the acts' real length differences (act 2 is ~half the movie) are visible.
+ */
+export function actPageRange(actId: ActId): { start: number; end: number } {
+  const { start, span } = actPageBounds(actId);
+  return { start, end: start + span };
 }
 
 /** The act a beat number belongs to. Throws on an out-of-range beat number. */
