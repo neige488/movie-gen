@@ -93,17 +93,24 @@ export interface AllSceneEntryDto {
 }
 
 /**
- * One BS2 beat as a visual ruler tick on the canvas. Mirrors the BeatSheet
- * domain `Beat` minus the act id (which is implied by the enclosing
- * `CanvasActDto`). `widthPct` is the beat's share of its act row (per-act
- * widths sum to 100). Beats are a visual guide only — Scenes are not assigned
- * to beats.
+ * One BS2 beat positioned on the canvas act timeline. Mirrors the BeatSheet
+ * domain `Beat` minus the act id (implied by the enclosing `CanvasActDto`).
+ * `leftPct`/`widthPct` place the beat on its act's page timeline (0–100%):
+ * span beats render as proportional bars, point beats as zero-width markers.
+ * Beats are a visual guide only — Scenes are not assigned to beats.
  */
 export interface BeatDto {
   number: number;
   label: string;
+  /** One-line beat description (guide book ch.4) — shown in the hover tooltip. */
+  description: string;
   startPage: number;
   endPage: number;
+  /** "span" (page range = dwell time) or "point" (single-page moment/turn). */
+  kind: "span" | "point";
+  /** Start offset within the act's page timeline, in percent (0–100). */
+  leftPct: number;
+  /** Page-span width within the act, in percent. 0 for point beats. */
   widthPct: number;
 }
 
