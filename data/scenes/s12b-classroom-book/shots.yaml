@@ -1,10 +1,6 @@
 shots:
   - id: '01'
-    prompt: >-
-      A classroom. A book pokes slightly out of Jihoon's bag. Beside him, SUA glances at it. Korean: SUA "오, 강지훈~ 웬일이야.
-      무슨 책이래?" Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구)
-      academy district (학군지). Characters appear exactly as in the provided character reference images — do not restyle,
-      re-dress, or alter their appearance.
+    prompt: 'A classroom. A book pokes slightly out of Jihoon''s bag. Beside him, SUA glances at it. Korean: SUA "오, 강지훈~ 웬일이야. 무슨 책이래?" Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지). Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces, a mix of uniforms and casual clothes — do not duplicate the reference characters.'
     duration: 6
     screenplayHash: 647a8150387fe583df4a39ea2672ac8df9e848bab026251d87f878ff55381d9e
     characterRefs:
@@ -19,10 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: >-
-      Jihoon hurriedly shoves the book back into his bag. JIHOON "안 돼. 만지지 마." Sua, startled by his reaction. SUA "뭔데?
-      중요한 거야?" Warm tone tightening into unease, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear
-      exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.
+    prompt: 'Jihoon hurriedly shoves the book back into his bag. JIHOON "안 돼. 만지지 마." Sua, startled by his reaction. SUA "뭔데? 중요한 거야?" Warm tone tightening into unease, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces — do not duplicate the reference characters.'
     duration: 8
     screenplayHash: ea29b0a5e80a5abb9d9d7f00a3418896c640811ff373a342f011b1e09a91ac7a
     prevShotRef: '01'
@@ -38,10 +31,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '03'
-    prompt: >-
-      JIHOON "아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아." His gaze wavers for a moment. Warm nostalgic look with a faint unease
-      underneath, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character
-      reference images — do not restyle, re-dress, or alter their appearance.
+    prompt: 'JIHOON "아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아." His gaze wavers for a moment. Warm nostalgic look with a faint unease underneath, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces — do not duplicate the reference characters.'
     duration: 6
     screenplayHash: af6666396468cbc0c9ee9a731a4f8fab04017070be85c01f11e9c8126e8b0c3d
     prevShotRef: '02'

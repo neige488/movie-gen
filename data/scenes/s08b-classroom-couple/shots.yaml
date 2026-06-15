@@ -1,10 +1,6 @@
 shots:
   - id: '01'
-    prompt: >-
-      A classroom. JIHOON and SUA sit facing each other, talking happily; Jihoon's face is bright. Warm nostalgic Korean
-      coming-of-age look, soft light, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지).
-      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
-      appearance.
+    prompt: 'A classroom. JIHOON and SUA sit facing each other, talking happily; Jihoon''s face is bright. Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지). Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces, a mix of uniforms and casual clothes — do not duplicate the reference characters.'
     duration: 6
     screenplayHash: 00dabb5d74b8f472b91ea5a80b02cae95d929a476f8b3676eb79b4d22c077a6e
     characterRefs:
@@ -18,12 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: >-
-      SEUNGHO and DOHYUN barge over noisily; Sua does not spare them a glance. Korean: SEUNGHO "아 강지훈, 오늘 저녁에 접속할 거지?"
-      JIHOON "아… 오늘은 좀 안 되는데." DOHYUN "오— 강지훈. 요즘 수상한데, 너 혹시 여자친구 생겼냐?" IMPORTANT: the friends do NOT look at or
-      acknowledge Sua — they only see Jihoon acting oddly. Warm-to-natural light, 35mm cinematic. Setting: 2026 Seoul
-      classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or
-      alter their appearance.
+    prompt: 'SEUNGHO and DOHYUN barge over noisily; Sua does not spare them a glance. Korean: SEUNGHO "아 강지훈, 오늘 저녁에 접속할 거지?" JIHOON "아… 오늘은 좀 안 되는데." DOHYUN "오— 강지훈. 요즘 수상한데, 너 혹시 여자친구 생겼냐?" IMPORTANT: the friends do NOT look at or acknowledge Sua — they only see Jihoon acting oddly. Warm-to-natural light, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces, a mix of uniforms and casual clothes — do not duplicate the reference characters.'
     duration: 9
     screenplayHash: 91131e0319b7d2fcab783ce12e7a385eaa6f7cff4d330fa03213520433140788
     prevShotRef: '01'
@@ -42,11 +33,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: >-
-      Beside Jihoon, Sua turns her head away, bashful. (Director note: from the friends' point of view the seat beside
-      Jihoon is empty — keep it natural on first watch, a rewatch clue.) Warm nostalgic look, soft light, 35mm
-      cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images
-      — do not restyle, re-dress, or alter their appearance.
+    prompt: 'Beside Jihoon, Sua turns her head away, bashful. (Director note: from the friends'' point of view the seat beside Jihoon is empty — keep it natural on first watch, a rewatch clue.) Warm nostalgic look, soft light, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces — do not duplicate the reference characters.'
     duration: 5
     screenplayHash: 78b4b551b97363c0b86aeac9529de03495fa47ce5f117a313ae665b40aea57fa
     prevShotRef: '02'

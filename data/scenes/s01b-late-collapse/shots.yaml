@@ -1,13 +1,8 @@
 shots:
   - id: '01'
-    prompt: >-
-      A Korean tutoring-academy lecture room, daytime. The door opens; JIHOON enters late, face frozen, breath not yet
-      settled. The instructor and students glance up, then look away. He moves to a seat at the back. Muted desaturated
-      realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구)
-      academy district (학군지). Jihoon appears exactly as in the provided character reference images — do not restyle,
-      re-dress, or alter his appearance.
-    duration: 6
-    screenplayHash: d39cadb0f1a2cd869d699fea23bf304c1112b488fe1a4223ddd2add5f3ac05ce
+    prompt: 'POV from SUA, who sits at a window-side desk looking toward the classroom entrance. A Korean tutoring-academy lecture room mid-class — the room is POPULATED: an instructor teaching at the front and students seated at their desks listening (the room must NOT be empty). The seated students are anonymous background extras with assorted DIFFERENT faces, a mix of school uniforms and casual plainclothes, both boys and girls — they must NOT resemble or duplicate the reference characters. The entrance door opens and JIHOON enters late, face frozen, breath not yet settled. The instructor and the students turn to look at him; he glances around the room for a beat, then hurries to his seat. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지). Jihoon appears exactly as in the provided character reference images — do not restyle, re-dress, or alter his appearance.'
+    duration: 10
+    screenplayHash: 449ebb95e2bbfeed532f9404ae4a52713aac5dd99a1426f812c07e068314d124
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
@@ -17,11 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: >-
-      Jihoon slowly lays his head down on the desk; his shoulders tremble faintly. No one approaches. Under the
-      fluorescent light, time seems to stop. Muted desaturated realistic tone, cold available light, restrained
-      handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Jihoon appears exactly as in the
-      provided character reference images — do not alter his appearance.
+    prompt: 'Jihoon slowly lays his head down on the desk; his shoulders tremble faintly. No one approaches. Under the fluorescent light, time seems to stop. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Jihoon appears exactly as in the provided character reference images — do not alter his appearance.'
     duration: 6
     screenplayHash: 72291dd5bab4f2f2e4457df817748120da185d09128055ff9e72ad62b1e34d9a
     prevShotRef: '01'
@@ -34,13 +25,9 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: >-
-      From somewhere at the back of the room, a quiet POV gaze watches the boy slumped at his desk — the soft look of
-      noticing a stranger for the first time. The watcher is never shown. Muted realistic tone with a faint warm bleed,
-      restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Jihoon appears exactly as in
-      the provided character reference images.
+    prompt: 'Continuing from the previous shot (same window-side POV as shot 1): a quiet gaze from the window desk watches Jihoon slumped at his desk — the soft look of noticing a stranger for the first time. Other seated students remain in the room — anonymous background extras with assorted different faces, mixed school uniforms and casual clothes, boys and girls, not resembling the reference characters. The watcher is never shown. Muted realistic tone with a faint warm bleed, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Jihoon appears exactly as in the provided character reference images.'
     duration: 5
-    screenplayHash: e4ae158e26bfdd216e56a007dadb4226ef8c2483ff84d6e6e5699e0078f129e6
+    screenplayHash: 7e5a7d9d2549b466755316598b9163014fddd8da6e6af8aff7b8d495630a21d7
     prevShotRef: '02'
     characterRefs:
       - character: jihoon

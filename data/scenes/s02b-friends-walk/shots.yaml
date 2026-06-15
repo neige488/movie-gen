@@ -1,11 +1,6 @@
 shots:
   - id: '01'
-    prompt: >-
-      After-school street, a group of boys walking home. SEUNGHO and DOHYUN chatter idly. JIHOON walks among them,
-      vacant, the talk not reaching him. Korean: SEUNGHO "야, 너 어제 그거 봤냐?" DOHYUN "봤지. 미쳤더라." Muted desaturated realistic
-      tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy
-      district (학군지). Characters appear exactly as in the provided character reference images — do not restyle,
-      re-dress, or alter their appearance.
+    prompt: 'After-school street, a group of boys walking home. SEUNGHO and DOHYUN chatter idly. JIHOON walks among them, vacant, the talk not reaching him. Korean: SEUNGHO "야, 너 어제 그거 봤냐?" DOHYUN "봤지. 미쳤더라." Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지). Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students or passersby on the street are anonymous background extras with different faces and mixed clothing — do not duplicate the reference characters.'
     duration: 7
     screenplayHash: e36c3c95734b33078b12037676735f63c06e8b4988f0dcf2a20cc08e95ca56be
     characterRefs:
@@ -21,11 +16,7 @@ shots:
     propRefs: []
     takes: []
   - id: '02'
-    prompt: >-
-      Jihoon's gaze locks onto a point — far off, SUA sits alone on a bench reading. JIHOON: "야, 나 먼저 가볼게!" He breaks
-      from the group and runs toward her; Seungho and Dohyun glance at each other, puzzled. The tone warms as he nears
-      her. 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Characters appear exactly as in the provided
-      character reference images — do not restyle, re-dress, or alter their appearance.
+    prompt: 'Jihoon''s gaze locks onto a point — far off, SUA sits alone on a bench reading. JIHOON: "야, 나 먼저 가볼게!" He breaks from the group and runs toward her; Seungho and Dohyun glance at each other, puzzled. The tone warms as he nears her. 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students or passersby on the street are anonymous background extras with different faces and mixed clothing — do not duplicate the reference characters.'
     duration: 6
     screenplayHash: fe40f8a380689751eaaa97144dd570c9f01c1187d54cfcc9c64fce5285130192
     prevShotRef: '01'
@@ -44,11 +35,7 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: >-
-      Jihoon reaches Sua, catching his breath. Korean: JIHOON "뭐 읽어?" SUA "집에 가는 이야기." JIHOON "그게 재밌어?" SUA "집에 가는 게 제일
-      어려운 사람도 있잖아." Warm nostalgic Korean coming-of-age look, soft golden light, gentle slightly too-perfect dreaminess,
-      35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Characters appear exactly as in the provided
-      character reference images — do not restyle, re-dress, or alter their appearance.
+    prompt: 'Jihoon reaches Sua, catching his breath. Korean: JIHOON "뭐 읽어?" SUA "집에 가는 이야기." JIHOON "그게 재밌어?" SUA "집에 가는 게 제일 어려운 사람도 있잖아." Warm nostalgic Korean coming-of-age look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu academy district. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any passersby in the background are anonymous extras with different faces — do not duplicate the reference characters.'
     duration: 10
     screenplayHash: 588e80b7c7b4cb6a9a9803c7a01cbf1060691ede0dbb2de6febc6406e16ac882
     prevShotRef: '02'
