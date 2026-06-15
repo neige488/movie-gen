@@ -6,7 +6,8 @@
 ## jihoon (지훈)
 - **headshot:** An 18-year-old Korean high school boy, soft gentle features, slightly unkempt black hair, tired but kind eyes, faint shadow of sleeplessness. Neutral expression headshot.
 - **look: uniform** — Korean high school uniform: white shirt, dark trousers, school jacket. Slightly loosened tie, worn naturally.
-- **look: hoodie** — Grey hoodie over uniform shirt, one drawstring hanging longer than the other, half-zipped backpack. Everyday Korean tutoring-academy commute outfit.
+- **look: hoodie-with-bag** — Grey hoodie over uniform shirt, one drawstring hanging longer than the other, **with a half-zipped backpack**. Commute (통학) outfit.
+- **look: only-hoodie** — The same grey hoodie (one drawstring longer), **without a backpack**. Casual/date outfit. (가방이 필요한 컷은 backpack prop으로 첨부)
 - **look: adult-traveler** — Same face aged to early 20s. Light alpine travel jacket, small backpack. Calm, weathered.
 
 ## sua (수아)

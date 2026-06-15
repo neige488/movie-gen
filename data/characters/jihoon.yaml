@@ -1,12 +1,15 @@
 name: jihoon
-headshot: jihoon/headshot.png
+headshot: characters/jihoon/headshot-3.png
 looks:
   - name: uniform
     faceImage: jihoon/uniform/face.png
     bodyImage: jihoon/uniform/body.png
-  - name: hoodie
-    faceImage: jihoon/hoodie/face.png
-    bodyImage: jihoon/hoodie/body.png
+  - name: hoodie-with-bag
+    faceImage: characters/jihoon/hoodie-with-bag/face.jpg
+    bodyImage: characters/jihoon/hoodie-with-bag/body.jpg
+  - name: only-hoodie
+    faceImage: characters/jihoon/only-hoodie/face.jpg
+    bodyImage: characters/jihoon/only-hoodie/body.jpg
   - name: adult-traveler
     faceImage: jihoon/adult-traveler/face.png
     bodyImage: jihoon/adult-traveler/body.png
