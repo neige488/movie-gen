@@ -1,0 +1,8 @@
+name: bookstore
+references:
+  - name: aisles
+    prompt: 'Cozy independent Korean bookstore interior, warm wooden shelves packed with books, soft daylight through large windows, narrow browsing aisles. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, inviting. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: bookstore/aisles.png
+  - name: record-corner
+    prompt: 'A small vinyl-record listening corner inside a Korean bookstore: crates of records, a couple of headphone listening stations, warm intimate lighting, wood and warm tones. 2026 Seoul, Nowon-gu (노원구) academy district. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: bookstore/record-corner.png

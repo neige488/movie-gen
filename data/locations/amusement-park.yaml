@@ -1,5 +1,8 @@
 name: amusement-park
 references:
   - name: carousel
-    prompt: A clean modern Korean amusement park carousel on a perfect clear day, pastel horses, gentle flags, slightly dreamlike over-perfect sunlight. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 'Lotte World indoor theme park (Jamsil, Seoul) carousel, pastel horses, gentle flags, bright indoor adventure-dome light, slightly dreamlike over-perfect glow. Photorealistic location reference, no people, cinematic 35mm look.'
     image: amusement-park/carousel.png
+  - name: indoor-plaza
+    prompt: 'Lotte World indoor theme park (Jamsil, Seoul) main plaza near the fairy-tale castle, balconies and festive lights, bright lively atmosphere. Photorealistic location reference, no people, cinematic 35mm look.'
+    image: amusement-park/indoor-plaza.png
