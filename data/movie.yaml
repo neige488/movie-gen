@@ -9,11 +9,11 @@ acts:
       - s01b-late-collapse
       - s02-classroom-window
       - s02b-friends-walk
+      - s04-rain-alley
+      - s05-bus-stop
   - id: 2
     scenes:
       - s03-convenience-store
-      - s04-rain-alley
-      - s05-bus-stop
       - s05b-bookstore-date
       - s05c-date-montage
       - s05d-hill-intro
@@ -28,14 +28,15 @@ acts:
       - s10r-ice-rink-alone
       - s11-sleepless
       - s12-minor-accident
+      - s12b-classroom-book
       - s13-back-figure
       - s14-jealousy
       - s15a-empty-places
       - s15b-snackbar
       - s15c-empty-desk
+      - s17r-confrontation-reveal
       - s16-bench-lap-reversed
       - s17-confrontation
-      - s17r-confrontation-reveal
       - s18-breakdown
       - s19-doctor
   - id: 3

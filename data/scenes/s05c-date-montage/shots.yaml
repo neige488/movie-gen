@@ -1,1 +1,75 @@
-shots: []
+shots:
+  - id: '01'
+    prompt: >-
+      [music continues] Lotte World, Jamsil. SUA wears a lion headband and covers her face with both hands; after a shy
+      beat she lowers them and shows her face, embarrassed. Warm nostalgic Korean coming-of-age look, soft golden light,
+      gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: Lotte World indoor theme park, Jamsil, Seoul.
+      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
+      appearance (headband is an added prop only).
+    duration: 5
+    screenplayHash: a9298271fcdf9779616e56913cc1d8532cf24b552dab1fecc14b1c37256ead54
+    characterRefs:
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: amusement-park
+        reference: indoor-plaza
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: >-
+      [music continues] Facing her, JIHOON wears a deer headband. The two look at each other and burst out laughing.
+      Warm nostalgic Korean coming-of-age look, soft golden light, 35mm cinematic. Setting: Lotte World indoor theme
+      park, Jamsil, Seoul. Characters appear exactly as in the provided character reference images — do not restyle or
+      re-dress them (headband is an added prop only).
+    duration: 5
+    screenplayHash: a62d31f2b5ee4e9d327590101cc692cb3c3358553954c72b31813b261343a66a
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: amusement-park
+        reference: indoor-plaza
+    propRefs: []
+    takes: []
+  - id: '03'
+    prompt: >-
+      [music continues] Lotte World ice rink. Sua glides backward holding both of Jihoon's hands, pulling him along; he
+      stumbles awkwardly after her. Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: Lotte
+      World Ice Rink, Jamsil, Seoul. Characters appear exactly as in the provided character reference images — do not
+      restyle, re-dress, or alter their appearance.
+    duration: 6
+    screenplayHash: 6fbd33c7c03552cf9cbc6f7ad73e01355c9a3796db82c0ff14685659345b41aa
+    prevShotRef: '02'
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: ice-rink
+        reference: indoor
+    propRefs: []
+    takes: []
+  - id: '04'
+    prompt: >-
+      [music continues] Cut: Jihoon now skates fairly smoothly. Sua holds him, gliding backward while he moves forward —
+      the two meet eyes and smile. Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: Lotte
+      World Ice Rink, Jamsil, Seoul. Characters appear exactly as in the provided character reference images — do not
+      restyle, re-dress, or alter their appearance.
+    duration: 7
+    screenplayHash: 3ef42a7cac4320d5b0c7319d589b59909a2b95d1a9e8872e09296b1e4440a744
+    prevShotRef: '03'
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: ice-rink
+        reference: indoor
+    propRefs: []
+    takes: []

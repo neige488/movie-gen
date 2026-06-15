@@ -1,1 +1,57 @@
-shots: []
+shots:
+  - id: '01'
+    prompt: >-
+      Weekend. A cozy bookstore. JIHOON enters a little awkwardly; among the shelves SUA spots him and raises a hand.
+      They walk slowly between the bookshelves. Warm nostalgic Korean coming-of-age look, soft golden light, gentle
+      slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul. Characters appear exactly as in the provided
+      character reference images — do not restyle, re-dress, or alter their appearance.
+    duration: 7
+    screenplayHash: 6c71da8cd16f0b0d001bf25edb572e9c9e7b227b04d20d5cc9969f738b838abe
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: aisles
+    propRefs: []
+    takes: []
+  - id: '02'
+    prompt: >-
+      The vinyl-record corner inside the bookstore. Sua picks up a pair of headphones and gently places them over
+      Jihoon's ears. His tension melts away. Warm intimate light, 35mm cinematic. Setting: 2026 Seoul bookstore.
+      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
+      appearance.
+    duration: 7
+    screenplayHash: 376525f84c69432b957277da51dcd328cfcb004848b9356c89d430a2b58591c6
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: record-corner
+    propRefs: []
+    takes: []
+  - id: '03'
+    prompt: >-
+      Music swells beyond the headphones. Sua meets Jihoon's eyes and smiles. (This music carries over into the
+      following date montage.) Warm nostalgic look, soft golden light, 35mm cinematic. Setting: 2026 Seoul bookstore.
+      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
+      appearance.
+    duration: 6
+    screenplayHash: fb41f4db9e28e119d103317f29eed1cbdab17cde485934674db31730124cb30a
+    prevShotRef: '02'
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: record-corner
+    propRefs: []
+    takes: []
