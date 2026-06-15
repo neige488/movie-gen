@@ -5,7 +5,7 @@ shots:
     screenplayHash: 63d26aa0a53377a20c6884ff4665f3ea9251406f821a342a6976b90d9cb58fc8
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: hoodie-with-bag
     locationRefs:
       - location: jihoon-home
         reference: bedroom
@@ -18,7 +18,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: hoodie-with-bag
     locationRefs:
       - location: rain-alley
     propRefs: []

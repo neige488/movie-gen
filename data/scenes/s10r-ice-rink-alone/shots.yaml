@@ -5,7 +5,7 @@ shots:
     screenplayHash: 64199fe9b87b9e33921612b58f06f0716b3e41d117aa9410eda22c3a08457776
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: ice-rink
         reference: indoor

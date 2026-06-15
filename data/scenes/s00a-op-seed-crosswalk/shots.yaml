@@ -5,7 +5,7 @@ shots:
     screenplayHash: 233831a16fd9c8440dbb255a4f8be6452850a68ee1181280308c6d24d979b59d
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: hoodie-with-bag
     locationRefs:
       - location: crosswalk
         reference: day-wide

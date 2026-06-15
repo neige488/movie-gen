@@ -20,7 +20,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: hospital
         reference: ward

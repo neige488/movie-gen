@@ -5,7 +5,7 @@ shots:
     screenplayHash: f6e314cea3c25accee8625297ca96581ef9fef7830f608da216cf9d033c34254
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: amusement-park
         reference: carousel

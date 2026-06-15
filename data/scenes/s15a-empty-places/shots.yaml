@@ -5,7 +5,7 @@ shots:
     screenplayHash: 356696ffe16fd7a3e37c4a2baa468337ab8a67af7b541412caf68fb990777a64
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: hill-bench
         reference: overcast
@@ -17,7 +17,7 @@ shots:
     screenplayHash: c92017a0eea1c7dc53c7d08845cfe6e91623423047fe00e1582ec3389f99370b
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: convenience-store
         reference: window-seat
@@ -29,7 +29,7 @@ shots:
     screenplayHash: 9ebe50a6c22cfe0c72b427d0ef0b7648cefb158265ab28396df0688ecbb9371c
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: bus-stop
         reference: dusk

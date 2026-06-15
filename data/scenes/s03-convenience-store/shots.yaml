@@ -5,7 +5,7 @@ shots:
     screenplayHash: bd5ed16524b65768bb629acc6efe613c39642b42805832103c6b92f762e453e1
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
       - character: sua
         look: accident-day
     locationRefs:
@@ -20,7 +20,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
       - character: sua
         look: accident-day
     locationRefs:

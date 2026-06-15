@@ -5,7 +5,7 @@ shots:
     screenplayHash: 04830c70c37113bf123890c9be8154d89e474cf1c0f05d5ab70ed8450263896e
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: hill-bench
         reference: day-city-view
@@ -18,7 +18,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: rain-alley
         reference: evening-rain

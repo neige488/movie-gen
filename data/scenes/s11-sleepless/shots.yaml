@@ -5,7 +5,7 @@ shots:
     screenplayHash: f77f77bc765507f80ceefe77ab27dbdc7720c1a7ae06ef0c7af931732bd399ed
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
     locationRefs:
       - location: jihoon-home
         reference: bedroom

@@ -18,7 +18,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
       - character: jihoon-mother
         look: default
     locationRefs:

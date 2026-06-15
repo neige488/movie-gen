@@ -5,7 +5,7 @@ shots:
     screenplayHash: 2cba28275681d3f9638b56fdd4c18f233968ffed097689626b1efb9ba753870e
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
       - character: doctor
         look: default
       - character: jihoon-mother
@@ -22,7 +22,7 @@ shots:
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
-        look: hoodie
+        look: only-hoodie
       - character: doctor
         look: default
       - character: jihoon-mother
