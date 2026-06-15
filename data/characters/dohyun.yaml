@@ -1,0 +1,6 @@
+name: dohyun
+headshot: dohyun/headshot.png
+looks:
+  - name: uniform
+    faceImage: dohyun/uniform/face.png
+    bodyImage: dohyun/uniform/body.png

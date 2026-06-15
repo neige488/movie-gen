@@ -1,0 +1,6 @@
+name: seungho
+headshot: seungho/headshot.png
+looks:
+  - name: uniform
+    faceImage: seungho/uniform/face.png
+    bodyImage: seungho/uniform/body.png

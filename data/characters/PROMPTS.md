@@ -26,3 +26,11 @@
 
 ## classmate-girl (단발 여학생 — #충돌 리빌용)
 - **headshot:** An 18-year-old Korean girl with a chin-length bob superficially similar to Sua's but clearly a different person, rounder face. Korean high school uniform with skirt.
+
+## seungho (승호 — 지훈 단짝 1)
+- **headshot:** An 18-year-old Korean high school boy, friendly round face, short neat black hair, easygoing grin. Ordinary, cheerful, the talkative one.
+- **look: uniform** — Standard Korean high school uniform, worn a little casually.
+
+## dohyun (도현 — 지훈 단짝 2)
+- **headshot:** An 18-year-old Korean high school boy, a bit taller with slightly sharper features, playful joker's look, hair slightly styled.
+- **look: uniform** — Standard Korean high school uniform.
