@@ -1,8 +1,14 @@
 shots:
   - id: '01'
-    prompt: 'Evening rain in a narrow Korean alley, one umbrella shared. Sua hugs her poetry book to her chest; the umbrella keeps tilting toward the book. Korean dialogue: JIHOON: "너보다 책이 더 중요하냐?" SUA: "책은 젖으면 티 나잖아." JIHOON: "사람은?" SUA: "사람은 말리면 돼." Wet asphalt reflections, intimate side tracking shot. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 12
-    screenplayHash: a21fd01b1efb26b9872aeba3781ece7ee6f07820dcb60fce49356814d6422391
+    prompt: >-
+      Evening rain in a narrow Korean alley. Jihoon walks under an umbrella. From up ahead, Sua — hugging her poetry
+      book to her chest — runs through the rain toward him and ducks straight in under his umbrella, pressing close
+      beside him. She actively closes the distance. Wet asphalt reflections, intimate. Warm nostalgic Korean
+      coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026
+      Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in
+      the provided character reference images — do not restyle, re-dress, or alter their appearance.
+    duration: 5
+    screenplayHash: 8f677230b78d4132f90b01613791c59cf0dac3e7203b7ec2efbeb089770f8978
     characterRefs:
       - character: jihoon
         look: hoodie
@@ -15,10 +21,37 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: 'He laughs in disbelief and tilts the umbrella further over her. His own shoulder slowly darkens with rain. Quiet, warm, a little sad if you look twice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+    prompt: >-
+      Walking together under one umbrella, the umbrella keeps tilting toward her book. Korean dialogue: JIHOON: "너보다 책이
+      더 중요하냐?" SUA: "책은 젖으면 티 나잖아." JIHOON: "사람은?" SUA: "사람은 말리면 돼." Wet asphalt reflections, intimate side tracking
+      shot. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess,
+      35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright.
+      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
+      appearance.
+    duration: 12
+    screenplayHash: 4d326edcbcc4b103821caf152078c9ea835eba1feec92f09c37dda66c3e4d521
+    prevShotRef: '01'
+    characterRefs:
+      - character: jihoon
+        look: hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: rain-alley
+        reference: evening-rain
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: '03'
+    prompt: >-
+      He laughs in disbelief and tilts the umbrella further over her. His own shoulder slowly darkens with rain. Quiet,
+      warm, a little sad if you look twice. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle
+      slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) —
+      modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not
+      restyle, re-dress, or alter their appearance.
     duration: 6
     screenplayHash: 5ce7aa93fbf434a81888d881749112b6e713112a17dd72fc956330898567dcf0
-    prevShotRef: '01'
+    prevShotRef: '02'
     characterRefs:
       - character: jihoon
         look: hoodie

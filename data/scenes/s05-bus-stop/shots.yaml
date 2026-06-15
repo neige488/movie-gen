@@ -1,8 +1,13 @@
 shots:
   - id: '01'
-    prompt: 'Small Korean neighborhood bus stop at dusk. Sua reads on the bench; Jihoon beside her keeps stealing glances. Korean dialogue: JIHOON: "맨날 뭘 그렇게 읽냐?" SUA: "집에 가는 이야기." JIHOON: "그게 재밌어?" SUA: "집에 가는 게 제일 어려운 사람도 있잖아." Low golden light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 12
-    screenplayHash: b385f14e41948d978f776abb52e9266a690d31d2ef1f8b6452c3456ff797fef4
+    prompt: >-
+      A wet Korean street at dusk just after the rain has stopped, sunset glow and puddle reflections. A bus pulls in at
+      a small neighborhood bus stop; Sua steps toward the open door to board. Warm nostalgic Korean coming-of-age film
+      look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu
+      (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided
+      character reference images — do not restyle, re-dress, or alter their appearance.
+    duration: 6
+    screenplayHash: 1b90989ada2cd40268a2bbfb2703838ec490bdc7aa86a490b19d83fb0a280496
     characterRefs:
       - character: jihoon
         look: hoodie
@@ -11,13 +16,18 @@ shots:
     locationRefs:
       - location: bus-stop
         reference: dusk
-    propRefs:
-      - prop: poetry-book
+    propRefs: []
     takes: []
   - id: '02'
-    prompt: 'A bus stops, waits, leaves. Neither moves. JIHOON: "…안 타?" SUA, turning a page: "다음 거." The bus''s tail lights drift away in the dusk. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 7
-    screenplayHash: 1d0e459b22d6225fcda4657a184b56869b9108172d2fbc500baacba8f552eaf2
+    prompt: >-
+      JIHOON calls out across the stop: "수아야!" Sua, one foot already on the bus step, turns back. JIHOON, a little
+      nervous: "혹시… 이번 주말에 뭐 해?" Sua breaks into a bright, radiant smile. The bus waits a beat. Natural Korean lip sync,
+      tender first-love moment. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly
+      too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern,
+      clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not
+      restyle, re-dress, or alter their appearance.
+    duration: 10
+    screenplayHash: 4bbc3472e369235082e0c560a9135505ef601bcac0eef72eba4e0c7ac4dc9db2
     prevShotRef: '01'
     characterRefs:
       - character: jihoon

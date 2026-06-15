@@ -1,6 +1,11 @@
 shots:
   - id: '01'
-    prompt: 'Jihoon arrives panting at a quiet Korean neighborhood crosswalk, red light, no cars. One foot already steps off the curb. Beside him Sua looks up from her worn poetry book. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+    prompt: >-
+      Jihoon arrives panting at a quiet Korean neighborhood crosswalk, red light, no cars. One foot already steps off
+      the curb. Beside him Sua looks up from her worn poetry book. Warm nostalgic Korean coming-of-age film look, soft
+      golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy
+      district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character
+      reference images — do not restyle, re-dress, or alter their appearance.
     duration: 6
     screenplayHash: b7bf85bbf2b37611ca206a201f028c9f633a4abde2967209a123b92e61d1a903
     characterRefs:
@@ -15,9 +20,16 @@ shots:
       - prop: poetry-book
     takes: []
   - id: '02'
-    prompt: 'Two-shot at the crosswalk, warm afternoon. Playful banter in Korean. SUA: "너 또 빨간불에 건너려 했지?" JIHOON: "아니거든." SUA: "거짓말." JIHOON: "넌 어떻게 맨날 알아?" SUA: "네가 맨날 그러니까." He laughs, mock-offended. Natural Korean lip sync, bright teen chemistry. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+    prompt: >-
+      Two-shot at the crosswalk, warm afternoon. Playful banter in Korean. SUA: "너 또 빨간불에 건너려 했지?" JIHOON: "아니거든." SUA:
+      "거짓말." JIHOON: "넌 어떻게 맨날 알아?" SUA: "네가 맨날 그러니까." He laughs, mock-offended. As they talk, a single ordinary car
+      passes across the road in front of them (unremarkable on first watch — this is the car that will later kill Sua).
+      Natural Korean lip sync, bright teen chemistry. Warm nostalgic Korean coming-of-age film look, soft golden light,
+      gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지)
+      — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do
+      not restyle, re-dress, or alter their appearance.
     duration: 12
-    screenplayHash: acc2f6f4b47361277eb577780746d417d4f19af70a20d96fbb1a5b8e7c632faa
+    screenplayHash: a628c0f4a9d152065d34d90c01c9b4ace378ade529256d08d798d98ce3d62360
     prevShotRef: '01'
     characterRefs:
       - character: jihoon
@@ -30,9 +42,14 @@ shots:
     propRefs: []
     takes: []
   - id: '03'
-    prompt: 'Wide shot: the light turns green and the two cross side by side, small talk continuing soundlessly, warm golden afternoon. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 5
-    screenplayHash: fca9a0a26825ac48aa7de9f82502bb0e18f29141acba0291f0eaac22e4af323c
+    prompt: >-
+      Wide shot: the light turns green. Jihoon hoists his backpack and, with a quick "나 먼저 간다. 나중에 보자", runs ahead and
+      crosses first; Sua stays on the curb watching him recede. Warm golden afternoon. Warm nostalgic Korean
+      coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026
+      Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in
+      the provided character reference images — do not restyle, re-dress, or alter their appearance.
+    duration: 7
+    screenplayHash: 180e9867ca31eff659d81c466ab9b152a646c9b3437e83c065f196169b5925e8
     prevShotRef: '02'
     characterRefs:
       - character: jihoon
