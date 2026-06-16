@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { createProject, createScene, createShot } from "@domain/movie.js";
+import {
+  createCharacter,
+  createLocation,
+  createLook,
+  createProject,
+  createScene,
+  createShot,
+} from "@domain/movie.js";
 import { createMovieArrangement } from "@domain/movie-arrangement.js";
+import { createPromptPreset } from "@domain/prompt-preset.js";
 import { projectToMovieDto } from "./dto-mapper.js";
 
 const SHOT = createShot({
@@ -213,5 +221,75 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
     ]);
     expect(projectToMovieDto(project, arrangement).totalPages).toBe(110);
     expect(projectToMovieDto(project, arrangement, 90).totalPages).toBe(90);
+  });
+});
+
+describe("projectToMovieDto — finalPrompt assembly", () => {
+  const character = createCharacter({
+    name: "character-a",
+    headshot: "characters/character-a/headshot.png",
+    looks: [
+      createLook({
+        name: "introspective",
+        face: { image: "f.png" },
+        body: { image: "b.png" },
+      }),
+    ],
+  });
+  const location = createLocation({ name: "small-apartment", references: [] });
+
+  function projectWithRefShot() {
+    const shot = createShot({
+      id: "01",
+      prompt: "@p1_c_suah_face 클로즈업, @p1_l_rooftop_cafe 배경",
+      duration: 6,
+      screenplayHash: "h",
+      characterRefs: [{ character: "character-a", look: "introspective" }],
+      locationRefs: [{ location: "small-apartment", reference: "desk-corner" }],
+    });
+    return createProject({
+      scenes: [
+        createScene({
+          slug: "s01-a",
+          slugline: "X",
+          screenplay: "<!-- shot:01 -->\nbody\n<!-- /shot:01 -->",
+          isStarred: true,
+          shots: [shot],
+        }),
+      ],
+      characters: [character],
+      locations: [location],
+      props: [],
+    });
+  }
+
+  it("wraps the shot prompt with the preset prefix and suffix (no ref block)", () => {
+    const preset = createPromptPreset({
+      prefix: "cinematic 4K",
+      suffix: "워터마크 없음",
+    });
+    const dto = projectToMovieDto(projectWithRefShot(), undefined, 110, preset);
+    expect(dto.scenes[0]!.shots[0]!.finalPrompt).toBe(
+      [
+        "cinematic 4K",
+        "@p1_c_suah_face 클로즈업, @p1_l_rooftop_cafe 배경",
+        "워터마크 없음",
+      ].join("\n\n"),
+    );
+  });
+
+  it("parses inline @mentions into refMentions", () => {
+    const dto = projectToMovieDto(projectWithRefShot());
+    expect(dto.scenes[0]!.shots[0]!.refMentions).toEqual([
+      "p1_c_suah_face",
+      "p1_l_rooftop_cafe",
+    ]);
+  });
+
+  it("defaults to the identity preset (finalPrompt is just the prompt)", () => {
+    const dto = projectToMovieDto(projectWithRefShot());
+    expect(dto.scenes[0]!.shots[0]!.finalPrompt).toBe(
+      "@p1_c_suah_face 클로즈업, @p1_l_rooftop_cafe 배경",
+    );
   });
 });

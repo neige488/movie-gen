@@ -22,10 +22,21 @@ import path from "node:path";
 import yaml from "js-yaml";
 import type {
   Character,
+  ImageReference,
   Location,
   Prop,
   Shot,
 } from "@domain/movie.js";
+
+/** Serialize an ImageReference, omitting undefined optionals for clean diffs. */
+function imageRefToYaml(r: ImageReference): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  if (r.name !== undefined) out.name = r.name;
+  if (r.refName !== undefined) out.refName = r.refName;
+  if (r.prompt !== undefined) out.prompt = r.prompt;
+  out.image = r.image;
+  return out;
+}
 
 export async function saveCharacter(
   dataDir: string,
@@ -38,8 +49,8 @@ export async function saveCharacter(
     headshot: character.headshot,
     looks: character.looks.map((l) => ({
       name: l.name,
-      faceImage: l.faceImage,
-      bodyImage: l.bodyImage,
+      face: imageRefToYaml(l.face),
+      body: imageRefToYaml(l.body),
     })),
   };
   await writeFile(
@@ -57,11 +68,7 @@ export async function saveLocation(
   await mkdir(dir, { recursive: true });
   const payload = {
     name: location.name,
-    references: location.references.map((r) => ({
-      name: r.name,
-      prompt: r.prompt,
-      image: r.image,
-    })),
+    references: location.references.map(imageRefToYaml),
   };
   await writeFile(
     path.join(dir, `${location.name}.yaml`),
@@ -75,11 +82,7 @@ export async function saveProp(dataDir: string, prop: Prop): Promise<void> {
   await mkdir(dir, { recursive: true });
   const payload = {
     name: prop.name,
-    references: prop.references.map((r) => ({
-      name: r.name,
-      prompt: r.prompt,
-      image: r.image,
-    })),
+    references: prop.references.map(imageRefToYaml),
   };
   await writeFile(
     path.join(dir, `${prop.name}.yaml`),

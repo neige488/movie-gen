@@ -234,8 +234,8 @@ async function loadCharacters(dir: string): Promise<Character[]> {
       const looks = file.looks.map((l) =>
         createLook({
           name: l.name,
-          faceImage: l.faceImage,
-          bodyImage: l.bodyImage,
+          face: l.face,
+          body: l.body,
         }),
       );
       characters.push(

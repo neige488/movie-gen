@@ -226,9 +226,10 @@ function mutateCharacter(
   }
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;
+    // Patch only the image path; preserve refName/name/prompt on the ImageRef.
     return slot.kind === "character-face"
-      ? { ...l, faceImage: relativePath }
-      : { ...l, bodyImage: relativePath };
+      ? { ...l, face: { ...l.face, image: relativePath } }
+      : { ...l, body: { ...l.body, image: relativePath } };
   });
   return { ...c, looks };
 }
