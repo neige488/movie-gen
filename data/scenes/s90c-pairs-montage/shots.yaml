@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'A silent montage: each two-shot from the happy scenes dissolves into the SAME framing with the boy alone — bench reading, convenience store, carousel, ice rink. No dialogue, no music cue baked in. The compositions must match the couple versions exactly. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–12초] 연쇄 디졸브 몽타주, 동일 구도 · 고정 · 대사 없음 · 투샷이 하나씩 같은 구도의 혼자 샷으로 바뀐다 — @p1_l_hillbench_daycityview 벤치에서 책 읽던 두 사람이 혼자 앉은 @p1_c_jihoon_onlyhoodie_full 으로, 편의점 마주 앉은 둘이 컵라면 하나로, 회전목마 나란히가 아이들 사이 혼자로, 아이스링크 손잡고가 혼자 능숙하게로"
     duration: 12
     screenplayHash: 04830c70c37113bf123890c9be8154d89e474cf1c0f05d5ab70ed8450263896e
     characterRefs:
@@ -11,11 +11,11 @@ shots:
         reference: day-city-view
     propRefs: []
     takes: []
-  - id: '02'
-    prompt: 'Final piece: the rain alley — one umbrella, Jihoon walking alone beneath it, perfectly dry on both shoulders. The umbrella never tilts. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–7초] 미디엄 · 스테디 트래킹 · @p1_l_rainalley_eveningrain 비 오는 골목 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
     duration: 7
     screenplayHash: 02ceaacd309a600efa1db6bb8872f3626e86dc600a912c3e032430e58650de40
-    prevShotRef: '01'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: only-hoodie

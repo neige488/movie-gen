@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'A modest Korean amusement park on a flawless clear day. Before the carousel, Korean dialogue: SUA: "나 이런 데 처음 와 봐." JIHOON: "거짓말하지 마." SUA, looking up at the horses: "진짜야. …좋다." Her face lit with quiet wonder. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–9초] 와이드 투샷 · 스테디 · 맑은 날 @p1_l_amusementpark_carousel 회전목마 앞, @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full · 수아 “나 이런 데 처음 와 봐.” 지훈 “거짓말하지 마.” 수아 회전목마를 올려다보며 “진짜야. …좋다.”"
     duration: 9
     screenplayHash: 8ca1fbef3d22c85fd53f1979343b0d392103d6da4caba19fda8a19013d9e0da3
     characterRefs:
@@ -13,11 +13,11 @@ shots:
         reference: carousel
     propRefs: []
     takes: []
-  - id: '02'
-    prompt: 'The two ride the carousel side by side; Sua laughs freely, pastel horses rising and falling. The afternoon is somehow too perfect, light a touch dreamlike. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–8초] 미디엄 투샷 · 천천히 도는 트래킹 · @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full 가 회전목마를 탄다, 수아가 웃는다 · 연기: 어딘가 너무 완벽한 오후"
     duration: 8
     screenplayHash: c046ee3b51e6b9910ae39bb95b42311aed47cd43568805d73f57342d6be798e1
-    prevShotRef: '01'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: only-hoodie

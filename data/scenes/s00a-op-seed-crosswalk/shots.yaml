@@ -1,25 +1,18 @@
 shots:
-  - id: '01'
-    prompt: 'Jihoon sprints down a narrow Korean alley and bursts onto a quiet 4-lane neighborhood crosswalk. The pedestrian light is red, no cars. Without slowing he steps onto the road. Urgent handheld energy, midday. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 6
-    screenplayHash: 233831a16fd9c8440dbb255a4f8be6452850a68ee1181280308c6d24d979b59d
+  - id: "01"
+    prompt: |-
+      [0–6초] 와이드 풀샷 · 핸드헬드 팔로우 · @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 골목을 빠져나와 @p1_l_crosswalk_daywide 빨간불·빈 차도로 속도를 줄이지 않고 그대로 들어선다 · 연기: 조급함, 가쁜 숨
+      [6–14초] 슬로우모션, 미디엄→클로즈업 드리프트 · 카메라가 길가에 앉아 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴을 스쳐 지난다 · @p1_l_crosswalk_signalred 빨간불이 프레임 가장자리에서 번진다 · 연기: 수아는 책에서 눈을 떼지 않고 평온·무심
+    duration: 14
+    screenplayHash: 7e55577ebaf1bda49b2eb78e7d9b37180a1fdcd18a2dc701b61e13493f1896ca
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
-    locationRefs:
-      - location: crosswalk
-        reference: day-wide
-    propRefs: []
-    takes: []
-  - id: '02'
-    prompt: 'Slow motion. As the running boy passes, the camera drifts past Sua sitting at the roadside reading a worn poetry book — her face at a three-quarter angle, serene, unaware. The red pedestrian signal glows soft at the frame edge. Time stretched, dreamlike clarity. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 8
-    screenplayHash: c0c53324afe6fad2a98957a494b4bbb8de4c8308c278b8034a1d036bfd3f7f23
-    prevShotRef: '01'
-    characterRefs:
       - character: sua
         look: accident-day
     locationRefs:
+      - location: crosswalk
+        reference: day-wide
       - location: crosswalk
         reference: signal-red
     propRefs:

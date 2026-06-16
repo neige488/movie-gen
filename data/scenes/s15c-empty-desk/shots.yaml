@@ -1,25 +1,16 @@
 shots:
-  - id: '01'
-    prompt: 'The same corridor window as the early glances — but now the desk by the window is empty, its chair upside down on top, a thin film of dust. Students inside flow around it without touching it. Jihoon watches through the glass. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 8
-    screenplayHash: 55df8d7aad0fb604542f257b56f0c03ed28fd79aaadee8de53ef133007f13bb6
+  - id: "01"
+    prompt: |-
+      [0–8초] 미디엄 · 고정 · 쉬는 시간 @p1_l_schoolhallway_windowrow 복도, @p1_c_jihoon_uniform_full 이 창문으로 옆 반을 들여다본다 · @p1_l_classroom_emptydesk 창가 줄 한 책상이 비어 있고 의자는 책상 위에 거꾸로 올려져 있으며 책상 위엔 먼지가 얇다, 아이들은 그 책상을 피해 다니고 아무도 거기 앉지 않는다
+      [8–14초] 클로즈업 · 고정 · @p1_c_jihoon_uniform_face 의 시선이 그 책상에 오래 머문다, 무언가 생각날 듯 — 종이 친다, 지훈이 고개를 흔들고 걸어간다
+    duration: 14
+    screenplayHash: d816a8ffd4264fc13be89a3b91aa3144737b9fc9293f2545f4f6156d6fe1cbe5
     characterRefs:
       - character: jihoon
         look: uniform
     locationRefs:
       - location: classroom
         reference: empty-desk
-    propRefs: []
-    takes: []
-  - id: '02'
-    prompt: 'His gaze stays on the empty desk a beat too long — something almost surfaces in his face — then the school bell rings. He shakes his head and walks on. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 6
-    screenplayHash: 324d501ccbc8bc68d9e46ccb780761711dce70bda4a0f20eede7bb593d26e829
-    prevShotRef: '01'
-    characterRefs:
-      - character: jihoon
-        look: uniform
-    locationRefs:
       - location: school-hallway
         reference: window-row
     propRefs: []

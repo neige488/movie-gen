@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Interior of a car driving a Swiss alpine road. The driver''s face is never shown — only hands on the wheel and snow-capped mountains drifting past the windshield. No radio, no voice. The road curves down toward a turquoise lake. Anonymous, serene, slightly unreal. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–10초] 인서트/POV · 차량 내부 고정, 미세 흔들림 · 운전자의 얼굴은 보이지 않고 핸들 위의 손만 보인다 · 차창 밖 @p1_l_swissroad_mountaindrive 설산이 흐르고 길이 호수를 향해 굽어 내려간다, 라디오도 말소리도 없다 · 끝에서 천천히 디졸브(제목)"
     duration: 10
     screenplayHash: f7da7681ac9179fa0d27e522f859bd2fd04e8a3402d5f8de658e66eb0ee8ff6d
     characterRefs: []

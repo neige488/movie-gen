@@ -1,8 +1,10 @@
 shots:
-  - id: '01'
-    prompt: 'A clean academy-district side street. Jihoon walks alone. A short screech — a car flinches to avoid a bicycle, and an incidental schoolgirl at the roadside falls on her backside, her book tumbling onto the asphalt. Sudden but minor; nobody is hurt. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 7
-    screenplayHash: 6a9f637d0d0c2df1aae086b669891144da339c56f9cc39706c43e5c770941ee9
+  - id: "01"
+    prompt: |-
+      [0–7초] 와이드 · 핸드헬드 · 하굣길 @p1_l_sidestreet_schoolroute, @p1_c_jihoon_uniform_full 이 혼자 걷는다, 골목 어귀에서 끼익 짧은 마찰음 — 자전거를 피하려던 차가 멈칫하고 길가의 여자아이가 엉덩방아를 찧는다, 들고 있던 책이 길에 떨어진다
+      [7–12초] 미디엄 · 고정 · 여자아이가 벌떡 일어나 교복 치마를 털고 뒤도 안 돌아보고 빠르게 가버린다, 운전자가 창문을 내리다 말고 그냥 출발한다
+    duration: 12
+    screenplayHash: 99e8d8289724423e650c51fb48b3095e0f0d91200fec53368a6ebbdf001b8769
     characterRefs:
       - character: jihoon
         look: uniform
@@ -12,22 +14,11 @@ shots:
     propRefs:
       - prop: poetry-book
     takes: []
-  - id: '02'
-    prompt: 'The schoolgirl springs up, brushes herself off, and hurries away without looking back. The driver half-lowers a window, then just drives off. The street is ordinary again in seconds. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 5
-    screenplayHash: 9b5e8cd705200e0ffd2ffd36b9868761d74d87af55328a295d3aa5b858f72ab7
-    prevShotRef: '01'
-    characterRefs: []
-    locationRefs:
-      - location: side-street
-        reference: school-route
-    propRefs: []
-    takes: []
-  - id: '03'
-    prompt: 'Jihoon picks up the fallen book and calls after her — "저기—! …책." — but the street is empty. He stands a moment too long, blank, his thumb rubbing the worn cover. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–8초] 미디엄→클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_full 이 길에 남은 @p1_p_poetrybook_coverworn 로 다가가 줍는다 · 지훈 가버린 쪽을 향해 “저기—! …책.” 아무도 없다 · @p1_c_jihoon_uniform_face 이 책을 든 채 멍하니 서서 손끝으로 책 표지를 문지른다"
     duration: 8
     screenplayHash: 050c8b78eaafa6571aef7ca772c6144a5bc4a2ce27925441e0b21ae679a52ca3
-    prevShotRef: '02'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: uniform

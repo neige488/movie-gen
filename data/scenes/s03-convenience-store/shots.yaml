@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Korean convenience store window seats at night, warm fluorescent glow. Jihoon with cup ramyeon; Sua nibbles a samgak-gimbap in tiny bites, one milk carton beside it. Korean dialogue: JIHOON: "그거 하나로 저녁이 돼?" SUA: "천천히 먹으면 오래가." JIHOON: "그게 무슨 말이야." SUA: "빨리 먹으면 없어지잖아." Matter-of-fact sweetness, natural lip sync. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–12초] 미디엄 투샷 · 고정 · 밤 @p1_l_conveniencestore_windowseat, @p1_c_jihoon_onlyhoodie_full 앞엔 컵라면, @p1_c_sua_accidentday_full 앞엔 삼각김밥 하나와 우유, 수아가 삼각김밥을 아주 조금씩 베어 문다 · 지훈 “그거 하나로 저녁이 돼?” 수아 “천천히 먹으면 오래가.” 지훈 “그게 무슨 말이야.” 수아 “빨리 먹으면 없어지잖아.” · 연기: 수아 담담, 지훈 어이없음"
     duration: 12
     screenplayHash: bd5ed16524b65768bb629acc6efe613c39642b42805832103c6b92f762e453e1
     characterRefs:
@@ -13,11 +13,11 @@ shots:
         reference: window-seat
     propRefs: []
     takes: []
-  - id: '02'
-    prompt: 'He quietly slides his cup ramyeon toward her. She laughs and pushes it right back: "내 거 천천히 먹을 거야." Small warm beat, window reflections of the street. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–7초] 클로즈업 투샷 · 고정 · @p1_c_sua_accidentday_face 가 당연한 걸 왜 묻냐는 얼굴, @p1_c_jihoon_onlyhoodie_full 이 잠깐 보다 자기 컵라면을 수아 쪽으로 슬쩍 민다, 수아가 웃으며 도로 밀어주며 “내 거 천천히 먹을 거야.” · 연기: 따뜻한 실랑이"
     duration: 7
     screenplayHash: f9cb7bd8035f1c1996ddbdb971fb86f0025de3fda02b5fa7d1b22250c9f30156
-    prevShotRef: '01'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: only-hoodie

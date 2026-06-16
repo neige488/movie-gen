@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Credits interludes: macro close-ups of handwritten pencil notes in a poetry book''s margins, shallow focus, one line at a time (live-action plates, text by director); intercut with moments of the girl vanishing from frames we have seen before. Black, sparse, no narration. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–10초] 인서트 시퀀스, 검은 화면 · 고정 · 검은 화면 크레딧 사이로 천천히 끼어드는 컷들 — @p1_p_poetrybook_marginnote 시집 여백의 손글씨 메모(접사, 얕은 초점, 한 줄씩), 수아가 화면에서 사라지는 순간들(이미 만든 씬의 재편집) · 설명은 없다, 음악 없이 또는 불온하게 반복되는 모티프만"
     duration: 10
     screenplayHash: 4f9e9ae662eeef92a5e19b8fd1c9bf8e4ea709bc01ffe4cbec713aff0cf3715f
     characterRefs: []

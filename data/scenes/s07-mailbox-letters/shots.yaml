@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Beside the hillside bench, a faded red postbox with peeling paint. Sua holds a folded letter. Korean dialogue: SUA: "여기 아무도 안 오는 거 알지?" JIHOON: "근데 우체통은 왜 있냐." SUA: "그러니까. 근데 있잖아 — 편지 넣어두면, 한 번씩 누가 싹 가져가." Side two-shot, warm light. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–9초] 미디엄 투샷 · 고정 · @p1_l_hillbench_daycityview 벤치 옆 페인트가 벗겨진 낡은 우체통, @p1_c_sua_accidentday_full 가 접은 편지를 들고 @p1_c_jihoon_onlyhoodie_full 곁에 있다 · 수아 “여기 아무도 안 오는 거 알지?” 지훈 “근데 우체통은 왜 있냐.” 수아 “그러니까. 근데 있잖아 — 편지 넣어두면 한 번씩 누가 싹 가져가.”"
     duration: 9
     screenplayHash: c91744fedfe7caad49bc1165b63e41c708188bf0282f31a680d3dd32d20627dc
     characterRefs:
@@ -13,11 +13,11 @@ shots:
         reference: day-city-view
     propRefs: []
     takes: []
-  - id: '02'
-    prompt: 'She slips the letter into the postbox. JIHOON: "…누가?" SUA: "몰라. 나 꿀꿀할 때마다 여기 와서 편지 써서 넣거든. 그럼 꼭… 누가 들어주는 거 같단 말이야." JIHOON: "답장은 오고?" SUA, thinking a beat, grinning: "그건 욕심이지." Lovely on first watch; devastating on second. Warm nostalgic Korean coming-of-age film look, soft golden light, gentle slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–13초] 미디엄 투샷, 간헐 클로즈업 · 고정 · 지훈 “…누가?” @p1_c_sua_accidentday_full 가 우체통에 편지를 넣으며 “몰라. 나 꿀꿀할 때마다 여기 와서 편지 써서 넣거든. 그럼 꼭 누가 들어주는 거 같단 말이야.” 지훈 “답장은 오고?” 수아 잠깐 생각하다 씩 웃으며 “그건 욕심이지.” · @p1_c_jihoon_onlyhoodie_face 의 옅은 웃음"
     duration: 13
     screenplayHash: 556b2c1b920e1ff27c130f61a07c841a138bb746f26aa580a98fea8939f1e559
-    prevShotRef: '01'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: only-hoodie

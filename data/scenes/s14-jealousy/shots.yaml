@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Night, teenage bedroom lit by a desk lamp. Jihoon pores over tiny handwritten margin notes in the worn poetry book. Sua sits on the edge of the bed behind him. Korean dialogue: SUA: "요즘 너, 그 책만 봐." JIHOON: "…돌려줘야 되니까. 주인 찾아서." SUA: "그 여자가 마음에 드는 거야?" JIHOON: "무슨 소리야." SUA: "너 요즘 이상해. 진짜 이상해." Frame it like a boy arguing with himself — her presence soft, almost part of the lamplight. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–13초] 미디엄 투샷 · 고정 · 밤 @p1_l_jihoonhome_bedroom, 책상 스탠드 아래 펼쳐진 @p1_p_poetrybook_marginnote 를 @p1_c_jihoon_onlyhoodie_full 이 한참 들여다본다, @p1_c_sua_accidentday_full 가 침대 끝에 앉아 있다 · 수아 “요즘 너, 그 책만 봐.” 지훈 “…돌려줘야 되니까. 주인 찾아서.” 수아 “그 여자가 마음에 드는 거야?” 지훈 “무슨 소리야.” 수아 “너 요즘 이상해. 진짜 이상해.”"
     duration: 13
     screenplayHash: 97e230a106c91502568963160a7a97d882721235a87c1dccbf03d89e3f72254c
     characterRefs:
@@ -14,11 +14,11 @@ shots:
     propRefs:
       - prop: poetry-book
     takes: []
-  - id: '02'
-    prompt: 'JIHOON, eyes still on the book: "잠깐만. 이것만 보고." SUA, voice wavering: "그만해. 그만 좀 해…" JIHOON snaps, shouting: "좀 내버려 둬!" Silence. When he finally turns around, the room is empty — the bed undisturbed. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–11초] 클로즈업→미디엄 · 고정 · 지훈이 @p1_p_poetrybook_marginnote 에서 눈을 떼지 않은 채 “잠깐만. 이것만 보고.” @p1_c_sua_accidentday_face 의 목소리가 흔들린다 “그만해. 그만 좀 해…” 지훈 버럭 “좀 내버려 둬!” · 정적, 수아가 입을 다물고, @p1_c_jihoon_onlyhoodie_face 이 돌아봤을 때 방에는 아무도 없다"
     duration: 11
     screenplayHash: 083348292ed586c8fc7fb19a38c445caab5ca34c7f81194698cc50a04e6af71f
-    prevShotRef: '01'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: only-hoodie

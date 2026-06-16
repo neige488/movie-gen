@@ -1,8 +1,10 @@
 shots:
-  - id: '01'
-    prompt: 'Slow motion, raw realistic grade (NOT the warm fantasy look). Jihoon sprints across the red-light crosswalk, swerving past Sua who reads at the roadside. As he passes, his head turns slightly — her profile. She never looks up from the book. Harsh daylight, desaturated. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 7
-    screenplayHash: d2627ec0fc5dd4e389c65c83a619e9ea207e6894a7fc17048a4d9c97917ff62e
+  - id: "01"
+    prompt: |-
+      [0–7초] 슬로우모션 와이드 · 트래킹 · @p1_l_crosswalk_daywide, 달리는 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_full 를 비켜 지나간다, 스치는 순간 지훈의 고개가 살짝 옆으로 — @p1_c_sua_accidentday_face 의 옆모습, 수아는 책에서 눈을 떼지 않는다
+      [7–11초] 미디엄 · 고정 · 길을 다 건넌 @p1_c_jihoon_onlyhoodie_full 이 몇 걸음 가다 문득 멈춘다, 아는 얼굴이다, 돌아본다
+    duration: 11
+    screenplayHash: 968cd03e2b5a99ba9a7a59c3163d1dadafee1ae79a0425f82288fd30bb067ecb
     characterRefs:
       - character: jihoon
         look: only-hoodie
@@ -14,24 +16,11 @@ shots:
     propRefs:
       - prop: poetry-book
     takes: []
-  - id: '02'
-    prompt: 'Across the road now, Jihoon slows after a few steps — recognition hits. That face. He turns around. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
-    duration: 4
-    screenplayHash: ee8b6ff35981da058339333d3eb62bda12a68bcaddf7574dda75c1a16f320e41
-    prevShotRef: '01'
-    characterRefs:
-      - character: jihoon
-        look: only-hoodie
-    locationRefs:
-      - location: crosswalk
-        reference: day-wide
-    propRefs: []
-    takes: []
-  - id: '03'
-    prompt: 'A brake SCREECH over empty white sky. A book spinning in the air. A single red canvas sneaker rolling to a stop on the asphalt. Hard cut. The impact itself is never shown. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "02"
+    prompt: "[0–5초] 빠른 인서트 · 핸드헬드 · @p1_l_crosswalk_daywide — 브레이크 소리, 하늘, 허공에 뜬 책, 길 위를 구르는 빨간 운동화 한 짝 · 컷"
     duration: 5
     screenplayHash: bb255e62dc637fbeb82e07da6ed0d05edc8b00636c934221033ea556c1690aed
-    prevShotRef: '02'
+    prevShotRef: "01"
     characterRefs: []
     locationRefs:
       - location: crosswalk

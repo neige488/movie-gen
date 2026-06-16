@@ -1,31 +1,10 @@
 shots:
-  - id: '01'
-    prompt: >-
-      [music continues, fading in volume] Sua pulls Jihoon by the hand up a hill path. Korean: SUA "여기, 내가 제일 좋아하는 데."
-      Warm nostalgic Korean coming-of-age look, soft golden light, gentle slightly too-perfect dreaminess, 35mm
-      cinematic. Setting: 2026 Seoul, a hill path overlooking the city. Characters appear exactly as in the provided
-      character reference images — do not restyle, re-dress, or alter their appearance.
-    duration: 6
-    screenplayHash: 3d3f7f81e4f661f9caa31881bff48a99640c646f31dfef5c871dc40365817584
-    characterRefs:
-      - character: jihoon
-        look: date-outfit
-      - character: sua
-        look: accident-day
-    locationRefs:
-      - location: hill-bench
-        reference: day-city-view
-    propRefs: []
-    takes: []
-  - id: '02'
-    prompt: >-
-      Top of the hill: a bench overlooking the city. Sua spreads her arms to show him the view; Jihoon catches his
-      breath and looks out over the city. The music slowly fades to silence. Warm nostalgic Korean coming-of-age look,
-      soft golden light, 35mm cinematic. Setting: 2026 Seoul hill bench, city view. Characters appear exactly as in the
-      provided character reference images — do not restyle, re-dress, or alter their appearance.
-    duration: 7
-    screenplayHash: cc46905f292ff45719f8291ea9cf1d6bc8275a6c1a47743514947c01e5ba3bcf
-    prevShotRef: '01'
+  - id: "01"
+    prompt: |-
+      [0–6초] 미디엄 트래킹 · 핸드헬드 팔로우 · @p1_c_sua_accidentday_full 가 @p1_c_jihoon_dateoutfit_full 의 손을 끌고 언덕길을 오른다 · 수아 “여기, 내가 제일 좋아하는 데.”
+      [6–13초] 와이드 풀샷 · 고정, 천천히 푸시인 · @p1_l_hillbench_daycityview 언덕 위, @p1_c_sua_accidentday_full 가 팔을 벌려 풍경을 보여주고 @p1_c_jihoon_dateoutfit_full 이 숨을 고르며 도시를 내려다본다 · 음악이 천천히 잦아든다
+    duration: 13
+    screenplayHash: 5700f090643e676f64a7b6895402ef0c2ebe92a06497132205c44cc315e4df3f
     characterRefs:
       - character: jihoon
         look: date-outfit

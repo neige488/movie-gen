@@ -1,40 +1,15 @@
 shots:
-  - id: '01'
-    prompt: >-
-      [music continues] At a headband stall inside Lotte World, Jamsil. SUA picks a simple headband with just a pair of
-      lion ears, puts it on, and covers her face with both hands; after a shy beat she lowers them and shows her face,
-      embarrassed. Warm nostalgic Korean coming-of-age look, soft golden light, gentle slightly too-perfect dreaminess,
-      35mm cinematic. Setting: a headband/accessory kiosk inside Lotte World indoor theme park, Jamsil. The lion-ears
-      headband is the provided prop. Characters appear exactly as in the provided character reference images — do not
-      restyle, re-dress, or alter their appearance. Any other park visitors around are anonymous background extras with
-      different faces — do not duplicate the reference characters.
-    duration: 5
-    screenplayHash: 6e55e7acbff603b25deb37b3939ccdaa8f0c852d4ce00aa17474f2bbd4852fe6
+  - id: "01"
+    prompt: |-
+      [0–5초] 미디엄 · 고정 · [음악 계속] @p1_l_amusementpark_headbandstall 가판대 앞, @p1_c_sua_accidentday_full 가 @p1_p_lionheadband_default 를 골라 쓰고 두 손으로 얼굴을 가렸다가 부끄럽다는 듯 손을 떼고 얼굴을 보인다 · 연기: 수줍은 장난
+      [5–10초] 투샷 · 고정 · 마주 선 @p1_c_jihoon_dateoutfit_full 이 @p1_p_giraffeheadband_default 를 쓰고 있다, 둘이 서로를 보고 웃음을 터뜨린다
+    duration: 10
+    screenplayHash: b9577d367680d556bf4650b366f3ac210185423e6568ff2c3780cd841f770691
     characterRefs:
       - character: sua
         look: accident-day
-    locationRefs:
-      - location: amusement-park
-        reference: headband-stall
-    propRefs:
-      - prop: lion-headband
-    takes: []
-  - id: '02'
-    prompt: >-
-      [music continues] At the same headband stall, JIHOON now wears a giraffe headband — a pair of giraffe ears with small horns (ossicones) on top
-      (Sua still in her lion-ears headband). The two look at each other and burst out laughing. Warm nostalgic Korean
-      coming-of-age look, soft golden light, 35mm cinematic. Setting: headband kiosk inside Lotte World, Jamsil. The
-      headbands are the provided props. Characters appear exactly as in the provided character reference images — do not
-      restyle or re-dress them. Any other park visitors around are anonymous background extras with different faces — do
-      not duplicate the reference characters.
-    duration: 5
-    screenplayHash: 21763342d14fac10c3023e798669d7a4b9ea6c58be3619cb2bc75f2da724eee7
-    prevShotRef: '01'
-    characterRefs:
       - character: jihoon
         look: date-outfit
-      - character: sua
-        look: accident-day
     locationRefs:
       - location: amusement-park
         reference: headband-stall
@@ -42,36 +17,13 @@ shots:
       - prop: lion-headband
       - prop: giraffe-headband
     takes: []
-  - id: '03'
-    prompt: >-
-      [music continues] Lotte World ice rink. Sua glides backward holding both of Jihoon's hands, pulling him along; he
-      stumbles awkwardly after her. Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: Lotte
-      World Ice Rink, Jamsil, Seoul. Characters appear exactly as in the provided character reference images — do not
-      restyle, re-dress, or alter their appearance. Any other skaters on the rink are anonymous background extras with
-      different faces — do not duplicate the reference characters.
-    duration: 6
-    screenplayHash: 6fbd33c7c03552cf9cbc6f7ad73e01355c9a3796db82c0ff14685659345b41aa
-    prevShotRef: '02'
-    characterRefs:
-      - character: jihoon
-        look: date-outfit
-      - character: sua
-        look: accident-day
-    locationRefs:
-      - location: ice-rink
-        reference: indoor
-    propRefs: []
-    takes: []
-  - id: '04'
-    prompt: >-
-      [music continues] Cut: Jihoon now skates fairly smoothly. Sua holds him, gliding backward while he moves forward —
-      the two meet eyes and smile. Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: Lotte
-      World Ice Rink, Jamsil, Seoul. Characters appear exactly as in the provided character reference images — do not
-      restyle, re-dress, or alter their appearance. Any other skaters on the rink are anonymous background extras with
-      different faces — do not duplicate the reference characters.
-    duration: 7
-    screenplayHash: 3ef42a7cac4320d5b0c7319d589b59909a2b95d1a9e8872e09296b1e4440a744
-    prevShotRef: '03'
+  - id: "02"
+    prompt: |-
+      [0–6초] 와이드 풀샷 · 스테디 트래킹 · [음악 계속] @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 뒤로 미끄러지며 @p1_c_jihoon_dateoutfit_full 의 두 손을 잡아 끌어준다, 지훈이 엉거주춤 따라간다
+      [6–13초] 미디엄 투샷 · 아크 트래킹 · 샷이 바뀌면 @p1_c_jihoon_dateoutfit_full 이 제법 능숙하게 탄다, 수아가 그를 잡은 채 뒤로·지훈은 앞으로, 둘이 눈을 마주 보며 웃는다 · 연기: 더없이 행복
+    duration: 13
+    screenplayHash: 15058f2cd37854a432630f6d59bbc6aad59303fbccc09a4d198679913c593469
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: date-outfit

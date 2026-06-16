@@ -1,12 +1,10 @@
 shots:
-  - id: '01'
-    prompt: >-
-      Weekend. A cozy bookstore. JIHOON enters a little awkwardly; among the shelves SUA spots him and raises a hand.
-      They walk slowly between the bookshelves. Warm nostalgic Korean coming-of-age look, soft golden light, gentle
-      slightly too-perfect dreaminess, 35mm cinematic. Setting: 2026 Seoul. Characters appear exactly as in the provided
-      character reference images — do not restyle, re-dress, or alter their appearance.
-    duration: 7
-    screenplayHash: 6c71da8cd16f0b0d001bf25edb572e9c9e7b227b04d20d5cc9969f738b838abe
+  - id: "01"
+    prompt: |-
+      [0–7초] 와이드 풀샷 · 스테디 팔로우 · 주말 @p1_l_bookstore_aisles, @p1_c_jihoon_dateoutfit_full 이 조금 어색하게 들어서고 서가 사이에서 @p1_c_sua_accidentday_full 가 그를 발견하고 손을 든다, 둘이 책장 사이를 천천히 걷는다 · 연기: 첫 데이트의 어색함
+      [7–14초] 미디엄→클로즈업 · 고정 · @p1_l_bookstore_recordcorner 레코드 코너에서 @p1_c_sua_accidentday_full 가 헤드폰을 집어 @p1_c_jihoon_dateoutfit_face 의 귀에 살며시 씌워 준다 · 연기: 지훈의 긴장이 사르르 풀린다
+    duration: 14
+    screenplayHash: 5ab57be196d776ac7d81a1517b32632e9407ddcc3c966ea5cf3ecf302f2927e0
     characterRefs:
       - character: jihoon
         look: date-outfit
@@ -15,36 +13,15 @@ shots:
     locationRefs:
       - location: bookstore
         reference: aisles
-    propRefs: []
-    takes: []
-  - id: '02'
-    prompt: >-
-      The vinyl-record corner inside the bookstore. Sua picks up a pair of headphones and gently places them over
-      Jihoon's ears. His tension melts away. Warm intimate light, 35mm cinematic. Setting: 2026 Seoul bookstore.
-      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
-      appearance.
-    duration: 7
-    screenplayHash: 376525f84c69432b957277da51dcd328cfcb004848b9356c89d430a2b58591c6
-    prevShotRef: '01'
-    characterRefs:
-      - character: jihoon
-        look: date-outfit
-      - character: sua
-        look: accident-day
-    locationRefs:
       - location: bookstore
         reference: record-corner
     propRefs: []
     takes: []
-  - id: '03'
-    prompt: >-
-      Music swells beyond the headphones. Sua meets Jihoon's eyes and smiles. (This music carries over into the
-      following date montage.) Warm nostalgic look, soft golden light, 35mm cinematic. Setting: 2026 Seoul bookstore.
-      Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their
-      appearance.
+  - id: "02"
+    prompt: "[0–6초] 클로즈업 투샷 · 고정, 미세 드리프트 · 헤드폰 너머로 음악이 차오르고 @p1_c_sua_accidentday_face 가 @p1_c_jihoon_dateoutfit_face 와 눈을 맞추며 웃는다 · (이 음악은 이어지는 데이트 장면으로 계속 흐른다) · 연기: 안온한 미소"
     duration: 6
     screenplayHash: fb41f4db9e28e119d103317f29eed1cbdab17cde485934674db31730124cb30a
-    prevShotRef: '02'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: date-outfit

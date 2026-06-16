@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Jihoon strides to the back of the classroom and squares up to a female classmate at her desk. Korean dialogue: JIHOON: "너지. 어디 숨겼어." GIRL, bewildered: "…뭐?" JIHOON: "말을 해." GIRL, backing away, frightened: "무슨 말인지 모르겠는데…" JIHOON, cold: "꺼져. 다시는 내 앞에 나타나지 마." He never says a name. (REVEAL: identical blocking/dialogue to s17 — only the character ref differs; here the ref is the stranger classmate, exposing that he was screaming at someone he doesn''t know.) Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–13초] 미디엄 투샷, 클로즈업 인서트 · 핸드헬드 · 같은 @p1_l_classroom_midday 교실 같은 순간, @p1_c_jihoon_uniform_full 이 @p1_c_classmategirl_uniform_full 앞에 서 있다 — 수아가 아니다, 모르는 얼굴이다 · 지훈 “너지. 어디 숨겼어.” @p1_c_classmategirl_uniform_face 어리둥절 “…뭐?” 지훈 “말을 해.” 여학생 겁먹은 뒷걸음질 “무슨 말인지 모르겠는데…” 지훈 “꺼져. 다시는 내 앞에 나타나지 마.” · 연기: 여학생 공포, 지훈 광기"
     duration: 13
     screenplayHash: ee32afe2e318990d42621bacc13ccd60ed919babe865fdf15f910f693e0015cb
     characterRefs:

@@ -1,6 +1,6 @@
 shots:
-  - id: '01'
-    prompt: 'Close shot: a hand opens the faded red hillside postbox and takes the letters inside. The owner of the hand is never shown — only hand, letters, postbox. Ambiguous time of day. Muted desaturated realistic tone, cold available light, restrained handheld, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지) — modern, clean, well-kept, bright. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance.'
+  - id: "01"
+    prompt: "[0–6초] 클로즈업 인서트 · 고정 · (시간 불명) @p1_l_hillbench_daycityview 우체통, 손 하나가 우체통을 열고 안의 편지들을 꺼내 간다, 얼굴은 화면에 없다 · 연기: 정체불명의 손"
     duration: 6
     screenplayHash: d97cffd825a95f7948c0fb20700107ee14aa9615e56ac90ad568409ca1e0994e
     characterRefs: []

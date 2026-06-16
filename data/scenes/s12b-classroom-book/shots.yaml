@@ -1,8 +1,10 @@
 shots:
-  - id: '01'
-    prompt: 'A classroom. A book pokes slightly out of Jihoon''s bag. Beside him, SUA glances at it. Korean: SUA "오, 강지훈~ 웬일이야. 무슨 책이래?" Warm nostalgic Korean coming-of-age look, soft light, 35mm cinematic. Setting: 2026 Seoul, Nowon-gu (노원구) academy district (학군지). Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces, a mix of uniforms and casual clothes — do not duplicate the reference characters.'
-    duration: 6
-    screenplayHash: 647a8150387fe583df4a39ea2672ac8df9e848bab026251d87f878ff55381d9e
+  - id: "01"
+    prompt: |-
+      [0–6초] 미디엄 투샷 · 고정 · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 의 가방에서 @p1_p_poetrybook_coverworn 가 살짝 삐져나와 있다, 옆의 @p1_c_sua_accidentday_full 가 흘깃 본다 · 수아 “오, 강지훈~ 웬일이야. 무슨 책이래?”
+      [6–14초] 클로즈업 투샷 · 고정 · @p1_c_jihoon_uniform_full 이 황급히 책을 가방에 밀어 넣는다 · 지훈 “안 돼. 만지지 마.” @p1_c_sua_accidentday_face 가 그 반응에 깜짝 놀란다 · 수아 “뭔데? 중요한 거야?”
+    duration: 14
+    screenplayHash: c220a790d4e7039c5c127d90e99bef4547a55a096c0aa5aecc4693a00e785b5f
     characterRefs:
       - character: jihoon
         look: uniform
@@ -14,27 +16,11 @@ shots:
     propRefs:
       - prop: poetry-book
     takes: []
-  - id: '02'
-    prompt: 'Jihoon hurriedly shoves the book back into his bag. JIHOON "안 돼. 만지지 마." Sua, startled by his reaction. SUA "뭔데? 중요한 거야?" Warm tone tightening into unease, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces — do not duplicate the reference characters.'
-    duration: 8
-    screenplayHash: ea29b0a5e80a5abb9d9d7f00a3418896c640811ff373a342f011b1e09a91ac7a
-    prevShotRef: '01'
-    characterRefs:
-      - character: jihoon
-        look: uniform
-      - character: sua
-        look: accident-day
-    locationRefs:
-      - location: classroom
-        reference: midday
-    propRefs:
-      - prop: poetry-book
-    takes: []
-  - id: '03'
-    prompt: 'JIHOON "아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아." His gaze wavers for a moment. Warm nostalgic look with a faint unease underneath, 35mm cinematic. Setting: 2026 Seoul classroom. Characters appear exactly as in the provided character reference images — do not restyle, re-dress, or alter their appearance. Any other students in the classroom are anonymous background extras with different faces — do not duplicate the reference characters.'
+  - id: "02"
+    prompt: "[0–6초] 클로즈업 · 고정 · 지훈 “아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아.” @p1_c_jihoon_uniform_face 의 시선이 잠깐 흔들린다 · 연기: 숨기는 듯"
     duration: 6
     screenplayHash: af6666396468cbc0c9ee9a731a4f8fab04017070be85c01f11e9c8126e8b0c3d
-    prevShotRef: '02'
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: uniform
