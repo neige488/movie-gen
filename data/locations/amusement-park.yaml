@@ -1,8 +1,18 @@
 name: amusement-park
 references:
   - name: carousel
-    prompt: 'Lotte World indoor theme park (Jamsil, Seoul) carousel, pastel horses, gentle flags, bright indoor adventure-dome light, slightly dreamlike over-perfect glow. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: >-
+      Lotte World indoor theme park (Jamsil, Seoul) carousel, pastel horses, gentle flags, bright indoor adventure-dome
+      light, slightly dreamlike over-perfect glow. Photorealistic location reference, no people, cinematic 35mm look.
     image: amusement-park/carousel.png
   - name: indoor-plaza
-    prompt: 'Lotte World indoor theme park (Jamsil, Seoul) main plaza near the fairy-tale castle, balconies and festive lights, bright lively atmosphere. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: >-
+      Lotte World indoor theme park (Jamsil, Seoul) main plaza near the fairy-tale castle, balconies and festive lights,
+      bright lively atmosphere. Photorealistic location reference, no people, cinematic 35mm look.
     image: amusement-park/indoor-plaza.png
+  - name: headband-stall
+    prompt: >-
+      A headband/accessory kiosk inside Lotte World indoor theme park (Jamsil, Seoul): a small stall displaying rows of
+      novelty animal headbands (lion manes, deer antlers) and light-up accessories, bright festive lighting,
+      close/medium view. Photorealistic location reference, no people, cinematic 35mm look.
+    image: locations/amusement-park/headband-stall.jpeg

@@ -1,5 +1,5 @@
 name: backpack
 references:
   - name: default
-    prompt: 'A Korean high-school student''s backpack worn over a grey hoodie, slightly worn fabric, the zipper half-open (recurring detail planted in the opening). Photorealistic prop reference, plain neutral background, cinematic 35mm look.'
+    prompt: 'A Korean high-school student''s backpack worn over a grey hoodie, slightly worn fabric, the zipper half-open (recurring detail planted in the opening). Photorealistic prop reference, plain grey background, cinematic 35mm look.'
     image: backpack/default.png
