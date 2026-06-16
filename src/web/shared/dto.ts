@@ -52,6 +52,18 @@ export interface PropRefDto {
 export interface ShotDto {
   id: string;
   prompt: string;
+  /**
+   * The copy-paste prompt the director pastes into the engine: the movie-level
+   * preset's prefix + `prompt` + suffix, assembled server-side
+   * (`assembleFinalPrompt`). Derived — never stored on disk.
+   */
+  finalPrompt: string;
+  /**
+   * Engine ref `@names` mentioned inline in `prompt` (without the leading `@`),
+   * parsed server-side. Drives the ref chips — refs live in the prompt body now,
+   * not in a structured field.
+   */
+  refMentions: string[];
   duration: number;
   screenplayHash: string;
   prevShotRef?: string;

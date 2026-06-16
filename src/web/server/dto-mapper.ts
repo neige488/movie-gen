@@ -5,6 +5,12 @@
 import { actPageRange, beatsForAct, type ActId } from "@domain/beat-sheet.js";
 import { parseShotMarkers } from "@domain/marker-parser.js";
 import { movieSequence, type Project, type Scene } from "@domain/movie.js";
+import {
+  assembleFinalPrompt,
+  createPromptPreset,
+  extractRefMentions,
+  type PromptPreset,
+} from "@domain/prompt-preset.js";
 import { evaluateSceneSync, evaluateTakeSync } from "@domain/sync-evaluator.js";
 import type {
   CanvasActDto,
@@ -39,10 +45,11 @@ export function projectToMovieDto(
   project: Project,
   arrangement?: ArrangementView,
   totalPages = 110,
+  preset: PromptPreset = createPromptPreset({}),
 ): MovieDto {
   const sequenced = movieSequence(project, arrangement);
   return {
-    scenes: sequenced.map(sceneToDto),
+    scenes: sequenced.map((s) => sceneToDto(s, preset)),
     allScenes: project.scenes.map((s) => ({
       slug: s.slug,
       slugline: s.slugline,
@@ -107,7 +114,7 @@ function buildCanvasActs(
   });
 }
 
-function sceneToDto(scene: Scene): SceneDto {
+function sceneToDto(scene: Scene, preset: PromptPreset): SceneDto {
   const markers = parseShotMarkers(scene.screenplay);
   const syncByShotId = new Map(
     evaluateSceneSync(scene).map((s) => [s.shotId, s.status]),
@@ -127,6 +134,8 @@ function sceneToDto(scene: Scene): SceneDto {
     shots: scene.shots.map((shot) => ({
       id: shot.id,
       prompt: shot.prompt,
+      finalPrompt: assembleFinalPrompt(shot, preset),
+      refMentions: extractRefMentions(shot.prompt),
       duration: shot.duration,
       screenplayHash: shot.screenplayHash,
       ...(shot.prevShotRef !== undefined

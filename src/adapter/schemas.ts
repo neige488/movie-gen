@@ -53,6 +53,22 @@ export const shotsFileSchema = z.object({
 });
 export type ShotsFile = z.infer<typeof shotsFileSchema>;
 
+/**
+ * Movie-level prompt preset (`data/prompt-preset.yaml`). Every field is
+ * optional on disk — the domain factory (`createPromptPreset`) fills the gaps
+ * (empty affixes + no registered refs), so an absent or partial file is valid.
+ * `refs` lists the engine's registered `@names` for this movie (without the
+ * leading `@`); when present, Shot prompts are validated against it. The schema
+ * only guards types; an actively malformed file (wrong types) is rejected
+ * loudly per the no-silent-fallback rule.
+ */
+export const promptPresetFileSchema = z.object({
+  prefix: z.string().optional(),
+  suffix: z.string().optional(),
+  refs: z.array(z.string().min(1)).optional(),
+});
+export type PromptPresetFile = z.infer<typeof promptPresetFileSchema>;
+
 export const lookFileSchema = z.object({
   name: z.string().min(1),
   // Each profile is a single pre-split sheet image (face = 5 panels, body = 3),

@@ -384,6 +384,22 @@ body {
   gap: 0.35rem;
   margin-top: 0.6rem;
 }
+/* Final prompt — the assembled copy-paste string for 씨댄스 2.0. */
+.shot__final-prompt {
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.shot__final-prompt-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+}
 .chip {
   font-size: 0.72rem;
   padding: 0.15rem 0.5rem;
@@ -401,6 +417,11 @@ body {
 }
 .chip--prop {
   border-color: rgba(224, 175, 104, 0.4);
+}
+/* Inline @mention ref parsed from the prompt body. */
+.chip--ref {
+  border-color: rgba(187, 154, 247, 0.5);
+  color: var(--accent);
 }
 .shot__takes {
   display: flex;

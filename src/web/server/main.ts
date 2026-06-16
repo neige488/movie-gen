@@ -27,6 +27,14 @@ import {
 } from "@adapter/movie-manifest-repository.js";
 import type { MovieArrangement } from "@domain/movie-arrangement.js";
 import {
+  loadPromptPreset,
+  PromptPresetError,
+} from "@adapter/prompt-preset-repository.js";
+import {
+  findUnregisteredMentions,
+  type PromptPreset,
+} from "@domain/prompt-preset.js";
+import {
   saveCharacter,
   saveLocation,
   saveProp,
@@ -97,6 +105,26 @@ const MAX_IMAGE_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB — images
 // gives headroom without enabling truly pathological uploads.
 const MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024;
 
+/**
+ * Validate that every inline `@mention` in every Shot prompt points at a ref
+ * registered in the preset (`data/prompt-preset.yaml` → `refs`). Opt-in: movies
+ * with no registered refs are never blocked. Throws PromptPresetError (which the
+ * boot path turns into a friendly exit, and the reload path captures as
+ * reload-failed) so a typo'd `@name` is caught loudly instead of silently
+ * producing a prompt the engine can't resolve.
+ */
+function assertRefsRegistered(project: Project, preset: PromptPreset): void {
+  const prompts = project.scenes.flatMap((s) => s.shots.map((sh) => sh.prompt));
+  const unknown = findUnregisteredMentions(prompts, preset);
+  if (unknown.length > 0) {
+    throw new PromptPresetError(
+      `Shot 프롬프트가 등록되지 않은 ref를 참조합니다: ${unknown
+        .map((n) => `@${n}`)
+        .join(", ")}. data/prompt-preset.yaml의 refs에 추가하거나 이름을 고치세요.`,
+    );
+  }
+}
+
 async function main(): Promise<void> {
   console.log(`[movie-gen] loading project from ${DATA_DIR}`);
   console.log(`[movie-gen] assets root: ${ASSETS_DIR}`);
@@ -109,10 +137,16 @@ async function main(): Promise<void> {
   // Movie length in BS2 pages (≈ minutes; default 110). Rescales displayed beat
   // page numbers only — see movie-manifest-repository.
   let currentTotalPages: number;
+  // Movie-level prompt preset (common prefix/suffix + ref templates). Held
+  // alongside the Project so the dto-mapper can assemble each Shot's final
+  // copy-paste prompt without an extra disk read.
+  let currentPreset: PromptPreset;
   try {
     currentProject = await loadProject(DATA_DIR);
     currentArrangement = await loadArrangement(DATA_DIR);
     currentTotalPages = await loadTotalPages(DATA_DIR);
+    currentPreset = await loadPromptPreset(DATA_DIR);
+    assertRefsRegistered(currentProject, currentPreset);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -120,7 +154,7 @@ async function main(): Promise<void> {
         `${currentProject.props.length} props`,
     );
   } catch (err) {
-    if (err instanceof ProjectLoadError) {
+    if (err instanceof ProjectLoadError || err instanceof PromptPresetError) {
       console.error(`[movie-gen] FAILED TO LOAD PROJECT:\n  ${err.message}`);
       process.exit(1);
     }
@@ -128,9 +162,14 @@ async function main(): Promise<void> {
   }
 
   // Build the MovieDto from the current in-memory state (project + arrangement
-  // + totalPages). Used by every endpoint that returns the movie.
+  // + totalPages + preset). Used by every endpoint that returns the movie.
   const movieDto = () =>
-    projectToMovieDto(currentProject, currentArrangement, currentTotalPages);
+    projectToMovieDto(
+      currentProject,
+      currentArrangement,
+      currentTotalPages,
+      currentPreset,
+    );
 
   const assetStore = createAssetStore(ASSETS_DIR);
   const app = express();
@@ -170,6 +209,8 @@ async function main(): Promise<void> {
       const next = await loadProject(DATA_DIR);
       currentArrangement = await loadArrangement(DATA_DIR);
       currentTotalPages = await loadTotalPages(DATA_DIR);
+      currentPreset = await loadPromptPreset(DATA_DIR);
+      assertRefsRegistered(next, currentPreset);
       return next;
     },
     getProject: () => currentProject,

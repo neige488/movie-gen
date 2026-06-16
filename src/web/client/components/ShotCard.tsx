@@ -25,6 +25,7 @@ import {
 } from "../upload-client.js";
 import { shotPaletteColor } from "../shot-palette.js";
 import { StarButton } from "./StarButton.js";
+import { PromptBlock } from "./PromptBlock.js";
 
 interface Props {
   shot: ShotDto;
@@ -125,6 +126,12 @@ export function ShotCard({
       label: r.reference ? `${r.prop} (${r.reference})` : r.prop,
     });
   }
+  // Inline @mention refs parsed from the prompt body — the engine resolves
+  // these to registered reference images. Refs now live in the prompt, so
+  // these chips are derived from `refMentions`, not a structured field.
+  for (const name of shot.refMentions) {
+    chips.push({ kind: "ref", label: `@${name}` });
+  }
 
   // Chaining: badge in the header when chained, plus warning in the body when
   // the previous Shot has no starred Take (the chain target is missing).
@@ -210,6 +217,16 @@ export function ShotCard({
               ))}
             </div>
           )}
+          {/*
+            Final prompt = the copy-paste string for 씨댄스 2.0 (preset prefix +
+            this Shot's prompt + ref block + suffix), assembled server-side. The
+            raw prompt above stays the authored/editable text; this is what the
+            director actually pastes into the engine.
+          */}
+          <div className="shot__final-prompt">
+            <span className="shot__final-prompt-label">최종 프롬프트</span>
+            <PromptBlock prompt={shot.finalPrompt} />
+          </div>
         </>
       )}
       <TakesSection

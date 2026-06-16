@@ -41,6 +41,14 @@
   - **Take는 immutable.** 한 번 만든 Take를 도구가 자동 삭제·수정하지 않는다.
   - **작은 수정** → hash 갱신("확인됨" 액션). **큰 수정** → 새 Scene 폴더로 분기.
 
+- **공통 프롬프트 + 최종 프롬프트 조립: 영화 단위 PromptPreset.** 엔진(씨댄스/Runway)에 붙여넣는 텍스트는 도구가 Shot마다 **조립**한다: `prefix → Shot.prompt → suffix`. 조각만 디스크에 저장하고 **조립 결과는 derive**(저장 안 함) — 공통 프롬프트를 바꾸면 모든 Shot의 최종 프롬프트에 즉시 반영. PromptPreset은 영화 단위 단일 파일 **`data/prompt-preset.yaml`**(순서·막 SSOT인 `movie.yaml`과 별개 — 관심사 분리)에 둔다.
+  - **prefix/suffix**(공통 프롬프트): 모든 Shot에 공통으로 감싸는 텍스트. prefix = 카메라/화질 룩(예: `cinematic 4K, ...`, 보통 영어), suffix = 네거티브(예: `배경 음악 없음. 자막 없음. ...`, 한글이 잘 먹음).
+  - **Ref는 본문 인라인 `@이름`.** 엔진 레퍼런스는 **계정 전역**으로 이름 등록되고, Shot.prompt 본문에 `@이름`을 직접 써서 지칭한다(별도 ref 블록 생성 안 함). 네이밍: `{프로젝트}_{c|l|p}_{고유이름}`, 구분자 `_`만(하이픈 불가), 전역 충돌 방지 위해 프로젝트 prefix 필수. 예: `@p1_c_suah_face`, `@p1_l_rooftop_cafe`.
+  - **refs(등록 레퍼런스 검증):** PromptPreset의 `refs`는 이 영화에 등록된 `@이름` 목록(@ 없이). Shot 프롬프트의 `@멘션`을 이 목록과 대조해 **없는 이름이면 부팅 에러**(정합성). `refs`가 비면 검증 off(opt-in).
+  - **화면비**: 프롬프트 토큰이 아니라 엔진 출력 포맷에서 설정하는 영화 단위 상수. 본문에 비율 토큰을 넣지 않는다.
+  - **샷별 작성 포맷·룩 라이브러리**는 스킬 `shot-prompt-authoring`에 둔다(작성 워크플로의 SSOT).
+  - **언어 기본값:** `Shot.prompt`·ref 식별자는 **한글**, prefix는 영어, suffix 네거티브는 한글. 프리셋 파일이 없거나 비면 identity 프리셋(빈 affix + 빈 refs)으로 동작 — 정합성 break 아님. 파일이 있는데 malformed면 부팅 시 명확히 실패.
+
 ## Language
 
 **Project**:
@@ -125,9 +133,23 @@ _Avoid_: Item, Object
 한 Scene 안에서 영상 길이가 15초를 넘어 여러 Shot으로 쪼개질 때, 다음 Shot이 직전 Shot의 starred Take를 ref로 받아 이어지는 메커니즘. Scene 경계는 넘지 않는다.
 _Avoid_: Linking, Continuation
 
+**PromptPreset** (공통 프롬프트 프리셋):
+영화 단위 단일 객체(`data/prompt-preset.yaml`). `prefix` + `suffix`(공통 프롬프트) + `refs`(등록 레퍼런스 `@이름` 목록)를 가진다. 도구가 Shot마다 최종 프롬프트를 조립하고 `@멘션`을 검증할 때 쓴다. 조각만 저장, 조립은 derive.
+_Avoid_: Template(단독), Boilerplate, Config
+
+**공통 프롬프트** (prefix/suffix):
+모든 Shot의 최종 프롬프트를 공통으로 감싸는 앞/뒤 텍스트. prefix = 카메라/화질 룩(보통 영어), suffix = 네거티브(한글). PromptPreset에 저장.
+
+**Final prompt** (최종 프롬프트):
+디렉터가 엔진에 붙여넣는 조립 결과 = `prefix → Shot.prompt → suffix`. **저장하지 않고 도구가 derive**(웹에서 Shot마다 표시 + 복사). ref는 Shot.prompt 본문에 `@이름`으로 인라인.
+_Avoid_: Shot.prompt에 조립 결과 저장하기
+
+**@이름 ref** (inline mention):
+엔진 레퍼런스를 본문에서 직접 지칭하는 `@이름`(계정 전역 등록명). 네이밍 `{프로젝트}_{c|l|p}_{고유이름}`, 구분자 `_`만. PromptPreset의 `refs`에 등록된 이름과 대조해 검증. 작성 규칙·룩 라이브러리는 스킬 `shot-prompt-authoring` 참조.
+
 ## Relationships
 
-- **Project**은 N개의 **Scene**(폴더), N개의 **Character**, N개의 **Location**, N개의 **Prop**을 가진다.
+- **Project**은 N개의 **Scene**(폴더), N개의 **Character**, N개의 **Location**, N개의 **Prop**, 1개의 **PromptPreset**(영화 단위 공통 프롬프트)을 가진다.
 - **Scene**은 1 **Slugline** + 1 **Screenplay** + N개의 **Shot** + `isStarred` boolean을 가진다.
 - **Movie**는 정확히 3개의 **Act**(1막/2막/3막)를 가지며, 각 Act는 순서 있는 **Scene** 리스트를 가진다. 각 Scene은 정확히 한 Act에 속한다.
 - **영화 시퀀스 = Scene 매니페스트(`data/movie.yaml`의 `acts` flatten) 순서에서 `isStarred=true`인 Scene만 필터.** 매니페스트는 모든 Scene을 3개 막으로 그룹지어 담고, isStarred가 시퀀스/캔버스 포함을 결정(디렉터 책임).
