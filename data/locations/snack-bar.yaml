@@ -1,5 +1,6 @@
 name: snack-bar
 references:
   - name: interior
+    refName: p1_l_snackbar_interior
     prompt: 'A small clean Korean bunsik snack restaurant interior in the academy district: tidy tables, menu on a backlit board, steam from the kitchen, daylight through the glass door. Modest but well-kept, not run-down. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: snack-bar/interior.png

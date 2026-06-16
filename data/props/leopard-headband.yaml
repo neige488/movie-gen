@@ -1,6 +1,7 @@
 name: leopard-headband
 references:
   - name: default
+    refName: p1_p_leopardheadband_default
     prompt: >-
       A simple novelty headband with a pair of leopard ears on the band (leopard-print fabric), Korean theme-park style.
       Photorealistic prop reference, plain grey background, cinematic 35mm look.

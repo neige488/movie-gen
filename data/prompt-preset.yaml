@@ -6,6 +6,9 @@
 # 레퍼런스(@이름)는 여기 두지 않는다 — 라이브러리 에셋의 refName이 SSOT이고,
 # 유효한 @이름 레지스트리는 거기서 자동 도출된다(Shot 프롬프트 본문에 @이름 인라인).
 
-prefix: "cinematic 4K, film grain, shallow depth of field, natural cinematic lighting, photorealistic"
+# PTSD 단편 룩: 따뜻한 노스탤지어 코리안 청춘물, 황금빛, 살짝 과하게 완벽한 몽환.
+# 카메라/필름 룩은 영화 전체 상수라 prefix에 고정한다(샷마다 반복하지 않음).
+prefix: "35mm film, warm nostalgic Korean coming-of-age look, soft golden light, shallow depth of field, gentle dreamlike haze, film grain"
 
-suffix: "배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 화면에 동일 인물 없음. 복장 유지."
+# 공통 네거티브 + 레퍼런스 외형 고정(기존 'appear exactly as reference' 지시문 대체).
+suffix: "레퍼런스 외형·의상 그대로 유지(재해석·재착장·변형 금지). 배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 화면에 동일 인물 중복 없음."

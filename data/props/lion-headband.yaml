@@ -1,5 +1,6 @@
 name: lion-headband
 references:
   - name: default
+    refName: p1_p_lionheadband_default
     prompt: 'A simple novelty headband with just a pair of small fuzzy lion ears on the band (no mane), Korean theme-park style. Photorealistic prop reference, plain grey background, cinematic 35mm look.'
     image: lion-headband/default.png

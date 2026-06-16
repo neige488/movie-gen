@@ -1,11 +1,14 @@
 name: sua-home
 references:
   - name: corridor-apartment
+    refName: p1_l_suahome_corridorapartment
     prompt: Exterior of an older corridor-type (bokdo-sik) apartment building in Nowon-gu — 1980s-90s stock, well-maintained but plainly older than the surrounding new towers. Clean exposed walkways, afternoon light. (Deliberate quiet contrast with Jihoon's newer complex — NOT a slum.) 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: sua-home/corridor-apartment.png
   - name: front-door
+    refName: p1_l_suahome_frontdoor
     prompt: 'Open-air corridor of the older Nowon apartment: a plain but clean front door, even corridor light, the academy district visible past the railing. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: sua-home/front-door.png
   - name: entry-glimpse
+    refName: p1_l_suahome_entryglimpse
     prompt: 'View through a half-open Korean apartment front door into a small tidy entryway: a shoe cabinet with a framed photo on top and a pair of red canvas sneakers placed neatly beside it. Shallow depth. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
     image: sua-home/entry-glimpse.png

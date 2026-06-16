@@ -1,6 +1,7 @@
 name: academy
 references:
   - name: lecture-room
+    refName: p1_l_academy_lectureroom
     prompt: >-
       A Korean private tutoring-academy (학원) lecture room: rows of desks, a whiteboard, flat fluorescent ceiling light,
       late-afternoon light through the windows. 2026 Seoul, Nowon-gu (노원구) academy district. Photorealistic location

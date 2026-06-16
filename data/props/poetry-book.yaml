@@ -1,14 +1,18 @@
 name: poetry-book
 references:
   - name: cover-worn
+    refName: p1_p_poetrybook_coverworn
     prompt: A small worn Korean poetry book, soft faded cloth cover, title deliberately out of focus and illegible, edges rounded from years of handling. Shallow depth of field. Photorealistic location reference, no people, cinematic 35mm look.
     image: poetry-book/cover-worn.png
   - name: underline-page
+    refName: p1_p_poetrybook_underlinepage
     prompt: 'Extreme shallow-focus close-up inside an old poetry book: a single underlined line of Korean text in focus, all other text soft blur, pencil underline slightly trembling. Warm window light. (실촬영 대체 예정 — 글자는 감독 자작) Photorealistic location reference, no people, cinematic 35mm look.'
     image: poetry-book/underline-page.png
   - name: margin-note
+    refName: p1_p_poetrybook_marginnote
     prompt: 'Shallow-focus close-up of a poetry book margin: tiny handwritten Korean note in pencil, a few words only, rest of page blurred. (실촬영 대체 예정 — 글자는 감독 자작) Photorealistic location reference, no people, cinematic 35mm look.'
     image: poetry-book/margin-note.png
   - name: name-page
+    refName: p1_p_poetrybook_namepage
     prompt: Inside front cover of a worn poetry book, a handwritten Korean name in small neat letters, shallow focus, the name softly legible. (실촬영 대체 예정) Photorealistic location reference, no people, cinematic 35mm look.
     image: poetry-book/name-page.png

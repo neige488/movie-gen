@@ -2,5 +2,9 @@ name: doctor
 headshot: doctor/headshot.png
 looks:
   - name: default
-    faceImage: doctor/default/face.png
-    bodyImage: doctor/default/body.png
+    face:
+      image: doctor/default/face.png
+      refName: p1_c_doctor_default_face
+    body:
+      image: doctor/default/body.png
+      refName: p1_c_doctor_default_full

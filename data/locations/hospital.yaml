@@ -1,11 +1,14 @@
 name: hospital
 references:
   - name: exam-room
+    refName: p1_l_hospital_examroom
     prompt: 'Modern Korean psychiatric clinic consultation room: clean desk, two chairs, soft neutral light, certificates blurred on the wall. Photorealistic location reference, no people, cinematic 35mm look.'
     image: hospital/exam-room.png
   - name: ward
+    refName: p1_l_hospital_ward
     prompt: Modern Korean hospital ward by a window, single bed in pale morning light, thin curtain moving slightly. Photorealistic location reference, no people, cinematic 35mm look.
     image: hospital/ward.png
   - name: corridor
+    refName: p1_l_hospital_corridor
     prompt: Quiet modern hospital corridor in Korea, cool even light, empty benches along the wall. Photorealistic location reference, no people, cinematic 35mm look.
     image: hospital/corridor.png

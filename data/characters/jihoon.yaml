@@ -2,17 +2,37 @@ name: jihoon
 headshot: characters/jihoon/headshot-3.png
 looks:
   - name: uniform
-    faceImage: jihoon/uniform/face.png
-    bodyImage: jihoon/uniform/body.png
+    face:
+      image: jihoon/uniform/face.png
+      refName: p1_c_jihoon_uniform_face
+    body:
+      image: jihoon/uniform/body.png
+      refName: p1_c_jihoon_uniform_full
   - name: hoodie-with-bag
-    faceImage: characters/jihoon/hoodie-with-bag/face.jpg
-    bodyImage: characters/jihoon/hoodie-with-bag/body.jpg
+    face:
+      image: characters/jihoon/hoodie-with-bag/face.jpg
+      refName: p1_c_jihoon_hoodiewithbag_face
+    body:
+      image: characters/jihoon/hoodie-with-bag/body.jpg
+      refName: p1_c_jihoon_hoodiewithbag_full
   - name: only-hoodie
-    faceImage: characters/jihoon/only-hoodie/face.jpg
-    bodyImage: characters/jihoon/only-hoodie/body.jpg
+    face:
+      image: characters/jihoon/only-hoodie/face.jpg
+      refName: p1_c_jihoon_onlyhoodie_face
+    body:
+      image: characters/jihoon/only-hoodie/body.jpg
+      refName: p1_c_jihoon_onlyhoodie_full
   - name: date-outfit
-    faceImage: jihoon/date-outfit/face.png
-    bodyImage: jihoon/date-outfit/body.png
+    face:
+      image: jihoon/date-outfit/face.png
+      refName: p1_c_jihoon_dateoutfit_face
+    body:
+      image: jihoon/date-outfit/body.png
+      refName: p1_c_jihoon_dateoutfit_full
   - name: adult-traveler
-    faceImage: jihoon/adult-traveler/face.png
-    bodyImage: jihoon/adult-traveler/body.png
+    face:
+      image: jihoon/adult-traveler/face.png
+      refName: p1_c_jihoon_adulttraveler_face
+    body:
+      image: jihoon/adult-traveler/body.png
+      refName: p1_c_jihoon_adulttraveler_full

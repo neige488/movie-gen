@@ -1,5 +1,6 @@
 name: ice-rink
 references:
   - name: indoor
+    refName: p1_l_icerink_indoor
     prompt: 'Lotte World Ice Rink (Jamsil, Seoul), pale blue ice, soft diffuse ceiling light, tidy boards, a few distant skaters'' trails on the ice. Photorealistic location reference, no people, cinematic 35mm look.'
     image: ice-rink/indoor.png

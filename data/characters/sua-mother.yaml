@@ -2,5 +2,9 @@ name: sua-mother
 headshot: sua-mother/headshot.png
 looks:
   - name: default
-    faceImage: sua-mother/default/face.png
-    bodyImage: sua-mother/default/body.png
+    face:
+      image: sua-mother/default/face.png
+      refName: p1_c_suamother_default_face
+    body:
+      image: sua-mother/default/body.png
+      refName: p1_c_suamother_default_full

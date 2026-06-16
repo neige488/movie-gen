@@ -1,5 +1,6 @@
 name: bus-stop
 references:
   - name: dusk
+    refName: p1_l_busstop_dusk
     prompt: Modern Korean glass bus shelter with an LED arrival display at dusk, clean bench, academy-district street, warm low sun. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: bus-stop/dusk.png

@@ -1,5 +1,6 @@
 name: side-street
 references:
   - name: school-route
+    refName: p1_l_sidestreet_schoolroute
     prompt: A clean side street on an academy-district commute route in Nowon-gu, parked cars, modern low-rise shops and academy buildings, mid-afternoon, a slight bend where a bicycle and a car could meet. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
     image: side-street/school-route.png
