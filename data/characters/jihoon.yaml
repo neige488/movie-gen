@@ -10,6 +10,9 @@ looks:
   - name: only-hoodie
     faceImage: characters/jihoon/only-hoodie/face.jpg
     bodyImage: characters/jihoon/only-hoodie/body.jpg
+  - name: date-outfit
+    faceImage: jihoon/date-outfit/face.png
+    bodyImage: jihoon/date-outfit/body.png
   - name: adult-traveler
     faceImage: jihoon/adult-traveler/face.png
     bodyImage: jihoon/adult-traveler/body.png

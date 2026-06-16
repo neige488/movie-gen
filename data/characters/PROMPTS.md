@@ -7,7 +7,8 @@
 - **headshot:** An 18-year-old Korean high school boy, soft gentle features, slightly unkempt black hair, tired but kind eyes, faint shadow of sleeplessness. Neutral expression headshot.
 - **look: uniform** — Korean high school uniform: white shirt, dark trousers, school jacket. Slightly loosened tie, worn naturally.
 - **look: hoodie-with-bag** — Grey hoodie over uniform shirt, one drawstring hanging longer than the other, **with a half-zipped backpack**. Commute (통학) outfit.
-- **look: only-hoodie** — The same grey hoodie (one drawstring longer), **without a backpack**. Casual/date outfit. (가방이 필요한 컷은 backpack prop으로 첨부)
+- **look: only-hoodie** — The same grey hoodie (one drawstring longer), **without a backpack**. Everyday/casual outfit (집·일상). (가방이 필요한 컷은 backpack prop으로 첨부)
+- **look: date-outfit** — A neater casual date outfit: a clean knit sweater or button-up shirt over a tee, slim chinos or dark jeans — a step dressier than the everyday hoodie. No backpack.
 - **look: adult-traveler** — Same face aged to early 20s. Light alpine travel jacket, small backpack. Calm, weathered.
 
 ## sua (수아)
