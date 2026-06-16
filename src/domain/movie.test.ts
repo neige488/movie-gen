@@ -8,6 +8,7 @@ import {
   createLocation,
   createProp,
   createProject,
+  collectRefNames,
   movieSequence,
   resolveChainingTake,
   setSceneStarred,
@@ -227,31 +228,32 @@ describe("Scene — invariants", () => {
   });
 });
 
-describe("Look — single faceImage + bodyImage (pre-split sheets)", () => {
+describe("Look — face + body ImageRefs (pre-split sheets)", () => {
   it("requires a name", () => {
     expect(() =>
-      createLook({ name: "", faceImage: "f.png", bodyImage: "b.png" }),
+      createLook({ name: "", face: { image: "f.png" }, body: { image: "b.png" } }),
     ).toThrow(DomainInvariantError);
   });
 
-  it("requires faceImage and bodyImage", () => {
+  it("requires face.image and body.image", () => {
     expect(() =>
-      createLook({ name: "hoodie", faceImage: "", bodyImage: "b.png" }),
-    ).toThrow(/faceImage/i);
+      createLook({ name: "hoodie", face: { image: "" }, body: { image: "b.png" } }),
+    ).toThrow(/face\.image/i);
     expect(() =>
-      createLook({ name: "hoodie", faceImage: "f.png", bodyImage: "" }),
-    ).toThrow(/bodyImage/i);
+      createLook({ name: "hoodie", face: { image: "f.png" }, body: { image: "" } }),
+    ).toThrow(/body\.image/i);
   });
 
-  it("composes a faceImage and bodyImage", () => {
+  it("composes face and body refs (with optional refName)", () => {
     const look = createLook({
       name: "hoodie",
-      faceImage: "f.png",
-      bodyImage: "b.png",
+      face: { image: "f.png", refName: "p1_c_alice_face" },
+      body: { image: "b.png" },
     });
     expect(look.name).toBe("hoodie");
-    expect(look.faceImage).toBe("f.png");
-    expect(look.bodyImage).toBe("b.png");
+    expect(look.face.image).toBe("f.png");
+    expect(look.face.refName).toBe("p1_c_alice_face");
+    expect(look.body.image).toBe("b.png");
   });
 });
 
@@ -268,7 +270,7 @@ describe("Character — name + headshot + looks", () => {
 
   it("rejects duplicate look names", () => {
     const mkLook = (name: string) =>
-      createLook({ name, faceImage: "f.png", bodyImage: "b.png" });
+      createLook({ name, face: { image: "f.png" }, body: { image: "b.png" } });
     expect(() =>
       createCharacter({
         name: "alice",
@@ -281,7 +283,7 @@ describe("Character — name + headshot + looks", () => {
 
 describe("Project — reference integrity", () => {
   const mkLook = (name: string) =>
-    createLook({ name, faceImage: "f.png", bodyImage: "b.png" });
+    createLook({ name, face: { image: "f.png" }, body: { image: "b.png" } });
 
   const mkScene = (slug: string, isStarred: boolean, shot: ReturnType<typeof createShot>) =>
     createScene({
@@ -1035,7 +1037,7 @@ describe("setShotDuration — Shot duration immutable update", () => {
 describe("setShotCharacterRefs — Shot characterRefs immutable update", () => {
   const headshot = "character-a/headshot.png";
   const mkLook = (name: string) =>
-    createLook({ name, faceImage: "face.png", bodyImage: "body.png" });
+    createLook({ name, face: { image: "face.png" }, body: { image: "body.png" } });
   const mkChar = (name: string, lookNames: string[]) =>
     createCharacter({ name, headshot, looks: lookNames.map(mkLook) });
   const mkShot = (id: string, refs: { character: string; look: string }[] = []) =>
@@ -1544,5 +1546,95 @@ describe("resolveChainingTake — derive starred Take of prevShotRef", () => {
       shots: [createShot({ ...VALID_SHOT_BASE, id: "01", duration: 5 })],
     });
     expect(resolveChainingTake(scene, "ghost")).toBeNull();
+  });
+});
+
+describe("Project — engine @refName integrity", () => {
+  const charWithFaceRef = (refName: string) =>
+    createCharacter({
+      name: "alice",
+      headshot: "h.png",
+      looks: [
+        createLook({
+          name: "look1",
+          face: { image: "f.png", refName },
+          body: { image: "b.png" },
+        }),
+      ],
+    });
+
+  const baseProject = (
+    overrides: Partial<Parameters<typeof createProject>[0]>,
+  ) =>
+    createProject({
+      scenes: [],
+      characters: [],
+      locations: [],
+      props: [],
+      ...overrides,
+    });
+
+  it("rejects a refName with invalid charset (hyphen/uppercase)", () => {
+    expect(() =>
+      baseProject({ characters: [charWithFaceRef("p1-c-alice-face")] }),
+    ).toThrow(/refName/i);
+    expect(() =>
+      baseProject({ characters: [charWithFaceRef("p1_c_Alice")] }),
+    ).toThrow(/refName/i);
+  });
+
+  it("rejects duplicate refName across assets", () => {
+    expect(() =>
+      baseProject({
+        characters: [
+          createCharacter({
+            name: "alice",
+            headshot: "h.png",
+            looks: [
+              createLook({
+                name: "look1",
+                face: { image: "f.png", refName: "p1_c_dup" },
+                body: { image: "b.png", refName: "p1_c_dup" },
+              }),
+            ],
+          }),
+        ],
+      }),
+    ).toThrow(/duplicate refname/i);
+  });
+
+  it("accepts valid refNames and collectRefNames gathers them", () => {
+    const project = baseProject({
+      characters: [charWithFaceRef("p1_c_alice_face")],
+      locations: [
+        createLocation({
+          name: "kitchen",
+          references: [{ image: "k.png", name: "wide", refName: "p1_l_kitchen" }],
+        }),
+      ],
+    });
+    expect(collectRefNames(project).sort()).toEqual([
+      "p1_c_alice_face",
+      "p1_l_kitchen",
+    ]);
+  });
+
+  it("returns [] from collectRefNames when no refNames are assigned", () => {
+    const project = baseProject({
+      characters: [
+        createCharacter({
+          name: "alice",
+          headshot: "h.png",
+          looks: [
+            createLook({
+              name: "look1",
+              face: { image: "f.png" }, // no refName
+              body: { image: "b.png" },
+            }),
+          ],
+        }),
+      ],
+    });
+    expect(collectRefNames(project)).toEqual([]);
   });
 });

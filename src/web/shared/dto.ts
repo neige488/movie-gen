@@ -181,17 +181,19 @@ export interface MovieDto {
 // ---------------------------------------------------------------------------
 
 export interface ImageReferenceDto {
-  name: string;
-  prompt: string;
   image: string; // relative path under assets root (empty if unset)
+  name?: string;
+  prompt?: string;
+  /** Engine `@이름` (@mention handle), e.g. `p1_c_suah_face`. */
+  refName?: string;
 }
 
 export interface LookDto {
   name: string;
-  /** Face reference — single 5-panel split sheet (relative asset path). */
-  faceImage: string;
-  /** Body reference — single 3-panel split sheet (relative asset path). */
-  bodyImage: string;
+  /** Face reference — single 5-panel split sheet, with optional engine @refName. */
+  face: ImageReferenceDto;
+  /** Body reference — single 3-panel split sheet, with optional engine @refName. */
+  body: ImageReferenceDto;
 }
 
 export interface LibraryCharacterDto {

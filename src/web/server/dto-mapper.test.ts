@@ -231,8 +231,8 @@ describe("projectToMovieDto — finalPrompt assembly", () => {
     looks: [
       createLook({
         name: "introspective",
-        faceImage: "f.png",
-        bodyImage: "b.png",
+        face: { image: "f.png" },
+        body: { image: "b.png" },
       }),
     ],
   });

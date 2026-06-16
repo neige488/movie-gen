@@ -4,7 +4,12 @@
 
 import { actPageRange, beatsForAct, type ActId } from "@domain/beat-sheet.js";
 import { parseShotMarkers } from "@domain/marker-parser.js";
-import { movieSequence, type Project, type Scene } from "@domain/movie.js";
+import {
+  movieSequence,
+  type ImageReference,
+  type Project,
+  type Scene,
+} from "@domain/movie.js";
 import {
   assembleFinalPrompt,
   createPromptPreset,
@@ -14,6 +19,7 @@ import {
 import { evaluateSceneSync, evaluateTakeSync } from "@domain/sync-evaluator.js";
 import type {
   CanvasActDto,
+  ImageReferenceDto,
   LibraryCharacterDto,
   LibraryDto,
   LibraryLocationDto,
@@ -21,6 +27,16 @@ import type {
   MovieDto,
   SceneDto,
 } from "../shared/dto.js";
+
+/** Map a domain ImageReference to its DTO, omitting undefined optionals. */
+function imageRefToDto(r: ImageReference): ImageReferenceDto {
+  return {
+    image: r.image,
+    ...(r.name !== undefined ? { name: r.name } : {}),
+    ...(r.prompt !== undefined ? { prompt: r.prompt } : {}),
+    ...(r.refName !== undefined ? { refName: r.refName } : {}),
+  };
+}
 
 /**
  * Minimal structural view of MovieArrangement the mapper needs. Kept narrow
@@ -185,8 +201,8 @@ function characterToLibrary(c: Project["characters"][number]): LibraryCharacterD
     headshot: c.headshot,
     looks: c.looks.map((l) => ({
       name: l.name,
-      faceImage: l.faceImage,
-      bodyImage: l.bodyImage,
+      face: imageRefToDto(l.face),
+      body: imageRefToDto(l.body),
     })),
   };
 }
@@ -196,21 +212,13 @@ function locationToLibrary(
 ): LibraryLocationDto {
   return {
     name: l.name,
-    references: l.references.map((r) => ({
-      name: r.name,
-      prompt: r.prompt,
-      image: r.image,
-    })),
+    references: l.references.map(imageRefToDto),
   };
 }
 
 function propToLibrary(p: Project["props"][number]): LibraryPropDto {
   return {
     name: p.name,
-    references: p.references.map((r) => ({
-      name: r.name,
-      prompt: r.prompt,
-      image: r.image,
-    })),
+    references: p.references.map(imageRefToDto),
   };
 }

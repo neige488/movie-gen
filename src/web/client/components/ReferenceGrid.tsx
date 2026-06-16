@@ -28,25 +28,25 @@ export function ReferenceGrid({ kind, name, references, onUploaded }: Props) {
         </div>
       ) : (
         <div className="card__refs">
-          {references.map((r) => (
-            <div key={r.name} className="ref">
-              <ImageSlot
-                slot={
-                  kind === "location"
-                    ? {
-                        kind: "location-ref",
-                        location: name,
-                        refName: r.name,
-                      }
-                    : { kind: "prop-ref", prop: name, refName: r.name }
-                }
-                imagePath={r.image}
-                label={r.name}
-                onUploaded={onUploaded}
-              />
-              <PromptBlock prompt={r.prompt} />
-            </div>
-          ))}
+          {references.map((r, i) => {
+            const label = r.name ?? `ref ${i + 1}`;
+            return (
+              <div key={r.name ?? i} className="ref">
+                <ImageSlot
+                  slot={
+                    kind === "location"
+                      ? { kind: "location-ref", location: name, refName: label }
+                      : { kind: "prop-ref", prop: name, refName: label }
+                  }
+                  imagePath={r.image}
+                  label={label}
+                  onUploaded={onUploaded}
+                />
+                {r.refName && <span className="ref__refname">@{r.refName}</span>}
+                {r.prompt && <PromptBlock prompt={r.prompt} />}
+              </div>
+            );
+          })}
         </div>
       )}
     </article>

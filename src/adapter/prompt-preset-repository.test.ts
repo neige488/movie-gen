@@ -26,34 +26,20 @@ describe("loadPromptPreset", () => {
     const preset = await loadPromptPreset(dataDir);
     expect(preset.prefix).toBe("");
     expect(preset.suffix).toBe("");
-    expect(preset.registeredRefs).toEqual([]);
   });
 
   it("returns the identity preset for an empty file", async () => {
     writePreset("");
     const preset = await loadPromptPreset(dataDir);
     expect(preset.prefix).toBe("");
-    expect(preset.registeredRefs).toEqual([]);
+    expect(preset.suffix).toBe("");
   });
 
-  it("loads affixes and the registered ref list", async () => {
-    writePreset(
-      [
-        "prefix: cinematic 4K",
-        "suffix: 워터마크 없음",
-        "refs:",
-        "  - p1_c_suah_face",
-        "  - p1_l_rooftop_cafe",
-        "",
-      ].join("\n"),
-    );
+  it("loads the prefix and suffix affixes", async () => {
+    writePreset(["prefix: cinematic 4K", "suffix: 워터마크 없음", ""].join("\n"));
     const preset = await loadPromptPreset(dataDir);
     expect(preset.prefix).toBe("cinematic 4K");
     expect(preset.suffix).toBe("워터마크 없음");
-    expect(preset.registeredRefs).toEqual([
-      "p1_c_suah_face",
-      "p1_l_rooftop_cafe",
-    ]);
   });
 
   it("throws a named error when a field has the wrong type", async () => {

@@ -7,12 +7,11 @@
  * movie-level preset holds:
  *  - `prefix` / `suffix`: common text wrapped around every Shot prompt. May be
  *    English (prefix = camera/quality look) or Korean (suffix = negatives).
- *  - `registeredRefs`: the engine's reference `@names` registered for this movie
- *    (account-global, project-prefixed — e.g. `p1_c_suah_face`). Used to validate
- *    that every `@mention` in a Shot prompt points at a real registered ref.
  *
  * Refs are written INLINE in the Shot prompt as `@name` (not a generated ref
- * block) — the engine resolves `@name` to the registered reference image.
+ * block) — the engine resolves `@name` to the registered reference image. The
+ * set of valid `@names` is the project's ImageReference `refName`s (see
+ * `collectRefNames` in movie.ts), NOT a list stored on the preset.
  *
  * `assembleFinalPrompt` derives the copy-paste string on the fly — only the
  * pieces (preset + Shot.prompt) live on disk, never the assembled whole.
@@ -23,26 +22,21 @@ import type { Shot } from "./movie.js";
 export interface PromptPreset {
   readonly prefix: string;
   readonly suffix: string;
-  /** Engine `@names` registered for this movie (without the leading `@`). */
-  readonly registeredRefs: readonly string[];
 }
 
 export interface CreatePromptPresetInput {
   prefix?: string;
   suffix?: string;
-  registeredRefs?: readonly string[];
 }
 
 /**
  * Build a PromptPreset. Every field is optional on disk — missing affixes
- * default to empty (so an absent file behaves as "no common prompt") and an
- * absent ref list means ref validation is off for this movie.
+ * default to empty (so an absent file behaves as "no common prompt").
  */
 export function createPromptPreset(input: CreatePromptPresetInput): PromptPreset {
   return {
     prefix: input.prefix ?? "",
     suffix: input.suffix ?? "",
-    registeredRefs: input.registeredRefs ?? [],
   };
 }
 
@@ -78,21 +72,22 @@ export function extractRefMentions(text: string): string[] {
 }
 
 /**
- * Find `@mentions` across the given texts that are NOT in the preset's
- * registered ref list (sorted, unique, without `@`). Returns [] when the movie
- * has no registered refs — validation is opt-in, so movies that have not listed
- * their refs are never blocked.
+ * Find `@mentions` across the given texts that are NOT in the registry of valid
+ * `@names` (the project's ImageReference refNames — see `collectRefNames`).
+ * Returns sorted, unique names without `@`. Returns [] when the registry is
+ * empty — validation is opt-in, so movies that have not assigned any refName are
+ * never blocked.
  */
 export function findUnregisteredMentions(
   texts: readonly string[],
-  preset: PromptPreset,
+  registered: readonly string[],
 ): string[] {
-  if (preset.registeredRefs.length === 0) return [];
-  const registered = new Set(preset.registeredRefs);
+  if (registered.length === 0) return [];
+  const known = new Set(registered);
   const unknown = new Set<string>();
   for (const text of texts) {
     for (const name of extractRefMentions(text)) {
-      if (!registered.has(name)) unknown.add(name);
+      if (!known.has(name)) unknown.add(name);
     }
   }
   return [...unknown].sort();

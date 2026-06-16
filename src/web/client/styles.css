@@ -423,6 +423,14 @@ body {
   border-color: rgba(187, 154, 247, 0.5);
   color: var(--accent);
 }
+/* Engine @refName label on library assets (Character look face/body, ref). */
+.look__refname,
+.ref__refname {
+  margin-left: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--accent);
+}
 .shot__takes {
   display: flex;
   gap: 0.35rem;

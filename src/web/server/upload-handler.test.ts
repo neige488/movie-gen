@@ -62,8 +62,10 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    faceImage: alice/hoodie/face.png
-    bodyImage: alice/hoodie/body.png
+    face:
+      image: alice/hoodie/face.png
+    body:
+      image: alice/hoodie/body.png
 `;
 
 function writeCharacter(name: string, yaml: string): void {
@@ -175,7 +177,7 @@ describe("applyUpload — character headshot", () => {
 });
 
 describe("applyUpload — character face/body slots", () => {
-  it("updates the look's faceImage, leaving bodyImage untouched", async () => {
+  it("updates the look's face image, leaving body untouched", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
 
@@ -201,11 +203,11 @@ describe("applyUpload — character face/body slots", () => {
     expect(result.relativePath).toBe("characters/alice/hoodie/face.png");
     const reloaded = await loadProject(dataDir);
     const look = reloaded.characters[0]!.looks[0]!;
-    expect(look.faceImage).toBe("characters/alice/hoodie/face.png");
-    expect(look.bodyImage).toBe("alice/hoodie/body.png"); // unchanged
+    expect(look.face.image).toBe("characters/alice/hoodie/face.png");
+    expect(look.body.image).toBe("alice/hoodie/body.png"); // unchanged
   });
 
-  it("updates the look's bodyImage", async () => {
+  it("updates the look's body image", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
 
@@ -230,8 +232,8 @@ describe("applyUpload — character face/body slots", () => {
 
     const reloaded = await loadProject(dataDir);
     const look = reloaded.characters[0]!.looks[0]!;
-    expect(look.bodyImage).toBe("characters/alice/hoodie/body.png");
-    expect(look.faceImage).toBe("alice/hoodie/face.png"); // unchanged
+    expect(look.body.image).toBe("characters/alice/hoodie/body.png");
+    expect(look.face.image).toBe("alice/hoodie/face.png"); // unchanged
   });
 
   it("rejects upload targeting unknown character", async () => {

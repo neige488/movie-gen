@@ -11,8 +11,9 @@
  * - Shot.duration ∈ [4, 15] integer seconds (씨댄스 2.0 engine limit)
  * - Shot.takes: at most one isStarred=true
  * - Scene: unique Shot ids, prevShotRef points to an earlier Shot in same Scene
- * - Look: faceImage + bodyImage required (each a single pre-split sheet image)
+ * - Look: face + body ImageRefs required (each a single pre-split sheet image)
  * - Character: at least one Look, unique Look names
+ * - ImageRef.refName (engine @이름): charset [a-z0-9_]+ + project-wide unique
  */
 
 import { computeScreenplayHash } from "./hash-calculator.js";
@@ -243,35 +244,34 @@ export function createScene(input: CreateSceneInput): Scene {
 /**
  * FaceProfile / BodyProfile (per CONTEXT.md ubiquitous language) are each a
  * SINGLE reference image already divided into panels — face = 5-panel split
- * sheet, body = 3-panel split sheet. They live flat on the Look as
- * `faceImage` / `bodyImage` (relative asset paths), mirroring
- * `Character.headshot`. The panel split is baked into the image, so there is
- * no per-panel count to enforce here.
+ * sheet, body = 3-panel split sheet. They live on the Look as `face` / `body`
+ * ImageReferences (relative asset path + optional engine `@refName`). The panel
+ * split is baked into the image, so there is no per-panel count to enforce here.
  */
 export interface Look {
   readonly name: string;
-  /** Face reference — single 5-panel split sheet (relative asset path). */
-  readonly faceImage: string;
-  /** Body reference — single 3-panel split sheet (relative asset path). */
-  readonly bodyImage: string;
+  /** Face reference — single 5-panel split sheet, with optional engine @refName. */
+  readonly face: ImageReference;
+  /** Body reference — single 3-panel split sheet, with optional engine @refName. */
+  readonly body: ImageReference;
 }
 
 export interface CreateLookInput {
   name: string;
-  faceImage: string;
-  bodyImage: string;
+  face: ImageReference;
+  body: ImageReference;
 }
 
 export function createLook(input: CreateLookInput): Look {
   if (!input.name) throw new DomainInvariantError("Look.name is required");
-  if (!input.faceImage)
-    throw new DomainInvariantError(`Look[${input.name}].faceImage is required`);
-  if (!input.bodyImage)
-    throw new DomainInvariantError(`Look[${input.name}].bodyImage is required`);
+  if (!input.face?.image)
+    throw new DomainInvariantError(`Look[${input.name}].face.image is required`);
+  if (!input.body?.image)
+    throw new DomainInvariantError(`Look[${input.name}].body.image is required`);
   return {
     name: input.name,
-    faceImage: input.faceImage,
-    bodyImage: input.bodyImage,
+    face: input.face,
+    body: input.body,
   };
 }
 
@@ -320,9 +320,19 @@ export function createCharacter(input: CreateCharacterInput): Character {
 // ---------------------------------------------------------------------------
 
 export interface ImageReference {
-  readonly name: string;
-  readonly prompt: string;
+  /** Relative asset path of the reference image. */
   readonly image: string;
+  /** Human label (e.g. Location/Prop angle name). Optional — Look face/body omit it. */
+  readonly name?: string;
+  /** How this reference image was generated (Location/Prop). Optional. */
+  readonly prompt?: string;
+  /**
+   * Engine `@이름` — the inline @mention handle (e.g. `p1_c_suah_face`) the
+   * director writes in Shot prompts. LLM-authored per the `shot-prompt-authoring`
+   * convention; validated for charset + project-uniqueness in `createProject`.
+   * Optional: refs without it are simply absent from the @mention registry.
+   */
+  readonly refName?: string;
 }
 
 export interface Location {
@@ -405,12 +415,77 @@ export function createProject(input: {
     }
   }
 
+  // Engine @refName integrity: charset ([a-z0-9_]+ — the @mention charset, no
+  // hyphens/uppercase) and project-wide uniqueness across every ImageReference
+  // (Look face/body + Location/Prop references). refName is optional, so refs
+  // without it are skipped.
+  const seenRefName = new Map<string, string>();
+  for (const { ref, where } of gatherImageRefs(input)) {
+    const rn = ref.refName;
+    if (rn === undefined) continue;
+    if (!REFNAME_RE.test(rn)) {
+      throw new DomainInvariantError(
+        `${where} refName "${rn}" must match [a-z0-9_]+ (lowercase letters, digits, underscore only)`,
+      );
+    }
+    const prev = seenRefName.get(rn);
+    if (prev) {
+      throw new DomainInvariantError(
+        `Duplicate refName "${rn}" (${where} and ${prev})`,
+      );
+    }
+    seenRefName.set(rn, where);
+  }
+
   return {
     scenes: input.scenes,
     characters: input.characters,
     locations: input.locations,
     props: input.props,
   };
+}
+
+const REFNAME_RE = /^[a-z0-9_]+$/;
+
+interface ProjectImageParts {
+  readonly characters: readonly Character[];
+  readonly locations: readonly Location[];
+  readonly props: readonly Prop[];
+}
+
+/** Every ImageReference in the project, tagged with a human-readable location. */
+function gatherImageRefs(
+  p: ProjectImageParts,
+): { ref: ImageReference; where: string }[] {
+  const out: { ref: ImageReference; where: string }[] = [];
+  for (const c of p.characters) {
+    for (const l of c.looks) {
+      out.push({ ref: l.face, where: `Character[${c.name}] Look[${l.name}].face` });
+      out.push({ ref: l.body, where: `Character[${c.name}] Look[${l.name}].body` });
+    }
+  }
+  for (const loc of p.locations) {
+    for (const r of loc.references) {
+      out.push({ ref: r, where: `Location[${loc.name}] ref[${r.name ?? "?"}]` });
+    }
+  }
+  for (const prop of p.props) {
+    for (const r of prop.references) {
+      out.push({ ref: r, where: `Prop[${prop.name}] ref[${r.name ?? "?"}]` });
+    }
+  }
+  return out;
+}
+
+/**
+ * The movie's engine @mention registry: every `refName` present across the
+ * project's ImageReferences (Look face/body + Location/Prop references). Used to
+ * validate that inline `@names` in Shot prompts point at a real registered ref.
+ */
+export function collectRefNames(project: Project): string[] {
+  return gatherImageRefs(project)
+    .map((x) => x.ref.refName)
+    .filter((n): n is string => n !== undefined);
 }
 
 /**

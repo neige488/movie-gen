@@ -56,25 +56,36 @@ export type ShotsFile = z.infer<typeof shotsFileSchema>;
 /**
  * Movie-level prompt preset (`data/prompt-preset.yaml`). Every field is
  * optional on disk — the domain factory (`createPromptPreset`) fills the gaps
- * (empty affixes + no registered refs), so an absent or partial file is valid.
- * `refs` lists the engine's registered `@names` for this movie (without the
- * leading `@`); when present, Shot prompts are validated against it. The schema
- * only guards types; an actively malformed file (wrong types) is rejected
- * loudly per the no-silent-fallback rule.
+ * (empty affixes), so an absent or partial file is valid. The `@mention`
+ * registry is NOT stored here; it is derived from the library's ImageReference
+ * refNames (`collectRefNames`). The schema only guards types; an actively
+ * malformed file (wrong types) is rejected loudly per no-silent-fallback.
  */
 export const promptPresetFileSchema = z.object({
   prefix: z.string().optional(),
   suffix: z.string().optional(),
-  refs: z.array(z.string().min(1)).optional(),
 });
 export type PromptPresetFile = z.infer<typeof promptPresetFileSchema>;
 
+/**
+ * Unified reference-image atom. `image` is the only required field. `name`
+ * (human/angle label) and `prompt` (generation prompt) are used by Location/Prop
+ * references; Look face/body omit them. `refName` is the engine `@이름` (@mention
+ * handle, e.g. `p1_c_suah_face`) — optional, validated in the domain.
+ */
+export const imageReferenceFileSchema = z.object({
+  image: z.string().min(1),
+  name: z.string().min(1).optional(),
+  prompt: z.string().min(1).optional(),
+  refName: z.string().min(1).optional(),
+});
+
 export const lookFileSchema = z.object({
   name: z.string().min(1),
-  // Each profile is a single pre-split sheet image (face = 5 panels, body = 3),
-  // stored as a relative asset path — same shape as Character.headshot.
-  faceImage: z.string().min(1),
-  bodyImage: z.string().min(1),
+  // Each profile is a single pre-split sheet image (face = 5 panels, body = 3)
+  // as an ImageReference (relative asset path + optional engine @refName).
+  face: imageReferenceFileSchema,
+  body: imageReferenceFileSchema,
 });
 
 export const characterFileSchema = z.object({
@@ -83,12 +94,6 @@ export const characterFileSchema = z.object({
   looks: z.array(lookFileSchema),
 });
 export type CharacterFile = z.infer<typeof characterFileSchema>;
-
-export const imageReferenceFileSchema = z.object({
-  name: z.string().min(1),
-  prompt: z.string().min(1),
-  image: z.string().min(1),
-});
 
 export const locationFileSchema = z.object({
   name: z.string().min(1),

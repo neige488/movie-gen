@@ -48,7 +48,7 @@ import {
   AssetStoreError,
   type AssetSlot,
 } from "@adapter/asset-store.js";
-import { createProject, type Project } from "@domain/movie.js";
+import { collectRefNames, createProject, type Project } from "@domain/movie.js";
 import { projectToLibraryDto, projectToMovieDto } from "./dto-mapper.js";
 import {
   applyUpload,
@@ -107,20 +107,20 @@ const MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024;
 
 /**
  * Validate that every inline `@mention` in every Shot prompt points at a ref
- * registered in the preset (`data/prompt-preset.yaml` → `refs`). Opt-in: movies
- * with no registered refs are never blocked. Throws PromptPresetError (which the
- * boot path turns into a friendly exit, and the reload path captures as
- * reload-failed) so a typo'd `@name` is caught loudly instead of silently
- * producing a prompt the engine can't resolve.
+ * registered in the library (an ImageReference `refName` — see
+ * `collectRefNames`). Opt-in: movies whose library assigns no refName are never
+ * blocked. Throws PromptPresetError (which the boot path turns into a friendly
+ * exit, and the reload path captures as reload-failed) so a typo'd `@name` is
+ * caught loudly instead of silently producing a prompt the engine can't resolve.
  */
-function assertRefsRegistered(project: Project, preset: PromptPreset): void {
+function assertRefsRegistered(project: Project): void {
   const prompts = project.scenes.flatMap((s) => s.shots.map((sh) => sh.prompt));
-  const unknown = findUnregisteredMentions(prompts, preset);
+  const unknown = findUnregisteredMentions(prompts, collectRefNames(project));
   if (unknown.length > 0) {
     throw new PromptPresetError(
-      `Shot 프롬프트가 등록되지 않은 ref를 참조합니다: ${unknown
+      `Shot 프롬프트가 라이브러리에 없는 ref를 참조합니다: ${unknown
         .map((n) => `@${n}`)
-        .join(", ")}. data/prompt-preset.yaml의 refs에 추가하거나 이름을 고치세요.`,
+        .join(", ")}. 라이브러리 에셋의 refName으로 등록하거나 이름을 고치세요.`,
     );
   }
 }
@@ -146,7 +146,7 @@ async function main(): Promise<void> {
     currentArrangement = await loadArrangement(DATA_DIR);
     currentTotalPages = await loadTotalPages(DATA_DIR);
     currentPreset = await loadPromptPreset(DATA_DIR);
-    assertRefsRegistered(currentProject, currentPreset);
+    assertRefsRegistered(currentProject);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -210,7 +210,7 @@ async function main(): Promise<void> {
       currentArrangement = await loadArrangement(DATA_DIR);
       currentTotalPages = await loadTotalPages(DATA_DIR);
       currentPreset = await loadPromptPreset(DATA_DIR);
-      assertRefsRegistered(next, currentPreset);
+      assertRefsRegistered(next);
       return next;
     },
     getProject: () => currentProject,

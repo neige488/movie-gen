@@ -15,22 +15,19 @@ const shotBase = {
 } as const;
 
 describe("createPromptPreset", () => {
-  it("defaults missing fields to empty affixes and no registered refs", () => {
+  it("defaults missing fields to empty affixes", () => {
     const preset = createPromptPreset({});
     expect(preset.prefix).toBe("");
     expect(preset.suffix).toBe("");
-    expect(preset.registeredRefs).toEqual([]);
   });
 
   it("keeps supplied values", () => {
     const preset = createPromptPreset({
       prefix: "cinematic 4K",
       suffix: "워터마크 없음",
-      registeredRefs: ["p1_c_suah_face"],
     });
     expect(preset.prefix).toBe("cinematic 4K");
     expect(preset.suffix).toBe("워터마크 없음");
-    expect(preset.registeredRefs).toEqual(["p1_c_suah_face"]);
   });
 });
 
@@ -70,34 +67,29 @@ describe("extractRefMentions", () => {
 });
 
 describe("findUnregisteredMentions", () => {
-  it("returns [] when the preset has no registered refs (validation off)", () => {
-    const preset = createPromptPreset({});
-    expect(findUnregisteredMentions(["@p1_c_typo 등장"], preset)).toEqual([]);
+  it("returns [] when the registry is empty (validation off)", () => {
+    expect(findUnregisteredMentions(["@p1_c_typo 등장"], [])).toEqual([]);
   });
 
-  it("flags mentions not in the registered list (sorted, unique)", () => {
-    const preset = createPromptPreset({
-      registeredRefs: ["p1_c_suah_face", "p1_l_rooftop_cafe"],
-    });
+  it("flags mentions not in the registry (sorted, unique)", () => {
+    const registry = ["p1_c_suah_face", "p1_l_rooftop_cafe"];
     const texts = [
       "@p1_c_suah_face 등장",
       "@p1_c_typo 와 @p1_l_unknown",
       "@p1_c_typo 다시",
     ];
-    expect(findUnregisteredMentions(texts, preset)).toEqual([
+    expect(findUnregisteredMentions(texts, registry)).toEqual([
       "p1_c_typo",
       "p1_l_unknown",
     ]);
   });
 
-  it("passes when every mention is registered", () => {
-    const preset = createPromptPreset({
-      registeredRefs: ["p1_c_suah_face", "p1_l_rooftop_cafe"],
-    });
+  it("passes when every mention is in the registry", () => {
+    const registry = ["p1_c_suah_face", "p1_l_rooftop_cafe"];
     expect(
       findUnregisteredMentions(
         ["@p1_c_suah_face 가 @p1_l_rooftop_cafe 에"],
-        preset,
+        registry,
       ),
     ).toEqual([]);
   });
