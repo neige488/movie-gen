@@ -1,5 +1,8 @@
 name: giraffe-headband
 references:
   - name: default
-    prompt: 'A simple novelty headband with a pair of giraffe ears AND a pair of small giraffe horns (ossicones) on top, giraffe-print fabric, Korean theme-park style. Photorealistic prop reference, plain grey background, cinematic 35mm look.'
-    image: giraffe-headband/default.png
+    prompt: >-
+      A simple novelty headband with a pair of giraffe ears AND a pair of small giraffe horns (ossicones) on top,
+      giraffe-print fabric, Korean theme-park style. Photorealistic prop reference, plain grey background, cinematic
+      35mm look.
+    image: props/giraffe-headband/default.jpeg
