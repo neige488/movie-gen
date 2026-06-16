@@ -1,0 +1,11 @@
+# 영화 단위 공통 프롬프트 프리셋.
+# 도구가 Shot마다 "최종 프롬프트"를 조립한다: prefix → Shot.prompt → suffix.
+# - prefix: 모든 Shot 공통 (카메라 종류/화질 룩). 엔진이 더 잘 읽으면 영어로 둬도 됨.
+# - suffix: 모든 Shot 공통 네거티브(무엇을 만들지 말 것). 한글이 잘 먹어 한글 유지.
+#
+# 레퍼런스(@이름)는 여기 두지 않는다 — 라이브러리 에셋의 refName이 SSOT이고,
+# 유효한 @이름 레지스트리는 거기서 자동 도출된다(Shot 프롬프트 본문에 @이름 인라인).
+
+prefix: "cinematic 4K, film grain, shallow depth of field, natural cinematic lighting, photorealistic"
+
+suffix: "배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 화면에 동일 인물 없음. 복장 유지."

@@ -107,8 +107,8 @@ function writeMinimalProject(opts?: {
         looks: [
           {
             name: "look1",
-            faceImage: "f.png",
-            bodyImage: "b.png",
+            face: { image: "f.png" },
+            body: { image: "b.png" },
           },
         ],
       }),

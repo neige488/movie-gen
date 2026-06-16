@@ -2,5 +2,7 @@ name: character-b
 headshot: characters/character-b/headshot.png
 looks:
   - name: long-coat
-    faceImage: characters/character-b/long-coat/face.png
-    bodyImage: characters/character-b/long-coat/body.png
+    face:
+      image: characters/character-b/long-coat/face.png
+    body:
+      image: characters/character-b/long-coat/body.png

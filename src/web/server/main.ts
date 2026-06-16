@@ -27,6 +27,14 @@ import {
 } from "@adapter/movie-manifest-repository.js";
 import type { MovieArrangement } from "@domain/movie-arrangement.js";
 import {
+  loadPromptPreset,
+  PromptPresetError,
+} from "@adapter/prompt-preset-repository.js";
+import {
+  findUnregisteredMentions,
+  type PromptPreset,
+} from "@domain/prompt-preset.js";
+import {
   saveCharacter,
   saveLocation,
   saveProp,
@@ -40,7 +48,7 @@ import {
   AssetStoreError,
   type AssetSlot,
 } from "@adapter/asset-store.js";
-import { createProject, type Project } from "@domain/movie.js";
+import { collectRefNames, createProject, type Project } from "@domain/movie.js";
 import { projectToLibraryDto, projectToMovieDto } from "./dto-mapper.js";
 import {
   applyUpload,
@@ -97,6 +105,26 @@ const MAX_IMAGE_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB — images
 // gives headroom without enabling truly pathological uploads.
 const MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024;
 
+/**
+ * Validate that every inline `@mention` in every Shot prompt points at a ref
+ * registered in the library (an ImageReference `refName` — see
+ * `collectRefNames`). Opt-in: movies whose library assigns no refName are never
+ * blocked. Throws PromptPresetError (which the boot path turns into a friendly
+ * exit, and the reload path captures as reload-failed) so a typo'd `@name` is
+ * caught loudly instead of silently producing a prompt the engine can't resolve.
+ */
+function assertRefsRegistered(project: Project): void {
+  const prompts = project.scenes.flatMap((s) => s.shots.map((sh) => sh.prompt));
+  const unknown = findUnregisteredMentions(prompts, collectRefNames(project));
+  if (unknown.length > 0) {
+    throw new PromptPresetError(
+      `Shot 프롬프트가 라이브러리에 없는 ref를 참조합니다: ${unknown
+        .map((n) => `@${n}`)
+        .join(", ")}. 라이브러리 에셋의 refName으로 등록하거나 이름을 고치세요.`,
+    );
+  }
+}
+
 async function main(): Promise<void> {
   console.log(`[movie-gen] loading project from ${DATA_DIR}`);
   console.log(`[movie-gen] assets root: ${ASSETS_DIR}`);
@@ -109,10 +137,16 @@ async function main(): Promise<void> {
   // Movie length in BS2 pages (≈ minutes; default 110). Rescales displayed beat
   // page numbers only — see movie-manifest-repository.
   let currentTotalPages: number;
+  // Movie-level prompt preset (common prefix/suffix + ref templates). Held
+  // alongside the Project so the dto-mapper can assemble each Shot's final
+  // copy-paste prompt without an extra disk read.
+  let currentPreset: PromptPreset;
   try {
     currentProject = await loadProject(DATA_DIR);
     currentArrangement = await loadArrangement(DATA_DIR);
     currentTotalPages = await loadTotalPages(DATA_DIR);
+    currentPreset = await loadPromptPreset(DATA_DIR);
+    assertRefsRegistered(currentProject);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -120,7 +154,7 @@ async function main(): Promise<void> {
         `${currentProject.props.length} props`,
     );
   } catch (err) {
-    if (err instanceof ProjectLoadError) {
+    if (err instanceof ProjectLoadError || err instanceof PromptPresetError) {
       console.error(`[movie-gen] FAILED TO LOAD PROJECT:\n  ${err.message}`);
       process.exit(1);
     }
@@ -128,9 +162,14 @@ async function main(): Promise<void> {
   }
 
   // Build the MovieDto from the current in-memory state (project + arrangement
-  // + totalPages). Used by every endpoint that returns the movie.
+  // + totalPages + preset). Used by every endpoint that returns the movie.
   const movieDto = () =>
-    projectToMovieDto(currentProject, currentArrangement, currentTotalPages);
+    projectToMovieDto(
+      currentProject,
+      currentArrangement,
+      currentTotalPages,
+      currentPreset,
+    );
 
   const assetStore = createAssetStore(ASSETS_DIR);
   const app = express();
@@ -170,6 +209,8 @@ async function main(): Promise<void> {
       const next = await loadProject(DATA_DIR);
       currentArrangement = await loadArrangement(DATA_DIR);
       currentTotalPages = await loadTotalPages(DATA_DIR);
+      currentPreset = await loadPromptPreset(DATA_DIR);
+      assertRefsRegistered(next);
       return next;
     },
     getProject: () => currentProject,

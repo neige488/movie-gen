@@ -32,27 +32,37 @@ export function CharacterCard({ character, onUploaded }: Props) {
             <h4 className="look__name">{look.name}</h4>
             <div className="look__row">
               <div className="look__group">
-                <div className="look__group-label">Face (5-panel sheet)</div>
+                <div className="look__group-label">
+                  Face (5-panel sheet)
+                  {look.face.refName && (
+                    <span className="look__refname">@{look.face.refName}</span>
+                  )}
+                </div>
                 <ImageSlot
                   slot={{
                     kind: "character-face",
                     character: character.name,
                     look: look.name,
                   }}
-                  imagePath={look.faceImage}
+                  imagePath={look.face.image}
                   label="face"
                   onUploaded={onUploaded}
                 />
               </div>
               <div className="look__group">
-                <div className="look__group-label">Body (3-panel sheet)</div>
+                <div className="look__group-label">
+                  Body (3-panel sheet)
+                  {look.body.refName && (
+                    <span className="look__refname">@{look.body.refName}</span>
+                  )}
+                </div>
                 <ImageSlot
                   slot={{
                     kind: "character-body",
                     character: character.name,
                     look: look.name,
                   }}
-                  imagePath={look.bodyImage}
+                  imagePath={look.body.image}
                   label="body"
                   onUploaded={onUploaded}
                 />

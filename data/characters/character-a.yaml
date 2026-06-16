@@ -2,8 +2,12 @@ name: character-a
 headshot: characters/character-a/headshot.png
 looks:
   - name: introspective
-    faceImage: characters/character-a/introspective/face.png
-    bodyImage: characters/character-a/introspective/body.png
+    face:
+      image: characters/character-a/introspective/face.png
+    body:
+      image: characters/character-a/introspective/body.png
   - name: street-jacket
-    faceImage: characters/character-a/street-jacket/face.png
-    bodyImage: characters/character-a/street-jacket/body.png
+    face:
+      image: characters/character-a/street-jacket/face.png
+    body:
+      image: characters/character-a/street-jacket/body.png

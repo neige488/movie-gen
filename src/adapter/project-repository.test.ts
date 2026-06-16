@@ -118,8 +118,10 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    faceImage: alice/hoodie/face.png
-    bodyImage: alice/hoodie/body.png
+    face:
+      image: alice/hoodie/face.png
+    body:
+      image: alice/hoodie/body.png
 `,
     );
 
@@ -145,10 +147,10 @@ references: []
     const project = await loadProject(dataDir);
     expect(project.characters.map((c) => c.name)).toEqual(["alice"]);
     expect(project.characters[0]!.looks).toHaveLength(1);
-    expect(project.characters[0]!.looks[0]!.faceImage).toBe(
+    expect(project.characters[0]!.looks[0]!.face.image).toBe(
       "alice/hoodie/face.png",
     );
-    expect(project.characters[0]!.looks[0]!.bodyImage).toBe(
+    expect(project.characters[0]!.looks[0]!.body.image).toBe(
       "alice/hoodie/body.png",
     );
     expect(project.locations.map((l) => l.name)).toEqual(["kitchen"]);
@@ -206,7 +208,7 @@ shots:
     await expect(loadProject(dataDir)).rejects.toThrow(/slugline/i);
   });
 
-  it("rejects a look missing bodyImage", async () => {
+  it("rejects a look missing body", async () => {
     writeScene("s01-open", {
       sceneYaml: MIN_SCENE_YAML,
       screenplay: MIN_SCREENPLAY,
@@ -219,11 +221,12 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    faceImage: alice/hoodie/face.png
+    face:
+      image: alice/hoodie/face.png
 `,
     );
 
-    await expect(loadProject(dataDir)).rejects.toThrow(/bodyImage/i);
+    await expect(loadProject(dataDir)).rejects.toThrow(/body/i);
   });
 
   it("rejects Shot referencing a Character that does not exist", async () => {

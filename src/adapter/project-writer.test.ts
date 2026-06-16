@@ -76,8 +76,10 @@ name: alice
 headshot: alice/headshot.png
 looks:
   - name: hoodie
-    faceImage: alice/hoodie/face.png
-    bodyImage: alice/hoodie/body.png
+    face:
+      image: alice/hoodie/face.png
+    body:
+      image: alice/hoodie/body.png
 `;
 
 describe("saveCharacter — round-trip", () => {
@@ -98,7 +100,7 @@ describe("saveCharacter — round-trip", () => {
     expect(after.characters[0]!.headshot).toBe("alice/headshot-2.png");
   });
 
-  it("updates a look's faceImage and reloads", async () => {
+  it("updates a look's face image and reloads", async () => {
     writeMinimalScene();
     writeCharacterFile("alice", ALICE_YAML);
 
@@ -108,20 +110,22 @@ describe("saveCharacter — round-trip", () => {
 
     await saveCharacter(dataDir, {
       ...alice,
-      looks: [{ ...hoodie, faceImage: "alice/hoodie/face-v2.png" }],
+      looks: [
+        { ...hoodie, face: { ...hoodie.face, image: "alice/hoodie/face-v2.png" } },
+      ],
     });
 
     const after = await loadProject(dataDir);
-    expect(after.characters[0]!.looks[0]!.faceImage).toBe(
+    expect(after.characters[0]!.looks[0]!.face.image).toBe(
       "alice/hoodie/face-v2.png",
     );
-    // bodyImage preserved.
-    expect(after.characters[0]!.looks[0]!.bodyImage).toBe(
+    // body preserved.
+    expect(after.characters[0]!.looks[0]!.body.image).toBe(
       "alice/hoodie/body.png",
     );
   });
 
-  it("updates a look's bodyImage and reloads", async () => {
+  it("updates a look's body image and reloads", async () => {
     writeMinimalScene();
     writeCharacterFile("alice", ALICE_YAML);
 
@@ -131,13 +135,34 @@ describe("saveCharacter — round-trip", () => {
 
     await saveCharacter(dataDir, {
       ...alice,
-      looks: [{ ...hoodie, bodyImage: "alice/hoodie/body-fresh.png" }],
+      looks: [
+        { ...hoodie, body: { ...hoodie.body, image: "alice/hoodie/body-fresh.png" } },
+      ],
     });
 
     const after = await loadProject(dataDir);
-    expect(after.characters[0]!.looks[0]!.bodyImage).toBe(
+    expect(after.characters[0]!.looks[0]!.body.image).toBe(
       "alice/hoodie/body-fresh.png",
     );
+  });
+
+  it("round-trips a look face refName (engine @이름)", async () => {
+    writeMinimalScene();
+    writeCharacterFile("alice", ALICE_YAML);
+
+    const before = await loadProject(dataDir);
+    const alice = before.characters[0]!;
+    const hoodie = alice.looks[0]!;
+
+    await saveCharacter(dataDir, {
+      ...alice,
+      looks: [
+        { ...hoodie, face: { ...hoodie.face, refName: "p1_c_alice_face" } },
+      ],
+    });
+
+    const after = await loadProject(dataDir);
+    expect(after.characters[0]!.looks[0]!.face.refName).toBe("p1_c_alice_face");
   });
 });
 
