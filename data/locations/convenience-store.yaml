@@ -2,5 +2,5 @@ name: convenience-store
 references:
   - name: window-seat
     refName: p1_l_conveniencestore_windowseat
-    prompt: 'Modern Korean convenience store (CU/GS25 style) at night seen from inside: window counter seats, clean bright lighting, well-stocked shelves, rain-flecked glass, academy-district street outside. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 밤, 안에서 본 현대적 한국 편의점 — 창가 카운터 좌석, 깔끔하고 밝은 조명, 잘 채워진 진열대, 빗방울 맺힌 유리, 바깥 거리. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 상표·간판·글자 없음, 시네마틱 35mm 필름.
     image: convenience-store/window-seat.png

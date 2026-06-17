@@ -2,13 +2,13 @@ name: hospital
 references:
   - name: exam-room
     refName: p1_l_hospital_examroom
-    prompt: 'Modern Korean psychiatric clinic consultation room: clean desk, two chairs, soft neutral light, certificates blurred on the wall. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 현대적 한국 정신과 진료실 — 깔끔한 책상, 의자 둘, 부드러운 중성 조명, 벽에 흐릿하게 처리된 액자. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 글자 없음, 시네마틱 35mm 필름.
     image: hospital/exam-room.png
   - name: ward
     refName: p1_l_hospital_ward
-    prompt: Modern Korean hospital ward by a window, single bed in pale morning light, thin curtain moving slightly. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 창가의 현대적 한국 병실, 옅은 아침 빛 속 침대 하나, 살짝 흔들리는 얇은 커튼. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 시네마틱 35mm 필름.
     image: hospital/ward.png
   - name: corridor
     refName: p1_l_hospital_corridor
-    prompt: Quiet modern hospital corridor in Korea, cool even light, empty benches along the wall. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 조용한 현대식 병원 복도, 고른 차가운 빛, 벽을 따라 늘어선 빈 벤치들. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 시네마틱 35mm 필름.
     image: hospital/corridor.png

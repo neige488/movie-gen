@@ -2,5 +2,5 @@ name: interlaken-bench
 references:
   - name: hill-lake-view
     refName: p1_l_interlakenbench_hilllakeview
-    prompt: A wooden bench on a grassy hill above Interlaken, Switzerland — strikingly similar in shape to the Nowon hillside-park bench. Turquoise lake and snow-capped peaks beyond, clear bright day. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 스위스 인터라켄 위 풀 언덕에 놓인 나무 벤치 — 서울 언덕 공원의 그 벤치와 형태가 똑 닮음. 너머로 청록빛 호수와 만년설 봉우리, 맑고 밝은 날. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 시네마틱 35mm 필름.
     image: interlaken-bench/hill-lake-view.png

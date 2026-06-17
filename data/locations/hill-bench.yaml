@@ -2,13 +2,13 @@ name: hill-bench
 references:
   - name: day-city-view
     refName: p1_l_hillbench_daycityview
-    prompt: A wooden bench in a tidy hillside neighborhood park at the foot of Bulamsan/Suraksan in Nowon-gu, beside a single old-style red postbox (a deliberate vintage detail in an otherwise well-kept park). Modern apartment towers and the academy district spread below. Warm afternoon. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 산자락의 잘 정비된 언덕 동네 공원에 놓인 나무 벤치, 그 옆에 오래된 구식 빨간 우체통 하나(정비된 공원 속 의도적 빈티지 디테일). 아래로 현대적 아파트 단지와 도시가 펼쳐짐. 따뜻한 오후. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: hill-bench/day-city-view.png
   - name: sunset
     refName: p1_l_hillbench_sunset
-    prompt: The same bench and old red postbox in the hillside park at sunset, sky in orange-pink, the Nowon apartment skyline lighting up below. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 같은 벤치와 오래된 빨간 우체통, 언덕 공원의 해질녘 — 주황빛 하늘, 아래로 켜지는 도시의 불빛. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: hill-bench/sunset.png
   - name: overcast
     refName: p1_l_hillbench_overcast
-    prompt: The same bench and postbox under a flat grey overcast sky, cold light, wind in the grass, the city muted below. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 같은 벤치와 우체통, 흐린 잿빛 하늘 아래 — 차가운 빛, 풀밭을 스치는 바람, 아래로 가라앉은 도시. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: hill-bench/overcast.png

@@ -2,5 +2,5 @@ name: school-office
 references:
   - name: teachers-room
     refName: p1_l_schooloffice_teachersroom
-    prompt: Modern Korean high school teachers' office, stacked papers and binders, late afternoon light, one desk with an open student-records binder. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 현대적 한국 고등학교 교무실, 쌓인 서류와 바인더, 늦은 오후 빛, 한 책상엔 펼쳐진 학생부 바인더. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: school-office/teachers-room.png

@@ -2,13 +2,13 @@ name: sua-home
 references:
   - name: corridor-apartment
     refName: p1_l_suahome_corridorapartment
-    prompt: Exterior of an older corridor-type (bokdo-sik) apartment building in Nowon-gu — 1980s-90s stock, well-maintained but plainly older than the surrounding new towers. Clean exposed walkways, afternoon light. (Deliberate quiet contrast with Jihoon's newer complex — NOT a slum.) 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 오래된 복도식 아파트 외관 — 1980~90년대 건물로, 잘 관리됐지만 주변 새 아파트보다 분명히 오래됨. 깨끗한 외부 복도, 오후 빛. (지훈의 새 아파트와의 의도적이고 조용한 대비 — 빈민가 아님.) 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: sua-home/corridor-apartment.png
   - name: front-door
     refName: p1_l_suahome_frontdoor
-    prompt: 'Open-air corridor of the older Nowon apartment: a plain but clean front door, even corridor light, the academy district visible past the railing. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 오래된 아파트의 외부 복도 — 수수하지만 깨끗한 현관문, 고른 복도 빛, 난간 너머로 보이는 도시. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: sua-home/front-door.png
   - name: entry-glimpse
     refName: p1_l_suahome_entryglimpse
-    prompt: 'View through a half-open Korean apartment front door into a small tidy entryway: a shoe cabinet with a framed photo on top and a pair of red canvas sneakers placed neatly beside it. Shallow depth. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 반쯤 열린 한국 아파트 현관문 너머로 보이는 작고 정돈된 현관 안 — 신발장 위 액자 하나와 그 옆에 가지런히 놓인 빨간 운동화 한 켤레. 얕은 심도. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: sua-home/entry-glimpse.png

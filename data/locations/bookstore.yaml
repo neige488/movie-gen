@@ -2,9 +2,9 @@ name: bookstore
 references:
   - name: aisles
     refName: p1_l_bookstore_aisles
-    prompt: 'Cozy independent Korean bookstore interior, warm wooden shelves packed with books, soft daylight through large windows, narrow browsing aisles. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, inviting. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 아늑한 동네 독립서점 내부 — 따뜻한 원목 책장에 책이 빼곡, 큰 창으로 드는 부드러운 자연광, 좁은 통로. 책등·표지 글자는 흐릿하게 처리해 읽히지 않게. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 시네마틱 35mm 필름.
     image: bookstore/aisles.png
   - name: record-corner
     refName: p1_l_bookstore_recordcorner
-    prompt: 'A small vinyl-record listening corner inside a Korean bookstore: crates of records, a couple of headphone listening stations, warm intimate lighting, wood and warm tones. 2026 Seoul, Nowon-gu (노원구) academy district. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 서점 안 작은 LP 청음 코너 — 레코드 상자들, 헤드폰 청음 스테이션 두어 개, 따뜻하고 친밀한 조명, 원목과 따뜻한 톤. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: bookstore/record-corner.png

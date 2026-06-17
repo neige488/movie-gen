@@ -2,5 +2,5 @@ name: school-hallway
 references:
   - name: window-row
     refName: p1_l_schoolhallway_windowrow
-    prompt: Modern Korean high school corridor in afternoon light, a row of classroom windows looking into a classroom, clean polished floor, dust in sunbeams. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    prompt: 오후 빛 속 현대적 한국 고등학교 복도, 교실을 들여다보는 창문들이 줄지어 있고, 깨끗한 광택 바닥, 햇살 속 떠다니는 먼지. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: school-hallway/window-row.png

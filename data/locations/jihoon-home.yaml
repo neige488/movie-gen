@@ -2,9 +2,9 @@ name: jihoon-home
 references:
   - name: bedroom
     refName: p1_l_jihoonhome_bedroom
-    prompt: 'A Korean teenage boy''s bedroom at night in a newer well-kept apartment: gaming desk with monitor glow, single bed, study books piled, window with thin curtains, city light leaking in. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 밤, 비교적 새 아파트의 한국 남자 고등학생 방 — 모니터 불빛이 새는 게이밍 책상, 싱글 침대, 쌓인 참고서, 얇은 커튼의 창, 새어드는 도시 불빛. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: jihoon-home/bedroom.png
   - name: hallway
     refName: p1_l_jihoonhome_hallway
-    prompt: 'Hallway outside a teenager''s room at night in a modern, well-kept Korean apartment (newer large complex): warm kitchen light from one end, door slightly ajar with monitor glow in the gap. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 밤, 현대적이고 잘 관리된 한국 아파트(비교적 새 대단지)의 방 밖 복도 — 한쪽 끝에서 새는 따뜻한 주방 불빛, 살짝 열린 문틈으로 새는 모니터 불빛. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: jihoon-home/hallway.png

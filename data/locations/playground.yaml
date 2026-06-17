@@ -2,5 +2,5 @@ name: playground
 references:
   - name: dusk-swings
     refName: p1_l_playground_duskswings
-    prompt: 'A modern Korean apartment-complex playground at dusk: clean colorful play equipment, two swings, soft rubber safety flooring, long shadows, empty. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.'
+    prompt: 해질녘 아파트 단지 놀이터 — 깨끗하고 알록달록한 놀이기구, 그네 둘, 푹신한 고무 바닥, 길게 늘어진 그림자, 텅 빔. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: playground/dusk-swings.png
