@@ -5,7 +5,7 @@
   "description": "Movie Gen — 영화 제작 산출물 관리 도구",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n server,client -c green,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev": "concurrently --restart-tries=-1 --restart-after=500 -n server,client -c green,cyan \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "tsx watch src/web/server/main.ts",
     "dev:client": "vite",
     "build": "tsc -p tsconfig.build.json && vite build",
