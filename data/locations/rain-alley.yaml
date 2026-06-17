@@ -1,6 +1,6 @@
 name: rain-alley
 references:
-  - name: evening-rain
-    refName: p1_l_rainalley_eveningrain
-    prompt: Narrow clean street between modern low-rise commercial buildings in a Nowon academy district, steady evening rain, wet asphalt reflecting tidy storefront lights and academy signage. 2026 Seoul, Nowon-gu (노원구) academy district — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
-    image: rain-alley/evening-rain.png
+  - name: rain
+    refName: p1_l_rainalley_rain
+    prompt: A quiet tree-lined walking route from a high school toward a neighborhood bus stop, steady late-afternoon rain. A school-zone sidewalk along a calm two-lane residential road — low brick walls, wet leaves and roadside trees, a glimpse of the school fence behind and the bus stop ahead, overcast late-afternoon light, wet asphalt with soft reflections. NOT a commercial academy street, no shop signage. 2026 Seoul, Nowon-gu (노원구) residential school zone — modern, clean, well-maintained. Photorealistic location reference, no people, cinematic 35mm look.
+    image: rain-alley/rain.png

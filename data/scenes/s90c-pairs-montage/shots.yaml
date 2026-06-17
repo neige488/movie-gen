@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–7초] 미디엄 · 스테디 트래킹 · @p1_l_rainalley_eveningrain 비 오는 골목 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
+    prompt: "[0–7초] 미디엄 · 스테디 트래킹 · @p1_l_rainalley_rain 비 오는 하굣길 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
     duration: 7
     screenplayHash: 02ceaacd309a600efa1db6bb8872f3626e86dc600a912c3e032430e58650de40
     prevShotRef: "01"
@@ -21,6 +21,6 @@ shots:
         look: only-hoodie
     locationRefs:
       - location: rain-alley
-        reference: evening-rain
+        reference: rain
     propRefs: []
     takes: []

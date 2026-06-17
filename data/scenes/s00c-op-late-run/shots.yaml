@@ -1,16 +1,26 @@
 shots:
   - id: "01"
-    prompt: |-
-      [0–6초] 미디엄 · 핸드헬드 · 아침 @p1_l_jihoonhome_bedroom, @p1_c_jihoon_hoodiewithbag_full 이 게임을 끄고 허둥지둥 교복 위에 후드티를 걸친다, 가방 지퍼는 반쯤 열리고 후드티 끈이 한쪽만 길다 · 연기: 늦잠 뒤 다급함
-      [6–11초] 와이드 풀샷 · 팔로우 · 골목으로 @p1_c_jihoon_hoodiewithbag_full 이 뛰어나온다 · 연기: 거친 숨, 조급함
-    duration: 11
-    screenplayHash: ad3a614dfb888f01462cc4f55fbeb12ae1effd9b16809d3959a0836de79cb19a
+    prompt: "[0–6초] 미디엄 · 핸드헬드 · 아침 @p1_l_jihoonhome_bedroom, @p1_c_jihoon_hoodiewithbag_full 이 게임을 끄고 허둥지둥 교복 위에 후드티를 걸친다, 가방 지퍼는 반쯤 열리고 후드티 끈이 한쪽만 길다 · 연기: 늦잠 뒤 다급함"
+    duration: 6
+    screenplayHash: 63d26aa0a53377a20c6884ff4665f3ea9251406f821a342a6976b90d9cb58fc8
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
     locationRefs:
       - location: jihoon-home
         reference: bedroom
-      - location: rain-alley
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "[0–5초] 와이드 풀샷 · 팔로우 · 아침 @p1_l_homealley_morning 집 앞 마른 골목으로 @p1_c_jihoon_hoodiewithbag_full 이 뛰어나온다 · 연기: 거친 숨, 조급함"
+    duration: 5
+    screenplayHash: df3a7ddd026e9bae1f6b284bffafa1cd6928548927dce9d266e2cc88196cc40c
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+    locationRefs:
+      - location: home-alley
+        reference: morning
     propRefs: []
     takes: []

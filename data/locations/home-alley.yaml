@@ -1,0 +1,6 @@
+name: home-alley
+references:
+  - name: morning
+    refName: p1_l_homealley_morning
+    prompt: A narrow dry residential alley beside an apartment complex in Nowon-gu, early morning. Quiet side lane near home — parked cars, low walls, a few trees, clean pavement, soft morning light, no rain. The route a student takes bursting out toward the main road. 2026 Seoul, Nowon-gu (노원구) residential neighborhood — modern, clean, well-maintained, bright. Photorealistic location reference, no people, cinematic 35mm look.
+    image: home-alley/morning.png
