@@ -1,5 +1,7 @@
 name: jihoon-mother
-headshot: jihoon-mother/headshot.png
+headshot:
+  image: jihoon-mother/headshot.png
+  refName: p1_c_jihoonmother_headshot
 looks:
   - name: default
     face:

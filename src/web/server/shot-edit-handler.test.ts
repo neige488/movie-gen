@@ -103,7 +103,7 @@ function writeMinimalProject(opts?: {
       path.join(charDir, "character-a.yaml"),
       yaml.dump({
         name: "character-a",
-        headshot: "character-a/headshot.png",
+        headshot: { image: "character-a/headshot.png" },
         looks: [
           {
             name: "look1",

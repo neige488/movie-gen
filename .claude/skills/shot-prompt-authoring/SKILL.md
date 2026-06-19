@@ -56,6 +56,13 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 - 코드는 `refName` **포맷(`[a-z0-9_]+`)·프로젝트 내 유일성**만 검증한다. 작명은 LLM이 규약대로.
 - 유효 `@이름` 레지스트리는 라이브러리의 모든 `refName`에서 자동 도출된다(프리셋에 목록을 두지 않음).
 
+**에셋 이미지 생성 프롬프트:** 각 ImageRef는 생성 `prompt`를 가질 수 있다. 헤드샷·uniform은 기본
+프롬프트가 있다(도메인 `DEFAULT_HEADSHOT_PROMPT` / `DEFAULT_UNIFORM_PROMPT`).
+- **headshot**(Character 단위 얼굴 ID): 정면 클로즈업 식별용. `headshot.prompt`.
+- **uniform**(Look 단위, 선택): **2분할 앞/뒤** 의상 소스 한 장. `Look.uniform`(image + prompt).
+  이 uniform에서 **face(5분할)·body(3분할)를 derive**한다 — 권장 순서: uniform 생성 → face/body 추출.
+  `@refName`은 보통 video에 쓰는 face/body에 달고, uniform은 소스로만 둔다.
+
 ## Shot 단위 = 1회 생성(≤15초)
 
 - **15초 이내**면 **한 Shot**으로 작성한다 — 여러 Shot으로 쪼개지 말 것. 컷이 여러 개여도

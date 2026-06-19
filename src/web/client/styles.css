@@ -225,6 +225,10 @@ body {
 
 /* Main column */
 .main {
+  /* min-width:0 so this 1fr grid item can shrink below its content's
+     min-content width — without it the Canvas (nowrap beat labels etc.) forces
+     the column to overflow horizontally instead of shrinking responsively. */
+  min-width: 0;
   padding: 2rem 2.5rem 6rem;
   max-width: 1400px;
 }

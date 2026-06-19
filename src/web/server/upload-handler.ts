@@ -77,7 +77,8 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
   switch (slot.kind) {
     case "character-headshot":
     case "character-face":
-    case "character-body": {
+    case "character-body":
+    case "character-uniform": {
       const c = project.characters.find((x) => x.name === slot.character);
       if (!c) {
         throw new UploadValidationError(
@@ -144,7 +145,8 @@ async function applySlotToProject(
   switch (slot.kind) {
     case "character-headshot":
     case "character-face":
-    case "character-body": {
+    case "character-body":
+    case "character-uniform": {
       const updatedChar = mutateCharacter(
         findCharacter(project, slot.character),
         slot,
@@ -217,19 +219,28 @@ function mutateCharacter(
   c: Character,
   slot: Extract<
     AssetSlot,
-    { kind: "character-headshot" | "character-face" | "character-body" }
+    {
+      kind:
+        | "character-headshot"
+        | "character-face"
+        | "character-body"
+        | "character-uniform";
+    }
   >,
   relativePath: string,
 ): Character {
+  // Patch only the image path; preserve refName/name/prompt on the ImageRef.
   if (slot.kind === "character-headshot") {
-    return { ...c, headshot: relativePath };
+    return { ...c, headshot: { ...c.headshot, image: relativePath } };
   }
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;
-    // Patch only the image path; preserve refName/name/prompt on the ImageRef.
-    return slot.kind === "character-face"
-      ? { ...l, face: { ...l.face, image: relativePath } }
-      : { ...l, body: { ...l.body, image: relativePath } };
+    if (slot.kind === "character-face")
+      return { ...l, face: { ...l.face, image: relativePath } };
+    if (slot.kind === "character-body")
+      return { ...l, body: { ...l.body, image: relativePath } };
+    // character-uniform — creates the uniform ImageRef if the look had none.
+    return { ...l, uniform: { ...l.uniform, image: relativePath } };
   });
   return { ...c, looks };
 }

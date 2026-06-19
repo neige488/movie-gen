@@ -1,9 +1,16 @@
-import type { LibraryCharacterDto } from "../../shared/dto.js";
+import type { LibraryCharacterDto, ImageReferenceDto } from "../../shared/dto.js";
 import { ImageSlot } from "./ImageSlot.js";
+import { PromptBlock } from "./PromptBlock.js";
 
 interface Props {
   character: LibraryCharacterDto;
   onUploaded: () => void;
+}
+
+/** Small `@refName` label shown next to a slot when the ImageRef has one. */
+function RefName({ ref }: { ref?: ImageReferenceDto }) {
+  if (!ref?.refName) return null;
+  return <span className="look__refname">@{ref.refName}</span>;
 }
 
 export function CharacterCard({ character, onUploaded }: Props) {
@@ -18,12 +25,19 @@ export function CharacterCard({ character, onUploaded }: Props) {
           </span>
         </div>
         <div className="card__headshot">
+          <div className="look__group-label">
+            headshot (face ID)
+            <RefName ref={character.headshot} />
+          </div>
           <ImageSlot
             slot={{ kind: "character-headshot", character: character.name }}
-            imagePath={character.headshot}
+            imagePath={character.headshot.image}
             label="headshot"
             onUploaded={onUploaded}
           />
+          {character.headshot.prompt && (
+            <PromptBlock prompt={character.headshot.prompt} />
+          )}
         </div>
       </header>
       <div className="card__looks">
@@ -33,10 +47,27 @@ export function CharacterCard({ character, onUploaded }: Props) {
             <div className="look__row">
               <div className="look__group">
                 <div className="look__group-label">
+                  Uniform (2-panel 앞뒤)
+                  <RefName ref={look.uniform} />
+                </div>
+                <ImageSlot
+                  slot={{
+                    kind: "character-uniform",
+                    character: character.name,
+                    look: look.name,
+                  }}
+                  imagePath={look.uniform?.image ?? ""}
+                  label="uniform"
+                  onUploaded={onUploaded}
+                />
+                {look.uniform?.prompt && (
+                  <PromptBlock prompt={look.uniform.prompt} />
+                )}
+              </div>
+              <div className="look__group">
+                <div className="look__group-label">
                   Face (5-panel sheet)
-                  {look.face.refName && (
-                    <span className="look__refname">@{look.face.refName}</span>
-                  )}
+                  <RefName ref={look.face} />
                 </div>
                 <ImageSlot
                   slot={{
@@ -52,9 +83,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
               <div className="look__group">
                 <div className="look__group-label">
                   Body (3-panel sheet)
-                  {look.body.refName && (
-                    <span className="look__refname">@{look.body.refName}</span>
-                  )}
+                  <RefName ref={look.body} />
                 </div>
                 <ImageSlot
                   slot={{

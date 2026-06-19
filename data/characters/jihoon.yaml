@@ -1,5 +1,7 @@
 name: jihoon
-headshot: characters/jihoon/headshot-3.png
+headshot:
+  image: characters/jihoon/headshot-3.png
+  refName: p1_c_jihoon_headshot
 looks:
   - name: uniform
     face:

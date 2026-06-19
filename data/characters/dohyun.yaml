@@ -1,5 +1,7 @@
 name: dohyun
-headshot: dohyun/headshot.png
+headshot:
+  image: dohyun/headshot.png
+  refName: p1_c_dohyun_headshot
 looks:
   - name: uniform
     face:

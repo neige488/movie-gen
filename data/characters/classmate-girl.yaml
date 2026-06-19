@@ -1,5 +1,7 @@
 name: classmate-girl
-headshot: classmate-girl/headshot.png
+headshot:
+  image: classmate-girl/headshot.png
+  refName: p1_c_classmategirl_headshot
 looks:
   - name: uniform
     face:

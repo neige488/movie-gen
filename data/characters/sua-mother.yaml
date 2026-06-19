@@ -1,5 +1,7 @@
 name: sua-mother
-headshot: sua-mother/headshot.png
+headshot:
+  image: sua-mother/headshot.png
+  refName: p1_c_suamother_headshot
 looks:
   - name: default
     face:

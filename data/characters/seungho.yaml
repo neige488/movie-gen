@@ -1,5 +1,7 @@
 name: seungho
-headshot: seungho/headshot.png
+headshot:
+  image: seungho/headshot.png
+  refName: p1_c_seungho_headshot
 looks:
   - name: uniform
     face:

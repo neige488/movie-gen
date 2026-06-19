@@ -107,12 +107,15 @@ _Avoid_: Attempt, Render
 영화 등장 인물. `name` + `headshot` + `looks[]`로 구성. 얼굴 ID(headshot)는 캐릭터 단위로 통일.
 
 **Headshot**:
-캐릭터의 얼굴 ID 이미지. **Character 단위**(의상 무관, 영화 전체에서 공통).
+캐릭터의 얼굴 ID. **Character 단위**(의상 무관, 영화 전체 공통). **ImageRef**로 저장 — 이미지 + 선택 생성 `prompt`(기본 `DEFAULT_HEADSHOT_PROMPT`) + 선택 `@refName`.
 _Avoid_: Portrait
 
 **Look**:
-캐릭터의 의상/스타일 변종. 한 캐릭터가 영화 중 여러 의상을 입을 수 있으므로 Look 단위로 분기. 의상별 BodyProfile + FaceProfile을 가진다.
+캐릭터의 의상/스타일 변종. 한 캐릭터가 영화 중 여러 의상을 입을 수 있으므로 Look 단위로 분기. FaceProfile + BodyProfile + 선택 Uniform을 가진다.
 _Avoid_: Outfit, Costume, Wardrobe
+
+**Uniform**:
+한 Look(의상)의 **소스 레퍼런스** — 의상 앞/뒤를 담은 **2분할 시트 이미지 1장**. **Look 단위·선택**. ImageRef로 저장(이미지 + 선택 생성 `prompt`, 기본 `DEFAULT_UNIFORM_PROMPT`). 디렉터가 이걸 생성한 뒤 **face/body를 여기서 직접 derive**. 생성용 소스라 보통 `@refName`은 face/body에 단다.
 
 **BodyProfile**:
 신체/의상 ref. **3분할로 이미 나뉜 시트 이미지 1장**(개별 파일 3개가 아님). **Look 단위**. Look에 `body`(ImageRef = 상대 경로 + 선택 `@refName`)로 저장.
@@ -128,7 +131,7 @@ _Avoid_: Outfit, Costume, Wardrobe
 _Avoid_: Item, Object
 
 **Reference (image ref)**:
-Location/Prop의 한 앵글 = **ImageRef** `{ image, name?, prompt?, refName? }`. Look의 face/body, Character headshot도 같은 ImageRef 원자를 공유한다(headshot은 단일 경로 유지).
+Location/Prop의 한 앵글 = **ImageRef** `{ image, name?, prompt?, refName? }`. Look의 face/body/uniform, Character headshot도 모두 같은 ImageRef 원자를 공유한다.
 
 **Chaining**:
 한 Scene 안에서 영상 길이가 15초를 넘어 여러 Shot으로 쪼개질 때, 다음 Shot이 직전 Shot의 starred Take를 ref로 받아 이어지는 메커니즘. Scene 경계는 넘지 않는다.
@@ -149,7 +152,7 @@ _Avoid_: Shot.prompt에 조립 결과 저장하기
 엔진 레퍼런스를 본문에서 직접 지칭하는 `@이름`(계정 전역 등록명). 네이밍 `{프로젝트}_{c|l|p}_{고유이름}`, 구분자 `_`만. 라이브러리 ImageRef의 `refName`(= 등록명)과 대조해 검증. 작성 규칙·룩 라이브러리는 스킬 `shot-prompt-authoring` 참조.
 
 **ImageRef** (reference image atom):
-모든 레퍼런스 이미지의 통일 단위 `{ image, refName?, name?, prompt? }`. `image`만 필수. `refName` = 엔진 `@이름`(LLM 작성·코드 검증). `name`(앵글 라벨)·`prompt`는 Location/Prop이 사용, Look face/body는 생략. Look은 `face`/`body`로, Location/Prop은 `references[]`로 가진다.
+모든 레퍼런스 이미지의 통일 단위 `{ image, refName?, name?, prompt? }`. `image`만 필수. `refName` = 엔진 `@이름`(LLM 작성·코드 검증). `name`(앵글 라벨)은 Location/Prop이 사용, `prompt`(생성 프롬프트)는 Location/Prop·headshot·uniform이 사용. Character는 `headshot`, Look은 `face`/`body`/`uniform?`, Location/Prop은 `references[]`로 가진다.
 
 ## Relationships
 
@@ -161,8 +164,8 @@ _Avoid_: Shot.prompt에 조립 결과 저장하기
 - **Shot**은 **Screenplay marker** 블록 1개 이상과 매핑된다 (한 Shot이 여러 블록 가능).
 - **Shot**의 **Take**들 중 최대 1개가 `isStarred=true`.
 - **Take**는 immutable. `screenplay_hash` 스냅샷을 가진다.
-- **Character**는 1 **Headshot** + N **Look**을 가진다.
-- **Look**은 1 **face**(5분할 시트 1장) + 1 **body**(3분할 시트 1장)을 가진다 — 각각 **ImageRef**(이미지 + 선택 `@refName`).
+- **Character**는 1 **Headshot**(ImageRef, 생성 프롬프트 포함) + N **Look**을 가진다.
+- **Look**은 1 **face**(5분할 시트 1장) + 1 **body**(3분할 시트 1장) + 0..1 **uniform**(앞뒤 2분할 소스)을 가진다 — 각각 **ImageRef**(이미지 + 선택 생성 `prompt`/`@refName`).
 - **Location**은 N **Reference**(앵글별)를 가진다.
 - **Prop**은 N **Reference**(앵글별)를 가진다.
 

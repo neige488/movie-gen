@@ -59,7 +59,8 @@ function writeMinimalScene(): void {
 
 const ALICE_YAML = `
 name: alice
-headshot: alice/headshot.png
+headshot:
+  image: alice/headshot.png
 looks:
   - name: hoodie
     face:
@@ -121,11 +122,11 @@ describe("applyUpload — character headshot", () => {
 
     // YAML on disk updated.
     const reloaded = await loadProject(dataDir);
-    expect(reloaded.characters[0]!.headshot).toBe(
+    expect(reloaded.characters[0]!.headshot.image).toBe(
       "characters/alice/headshot.png",
     );
     // In-memory project also updated.
-    expect(result.project.characters[0]!.headshot).toBe(
+    expect(result.project.characters[0]!.headshot.image).toBe(
       "characters/alice/headshot.png",
     );
   });
@@ -170,7 +171,7 @@ describe("applyUpload — character headshot", () => {
     expect(r2.relativePath).toBe("characters/alice/headshot-2.png");
     // The latest upload becomes the active headshot.
     const reloaded = await loadProject(dataDir);
-    expect(reloaded.characters[0]!.headshot).toBe(
+    expect(reloaded.characters[0]!.headshot.image).toBe(
       "characters/alice/headshot-2.png",
     );
   });
@@ -234,6 +235,34 @@ describe("applyUpload — character face/body slots", () => {
     const look = reloaded.characters[0]!.looks[0]!;
     expect(look.body.image).toBe("characters/alice/hoodie/body.png");
     expect(look.face.image).toBe("alice/hoodie/face.png"); // unchanged
+  });
+
+  it("creates the look's uniform on upload when the look had none", async () => {
+    // ALICE_YAML's hoodie look has no uniform — uploading one creates it.
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+
+    await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-uniform", character: "alice", look: "hoodie" },
+        originalFilename: "u.png",
+        data: Buffer.from("UNIFORM"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      createProject,
+    });
+
+    const reloaded = await loadProject(dataDir);
+    const look = reloaded.characters[0]!.looks[0]!;
+    expect(look.uniform?.image).toBe("characters/alice/hoodie/uniform.png");
+    // face/body untouched.
+    expect(look.face.image).toBe("alice/hoodie/face.png");
+    expect(look.body.image).toBe("alice/hoodie/body.png");
   });
 
   it("rejects upload targeting unknown character", async () => {

@@ -1,5 +1,7 @@
 name: sua
-headshot: sua/headshot.png
+headshot:
+  image: sua/headshot.png
+  refName: p1_c_sua_headshot
 looks:
   - name: accident-day
     face:

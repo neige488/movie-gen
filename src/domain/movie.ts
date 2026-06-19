@@ -254,12 +254,19 @@ export interface Look {
   readonly face: ImageReference;
   /** Body reference — single 3-panel split sheet, with optional engine @refName. */
   readonly body: ImageReference;
+  /**
+   * Optional outfit source — a single 2-panel sheet (front + back view) of the
+   * outfit. The director generates this (default prompt: DEFAULT_UNIFORM_PROMPT)
+   * and derives `face`/`body` from it. Carries its own generation `prompt`.
+   */
+  readonly uniform?: ImageReference;
 }
 
 export interface CreateLookInput {
   name: string;
   face: ImageReference;
   body: ImageReference;
+  uniform?: ImageReference;
 }
 
 export function createLook(input: CreateLookInput): Look {
@@ -268,31 +275,51 @@ export function createLook(input: CreateLookInput): Look {
     throw new DomainInvariantError(`Look[${input.name}].face.image is required`);
   if (!input.body?.image)
     throw new DomainInvariantError(`Look[${input.name}].body.image is required`);
+  if (input.uniform !== undefined && !input.uniform.image)
+    throw new DomainInvariantError(
+      `Look[${input.name}].uniform.image is required when uniform is set`,
+    );
   return {
     name: input.name,
     face: input.face,
     body: input.body,
+    ...(input.uniform !== undefined ? { uniform: input.uniform } : {}),
   };
 }
 
+/**
+ * Default generation prompt for a Character headshot (face ID). The director/LLM
+ * starts from this when creating the headshot reference image.
+ */
+export const DEFAULT_HEADSHOT_PROMPT =
+  "캐릭터 얼굴 ID 헤드샷, 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음.";
+
+/**
+ * Default generation prompt for a Look uniform — a single 2-panel sheet showing
+ * the outfit front and back, from which face/body refs are derived.
+ */
+export const DEFAULT_UNIFORM_PROMPT =
+  "한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.";
+
 export interface Character {
   readonly name: string;
-  readonly headshot: string;
+  /** Face ID — single image (character-level), with optional generation prompt. */
+  readonly headshot: ImageReference;
   readonly looks: readonly Look[];
 }
 
 export interface CreateCharacterInput {
   name: string;
-  headshot: string;
+  headshot: ImageReference;
   looks: readonly Look[];
 }
 
 export function createCharacter(input: CreateCharacterInput): Character {
   if (!input.name)
     throw new DomainInvariantError("Character.name is required");
-  if (!input.headshot)
+  if (!input.headshot?.image)
     throw new DomainInvariantError(
-      `Character[${input.name}].headshot is required`,
+      `Character[${input.name}].headshot.image is required`,
     );
   if (input.looks.length === 0) {
     throw new DomainInvariantError(
@@ -417,7 +444,7 @@ export function createProject(input: {
 
   // Engine @refName integrity: charset ([a-z0-9_]+ — the @mention charset, no
   // hyphens/uppercase) and project-wide uniqueness across every ImageReference
-  // (Look face/body + Location/Prop references). refName is optional, so refs
+  // (headshot + Look face/body/uniform + Location/Prop refs). refName is optional, so refs
   // without it are skipped.
   const seenRefName = new Map<string, string>();
   for (const { ref, where } of gatherImageRefs(input)) {
@@ -459,9 +486,16 @@ function gatherImageRefs(
 ): { ref: ImageReference; where: string }[] {
   const out: { ref: ImageReference; where: string }[] = [];
   for (const c of p.characters) {
+    out.push({ ref: c.headshot, where: `Character[${c.name}].headshot` });
     for (const l of c.looks) {
       out.push({ ref: l.face, where: `Character[${c.name}] Look[${l.name}].face` });
       out.push({ ref: l.body, where: `Character[${c.name}] Look[${l.name}].body` });
+      if (l.uniform) {
+        out.push({
+          ref: l.uniform,
+          where: `Character[${c.name}] Look[${l.name}].uniform`,
+        });
+      }
     }
   }
   for (const loc of p.locations) {
@@ -479,8 +513,9 @@ function gatherImageRefs(
 
 /**
  * The movie's engine @mention registry: every `refName` present across the
- * project's ImageReferences (Look face/body + Location/Prop references). Used to
- * validate that inline `@names` in Shot prompts point at a real registered ref.
+ * project's ImageReferences (Character headshot + Look face/body/uniform +
+ * Location/Prop references). Used to validate that inline `@names` in Shot
+ * prompts point at a real registered ref.
  */
 export function collectRefNames(project: Project): string[] {
   return gatherImageRefs(project)

@@ -227,7 +227,7 @@ describe("projectToMovieDto — BS2 canvas acts", () => {
 describe("projectToMovieDto — finalPrompt assembly", () => {
   const character = createCharacter({
     name: "character-a",
-    headshot: "characters/character-a/headshot.png",
+    headshot: { image: "characters/character-a/headshot.png" },
     looks: [
       createLook({
         name: "introspective",

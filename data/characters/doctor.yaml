@@ -1,5 +1,7 @@
 name: doctor
-headshot: doctor/headshot.png
+headshot:
+  image: doctor/headshot.png
+  refName: p1_c_doctor_headshot
 looks:
   - name: default
     face:
