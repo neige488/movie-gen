@@ -236,6 +236,7 @@ async function loadCharacters(dir: string): Promise<Character[]> {
           name: l.name,
           face: l.face,
           body: l.body,
+          ...(l.uniform !== undefined ? { uniform: l.uniform } : {}),
         }),
       );
       characters.push(

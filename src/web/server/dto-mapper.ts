@@ -77,7 +77,7 @@ export function projectToMovieDto(
     totalPages,
     characters: project.characters.map((c) => ({
       name: c.name,
-      headshot: c.headshot,
+      headshot: c.headshot.image,
       looks: c.looks.map((l) => ({ name: l.name })),
     })),
     locations: project.locations.map((l) => ({ name: l.name })),
@@ -198,11 +198,12 @@ export function projectToLibraryDto(project: Project): LibraryDto {
 function characterToLibrary(c: Project["characters"][number]): LibraryCharacterDto {
   return {
     name: c.name,
-    headshot: c.headshot,
+    headshot: imageRefToDto(c.headshot),
     looks: c.looks.map((l) => ({
       name: l.name,
       face: imageRefToDto(l.face),
       body: imageRefToDto(l.body),
+      ...(l.uniform !== undefined ? { uniform: imageRefToDto(l.uniform) } : {}),
     })),
   };
 }

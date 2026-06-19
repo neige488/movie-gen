@@ -73,7 +73,8 @@ function writePropFile(name: string, yaml: string): void {
 
 const ALICE_YAML = `
 name: alice
-headshot: alice/headshot.png
+headshot:
+  image: alice/headshot.png
 looks:
   - name: hoodie
     face:
@@ -89,15 +90,15 @@ describe("saveCharacter — round-trip", () => {
 
     const before = await loadProject(dataDir);
     const alice = before.characters[0]!;
-    expect(alice.headshot).toBe("alice/headshot.png");
+    expect(alice.headshot.image).toBe("alice/headshot.png");
 
     await saveCharacter(dataDir, {
       ...alice,
-      headshot: "alice/headshot-2.png",
+      headshot: { ...alice.headshot, image: "alice/headshot-2.png" },
     });
 
     const after = await loadProject(dataDir);
-    expect(after.characters[0]!.headshot).toBe("alice/headshot-2.png");
+    expect(after.characters[0]!.headshot.image).toBe("alice/headshot-2.png");
   });
 
   it("updates a look's face image and reloads", async () => {

@@ -86,11 +86,15 @@ export const lookFileSchema = z.object({
   // as an ImageReference (relative asset path + optional engine @refName).
   face: imageReferenceFileSchema,
   body: imageReferenceFileSchema,
+  // Optional outfit source — a single 2-panel (front + back) sheet the director
+  // derives face/body from. Carries its own generation prompt.
+  uniform: imageReferenceFileSchema.optional(),
 });
 
 export const characterFileSchema = z.object({
   name: z.string().min(1),
-  headshot: z.string().min(1),
+  // Face ID — an ImageReference (image + optional generation prompt / @refName).
+  headshot: imageReferenceFileSchema,
   looks: z.array(lookFileSchema),
 });
 export type CharacterFile = z.infer<typeof characterFileSchema>;

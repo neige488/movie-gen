@@ -46,11 +46,12 @@ export async function saveCharacter(
   await mkdir(dir, { recursive: true });
   const payload = {
     name: character.name,
-    headshot: character.headshot,
+    headshot: imageRefToYaml(character.headshot),
     looks: character.looks.map((l) => ({
       name: l.name,
       face: imageRefToYaml(l.face),
       body: imageRefToYaml(l.body),
+      ...(l.uniform !== undefined ? { uniform: imageRefToYaml(l.uniform) } : {}),
     })),
   };
   await writeFile(
