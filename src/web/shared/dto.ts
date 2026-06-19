@@ -194,11 +194,14 @@ export interface LookDto {
   face: ImageReferenceDto;
   /** Body reference — single 3-panel split sheet, with optional engine @refName. */
   body: ImageReferenceDto;
+  /** Optional outfit source — single 2-panel (front+back) sheet + its prompt. */
+  uniform?: ImageReferenceDto;
 }
 
 export interface LibraryCharacterDto {
   name: string;
-  headshot: string;
+  /** Face ID — image + optional generation prompt / @refName. */
+  headshot: ImageReferenceDto;
   looks: LookDto[];
 }
 

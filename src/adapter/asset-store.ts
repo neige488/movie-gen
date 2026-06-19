@@ -49,6 +49,7 @@ export type AssetSlot =
   | { kind: "character-headshot"; character: string }
   | { kind: "character-face"; character: string; look: string }
   | { kind: "character-body"; character: string; look: string }
+  | { kind: "character-uniform"; character: string; look: string }
   | { kind: "location-ref"; location: string; refName: string }
   | { kind: "prop-ref"; prop: string; refName: string }
   | {
@@ -166,6 +167,14 @@ export function createAssetStore(assetsRoot: string): AssetStore {
         return {
           dir: path.join("characters", slot.character, slot.look),
           basename: `body.${ext}`,
+        };
+      }
+      case "character-uniform": {
+        assertSafeSegment(slot.character, "character name");
+        assertSafeSegment(slot.look, "look name");
+        return {
+          dir: path.join("characters", slot.character, slot.look),
+          basename: `uniform.${ext}`,
         };
       }
       case "location-ref": {

@@ -115,7 +115,8 @@ describe("loadProject — happy path", () => {
       "alice",
       `
 name: alice
-headshot: alice/headshot.png
+headshot:
+  image: alice/headshot.png
 looks:
   - name: hoodie
     face:
@@ -218,7 +219,8 @@ shots:
       "alice",
       `
 name: alice
-headshot: alice/headshot.png
+headshot:
+  image: alice/headshot.png
 looks:
   - name: hoodie
     face:

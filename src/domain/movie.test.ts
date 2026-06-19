@@ -262,7 +262,7 @@ describe("Character — name + headshot + looks", () => {
     expect(() =>
       createCharacter({
         name: "alice",
-        headshot: "headshot.png",
+        headshot: { image: "headshot.png" },
         looks: [],
       }),
     ).toThrow(DomainInvariantError);
@@ -274,7 +274,7 @@ describe("Character — name + headshot + looks", () => {
     expect(() =>
       createCharacter({
         name: "alice",
-        headshot: "headshot.png",
+        headshot: { image: "headshot.png" },
         looks: [mkLook("hoodie"), mkLook("hoodie")],
       }),
     ).toThrow(/duplicate.*look/i);
@@ -314,7 +314,7 @@ describe("Project — reference integrity", () => {
   it("rejects Shot referencing unknown Look on known Character", () => {
     const alice = createCharacter({
       name: "alice",
-      headshot: "h.png",
+      headshot: { image: "h.png" },
       looks: [mkLook("hoodie")],
     });
     const shot = createShot({
@@ -367,7 +367,7 @@ describe("Project — reference integrity", () => {
   it("accepts a project with all refs resolved", () => {
     const alice = createCharacter({
       name: "alice",
-      headshot: "h.png",
+      headshot: { image: "h.png" },
       looks: [mkLook("hoodie")],
     });
     const kitchen = createLocation({ name: "kitchen", references: [] });
@@ -1035,7 +1035,7 @@ describe("setShotDuration — Shot duration immutable update", () => {
 });
 
 describe("setShotCharacterRefs — Shot characterRefs immutable update", () => {
-  const headshot = "character-a/headshot.png";
+  const headshot = { image: "character-a/headshot.png" };
   const mkLook = (name: string) =>
     createLook({ name, face: { image: "face.png" }, body: { image: "body.png" } });
   const mkChar = (name: string, lookNames: string[]) =>
@@ -1553,7 +1553,7 @@ describe("Project — engine @refName integrity", () => {
   const charWithFaceRef = (refName: string) =>
     createCharacter({
       name: "alice",
-      headshot: "h.png",
+      headshot: { image: "h.png" },
       looks: [
         createLook({
           name: "look1",
@@ -1589,7 +1589,7 @@ describe("Project — engine @refName integrity", () => {
         characters: [
           createCharacter({
             name: "alice",
-            headshot: "h.png",
+            headshot: { image: "h.png" },
             looks: [
               createLook({
                 name: "look1",
@@ -1624,7 +1624,7 @@ describe("Project — engine @refName integrity", () => {
       characters: [
         createCharacter({
           name: "alice",
-          headshot: "h.png",
+          headshot: { image: "h.png" },
           looks: [
             createLook({
               name: "look1",
@@ -1636,5 +1636,57 @@ describe("Project — engine @refName integrity", () => {
       ],
     });
     expect(collectRefNames(project)).toEqual([]);
+  });
+});
+
+describe("Character headshot ImageRef + Look.uniform", () => {
+  const look = (over = {}) =>
+    createLook({ name: "casual", face: { image: "f.png" }, body: { image: "b.png" }, ...over });
+
+  it("requires headshot.image", () => {
+    expect(() =>
+      createCharacter({ name: "alice", headshot: { image: "" }, looks: [look()] }),
+    ).toThrow(/headshot\.image/i);
+  });
+
+  it("accepts an optional uniform on a Look", () => {
+    const l = look({ uniform: { image: "u.png", prompt: "2-panel 앞뒤" } });
+    expect(l.uniform?.image).toBe("u.png");
+    expect(l.uniform?.prompt).toBe("2-panel 앞뒤");
+  });
+
+  it("omits uniform when not provided", () => {
+    expect(look().uniform).toBeUndefined();
+  });
+
+  it("rejects a uniform without image when set", () => {
+    expect(() => look({ uniform: { image: "" } })).toThrow(/uniform\.image/i);
+  });
+
+  it("collectRefNames includes headshot and uniform refNames", () => {
+    const project = createProject({
+      scenes: [],
+      characters: [
+        createCharacter({
+          name: "alice",
+          headshot: { image: "h.png", refName: "p1_c_alice_headshot" },
+          looks: [
+            createLook({
+              name: "casual",
+              face: { image: "f.png", refName: "p1_c_alice_casual_face" },
+              body: { image: "b.png" },
+              uniform: { image: "u.png", refName: "p1_c_alice_casual_uniform" },
+            }),
+          ],
+        }),
+      ],
+      locations: [],
+      props: [],
+    });
+    expect(collectRefNames(project).sort()).toEqual([
+      "p1_c_alice_casual_face",
+      "p1_c_alice_casual_uniform",
+      "p1_c_alice_headshot",
+    ]);
   });
 });
