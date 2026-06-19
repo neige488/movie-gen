@@ -1,38 +1,20 @@
 # 캐릭터 레퍼런스 이미지 생성 프롬프트
 
-> 헤드샷/룩 시트 생성용. 생성 후 assets/에 넣고 YAML의 이미지 경로를 채울 것.
-> 전 캐릭터 공통: photorealistic, cinematic portrait, neutral background, soft daylight.
+> **이 문서는 SSOT가 아니다.** 헤드샷·룩 시트 생성 프롬프트는 이제 각 캐릭터 YAML의
+> ImageRef `prompt` 필드가 SSOT다(`headshot.prompt`, `looks[].uniform.prompt`).
+> prompt-preset 체계 도입(PR #37) + headshot/uniform ImageRef 전환(PR #39)으로,
+> 과거 이 문서에 영문으로 두던 묘사는 전부 한글로 각 YAML에 이전됐다.
 
-## jihoon (지훈)
-- **headshot:** An 18-year-old Korean high school boy, soft gentle features, slightly unkempt black hair, tired but kind eyes, faint shadow of sleeplessness. Neutral expression headshot.
-- **look: uniform** — Korean high school uniform: white shirt, dark trousers, school jacket. Slightly loosened tie, worn naturally.
-- **look: hoodie-with-bag** — Grey hoodie over uniform shirt, one drawstring hanging longer than the other, **with a half-zipped backpack**. Commute (통학) outfit.
-- **look: only-hoodie** — The same grey hoodie (one drawstring longer), **without a backpack**. Everyday/casual outfit (집·일상). (가방이 필요한 컷은 backpack prop으로 첨부)
-- **look: date-outfit** — A neater casual date outfit: a clean knit sweater or button-up shirt over a tee, slim chinos or dark jeans — a step dressier than the everyday hoodie. No backpack.
-- **look: adult-traveler** — Same face aged to early 20s. Light alpine travel jacket, small backpack. Calm, weathered.
+## 작성 규약
 
-## sua (수아)
-- **headshot:** An 18-year-old Korean girl, chin-length black bob with straight bangs, clear calm eyes, faint warm smile. Bright but quiet presence.
-- **look: accident-day (의상 동결 — 환상 전체에서 이 한 벌)** — Oversized oatmeal-beige knit cardigan with slight pilling, white button-up shirt with a regular pointed collar worn over the cardigan neckline, dark navy ankle-length trousers, white ankle socks, red canvas sneakers.
-- **look: uniform (현실 표지)** — Korean high school uniform with skirt, neat. Same bob hair.
-- **look: traveler-braid (엔딩 전용)** — Long black hair in a single braid reaching mid-back, practical traveler clothes (light jacket, comfortable pants). Face never clearly shown in film.
+- **headshot.prompt**: 캐릭터 얼굴 ID(의상·헤어 무관, 영화 전체 공통). 캐릭터 외모 묘사 +
+  공통 꼬리(정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일 조명, 글씨·워터마크 없음).
+- **looks[].uniform.prompt**: 그 룩의 의상 소스 시트(앞뒤 2분할). 공통 머리말(2분할 시트 ·
+  중립 A-포즈 · 단색 밝은 회색 배경 · 스튜디오 조명 · 소품·글씨 없음) + `의상:` 구체 묘사.
+  여기서 디렉터가 face(5분할)/body(3분할)를 파생한다.
+- 전 캐릭터 공통 톤: photorealistic, cinematic portrait.
+- `@이름`(refName)은 face/body에만 부여(엔진 멘션 대상). headshot은 얼굴 ID용 refName,
+  uniform은 소스라 refName 없이 prompt만.
 
-## sua-mother (수아 엄마)
-- **headshot:** Korean woman in her late 40s, deep fatigue in her face, kind but hollowed eyes, plain home clothes.
-
-## jihoon-mother (지훈 엄마)
-- **headshot:** Korean woman in her late 40s, warm worried face, apron over plain clothes.
-
-## doctor (의사)
-- **headshot:** Korean psychiatrist in his 50s, calm measured expression, glasses, white coat over shirt.
-
-## classmate-girl (단발 여학생 — #충돌 리빌용)
-- **headshot:** An 18-year-old Korean girl with a chin-length bob superficially similar to Sua's but clearly a different person, rounder face. Korean high school uniform with skirt.
-
-## seungho (승호 — 지훈 단짝 1)
-- **headshot:** An 18-year-old Korean high school boy, friendly round face, short neat black hair, easygoing grin. Ordinary, cheerful, the talkative one.
-- **look: uniform** — Standard Korean high school uniform, worn a little casually.
-
-## dohyun (도현 — 지훈 단짝 2)
-- **headshot:** An 18-year-old Korean high school boy, a bit taller with slightly sharper features, playful joker's look, hair slightly styled.
-- **look: uniform** — Standard Korean high school uniform.
+새 캐릭터·룩을 추가할 때는 위 규약대로 해당 YAML의 `prompt` 필드를 직접 채운다.
+작성 워크플로 전반은 스킬 `shot-prompt-authoring` 참조.
