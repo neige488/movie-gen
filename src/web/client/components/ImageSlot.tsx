@@ -24,12 +24,12 @@ export function ImageSlot({ slot, imagePath, label, onUploaded }: Props) {
   const [imgError, setImgError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // A new path (e.g. after upload) should re-attempt to load, and any stale
-  // upload toast/error should clear so it doesn't linger over the new image.
+  // A new path (e.g. after upload) should re-attempt to load. Do NOT clear the
+  // success toast here: a successful upload changes imagePath (empty → new path)
+  // via the parent refetch, which would otherwise wipe the toast after ~0.1s.
+  // The toast's own timer (below) dismisses it.
   useEffect(() => {
     setImgError(false);
-    setInfo(null);
-    setError(null);
   }, [imagePath]);
 
   // Auto-dismiss the transient success toast (otherwise it stayed until reload).
