@@ -24,10 +24,20 @@ export function ImageSlot({ slot, imagePath, label, onUploaded }: Props) {
   const [imgError, setImgError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // A new path (e.g. after upload) should re-attempt to load.
+  // A new path (e.g. after upload) should re-attempt to load, and any stale
+  // upload toast/error should clear so it doesn't linger over the new image.
   useEffect(() => {
     setImgError(false);
+    setInfo(null);
+    setError(null);
   }, [imagePath]);
+
+  // Auto-dismiss the transient success toast (otherwise it stayed until reload).
+  useEffect(() => {
+    if (!info) return;
+    const t = setTimeout(() => setInfo(null), 2500);
+    return () => clearTimeout(t);
+  }, [info]);
 
   async function handleFile(file: File): Promise<void> {
     setBusy(true);
@@ -86,13 +96,24 @@ export function ImageSlot({ slot, imagePath, label, onUploaded }: Props) {
         title={label ?? imagePath}
       >
         {showImage ? (
-          <img
-            className="slot__img"
-            src={`/assets/${encodeURI(imagePath)}`}
-            alt={label ?? imagePath}
-            loading="lazy"
-            onError={() => setImgError(true)}
-          />
+          <a
+            className="slot__view"
+            href={`/assets/${encodeURI(imagePath)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="원본 이미지를 새 탭에서 열기"
+          >
+            <img
+              className="slot__img"
+              src={`/assets/${encodeURI(imagePath)}`}
+              alt={label ?? imagePath}
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
+            <span className="slot__zoom" aria-hidden="true">
+              ↗
+            </span>
+          </a>
         ) : (
           <div className="slot__placeholder">
             <span className="slot__noimg" aria-hidden="true" />
@@ -101,10 +122,8 @@ export function ImageSlot({ slot, imagePath, label, onUploaded }: Props) {
         )}
         {label && <div className="slot__label">{label}</div>}
         {busy && <div className="slot__overlay">업로드 중…</div>}
-        {info && <div className="slot__overlay slot__overlay--info">{info}</div>}
-        {error && (
-          <div className="slot__overlay slot__overlay--error">{error}</div>
-        )}
+        {info && <div className="slot__toast slot__toast--info">{info}</div>}
+        {error && <div className="slot__toast slot__toast--error">{error}</div>}
       </div>
       <button
         type="button"
