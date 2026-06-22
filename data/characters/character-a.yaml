@@ -1,21 +1,25 @@
 name: character-a
 headshot:
+  prompt: 캐릭터 얼굴 ID 헤드샷, 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음.
   image: characters/character-a/headshot.png
-  prompt: "캐릭터 얼굴 ID 헤드샷, 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음."
 looks:
   - name: introspective
-    uniform:
-      image: characters/character-a/introspective/uniform.png
-      prompt: "한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음."
     face:
-      image: characters/character-a/introspective/face.png
+      image: characters/character-a/introspective/face-2.jpg
     body:
-      image: characters/character-a/introspective/body.png
-  - name: street-jacket
+      image: characters/character-a/introspective/body.jpg
     uniform:
-      image: characters/character-a/street-jacket/uniform.png
-      prompt: "한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음."
+      prompt: >-
+        한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오
+        조명, 소품·글씨·워터마크 없음.
+      image: characters/character-a/introspective/uniform.jpeg
+  - name: street-jacket
     face:
       image: characters/character-a/street-jacket/face.png
     body:
       image: characters/character-a/street-jacket/body.png
+    uniform:
+      prompt: >-
+        한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오
+        조명, 소품·글씨·워터마크 없음.
+      image: characters/character-a/street-jacket/uniform.png
