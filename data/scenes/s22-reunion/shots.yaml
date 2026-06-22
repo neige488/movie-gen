@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      [0–6초] 클로즈업→미디엄 · 고정 · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 의 책상 위에 연필로 그린 작은 그림 — 호수, 그 뒤에 산, 지훈이 그것을 발견하고 벌떡 일어난다
-      [6–13초] 와이드 트래킹 · 핸드헬드 팔로우 · @p1_c_jihoon_uniform_full 이 @p1_l_schoolhallway_windowrow 복도를 달린다, 옆 반 창문 — 빈 책상 · 지나가던 학생이 스치며 친구에게 “…야, 너 그 얘기 못 들었어? 옆 반에—” 지훈은 끝까지 듣지 않고 달린다
+      Cut #1 — 클로즈업→미디엄 · 고정 · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 의 책상 위에 연필로 그린 작은 그림 — 호수, 그 뒤에 산, 지훈이 그것을 발견하고 벌떡 일어난다
+      Cut #2 — 와이드 트래킹 · 핸드헬드 팔로우 · @p1_c_jihoon_uniform_full 이 @p1_l_schoolhallway_windowrow 복도를 달린다, 옆 반 창문 — 빈 책상 · 지나가던 학생이 스치며 친구에게 “…야, 너 그 얘기 못 들었어? 옆 반에—” 지훈은 끝까지 듣지 않고 달린다
     duration: 13
     screenplayHash: 09b266deafd10d28b102ddf8629307ab13c50616b91006095fbfc96953771f8a
     characterRefs:
@@ -16,7 +16,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–10초] 미디엄 투샷 · 고정, 미세 푸시인 · @p1_l_hillbench_daycityview 언덕 벤치, @p1_c_sua_accidentday_full 가 늘 입던 그 옷으로 앉아 있다 · 수아 “왔어?” @p1_c_jihoon_uniform_full 숨을 고르며 “미안해. …너 괜찮은 거야?” 수아 “이제 괜찮아.”"
+    prompt: 미디엄 투샷 · 고정, 미세 푸시인 · @p1_l_hillbench_daycityview 언덕 벤치, @p1_c_sua_accidentday_full 가 늘 입던 그 옷으로 앉아 있다 · 수아 “왔어?” @p1_c_jihoon_uniform_full 숨을 고르며 “미안해. …너 괜찮은 거야?” 수아 “이제 괜찮아.”
     duration: 10
     screenplayHash: fa50d2b9bd5b01a03d7ac5ba4bb57f8732f067c07b2db94d9ed225068fceeed3
     prevShotRef: "01"
@@ -32,8 +32,8 @@ shots:
     takes: []
   - id: "03"
     prompt: |-
-      [0–8초] 미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_coverworn 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?”
-      [8–15초] 인서트, 미디엄 · 고정 · @p1_l_schooloffice_teachersroom 교무실, @p1_c_jihoon_uniform_full 이 학생 명부를 몰래 넘기다 한 이름에서 손이 멈춘다, 복도 끝에서 @p1_c_sua_accidentday_full 가 그 모습을 가만히 지켜본다
+      Cut #1 — 미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_coverworn 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?”
+      Cut #2 — 인서트, 미디엄 · 고정 · @p1_l_schooloffice_teachersroom 교무실, @p1_c_jihoon_uniform_full 이 학생 명부를 몰래 넘기다 한 이름에서 손이 멈춘다, 복도 끝에서 @p1_c_sua_accidentday_full 가 그 모습을 가만히 지켜본다
     duration: 15
     screenplayHash: 093d65b21302409902b35dae6a71a9b2a33caaebc9156008924d870dc61dfff8
     prevShotRef: "02"

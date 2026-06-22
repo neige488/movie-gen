@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      [0–7초] 미디엄 트래킹 · 스테디 팔로우 · @p1_l_schoolhallway_windowrow 복도를 걷는 @p1_c_jihoon_uniform_full, 옆 반 창문 안 교복 차림 @p1_c_sua_uniform_full 가 혼자 책을 읽는다, 지훈의 걸음이 아주 조금 느려진다 · 연기: 무심한 척 곁눈질
-      [7–12초] 미디엄 · 팔로우 · (며칠 뒤) 같은 복도·같은 창문, 책 읽는 @p1_c_sua_uniform_full, @p1_c_jihoon_uniform_full 은 이제 일부러 이 복도로 다닌다 · 연기: 조금 익숙해진 곁눈질
+      Cut #1 — 미디엄 트래킹 · 스테디 팔로우 · @p1_l_schoolhallway_windowrow 복도를 걷는 @p1_c_jihoon_uniform_full, 옆 반 창문 안 교복 차림 @p1_c_sua_uniform_full 가 혼자 책을 읽는다, 지훈의 걸음이 아주 조금 느려진다 · 연기: 무심한 척 곁눈질
+      Cut #2 — 미디엄 · 팔로우 · (며칠 뒤) 같은 복도·같은 창문, 책 읽는 @p1_c_sua_uniform_full, @p1_c_jihoon_uniform_full 은 이제 일부러 이 복도로 다닌다 · 연기: 조금 익숙해진 곁눈질
     duration: 12
     screenplayHash: a11b0f9825ed27fd8f3972ad9273caa444002acfd257678cac418121880f7616
     characterRefs:
@@ -17,7 +17,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "[0–6초] 클로즈업 투샷 · 고정 · 창문 너머를 보며 걷던 @p1_c_jihoon_uniform_face 와 고개를 든 @p1_c_sua_uniform_face 의 눈이 마주친다, 지훈이 황급히 시선을 떼고 빠르게 걸어간다 · 연기: 귀가 빨갛다, 들킨 당황"
+    prompt: "클로즈업 투샷 · 고정 · 창문 너머를 보며 걷던 @p1_c_jihoon_uniform_face 와 고개를 든 @p1_c_sua_uniform_face 의 눈이 마주친다, 지훈이 황급히 시선을 떼고 빠르게 걸어간다 · 연기: 귀가 빨갛다, 들킨 당황"
     duration: 6
     screenplayHash: ac4e09ffb5a2f8232f1468488df26b66fdbe3c33509b27100e96ad3d986645b1
     prevShotRef: "01"

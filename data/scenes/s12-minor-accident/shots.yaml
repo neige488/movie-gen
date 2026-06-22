@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      [0–7초] 와이드 · 핸드헬드 · 하굣길 @p1_l_sidestreet_schoolroute, @p1_c_jihoon_uniform_full 이 혼자 걷는다, 골목 어귀에서 끼익 짧은 마찰음 — 자전거를 피하려던 차가 멈칫하고 길가의 여자아이가 엉덩방아를 찧는다, 들고 있던 책이 길에 떨어진다
-      [7–12초] 미디엄 · 고정 · 여자아이가 벌떡 일어나 교복 치마를 털고 뒤도 안 돌아보고 빠르게 가버린다, 운전자가 창문을 내리다 말고 그냥 출발한다
+      Cut #1 — 와이드 · 핸드헬드 · 하굣길 @p1_l_sidestreet_schoolroute, @p1_c_jihoon_uniform_full 이 혼자 걷는다, 골목 어귀에서 끼익 짧은 마찰음 — 자전거를 피하려던 차가 멈칫하고 길가의 여자아이가 엉덩방아를 찧는다, 들고 있던 책이 길에 떨어진다
+      Cut #2 — 미디엄 · 고정 · 여자아이가 벌떡 일어나 교복 치마를 털고 뒤도 안 돌아보고 빠르게 가버린다, 운전자가 창문을 내리다 말고 그냥 출발한다
     duration: 12
     screenplayHash: 99e8d8289724423e650c51fb48b3095e0f0d91200fec53368a6ebbdf001b8769
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "[0–8초] 미디엄→클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_full 이 길에 남은 @p1_p_poetrybook_coverworn 로 다가가 줍는다 · 지훈 가버린 쪽을 향해 “저기—! …책.” 아무도 없다 · @p1_c_jihoon_uniform_face 이 책을 든 채 멍하니 서서 손끝으로 책 표지를 문지른다"
+    prompt: 미디엄→클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_full 이 길에 남은 @p1_p_poetrybook_coverworn 로 다가가 줍는다 · 지훈 가버린 쪽을 향해 “저기—! …책.” 아무도 없다 · @p1_c_jihoon_uniform_face 이 책을 든 채 멍하니 서서 손끝으로 책 표지를 문지른다
     duration: 8
     screenplayHash: 050c8b78eaafa6571aef7ca772c6144a5bc4a2ce27925441e0b21ae679a52ca3
     prevShotRef: "01"

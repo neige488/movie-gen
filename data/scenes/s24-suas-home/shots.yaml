@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–9초] 미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층 복도, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어진 곳에 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 “저… 이거.” @p1_p_poetrybook_coverworn 를 내밀며 “따님 책인 것 같아서요.”"
+    prompt: 미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층 복도, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어진 곳에 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 “저… 이거.” @p1_p_poetrybook_coverworn 를 내밀며 “따님 책인 것 같아서요.”
     duration: 9
     screenplayHash: d57e4925e97015536065e03ad6fb3799a9e684485a253564c587bc3cb71410b1
     characterRefs:
@@ -17,7 +17,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "[0–12초] 클로즈업 · 고정 · @p1_c_suamother_default_face 가 책을 받아 @p1_p_poetrybook_namepage 속표지를 넘긴다 — 손글씨 이름, 손이 떨리기 시작한다 · 엄마 “…이걸 어디서.” 지훈 “길에서… 주웠어요.” 엄마 책을 가슴에 꼭 안으며 혼잣말처럼 “장례 때도… 이 책만 못 찾았어.”"
+    prompt: 클로즈업 · 고정 · @p1_c_suamother_default_face 가 책을 받아 @p1_p_poetrybook_namepage 속표지를 넘긴다 — 손글씨 이름, 손이 떨리기 시작한다 · 엄마 “…이걸 어디서.” 지훈 “길에서… 주웠어요.” 엄마 책을 가슴에 꼭 안으며 혼잣말처럼 “장례 때도… 이 책만 못 찾았어.”
     duration: 12
     screenplayHash: 97eb71f4041331c05ee21714d24f4663ae7e668ddb2ea28a92d84cbcdd0523e1
     prevShotRef: "01"
@@ -34,8 +34,8 @@ shots:
     takes: []
   - id: "03"
     prompt: |-
-      [0–8초] 클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_face 의 세계가 멈춘다 · 열린 문틈으로 @p1_l_suahome_entryglimpse — 신발장 위 액자 속 교복 입은 수아의 사진, 그 옆에 가지런히 놓인 빨간 운동화 · (파편 오버랩: 브레이크 소리, 떨어지는 책, 구르는 빨간 운동화)
-      [8–14초] 미디엄 · 고정 · @p1_c_jihoon_uniform_full 이 천천히 @p1_l_suahome_frontdoor 복도 끝을 돌아본다, 아무도 없다
+      Cut #1 — 클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_face 의 세계가 멈춘다 · 열린 문틈으로 @p1_l_suahome_entryglimpse — 신발장 위 액자 속 교복 입은 수아의 사진, 그 옆에 가지런히 놓인 빨간 운동화 · (파편 오버랩: 브레이크 소리, 떨어지는 책, 구르는 빨간 운동화)
+      Cut #2 — 미디엄 · 고정 · @p1_c_jihoon_uniform_full 이 천천히 @p1_l_suahome_frontdoor 복도 끝을 돌아본다, 아무도 없다
     duration: 14
     screenplayHash: eb1fc8bf4b267554ce8789a1838fdfdf480f7c8acd2c6c34c9e9247360637529
     prevShotRef: "02"

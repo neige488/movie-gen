@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      [0–6초] 와이드 · 고정 · @p1_l_hillbench_overcast 언덕 벤치, @p1_c_jihoon_onlyhoodie_full 이 혼자 앉아 있고 옆자리가 비어 있다
-      [6–11초] 미디엄 · 고정 · 하드 컷 → @p1_l_conveniencestore_windowseat 편의점 창가, 컵라면 하나, 맞은편 의자가 비어 있다
+      Cut #1 — 와이드 · 고정 · @p1_l_hillbench_overcast 언덕 벤치, @p1_c_jihoon_onlyhoodie_full 이 혼자 앉아 있고 옆자리가 비어 있다
+      Cut #2 — 미디엄 · 고정 · 하드 컷 → @p1_l_conveniencestore_windowseat 편의점 창가, 컵라면 하나, 맞은편 의자가 비어 있다
     duration: 11
     screenplayHash: 718000ad821b3aa4a1d8f19352ba16d9935ce55e2f9ec95e18f35d158fd69789
     characterRefs:
@@ -16,7 +16,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–6초] 와이드 · 고정 · @p1_l_busstop_dusk 버스정류장, @p1_c_jihoon_onlyhoodie_full 혼자, 버스가 서고 떠난다, 지훈은 타지 않는다"
+    prompt: 와이드 · 고정 · @p1_l_busstop_dusk 버스정류장, @p1_c_jihoon_onlyhoodie_full 혼자, 버스가 서고 떠난다, 지훈은 타지 않는다
     duration: 6
     screenplayHash: 9ebe50a6c22cfe0c72b427d0ef0b7648cefb158265ab28396df0688ecbb9371c
     characterRefs:

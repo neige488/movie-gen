@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–12초] 와이드→미디엄 투샷 · 고정 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_onlyhoodie_full 이 서 있고 옆에 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 옆모습 · 지훈은 이번엔 건너지 않고 멈춰 선 채 수아 쪽으로 고개를 돌린다 · 지훈 “안녕. 갑자기 말 걸어서 미안한데 난 지훈이라고 해.” · 수아는 책에서 고개를 들지 않는다 · 컷 투 블랙"
+    prompt: 와이드→미디엄 투샷 · 고정 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_onlyhoodie_full 이 서 있고 옆에 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 옆모습 · 지훈은 이번엔 건너지 않고 멈춰 선 채 수아 쪽으로 고개를 돌린다 · 지훈 “안녕. 갑자기 말 걸어서 미안한데 난 지훈이라고 해.” · 수아는 책에서 고개를 들지 않는다 · 컷 투 블랙
     duration: 12
     screenplayHash: 56a4174530679c02a0358855c8f9a97a8dddabda7c605f6d834e49422bd1d351
     characterRefs:

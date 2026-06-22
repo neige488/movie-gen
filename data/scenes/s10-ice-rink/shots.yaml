@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–10초] 와이드 투샷 · 스테디 트래킹 · @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 능숙하게 뒤로 미끄러지며 @p1_c_jihoon_onlyhoodie_full 의 두 손을 잡아 끌어주고 지훈은 다리가 후들거린다 · 수아 “무릎! 무릎을 굽히라니까?” 지훈 “굽히고 있어!” 수아 “그게 굽힌 거야?”"
+    prompt: 와이드 투샷 · 스테디 트래킹 · @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 능숙하게 뒤로 미끄러지며 @p1_c_jihoon_onlyhoodie_full 의 두 손을 잡아 끌어주고 지훈은 다리가 후들거린다 · 수아 “무릎! 무릎을 굽히라니까?” 지훈 “굽히고 있어!” 수아 “그게 굽힌 거야?”
     duration: 10
     screenplayHash: 532582dbc169e7b79dcada8530e8940d3c71e4080390f9af2080233666ce681c
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–9초] 미디엄 투샷 · 핸드헬드 · @p1_c_jihoon_onlyhoodie_full 이 크게 휘청하고 @p1_c_sua_accidentday_full 가 깔깔 웃는다 — 한순간 지훈의 발이 아무렇지 않게 균형을 잡고 매끄럽게 미끄러진다(아주 짧게, 스치듯), 다음 순간 다시 비틀거린다 · 수아 “봐, 되잖아!”"
+    prompt: 미디엄 투샷 · 핸드헬드 · @p1_c_jihoon_onlyhoodie_full 이 크게 휘청하고 @p1_c_sua_accidentday_full 가 깔깔 웃는다 — 한순간 지훈의 발이 아무렇지 않게 균형을 잡고 매끄럽게 미끄러진다(아주 짧게, 스치듯), 다음 순간 다시 비틀거린다 · 수아 “봐, 되잖아!”
     duration: 9
     screenplayHash: fcf9bbe112432e605412be28be2c8c88a4c5735573e8c8566831c05313fc482d
     prevShotRef: "01"

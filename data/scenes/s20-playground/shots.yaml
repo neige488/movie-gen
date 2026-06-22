@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–10초] 와이드 투샷 · 고정 · 해질녘 @p1_l_playground_duskswings, 그네가 삐걱이고 @p1_c_sua_accidentday_full 가 그네에 앉아 발끝으로 땅을 민다, @p1_c_jihoon_onlyhoodie_full 이 입구에 서서 오래 못 본 얼굴을 보는 표정 · 수아 평소처럼 “늦었네.” 지훈 목이 멘다 “…어.” 수아 옆 그네를 턱짓 “앉아.”"
+    prompt: 와이드 투샷 · 고정 · 해질녘 @p1_l_playground_duskswings, 그네가 삐걱이고 @p1_c_sua_accidentday_full 가 그네에 앉아 발끝으로 땅을 민다, @p1_c_jihoon_onlyhoodie_full 이 입구에 서서 오래 못 본 얼굴을 보는 표정 · 수아 평소처럼 “늦었네.” 지훈 목이 멘다 “…어.” 수아 옆 그네를 턱짓 “앉아.”
     duration: 10
     screenplayHash: e6fdf2889fb7fad51fafc82817f8c15324dc5ddc37820ba57a1b7505051a5413
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–8초] 미디엄 투샷 · 고정, 미세 드리프트 · @p1_c_jihoon_onlyhoodie_full 이 옆 그네에 앉는다, 둘은 한동안 말없이 그네만 흔든다 · 연기: 먹먹한 침묵"
+    prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_c_jihoon_onlyhoodie_full 이 옆 그네에 앉는다, 둘은 한동안 말없이 그네만 흔든다 · 연기: 먹먹한 침묵"
     duration: 8
     screenplayHash: 15b5db96f045bfe83bdad0801e872d9f6278b8323e4b9bc40227b0c0506773e0
     prevShotRef: "01"

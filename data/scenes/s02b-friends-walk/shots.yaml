@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      [0–7초] 와이드 그룹샷 · 핸드헬드 다큐 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 멍하니 걷는다 · 승호 “야, 너 어제 그거 봤냐?” 도현 “봤지, 미쳤더라.” · 연기: 지훈 대화가 귀에 안 들어오는 얼굴
-      [7–13초] 미디엄 · 팔로우 후 정지 · 지훈의 시선이 멎는다 — 멀찍이 @p1_c_sua_accidentday_full 가 혼자 앉아 책을 읽는다, “야, 나 먼저 가볼게!” 하고 @p1_c_jihoon_uniform_full 이 무리에서 빠져나가 뛰어간다, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 어리둥절 서로를 본다
+      Cut #1 — 와이드 그룹샷 · 핸드헬드 다큐 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 멍하니 걷는다 · 승호 “야, 너 어제 그거 봤냐?” 도현 “봤지, 미쳤더라.” · 연기: 지훈 대화가 귀에 안 들어오는 얼굴
+      Cut #2 — 미디엄 · 팔로우 후 정지 · 지훈의 시선이 멎는다 — 멀찍이 @p1_c_sua_accidentday_full 가 혼자 앉아 책을 읽는다, “야, 나 먼저 가볼게!” 하고 @p1_c_jihoon_uniform_full 이 무리에서 빠져나가 뛰어간다, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 어리둥절 서로를 본다
     duration: 13
     screenplayHash: 607f8a427fdb7649fda871a55c0209e624e1e66a998a9467f61a3aee98165636
     characterRefs:
@@ -20,7 +20,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–10초] 미디엄 투샷 · 고정, 미세 드리프트 · @p1_c_jihoon_uniform_full 이 @p1_c_sua_accidentday_full 곁에 다다라 숨을 고른다, 수아는 @p1_p_poetrybook_coverworn 를 들고 있다 · 지훈 “뭐 읽어?” 수아 “집에 가는 이야기.” 지훈 “그게 재밌어?” 수아 “집에 가는 게 제일 어려운 사람도 있잖아.” · 연기: 수아 잔잔, 지훈 호기심"
+    prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_c_jihoon_uniform_full 이 @p1_c_sua_accidentday_full 곁에 다다라 숨을 고른다, 수아는 @p1_p_poetrybook_coverworn 를 들고 있다 · 지훈 “뭐 읽어?” 수아 “집에 가는 이야기.” 지훈 “그게 재밌어?” 수아 “집에 가는 게 제일 어려운 사람도 있잖아.” · 연기: 수아 잔잔, 지훈 호기심"
     duration: 10
     screenplayHash: 588e80b7c7b4cb6a9a9803c7a01cbf1060691ede0dbb2de6febc6406e16ac882
     prevShotRef: "01"

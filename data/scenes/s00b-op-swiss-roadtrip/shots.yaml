@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–10초] 인서트/POV · 차량 내부 고정, 미세 흔들림 · 운전자의 얼굴은 보이지 않고 핸들 위의 손만 보인다 · 차창 밖 @p1_l_swissroad_mountaindrive 설산이 흐르고 길이 호수를 향해 굽어 내려간다, 라디오도 말소리도 없다 · 끝에서 천천히 디졸브(제목)"
+    prompt: 인서트/POV · 차량 내부 고정, 미세 흔들림 · 운전자의 얼굴은 보이지 않고 핸들 위의 손만 보인다 · 차창 밖 @p1_l_swissroad_mountaindrive 설산이 흐르고 길이 호수를 향해 굽어 내려간다, 라디오도 말소리도 없다 · 끝에서 천천히 디졸브(제목)
     duration: 10
     screenplayHash: f7da7681ac9179fa0d27e522f859bd2fd04e8a3402d5f8de658e66eb0ee8ff6d
     characterRefs: []

@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–9초] 미디엄 · 고정, 미세 핸드헬드 · 밤 @p1_l_jihoonhome_hallway, 문틈으로 모니터 불빛, @p1_c_jihoonmother_default_full 가 쟁반을 들고 문을 두드린다 · 엄마 “지훈아. 밥 먹어.” 대답이 없다, 안에서 게임 소리 · 엄마 “지훈아—” 콰앙, 둔탁한 굉음, 뭔가 부서지는 소리"
+    prompt: 미디엄 · 고정, 미세 핸드헬드 · 밤 @p1_l_jihoonhome_hallway, 문틈으로 모니터 불빛, @p1_c_jihoonmother_default_full 가 쟁반을 들고 문을 두드린다 · 엄마 “지훈아. 밥 먹어.” 대답이 없다, 안에서 게임 소리 · 엄마 “지훈아—” 콰앙, 둔탁한 굉음, 뭔가 부서지는 소리
     duration: 9
     screenplayHash: e2f3ffdc88543c89ab626193bd0a734c918363a48f9b20743d540d2278dff065
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "[0–10초] 와이드→미디엄 · 핸드헬드 · @p1_c_jihoonmother_default_full 가 문을 연다 — @p1_l_jihoonhome_bedroom 모니터가 바닥에 엎어져 있고 @p1_c_jihoon_onlyhoodie_full 이 책상 아래 주저앉아 두 손으로 가슴을 움켜쥐고 숨을 못 쉰다 · 지훈 “엄마… 나 숨을… 숨을 못 쉬겠어.” · 연기: 공황"
+    prompt: "와이드→미디엄 · 핸드헬드 · @p1_c_jihoonmother_default_full 가 문을 연다 — @p1_l_jihoonhome_bedroom 모니터가 바닥에 엎어져 있고 @p1_c_jihoon_onlyhoodie_full 이 책상 아래 주저앉아 두 손으로 가슴을 움켜쥐고 숨을 못 쉰다 · 지훈 “엄마… 나 숨을… 숨을 못 쉬겠어.” · 연기: 공황"
     duration: 10
     screenplayHash: bc332a2e6db07c62bc6da419dfabb06ffcb60de796613a2251fdc93dbfad21f0
     prevShotRef: "01"
@@ -27,7 +27,7 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "[0–6초] 빠른 인서트 몽타주 · 핸드헬드, 컷 연쇄 · (플래시백 파편) @p1_l_crosswalk_daywide — 브레이크 소리, 떨어지는 책, 구르는 빨간 운동화, 책을 들고 골목을 달리는 지훈, 도망가던 여자아이의 뒷모습 · 컷 투 블랙"
+    prompt: 빠른 인서트 몽타주 · 핸드헬드, 컷 연쇄 · (플래시백 파편) @p1_l_crosswalk_daywide — 브레이크 소리, 떨어지는 책, 구르는 빨간 운동화, 책을 들고 골목을 달리는 지훈, 도망가던 여자아이의 뒷모습 · 컷 투 블랙
     duration: 6
     screenplayHash: cc29dfdd2296c7c8679d7f9bcca7e2adca90ea422eafaeac3601abf856a2cc06
     prevShotRef: "02"

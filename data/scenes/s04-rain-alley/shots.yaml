@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "[0–5초] 와이드→미디엄 · 핸드헬드 · 늦은 오후 비, @p1_l_rainalley_rain 학교에서 버스정류장으로 가는 하굣길을 @p1_c_jihoon_onlyhoodie_full 이 우산을 쓰고 걷는다, 저만치서 @p1_c_sua_accidentday_full 가 @p1_p_poetrybook_coverworn 를 품에 꼭 안고 빗속을 뛰어와 그대로 우산 안으로 쏙 들어온다"
+    prompt: 와이드→미디엄 · 핸드헬드 · 늦은 오후 비, @p1_l_rainalley_rain 학교에서 버스정류장으로 가는 하굣길을 @p1_c_jihoon_onlyhoodie_full 이 우산을 쓰고 걷는다, 저만치서 @p1_c_sua_accidentday_full 가 @p1_p_poetrybook_coverworn 를 품에 꼭 안고 빗속을 뛰어와 그대로 우산 안으로 쏙 들어온다
     duration: 5
     screenplayHash: 4a7ae81c32324cfa62a1b375e5af805db60496416c3db7ce2f75b456f69641ce
     characterRefs:
@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "[0–12초] 미디엄 투샷 · 스테디 트래킹 · 우산 하나를 같이 쓰고 걷는 @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full, 우산은 자꾸 책 쪽으로 기운다 · 지훈 “너보다 책이 더 중요하냐?” 수아 “책은 젖으면 티 나잖아.” 지훈 “사람은?” 수아 “사람은 말리면 돼.” · 연기: 티격"
+    prompt: "미디엄 투샷 · 스테디 트래킹 · 우산 하나를 같이 쓰고 걷는 @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full, 우산은 자꾸 책 쪽으로 기운다 · 지훈 “너보다 책이 더 중요하냐?” 수아 “책은 젖으면 티 나잖아.” 지훈 “사람은?” 수아 “사람은 말리면 돼.” · 연기: 티격"
     duration: 12
     screenplayHash: 4d326edcbcc4b103821caf152078c9ea835eba1feec92f09c37dda66c3e4d521
     prevShotRef: "01"
@@ -31,7 +31,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "03"
-    prompt: "[0–6초] 클로즈업 디테일 · 고정 · @p1_c_jihoon_onlyhoodie_face 이 어이없다는 듯 웃고 우산을 더 수아 쪽으로 기울인다, 지훈의 한쪽 어깨가 천천히 젖는다 · 연기: 말없는 다정"
+    prompt: "클로즈업 디테일 · 고정 · @p1_c_jihoon_onlyhoodie_face 이 어이없다는 듯 웃고 우산을 더 수아 쪽으로 기울인다, 지훈의 한쪽 어깨가 천천히 젖는다 · 연기: 말없는 다정"
     duration: 6
     screenplayHash: 5ce7aa93fbf434a81888d881749112b6e713112a17dd72fc956330898567dcf0
     prevShotRef: "02"
