@@ -33,6 +33,32 @@ describe("loadPromptPreset", () => {
     const preset = await loadPromptPreset(dataDir);
     expect(preset.prefix).toBe("");
     expect(preset.suffix).toBe("");
+    expect(preset.looks).toEqual({});
+  });
+
+  it("loads the looks map", async () => {
+    writePreset(
+      [
+        "prefix: base",
+        "looks:",
+        "  default: neutral grade",
+        "  fantasy: high-key pastel",
+        "  reality: 16mm cold",
+        "",
+      ].join("\n"),
+    );
+    const preset = await loadPromptPreset(dataDir);
+    expect(preset.looks).toEqual({
+      default: "neutral grade",
+      fantasy: "high-key pastel",
+      reality: "16mm cold",
+    });
+  });
+
+  it("throws a named error when a looks value has the wrong type", async () => {
+    writePreset(["looks:", "  fantasy: 123", ""].join("\n"));
+    await expect(loadPromptPreset(dataDir)).rejects.toThrow(PromptPresetError);
+    await expect(loadPromptPreset(dataDir)).rejects.toThrow(/prompt-preset\.yaml/);
   });
 
   it("loads the prefix and suffix affixes", async () => {
