@@ -150,7 +150,7 @@ function sceneToDto(scene: Scene, preset: PromptPreset): SceneDto {
     shots: scene.shots.map((shot) => ({
       id: shot.id,
       prompt: shot.prompt,
-      finalPrompt: assembleFinalPrompt(shot, preset),
+      finalPrompt: assembleFinalPrompt(shot, preset, shot.look ?? scene.look),
       refMentions: extractRefMentions(shot.prompt),
       duration: shot.duration,
       screenplayHash: shot.screenplayHash,

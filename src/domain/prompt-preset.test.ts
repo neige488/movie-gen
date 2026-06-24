@@ -4,6 +4,7 @@ import {
   assembleFinalPrompt,
   createPromptPreset,
   extractRefMentions,
+  findUnregisteredLooks,
   findUnregisteredMentions,
 } from "./prompt-preset.js";
 
@@ -29,6 +30,17 @@ describe("createPromptPreset", () => {
     expect(preset.prefix).toBe("cinematic 4K");
     expect(preset.suffix).toBe("워터마크 없음");
   });
+
+  it("defaults looks to an empty map", () => {
+    expect(createPromptPreset({}).looks).toEqual({});
+  });
+
+  it("keeps the supplied looks map", () => {
+    const preset = createPromptPreset({
+      looks: { fantasy: "high-key", reality: "16mm cold" },
+    });
+    expect(preset.looks).toEqual({ fantasy: "high-key", reality: "16mm cold" });
+  });
 });
 
 describe("assembleFinalPrompt", () => {
@@ -49,6 +61,78 @@ describe("assembleFinalPrompt", () => {
     expect(assembleFinalPrompt(shot, createPromptPreset({}))).toBe(
       "책상에 앉은 인물의 클로즈업",
     );
+  });
+
+  describe("with looks", () => {
+    const lookPreset = createPromptPreset({
+      prefix: "base",
+      suffix: "neg",
+      looks: {
+        default: "neutral grade",
+        fantasy: "high-key pastel",
+        reality: "16mm cold",
+      },
+    });
+
+    it("inserts the named look package between prefix and body", () => {
+      const shot = createShot({ ...shotBase, prompt: "장면" });
+      expect(assembleFinalPrompt(shot, lookPreset, "fantasy")).toBe(
+        "base\n\nhigh-key pastel\n\n장면\n\nneg",
+      );
+    });
+
+    it("applies the reserved default look when no look is given", () => {
+      const shot = createShot({ ...shotBase, prompt: "장면" });
+      expect(assembleFinalPrompt(shot, lookPreset)).toBe(
+        "base\n\nneutral grade\n\n장면\n\nneg",
+      );
+    });
+
+    it("omits the look package when there is no default and no look", () => {
+      const noDefault = createPromptPreset({
+        prefix: "base",
+        looks: { fantasy: "high-key" },
+      });
+      const shot = createShot({ ...shotBase, prompt: "장면" });
+      expect(assembleFinalPrompt(shot, noDefault)).toBe("base\n\n장면");
+    });
+
+    it("stays backward compatible — empty looks behaves like prefix→body→suffix", () => {
+      const legacy = createPromptPreset({ prefix: "base", suffix: "neg" });
+      const shot = createShot({ ...shotBase, prompt: "장면" });
+      // Even if a look key is passed, an empty looks map contributes nothing.
+      expect(assembleFinalPrompt(shot, legacy, "fantasy")).toBe(
+        "base\n\n장면\n\nneg",
+      );
+    });
+  });
+});
+
+describe("findUnregisteredLooks", () => {
+  it("returns [] when no looks are registered (validation off)", () => {
+    expect(findUnregisteredLooks(["fantasy", "reality"], [])).toEqual([]);
+  });
+
+  it("flags look keys not defined in the preset (sorted, unique)", () => {
+    const registered = ["default", "fantasy", "reality"];
+    expect(
+      findUnregisteredLooks(
+        ["fantasy", "dreem", "reality", "dreem", undefined],
+        registered,
+      ),
+    ).toEqual(["dreem"]);
+  });
+
+  it("ignores undefined (scenes/shots with no look)", () => {
+    expect(
+      findUnregisteredLooks([undefined, undefined], ["fantasy"]),
+    ).toEqual([]);
+  });
+
+  it("passes when every used look is registered", () => {
+    expect(
+      findUnregisteredLooks(["fantasy", "reality"], ["fantasy", "reality"]),
+    ).toEqual([]);
   });
 });
 

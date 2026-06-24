@@ -32,6 +32,7 @@ import {
 } from "@adapter/prompt-preset-repository.js";
 import {
   findUnregisteredMentions,
+  findUnregisteredLooks,
   type PromptPreset,
 } from "@domain/prompt-preset.js";
 import {
@@ -125,6 +126,29 @@ function assertRefsRegistered(project: Project): void {
   }
 }
 
+/**
+ * Validate that every `look` key used by a Scene/Shot is defined in the preset's
+ * `looks` map (the reserved `default` look included if used). Opt-in: when the
+ * preset defines no `looks`, validation is skipped (see `findUnregisteredLooks`),
+ * so movies that never configured looks are never blocked. Throws
+ * PromptPresetError so a typo'd `look` is caught loudly at boot/reload instead of
+ * silently dropping the camera/film package.
+ */
+function assertLooksRegistered(project: Project, preset: PromptPreset): void {
+  const looksUsed = project.scenes.flatMap((s) => [
+    s.look,
+    ...s.shots.map((sh) => sh.look),
+  ]);
+  const unknown = findUnregisteredLooks(looksUsed, Object.keys(preset.looks));
+  if (unknown.length > 0) {
+    throw new PromptPresetError(
+      `씬/샷이 프리셋에 없는 look을 참조합니다: ${unknown.join(
+        ", ",
+      )}. prompt-preset.yaml의 looks에 정의하거나 이름을 고치세요.`,
+    );
+  }
+}
+
 async function main(): Promise<void> {
   console.log(`[movie-gen] loading project from ${DATA_DIR}`);
   console.log(`[movie-gen] assets root: ${ASSETS_DIR}`);
@@ -147,6 +171,7 @@ async function main(): Promise<void> {
     currentTotalPages = await loadTotalPages(DATA_DIR);
     currentPreset = await loadPromptPreset(DATA_DIR);
     assertRefsRegistered(currentProject);
+    assertLooksRegistered(currentProject, currentPreset);
     console.log(
       `[movie-gen] loaded ${currentProject.scenes.length} scenes, ` +
         `${currentProject.characters.length} characters, ` +
@@ -211,6 +236,7 @@ async function main(): Promise<void> {
       currentTotalPages = await loadTotalPages(DATA_DIR);
       currentPreset = await loadPromptPreset(DATA_DIR);
       assertRefsRegistered(next);
+      assertLooksRegistered(next, currentPreset);
       return next;
     },
     getProject: () => currentProject,

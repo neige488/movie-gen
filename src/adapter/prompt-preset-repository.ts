@@ -78,5 +78,6 @@ export async function loadPromptPreset(dataDir: string): Promise<PromptPreset> {
   return createPromptPreset({
     prefix: parsed.prefix,
     suffix: parsed.suffix,
+    looks: parsed.looks,
   });
 }

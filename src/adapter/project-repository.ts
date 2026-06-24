@@ -172,6 +172,7 @@ async function loadScene(slug: string, sceneDir: string): Promise<Scene> {
         duration: sf.duration,
         screenplayHash: sf.screenplayHash,
         prevShotRef: sf.prevShotRef,
+        look: sf.look,
         characterRefs: sf.characterRefs,
         locationRefs: sf.locationRefs.map((l) => ({
           location: l.location,
@@ -208,6 +209,7 @@ async function loadScene(slug: string, sceneDir: string): Promise<Scene> {
       slugline: sceneFile.slugline,
       screenplay,
       isStarred: sceneFile.isStarred,
+      look: sceneFile.look,
       shots,
     });
   } catch (err) {

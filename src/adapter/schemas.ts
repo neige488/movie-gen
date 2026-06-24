@@ -10,6 +10,10 @@ import { z } from "zod";
 export const sceneFileSchema = z.object({
   slugline: z.string().min(1, "slugline is required"),
   isStarred: z.boolean(),
+  // Optional camera/film/grade look key — resolves against the preset's `looks`
+  // map (validated at boot by findUnregisteredLooks). Distinct from a
+  // character's wardrobe look (characterRefs[].look).
+  look: z.string().min(1).optional(),
 });
 export type SceneFile = z.infer<typeof sceneFileSchema>;
 
@@ -42,6 +46,8 @@ export const shotFileSchema = z.object({
   duration: z.number(),
   screenplayHash: z.string().min(1),
   prevShotRef: z.string().optional(),
+  // Optional per-shot look override — see sceneFileSchema.look.
+  look: z.string().min(1).optional(),
   characterRefs: z.array(characterRefSchema).default([]),
   locationRefs: z.array(locationRefSchema).default([]),
   propRefs: z.array(propRefSchema).default([]),
@@ -64,6 +70,10 @@ export type ShotsFile = z.infer<typeof shotsFileSchema>;
 export const promptPresetFileSchema = z.object({
   prefix: z.string().optional(),
   suffix: z.string().optional(),
+  // Named camera/film/grade packages — `look` key -> full prefix text. Generic:
+  // the movie defines its own key names (e.g. fantasy/reality). The reserved key
+  // `default` applies to Scenes/Shots with no `look`.
+  looks: z.record(z.string()).optional(),
 });
 export type PromptPresetFile = z.infer<typeof promptPresetFileSchema>;
 
