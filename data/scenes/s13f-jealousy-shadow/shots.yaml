@@ -17,6 +17,7 @@ shots:
     duration: 8
     screenplayHash: 0ee389a5210d14232cc66cc57c709c5a06c46ab8e361f9f3d77b36c9fe35862c
     prevShotRef: "01"
+    look: fantasy
     characterRefs:
       - character: jihoon
         look: only-hoodie

@@ -20,6 +20,7 @@ shots:
     duration: 9
     screenplayHash: 2070558af2218b455a1e7849cda7663bbccdd08e3efb5f6c48f3e25696750b33
     prevShotRef: "01"
+    look: fantasy
     characterRefs:
       - character: jihoon
         look: uniform
@@ -40,6 +41,7 @@ shots:
     duration: 10
     screenplayHash: 588e80b7c7b4cb6a9a9803c7a01cbf1060691ede0dbb2de6febc6406e16ac882
     prevShotRef: "02"
+    look: fantasy
     characterRefs:
       - character: jihoon
         look: uniform

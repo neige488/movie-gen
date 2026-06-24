@@ -1,14 +1,28 @@
-# 영화 단위 공통 프롬프트 프리셋.
-# 도구가 Shot마다 "최종 프롬프트"를 조립한다: prefix → Shot.prompt → suffix.
-# - prefix: 모든 Shot 공통 (카메라 종류/화질 룩). 엔진이 더 잘 읽으면 영어로 둬도 됨.
-# - suffix: 모든 Shot 공통 네거티브(무엇을 만들지 말 것). 한글이 잘 먹어 한글 유지.
+# 영화 단위 프롬프트 프리셋.
+# 도구 조립 순서: prefix → looks[scene.look] → Shot.prompt → suffix
+# - prefix: 룩 무관하게 모든 Shot 공통. 이 영화는 카메라/필름 룩을 looks로
+#   나누므로 prefix는 비운다(공통 시각 토큰을 두면 두 룩이 충돌).
+# - suffix: 모든 Shot 공통 네거티브. 한글이 잘 먹어 한글 유지.
+# - looks: 씬별 카메라/필름/조명/그레이드 '완전 패키지'. scene.yaml(또는 shot)의
+#   `look` 키로 선택. look 미지정 씬(오프닝·모호)은 예약 키 `default`.
+#   ★ 환상층(fantasy) ↔ 현실층(reality)의 시각 분리가 이 영화 형식의 심장:
+#     위장(살아있는 첫사랑)은 환상 룩으로 따뜻·완벽하게, 진실(혼자·트라우마)은
+#     현실 룩으로 차갑·파편적으로. 클라이맥스(s24)에서 두 룩이 충돌한다.
 #
-# 레퍼런스(@이름)는 여기 두지 않는다 — 라이브러리 에셋의 refName이 SSOT이고,
-# 유효한 @이름 레지스트리는 거기서 자동 도출된다(Shot 프롬프트 본문에 @이름 인라인).
+# 레퍼런스(@이름)는 여기 두지 않는다 — 라이브러리 refName이 SSOT.
 
-# PTSD 단편 룩: 따뜻한 노스탤지어 코리안 청춘물, 황금빛, 살짝 과하게 완벽한 몽환.
-# 카메라/필름 룩은 영화 전체 상수라 prefix에 고정한다(샷마다 반복하지 않음).
-prefix: "35mm film, warm nostalgic Korean coming-of-age look, soft golden light, shallow depth of field, gentle dreamlike haze, film grain"
+prefix: ""
 
-# 공통 네거티브 + 레퍼런스 외형 고정(기존 'appear exactly as reference' 지시문 대체).
 suffix: "레퍼런스 외형·의상 그대로 유지(재해석·재착장·변형 금지). 배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 화면에 동일 인물 중복 없음."
+
+looks:
+  # 기본 — 오프닝·모호 씬. 따뜻한 노스탤지어 베이스(환상만큼 극단은 아님).
+  default: "35mm film, warm nostalgic Korean coming-of-age look, soft golden light, shallow depth of field, gentle dreamlike haze, film grain"
+
+  # 환상층 — 살아있는 수아와의 첫사랑(위장). 이와이 슌지 × 소피아 코폴라:
+  # 하이키 역광·파스텔·과한 블룸·렌즈 플레어 = '너무 완벽해서 불온한' 기억의 결.
+  fantasy: "35mm film, dreamy high-key backlight, pastel bloom, soft lens flare, hazy over-exposed glow, idyllic too-perfect warmth, golden-hour grade, warm red accents, nostalgic film grain"
+
+  # 현실층 — 혼자·PTSD·사고(진실). 린 램지:
+  # 16mm·차가운 형광·빨강만 남긴 탈색·핸드헬드·파편 = 트라우마의 날것.
+  reality: "16mm film grain, cold fluorescent light, desaturated palette with only deep red retained, handheld unstable framing, harsh contrast, fragmented intimate close-ups, clinical detachment"

@@ -3,6 +3,7 @@ shots:
     prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_l_snackbar_interior 분식집, 떡볶이 2인분이 놓인 테이블에서 @p1_c_jihoon_onlyhoodie_full 은 먹지 않고 @p1_p_poetrybook_coverworn 만 들여다보고, 맞은편에 앉은 @p1_c_sua_accidentday_full 가 그런 지훈을 말없이 가만히 본다, 김이 천천히 식어 간다 · 연기: 지훈 책에 빠짐, 수아 닿지 않는 채 조용히 지켜봄"
     duration: 7
     screenplayHash: 0d531116ea4426b4fa68007e811da90b95411dd98c03e00722c383e990d262b4
+    look: fantasy
     characterRefs:
       - character: jihoon
         look: only-hoodie
