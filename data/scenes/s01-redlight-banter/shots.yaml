@@ -1,8 +1,8 @@
 shots:
   - id: "01"
-    prompt: "와이드 투샷 · 핸드헬드 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_hoodiewithbag_full 이 가쁜 숨으로 도착해 한 발을 차도로 내민다, 옆에서 @p1_p_poetrybook_coverworn 를 읽던 @p1_c_sua_accidentday_full 가 고개를 든다 · 연기: 지훈 무심코, 수아 흘깃"
-    duration: 6
-    screenplayHash: b7bf85bbf2b37611ca206a201f028c9f633a4abde2967209a123b92e61d1a903
+    prompt: "Cut #1 — 와이드 투샷 · 핸드헬드 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_hoodiewithbag_full 이 가쁜 숨으로 도착해 멈추지 않고 빈 차도로 거의 들어선다 · 연기: 조급함, 가쁜 숨\nCut #2 — 지훈 시점 클로즈업 · 미세 드리프트 · 길가에 앉아 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴, 지훈이 '아는 얼굴'임을 알아챈다 · 연기: 수아 평온·무심\nCut #3 — 미디엄 · 핸드헬드 휩 팬 · @p1_c_jihoon_hoodiewithbag_full 이 차도로 나가던 몸을 급하게 틀어 수아 쪽으로 방향을 바꾼다 · 연기: 충동적 방향 전환"
+    duration: 8
+    screenplayHash: df11c33f79059d421c17a5c399aa16fed540aaaf551ca948d197556cb2bbb53f
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
@@ -15,9 +15,9 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "미디엄 투샷, 간헐 클로즈업 · 고정+미세 드리프트 · @p1_c_sua_accidentday_face 와 @p1_c_jihoon_hoodiewithbag_face 의 티격태격 · 수아 “너 또 빨간불에 건너려 했지?” 지훈 “아니거든.” 수아 “거짓말.” 지훈 “넌 어떻게 맨날 알아?” 수아 “네가 맨날 그러니까.” · 그 사이 차 한 대가 둘 앞 차도를 스쳐 지나간다 · 연기: 지훈 억울한 웃음"
+    prompt: "미디엄 투샷, 간헐 클로즈업 · 고정+미세 드리프트 · @p1_c_jihoon_hoodiewithbag_full 이 @p1_c_sua_accidentday_full 옆에 와 서고 수아가 책에서 눈을 든다, 둘의 티격태격 · 수아 “너 또 빨간불에 건너려 했지?” 지훈 “아니거든.” 수아 “거짓말.” 지훈 “넌 어떻게 맨날 알아?” 수아 “네가 맨날 그러니까.” · 그 사이 차 한 대가 둘 앞 차도를 스쳐 지나간다 · 연기: 지훈 억울한 웃음, 수아 짓궂은 평온"
     duration: 12
-    screenplayHash: a628c0f4a9d152065d34d90c01c9b4ace378ade529256d08d798d98ce3d62360
+    screenplayHash: 8ce2a3480398ddd03329e4e6cb148fc1f201fa6002d0c26349644202b6926975
     prevShotRef: "01"
     characterRefs:
       - character: jihoon

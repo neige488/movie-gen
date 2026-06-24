@@ -1,30 +1,35 @@
 shots:
   - id: "01"
-    prompt: |-
-      Cut #1 — 미디엄 트래킹 · 스테디 팔로우 · @p1_l_schoolhallway_windowrow 복도를 걷는 @p1_c_jihoon_uniform_full, 옆 반 창문 안 교복 차림 @p1_c_sua_uniform_full 가 혼자 책을 읽는다, 지훈의 걸음이 아주 조금 느려진다 · 연기: 무심한 척 곁눈질
-      Cut #2 — 미디엄 · 팔로우 · (며칠 뒤) 같은 복도·같은 창문, 책 읽는 @p1_c_sua_uniform_full, @p1_c_jihoon_uniform_full 은 이제 일부러 이 복도로 다닌다 · 연기: 조금 익숙해진 곁눈질
-    duration: 12
-    screenplayHash: a11b0f9825ed27fd8f3972ad9273caa444002acfd257678cac418121880f7616
+    prompt: "미디엄 (지훈 시점, 복도 창 너머 교실 안) · 핸드헬드 미세 드리프트 · @p1_l_classroom_midday 창가 약간 뒷자리의 @p1_c_sua_uniform_full 가 친구 두셋이 모여 떠드는 이야기를 흥미롭게 듣는다, 까르르 웃고 눈을 반짝이며 맞장구친다 · 주변 친구들은 레퍼런스와 다른 얼굴의 익명 단역(레퍼런스 캐릭터 복제 금지) · 연기: 또래 사이에 자연스럽게 섞인 생기"
+    duration: 7
+    screenplayHash: 76f5641efb82ad28b0ab3e016c5ccd11a52ad8b14ce1228cf496bf38465a20b3
     characterRefs:
-      - character: jihoon
-        look: uniform
       - character: sua
         look: uniform
     locationRefs:
-      - location: school-hallway
-        reference: window-row
-    propRefs:
-      - prop: poetry-book
+      - location: classroom
+        reference: midday
+    propRefs: []
     takes: []
   - id: "02"
-    prompt: "클로즈업 투샷 · 고정 · 창문 너머를 보며 걷던 @p1_c_jihoon_uniform_face 와 고개를 든 @p1_c_sua_uniform_face 의 눈이 마주친다, 지훈이 황급히 시선을 떼고 빠르게 걸어간다 · 연기: 귀가 빨갛다, 들킨 당황"
-    duration: 6
-    screenplayHash: ac4e09ffb5a2f8232f1468488df26b66fdbe3c33509b27100e96ad3d986645b1
+    prompt: "클로즈업 (지훈 POV) · 고정, 미세 드리프트 · @p1_c_sua_uniform_face, 친구들 쪽을 보며 웃던 수아가 문득 고개를 돌려 카메라(지훈) 쪽을 본다 · 연기: 무심하다 우연히 눈이 마주치는 순간의 옅은 멈칫"
+    duration: 5
+    screenplayHash: 9f2b2ae664fb1b665fa19d60f4b03587d89fa1536a4533ac4d93394c52062f94
     prevShotRef: "01"
     characterRefs:
-      - character: jihoon
-        look: uniform
       - character: sua
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: "클로즈업 · 고정 · @p1_l_schoolhallway_windowrow 복도, 창 너머 수아를 보고 있던 @p1_c_jihoon_uniform_face, 눈이 마주치자 시선을 피하지 않고 가만히 마주 본다 · 연기: 들켰지만 담담한, 묘하게 끌리는 응시(과장 없이)"
+    duration: 5
+    screenplayHash: e41f2e148c627c375e601d72810500c4d07fd6ce51bdde2185715785ee88daf8
+    characterRefs:
+      - character: jihoon
         look: uniform
     locationRefs:
       - location: school-hallway

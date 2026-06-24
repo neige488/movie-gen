@@ -1,0 +1,28 @@
+shots:
+  - id: "01"
+    prompt: "미디엄 · 핸드헬드, 살짝 긴장된 고정 · @p1_l_schooloffice_teachersroom 방과 후 텅 빈 교무실, @p1_c_jihoon_uniform_full 이 교사 책상에 펼쳐진 학생부 바인더를 몰래 넘긴다, 한 이름·주소에서 손이 멈추고 쪽지에 옮겨 적다 인기척에 황급히 바인더를 덮는다 · 연기: 들킬까 조심스러운 긴장, 절박한 집착"
+    duration: 9
+    screenplayHash: c0f7ca90a80c851009d1e1d6cafba91484fd8bf004702eaeef880f78eb1258bc
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: school-office
+        reference: teachers-room
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "와이드 · 고정 · @p1_l_schoolhallway_windowrow 복도, 교무실을 나서는 @p1_c_jihoon_uniform_full, 복도 끝 창가 빛 속에 @p1_c_sua_accidentday_full 가 멀리 서서 그를 가만히 바라본다(다가오지 않음), 지훈은 쪽지를 주머니에 넣고 수아가 선 쪽과 반대로 걸어간다 · 연기: 수아 멀리서 읽을 수 없는 조용한 응시, 지훈 무심히 멀어짐"
+    duration: 7
+    screenplayHash: aa7246748236683d5752d3eb48710f9d70582fa2754d5be50a6b03b969d51678
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: school-hallway
+        reference: window-row
+    propRefs: []
+    takes: []

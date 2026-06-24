@@ -8,3 +8,11 @@ references:
     refName: p1_l_jihoonhome_hallway
     prompt: 밤, 현대적이고 잘 관리된 한국 아파트(비교적 새 대단지)의 방 밖 복도 — 한쪽 끝에서 새는 따뜻한 주방 불빛, 살짝 열린 문틈으로 새는 모니터 불빛. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
     image: jihoon-home/hallway.png
+  - name: living-kitchen
+    refName: p1_l_jihoonhome_living
+    prompt: 아침, 비교적 새 아파트의 거실 겸 오픈형 주방 — 아침 햇살이 가득 드는 큰 창, 잘 정돈된 패브릭 소파와 원목 식탁, 조리대 위 아침 식사 준비 흔적(밥솥·반찬통·과일), 평범하고 따뜻한 중산층 가정의 정돈된 살림. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
+    image: jihoon-home/living-kitchen.png
+  - name: entryway
+    refName: p1_l_jihoonhome_entryway
+    prompt: 아침, 한국 아파트의 현관 — 낮은 신발장 위 가지런한 가족 신발, 벽에 걸린 외투, 중문 너머로 이어지는 짧은 복도, 바깥에서 들어오는 자연광. 비교적 새 아파트의 깔끔한 살림. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 시네마틱 35mm 필름.
+    image: jihoon-home/entryway.png

@@ -1,10 +1,8 @@
 shots:
   - id: "01"
-    prompt: |-
-      Cut #1 — 와이드 그룹샷 · 핸드헬드 다큐 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 멍하니 걷는다 · 승호 “야, 너 어제 그거 봤냐?” 도현 “봤지, 미쳤더라.” · 연기: 지훈 대화가 귀에 안 들어오는 얼굴
-      Cut #2 — 미디엄 · 팔로우 후 정지 · 지훈의 시선이 멎는다 — 멀찍이 @p1_c_sua_accidentday_full 가 혼자 앉아 책을 읽는다, “야, 나 먼저 가볼게!” 하고 @p1_c_jihoon_uniform_full 이 무리에서 빠져나가 뛰어간다, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 어리둥절 서로를 본다
+    prompt: "와이드 그룹샷 · 핸드헬드 다큐 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 끼지 못하고 굳은 얼굴로 듣기만 한다 · 승호 “어제 게임 다 이겨놓고 막판에 팀이 던져서 역전패” 도현 “너 또 혼자 네 명한테 들어갔지?” 승호 “들어가면 따라올 줄 알았다고” 도현 “누가 그걸 따라가냐, 그러니까 만년 골드지” · 연기: 친구들 깔깔, 지훈만 웃지 않고 대화가 멀게 들리는 얼굴"
     duration: 13
-    screenplayHash: 607f8a427fdb7649fda871a55c0209e624e1e66a998a9467f61a3aee98165636
+    screenplayHash: d5a91874f22d69e50828ee3a62081203225f54eae4dd6bf91dc2a1fc31cd0824
     characterRefs:
       - character: jihoon
         look: uniform
@@ -12,18 +10,36 @@ shots:
         look: uniform
       - character: dohyun
         look: uniform
-      - character: sua
-        look: accident-day
     locationRefs:
       - location: side-street
         reference: school-route
     propRefs: []
     takes: []
   - id: "02"
+    prompt: "미디엄 · 팔로우 후 정지 · @p1_c_jihoon_uniform_full 의 시선이 멎는다 — 멀찍이 벤치에 @p1_c_sua_accidentday_full 가 혼자 앉아 @p1_p_poetrybook_coverworn 를 읽는다, “나 먼저 가볼게” 하고 지훈이 무리에서 빠져나가 수아 쪽으로 걸어가며 걸음이 점점 빨라진다, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 어리둥절 서로를 본다 · 연기: 지훈 무언가에 끌리듯, 친구들 어리둥절"
+    duration: 9
+    screenplayHash: 2070558af2218b455a1e7849cda7663bbccdd08e3efb5f6c48f3e25696750b33
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+      - character: seungho
+        look: uniform
+      - character: dohyun
+        look: uniform
+    locationRefs:
+      - location: side-street
+        reference: school-route
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: "03"
     prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_c_jihoon_uniform_full 이 @p1_c_sua_accidentday_full 곁에 다다라 숨을 고른다, 수아는 @p1_p_poetrybook_coverworn 를 들고 있다 · 지훈 “뭐 읽어?” 수아 “집에 가는 이야기.” 지훈 “그게 재밌어?” 수아 “집에 가는 게 제일 어려운 사람도 있잖아.” · 연기: 수아 잔잔, 지훈 호기심"
     duration: 10
     screenplayHash: 588e80b7c7b4cb6a9a9803c7a01cbf1060691ede0dbb2de6febc6406e16ac882
-    prevShotRef: "01"
+    prevShotRef: "02"
     characterRefs:
       - character: jihoon
         look: uniform

@@ -1,8 +1,45 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 핸드헬드 · 아침 @p1_l_jihoonhome_bedroom, @p1_c_jihoon_hoodiewithbag_full 이 게임을 끄고 허둥지둥 교복 위에 후드티를 걸친다, 가방 지퍼는 반쯤 열리고 후드티 끈이 한쪽만 길다 · 연기: 늦잠 뒤 다급함"
+    prompt: "미디엄 · 핸드헬드, 미세 드리프트 · @p1_l_jihoonhome_bedroom 의 게이밍 책상에서 @p1_c_jihoon_onlyhoodie_full 이 헤드셋을 쓰고 화면에 바짝 붙어 빠르게 손을 놀린다 · 연기: 게임에 완전히 몰입해 작은 탄성과 혼잣웃음, 시간 가는 줄 모르는 천진함, 걱정 하나 없는 얼굴"
     duration: 6
-    screenplayHash: 63d26aa0a53377a20c6884ff4665f3ea9251406f821a342a6976b90d9cb58fc8
+    screenplayHash: a4d3baf28a67110060b40e89bfd97bd48ff038d501ee1b35be9d9dd9944b3915
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "미디엄 풀샷 · 고정 · @p1_l_jihoonhome_living 에서 앞치마를 두른 @p1_c_jihoonmother_default_full 이 아침 정리를 하다 방 쪽으로 고개를 돌려 부른다 · 연기: 정겹고 느긋한 아침의 잔소리, '지훈아 학원 갈 때 안 됐니' 하고 부르는 입모양, 따뜻한 중산층 가정의 평범한 아침"
+    duration: 5
+    screenplayHash: 00ff098778c660fb7c4c38bcfd159f7d3b45326ecb7f9e90e93fa2e824282c2f
+    characterRefs:
+      - character: jihoon-mother
+        look: default
+    locationRefs:
+      - location: jihoon-home
+        reference: living-kitchen
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: "Cut #1 — 클로즈업 · 고정 · @p1_c_jihoon_onlyhoodie_face 가 무심코 벽시계 쪽으로 눈을 든다 · 연기: 무심하다가 순간 굳는 표정\nCut #2 — 인서트 · 고정 · 늦은 시각을 가리키는 벽의 아날로그 시계\nCut #3 — 미디엄 · 핸드헬드 · @p1_l_jihoonhome_bedroom 에서 @p1_c_jihoon_onlyhoodie_full 이 게임을 팽개치고 화들짝 일어선다 · 연기: '늦었다'를 깨닫고 다급해지는 덜렁댐"
+    duration: 6
+    screenplayHash: 1fea512903e5bf9dabba84bd5f58fa775cd1ab664e1b0c4fccd9ddf8d923340a
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs: []
+    takes: []
+  - id: "04"
+    prompt: "미디엄 · 핸드헬드 팔로우 · @p1_l_jihoonhome_bedroom 에서 @p1_c_jihoon_hoodiewithbag_full 이 후드티 끈이 한쪽만 길게 늘어진 채 지퍼가 반쯤 열린 백팩을 대충 둘러메고 책과 물건을 허둥지둥 쓸어 담는다 · 연기: 덜렁대는 다급함, 우당탕거리는 손놀림"
+    duration: 6
+    screenplayHash: 294c29dd6505d54354f5882418242c4479e6c393b4a9ad3ce2c5cccbb2e4e302
+    prevShotRef: "03"
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
@@ -11,11 +48,24 @@ shots:
         reference: bedroom
     propRefs: []
     takes: []
-  - id: "02"
+  - id: "05"
+    prompt: "미디엄 풀샷 · 핸드헬드 · @p1_l_jihoonhome_entryway 에서 @p1_c_jihoon_hoodiewithbag_full 이 신발을 구겨 신으며 거실 쪽으로 외치고 곧장 문을 박차고 나간다 · 연기: '엄마 나 갔다 올게' 외치는 입모양, 대답도 안 듣고 뛰쳐나가는 활기"
+    duration: 5
+    screenplayHash: 64dfb2737b8ffca42d18d0a6847b71190d6dfb074bd94b9df60370e08863219f
+    prevShotRef: "04"
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+    locationRefs:
+      - location: jihoon-home
+        reference: entryway
+    propRefs: []
+    takes: []
+  - id: "06"
     prompt: "와이드 풀샷 · 팔로우 · 아침 @p1_l_homealley_morning 집 앞 마른 골목으로 @p1_c_jihoon_hoodiewithbag_full 이 뛰어나온다 · 연기: 거친 숨, 조급함"
     duration: 5
     screenplayHash: df3a7ddd026e9bae1f6b284bffafa1cd6928548927dce9d266e2cc88196cc40c
-    prevShotRef: "01"
+    prevShotRef: "05"
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
