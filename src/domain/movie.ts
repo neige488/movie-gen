@@ -115,6 +115,13 @@ export interface Shot {
   readonly duration: number;
   readonly screenplayHash: string;
   readonly prevShotRef?: string | undefined;
+  /**
+   * Optional camera/film/grade look key — overrides the Scene's `look` for this
+   * Shot. Resolves against the preset's `looks` map (see prompt-preset.ts).
+   * `undefined` ⇒ inherit the Scene's look (or the reserved `default` look).
+   * NOTE: distinct from `characterRefs[].look` (a character's wardrobe).
+   */
+  readonly look?: string | undefined;
   readonly characterRefs: readonly CharacterRef[];
   readonly locationRefs: readonly LocationRef[];
   readonly propRefs: readonly PropRef[];
@@ -127,6 +134,7 @@ export interface CreateShotInput {
   duration: number;
   screenplayHash: string;
   prevShotRef?: string | undefined;
+  look?: string | undefined;
   characterRefs?: readonly CharacterRef[];
   locationRefs?: readonly LocationRef[];
   propRefs?: readonly PropRef[];
@@ -169,6 +177,7 @@ export function createShot(input: CreateShotInput): Shot {
     duration: input.duration,
     screenplayHash: input.screenplayHash,
     prevShotRef: input.prevShotRef,
+    look: input.look,
     characterRefs: input.characterRefs ?? [],
     locationRefs: input.locationRefs ?? [],
     propRefs: input.propRefs ?? [],
@@ -185,6 +194,12 @@ export interface Scene {
   readonly slugline: string;
   readonly screenplay: string;
   readonly isStarred: boolean;
+  /**
+   * Optional camera/film/grade look key for the whole Scene — resolves against
+   * the preset's `looks` map (see prompt-preset.ts). A Shot may override per-shot
+   * via `Shot.look`. `undefined` ⇒ the reserved `default` look applies.
+   */
+  readonly look?: string | undefined;
   readonly shots: readonly Shot[];
 }
 
@@ -193,6 +208,7 @@ export interface CreateSceneInput {
   slugline: string;
   screenplay: string;
   isStarred: boolean;
+  look?: string | undefined;
   shots: readonly Shot[];
 }
 
@@ -233,6 +249,7 @@ export function createScene(input: CreateSceneInput): Scene {
     slugline: input.slugline,
     screenplay: input.screenplay,
     isStarred: input.isStarred,
+    look: input.look,
     shots: input.shots,
   };
 }
