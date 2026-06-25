@@ -2,5 +2,5 @@ name: convenience-store
 references:
   - name: window-seat
     refName: p1_l_conveniencestore_windowseat
-    prompt: 밤, 안에서 본 현대적 한국 편의점 — 창가 카운터 좌석, 깔끔하고 밝은 조명, 잘 채워진 진열대, 빗방울 맺힌 유리, 바깥 거리. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 상표·간판·글자 없음, 시네마틱 35mm 필름.
+    prompt: 밤, 안에서 본 현대적 한국 편의점 — 창가 카운터 좌석, 깔끔하고 밝은 조명, 잘 채워진 진열대, 빗방울 맺힌 유리, 바깥 거리. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 상표·간판·글자 없음, 고르고 부드러운 자연광과 은은한 중립 톤, 공간 구조·재질이 또렷한 정상 노출(그레이드는 후처리 looks가 입힘).
     image: convenience-store/window-seat.png

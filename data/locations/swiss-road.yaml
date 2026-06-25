@@ -2,5 +2,5 @@ name: swiss-road
 references:
   - name: mountain-drive
     refName: p1_l_swissroad_mountaindrive
-    prompt: 스위스 알프스 도로를 달리는 차 안에서 본 풍경 — 앞유리 너머 만년설 봉우리, 청록빛 호수를 향해 굽이쳐 내려가는 길, 다른 차는 없음. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 시네마틱 35mm 필름.
+    prompt: 스위스 알프스 도로를 달리는 차 안에서 본 풍경 — 앞유리 너머 만년설 봉우리, 청록빛 호수를 향해 굽이쳐 내려가는 길, 다른 차는 없음. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 따뜻한 노스탤지어 색감의 부드러운 자연광, 공간이 또렷한 정상 노출, 35mm 필름.
     image: swiss-road/mountain-drive.png
