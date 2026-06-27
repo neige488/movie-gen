@@ -349,11 +349,12 @@ export const DEFAULT_FACE_PROMPT =
   "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 얼굴 레퍼런스 시트 한 장. 왼쪽: 정면 클로즈업 헤드샷. 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 측면, 아래에서 본 모습(로우앵글). 동일 인물·동일 얼굴, 해당 의상의 헤어·넥라인 반영, 중립 표정, 단색 배경, 균일한 조명, 글씨·워터마크 없음.";
 
 /**
- * Default generation prompt for a Look body sheet (BodyProfile) — a 3-panel
- * full-body reference generated from the Character headshot + this Look's outfit.
+ * Default generation prompt for a Look body sheet (BodyProfile) — 3 panels:
+ * left headshot · center full-body front · right full-body back. Generated from
+ * the Character headshot + this Look's outfit.
  */
 export const DEFAULT_BODY_PROMPT =
-  "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 전신 레퍼런스 시트 한 장, 가로 3분할 — 정면, 측면, 후면. 동일 인물·동일 의상, 중립 A-포즈, 전신 안 잘리게, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.";
+  "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 전신 레퍼런스 시트 한 장, 가로 3분할 — 왼쪽: 헤드샷(정면 클로즈업), 가운데: 전신 앞면, 오른쪽: 전신 뒷면. 동일 인물·동일 의상, 중립 A-포즈, 전신 안 잘리게, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.";
 
 export interface Character {
   readonly name: string;
