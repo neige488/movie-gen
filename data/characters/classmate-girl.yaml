@@ -1,16 +1,16 @@
 name: classmate-girl
 headshot:
-  image: classmate-girl/headshot.png
   refName: p1_c_classmategirl_headshot
-  prompt: "18세 한국 여학생, 턱선 길이의 검은 단발, 둥근 얼굴. 얼굴 ID 헤드샷 — 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음."
+  prompt: 18세 한국 여학생, 턱선 길이의 검은 단발, 둥근 얼굴, 화장기 없이 수수하고 평범한 인상 — 눈에 잘 띄지 않는, 어디서나 볼 수 있는 보통의 얼굴(미화·매력 강조 없이). 얼굴 ID 헤드샷 — 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음.
+  image: characters/classmate-girl/headshot.png
 looks:
   - name: uniform
-    uniform:
-      image: classmate-girl/uniform/uniform.png
-      prompt: "한 의상의 2분할 레퍼런스 시트 한 장 — 좌측 패널=정면 전신, 우측 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음. 의상: 치마 있는 한국 고교 교복."
     face:
-      image: classmate-girl/uniform/face.png
       refName: p1_c_classmategirl_uniform_face
+      image: classmate-girl/uniform/face.png
     body:
-      image: classmate-girl/uniform/body.png
       refName: p1_c_classmategirl_uniform_full
+      image: classmate-girl/uniform/body.png
+    uniform:
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 한국 고교 교복 — 흰 버튼업 셔츠(뾰족 카라), 네이비 블레이저(가슴 엠블럼), 버건디 나비넥타이(짧은 리본형), 네이비 플리츠 치마, 검정 로퍼.'
+      image: classmate-girl/uniform/uniform.png
