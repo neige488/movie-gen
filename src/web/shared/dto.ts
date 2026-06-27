@@ -196,6 +196,8 @@ export interface LookDto {
   body: ImageReferenceDto;
   /** Optional outfit source — single 2-panel (front+back) sheet + its prompt. */
   uniform?: ImageReferenceDto;
+  /** Optional unified character sheet — single 3-panel image + its prompt. */
+  sheet?: ImageReferenceDto;
 }
 
 export interface LibraryCharacterDto {

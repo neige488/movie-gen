@@ -1663,7 +1663,21 @@ describe("Character headshot ImageRef + Look.uniform", () => {
     expect(() => look({ uniform: { image: "" } })).toThrow(/uniform\.image/i);
   });
 
-  it("collectRefNames includes headshot and uniform refNames", () => {
+  it("accepts an optional sheet on a Look", () => {
+    const l = look({ sheet: { image: "s.png", prompt: "3-panel 통합" } });
+    expect(l.sheet?.image).toBe("s.png");
+    expect(l.sheet?.prompt).toBe("3-panel 통합");
+  });
+
+  it("omits sheet when not provided", () => {
+    expect(look().sheet).toBeUndefined();
+  });
+
+  it("rejects a sheet without image when set", () => {
+    expect(() => look({ sheet: { image: "" } })).toThrow(/sheet\.image/i);
+  });
+
+  it("collectRefNames includes headshot, uniform and sheet refNames", () => {
     const project = createProject({
       scenes: [],
       characters: [
@@ -1676,6 +1690,7 @@ describe("Character headshot ImageRef + Look.uniform", () => {
               face: { image: "f.png", refName: "p1_c_alice_casual_face" },
               body: { image: "b.png" },
               uniform: { image: "u.png", refName: "p1_c_alice_casual_uniform" },
+              sheet: { image: "s.png", refName: "p1_c_alice_casual_sheet" },
             }),
           ],
         }),
@@ -1685,6 +1700,7 @@ describe("Character headshot ImageRef + Look.uniform", () => {
     });
     expect(collectRefNames(project).sort()).toEqual([
       "p1_c_alice_casual_face",
+      "p1_c_alice_casual_sheet",
       "p1_c_alice_casual_uniform",
       "p1_c_alice_headshot",
     ]);
