@@ -6,7 +6,7 @@ references:
     image: bookstore/aisles.png
   - name: storefront
     refName: p1_l_bookstore_storefront
-    prompt: 아늑한 동네 독립서점의 길가 입구 외관 — 큰 통유리창과 나무 문틀, 창 안으로 따뜻한 조명의 책장이 비친다, 문 옆 작은 화분, 주말 오후의 부드러운 햇빛. 간판 글자는 흐릿하게 처리해 읽히지 않게. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 따뜻한 골든 색감과 파스텔 톤, 부드러운 노스탤지어 무드, 공간 디테일이 또렷한 정상 노출, 35mm 필름.
+    prompt: 아늑한 동네 독립서점의 길가 입구 외관 — 큰 통유리창과 나무 문틀, 창 안으로 따뜻한 조명의 책장이 비친다, 문 옆 작은 화분, 주말 오후의 부드러운 햇빛. 나무 간판에 한글로 ‘안녕, 책방’이라고 또렷이 적혀 있다. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 따뜻한 골든 색감과 파스텔 톤, 부드러운 노스탤지어 무드, 공간 디테일이 또렷한 정상 노출, 35mm 필름.
     image: bookstore/storefront.png
   - name: record-corner
     refName: p1_l_bookstore_recordcorner
