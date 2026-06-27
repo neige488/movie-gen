@@ -96,6 +96,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
                   label="face"
                   onUploaded={onUploaded}
                 />
+                {look.face.prompt && <PromptBlock prompt={look.face.prompt} />}
               </div>
               <div className="look__group">
                 <div className="look__group-label">
@@ -112,6 +113,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
                   label="body"
                   onUploaded={onUploaded}
                 />
+                {look.body.prompt && <PromptBlock prompt={look.body.prompt} />}
               </div>
             </div>
           </div>
