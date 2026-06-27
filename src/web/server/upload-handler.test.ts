@@ -265,6 +265,34 @@ describe("applyUpload — character face/body slots", () => {
     expect(look.body.image).toBe("alice/hoodie/body.png");
   });
 
+  it("creates the look's sheet on upload when the look had none", async () => {
+    // ALICE_YAML's hoodie look has no sheet — uploading one creates it.
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+
+    await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-sheet", character: "alice", look: "hoodie" },
+        originalFilename: "s.png",
+        data: Buffer.from("SHEET"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      createProject,
+    });
+
+    const reloaded = await loadProject(dataDir);
+    const look = reloaded.characters[0]!.looks[0]!;
+    expect(look.sheet?.image).toBe("characters/alice/hoodie/sheet.png");
+    // face/body untouched.
+    expect(look.face.image).toBe("alice/hoodie/face.png");
+    expect(look.body.image).toBe("alice/hoodie/body.png");
+  });
+
   it("rejects upload targeting unknown character", async () => {
     writeCharacter("alice", ALICE_YAML);
     const ctx = await setupHandler();
