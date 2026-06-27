@@ -341,11 +341,12 @@ export const DEFAULT_SHEET_PROMPT =
   "첨부한 헤드샷(얼굴 ID)과 uniform(의상 앞/뒤)을 바탕으로 만든 통합 캐릭터 레퍼런스 시트 한 장, 가로 3분할. 중앙: 얼굴 클로즈업(정면, 중립 표정, 얼굴 ID). 왼쪽: 전신 — 위 정면 / 아래 후면(uniform 의상 유지, A-포즈). 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 정측면, 로우앵글(아래에서). 동일 인물·동일 의상·일관된 조명, 단색 밝은 회색 배경, 전신 안 잘리게, 소품·글씨·워터마크 없음.";
 
 /**
- * Default generation prompt for a Look face sheet (FaceProfile) — a 5-panel face
- * reference generated from the Character headshot + this Look's outfit.
+ * Default generation prompt for a Look face sheet (FaceProfile) — left: front
+ * close-up headshot · right: 4 face angles (3/4 L, 3/4 R, side, from below).
+ * Generated from the Character headshot + this Look's outfit.
  */
 export const DEFAULT_FACE_PROMPT =
-  "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 얼굴 레퍼런스 시트 한 장, 가로 5분할 — 정면, 3/4 좌, 3/4 우, 좌측면, 우측면. 동일 인물·동일 얼굴, 해당 의상의 헤어·넥라인 반영, 중립 표정, 단색 배경, 균일한 조명, 글씨·워터마크 없음.";
+  "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 얼굴 레퍼런스 시트 한 장. 왼쪽: 정면 클로즈업 헤드샷. 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 측면, 아래에서 본 모습(로우앵글). 동일 인물·동일 얼굴, 해당 의상의 헤어·넥라인 반영, 중립 표정, 단색 배경, 균일한 조명, 글씨·워터마크 없음.";
 
 /**
  * Default generation prompt for a Look body sheet (BodyProfile) — a 3-panel
