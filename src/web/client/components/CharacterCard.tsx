@@ -7,10 +7,15 @@ interface Props {
   onUploaded: () => void;
 }
 
-/** Small `@refName` label shown next to a slot when the ImageRef has one. */
-function RefName({ ref }: { ref?: ImageReferenceDto }) {
-  if (!ref?.refName) return null;
-  return <span className="look__refname">@{ref.refName}</span>;
+/**
+ * Small `@refName` label shown next to a slot when the ImageRef has one.
+ * NB: the prop is `imageRef`, NOT `ref` — `ref` is a reserved prop on React 18
+ * function components (React swallows it instead of passing it through), which
+ * silently made every label disappear.
+ */
+function RefName({ imageRef }: { imageRef?: ImageReferenceDto }) {
+  if (!imageRef?.refName) return null;
+  return <span className="look__refname">@{imageRef.refName}</span>;
 }
 
 export function CharacterCard({ character, onUploaded }: Props) {
@@ -27,7 +32,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
         <div className="card__headshot">
           <div className="look__group-label">
             headshot (face ID)
-            <RefName ref={character.headshot} />
+            <RefName imageRef={character.headshot} />
           </div>
           <ImageSlot
             slot={{ kind: "character-headshot", character: character.name }}
@@ -48,7 +53,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
               <div className="look__group">
                 <div className="look__group-label">
                   Uniform (2-panel 앞뒤)
-                  <RefName ref={look.uniform} />
+                  <RefName imageRef={look.uniform} />
                 </div>
                 <ImageSlot
                   slot={{
@@ -67,7 +72,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
               <div className="look__group">
                 <div className="look__group-label">
                   Sheet (3-panel 통합)
-                  <RefName ref={look.sheet} />
+                  <RefName imageRef={look.sheet} />
                 </div>
                 <ImageSlot
                   slot={{
@@ -84,7 +89,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
               <div className="look__group">
                 <div className="look__group-label">
                   Face (5-panel sheet)
-                  <RefName ref={look.face} />
+                  <RefName imageRef={look.face} />
                 </div>
                 <ImageSlot
                   slot={{
@@ -101,7 +106,7 @@ export function CharacterCard({ character, onUploaded }: Props) {
               <div className="look__group">
                 <div className="look__group-label">
                   Body (3-panel sheet)
-                  <RefName ref={look.body} />
+                  <RefName imageRef={look.body} />
                 </div>
                 <ImageSlot
                   slot={{
