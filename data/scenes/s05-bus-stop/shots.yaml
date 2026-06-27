@@ -1,0 +1,30 @@
+shots:
+  - id: "01"
+    prompt: 와이드 · 고정 · 비가 그친 젖은 거리에 노을, @p1_l_busstop_dusk 으로 버스가 들어오고 @p1_c_sua_accidentday_full 가 버스에 오르려 한다
+    duration: 6
+    screenplayHash: 1b90989ada2cd40268a2bbfb2703838ec490bdc7aa86a490b19d83fb0a280496
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bus-stop
+        reference: dusk
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "미디엄 투샷 · 고정, 미세 푸시인 · @p1_c_jihoon_onlyhoodie_full 이 “수아야!” 부르고, 한 발을 디딘 채 뒤돌아보는 @p1_c_sua_accidentday_face · 지훈 “혹시… 이번 주말에 뭐 해?” · 수아가 환하게 웃는다 · 연기: 설렘"
+    duration: 10
+    screenplayHash: 4bbc3472e369235082e0c560a9135505ef601bcac0eef72eba4e0c7ac4dc9db2
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bus-stop
+        reference: dusk
+    propRefs: []
+    takes: []

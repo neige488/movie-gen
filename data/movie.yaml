@@ -1,0 +1,48 @@
+totalPages: 20
+acts:
+  - id: 1
+    scenes:
+      - s00b-op-swiss-roadtrip
+      - s00c-op-late-run
+      - s00a-op-seed-crosswalk
+      - s01-redlight-banter
+      - s01b-late-collapse
+      - s02-classroom-window
+      - s02b-friends-walk
+      - s04-rain-alley
+      - s05-bus-stop
+  - id: 2
+    scenes:
+      - s03-convenience-store
+      - s05b-bookstore-date
+      - s05c-date-montage
+      - s05d-hill-intro
+      - s07-mailbox-letters
+      - s08-swiss-promise
+      - s08b-classroom-couple
+      - s09-amusement-park
+      - s09r-amusement-park-alone
+      - s10-ice-rink
+      - s10r-ice-rink-alone
+      - s11-sleepless
+      - s12-minor-accident
+      - s12b-classroom-book
+      - s13-book-immersion
+      - s13c-office-address
+      - s13d-accident-blur
+      - s13e-snackbar
+      - s13f-jealousy-shadow
+      - s17-confrontation
+      - s18-breakdown
+      - s19-doctor
+      - s19b-empty-days
+      - s19c-empty-seat
+  - id: 3
+    scenes:
+      - s22-reunion
+      - s23-finding-home
+      - s24-suas-home
+      - s90c-pairs-montage
+      - s90d-cookie-redlight
+      - s90a-ending-crosswalk
+      - s90b-ending-interlaken

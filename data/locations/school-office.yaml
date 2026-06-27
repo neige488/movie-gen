@@ -1,0 +1,6 @@
+name: school-office
+references:
+  - name: teachers-room
+    refName: p1_l_schooloffice_teachersroom
+    prompt: 현대적 한국 고등학교 교무실, 쌓인 서류와 바인더, 늦은 오후 빛, 한 책상엔 펼쳐진 학생부 바인더. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 따뜻한 골든 색감과 파스텔 톤, 부드러운 노스탤지어 무드, 공간 디테일이 또렷한 정상 노출, 35mm 필름.
+    image: school-office/teachers-room.png

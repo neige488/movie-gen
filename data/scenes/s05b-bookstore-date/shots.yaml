@@ -1,0 +1,41 @@
+shots:
+  - id: "01"
+    prompt: "와이드 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드, 다가가는 미세 전진 · @p1_l_bookstore_storefront 서점 앞 통유리창 옆에서 @p1_c_sua_accidentday_full 가 기다리다 카메라(지훈) 쪽을 발견하고 환하게 손을 흔든다 · 연기: 반가움, 설렘 가득한 첫 데이트의 인사"
+    duration: 6
+    screenplayHash: 23d6fe78790217164d3be282a47eb2e88a6afd545347425cf28295d5ee6c3c88
+    characterRefs:
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: storefront
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "미디엄 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드 팔로우 · @p1_l_bookstore_aisles 서가 사이에서 @p1_c_sua_accidentday_full 가 책등을 손끝으로 훑으며 한 권을 찾고, 찾았다는 듯 카메라(지훈)를 돌아보며 웃고 따라오라는 듯 손짓하며 레코드 코너 쪽으로 앞장선다 · 연기: 장난스러운 리드, 친밀함"
+    duration: 7
+    screenplayHash: 73826ee97e992088b24f81fe6a700626c001cb1dd7df1996dd13f43a8598cf19
+    prevShotRef: "01"
+    characterRefs:
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: aisles
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: "미디엄 투샷 → 클로즈업 투샷 (POV에서 투샷으로 전환, 지훈이 처음 한 프레임에) · 고정, 미세 드리프트 · @p1_l_bookstore_recordcorner 레코드 코너에서 @p1_c_sua_accidentday_full 가 헤드폰을 집어 @p1_c_jihoon_dateoutfit_face 의 귀에 살며시 씌워 준다, 헤드폰 너머로 음악이 차오르고 수아가 눈을 맞추며 웃는다 · (이 음악은 이어지는 데이트 장면으로 계속 흐른다) · 연기: 지훈의 긴장이 사르르 풀리고, 수아 안온한 미소"
+    duration: 8
+    screenplayHash: 97cae9d6f0824c3276f779a2dab2245502f365d5193b69f7c5222348a7e428db
+    prevShotRef: "02"
+    characterRefs:
+      - character: jihoon
+        look: date-outfit
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: bookstore
+        reference: record-corner
+    propRefs: []
+    takes: []

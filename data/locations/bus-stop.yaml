@@ -1,0 +1,6 @@
+name: bus-stop
+references:
+  - name: dusk
+    refName: p1_l_busstop_dusk
+    prompt: 해질녘 현대식 유리 버스정류장 셸터, 깔끔한 벤치, 한적한 거리, 낮게 깔린 따뜻한 햇빛. 배경 2026년 서울. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지, 읽을 수 있는 간판·글자 없음, 따뜻한 골든 색감과 파스텔 톤, 부드러운 노스탤지어 무드, 공간 디테일이 또렷한 정상 노출, 35mm 필름.
+    image: bus-stop/dusk.png

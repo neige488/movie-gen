@@ -1,0 +1,14 @@
+shots:
+  - id: "01"
+    prompt: "와이드 풀샷 · 고정 · 같은 @p1_l_amusementpark_carousel 회전목마, @p1_c_jihoon_onlyhoodie_full 이 혼자 목마에 앉아 한 손에 @p1_p_poetrybook_coverworn 를 들고 있다, 주위엔 아이들과 부모들뿐, 회전목마가 돈다 · 연기: 텅 빈 표정"
+    duration: 8
+    screenplayHash: f6e314cea3c25accee8625297ca96581ef9fef7830f608da216cf9d033c34254
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+    locationRefs:
+      - location: amusement-park
+        reference: carousel
+    propRefs:
+      - prop: poetry-book
+    takes: []

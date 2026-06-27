@@ -1,0 +1,30 @@
+shots:
+  - id: "01"
+    prompt: 미디엄 트래킹 · 핸드헬드 팔로우 · 오후, 낯선 동네 골목을 @p1_c_sua_accidentday_full 가 반 발짝 앞서 걷고 @p1_c_jihoon_uniform_full 이 쪽지를 보며 따른다 · 지훈 “이 동네 맞아?” 수아 “이쪽이야.” 지훈 “…와 본 적 있어?” 수아 잠깐 멈칫하더니 돌아보지 않고 “그냥, 알 것 같아.”
+    duration: 11
+    screenplayHash: 1acb4b5dae634dcfd151fa08c5694b0132e9df939a17b1061091b4bd92b154ef
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: sua-home
+        reference: corridor-apartment
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: 와이드 · 고정, 로우앵글 · @p1_l_suahome_corridorapartment 오래된 복도식 아파트 앞, @p1_c_sua_accidentday_full 가 멈춰 서 올려다본다 · 수아 “…여기다.”
+    duration: 6
+    screenplayHash: 54499fd668c542d56119a797d01a91ab77dec53c62f081d7b8bb0d34180f26c0
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: sua-home
+        reference: corridor-apartment
+    propRefs: []
+    takes: []

@@ -1,5 +1,0 @@
-name: riverside
-references:
-  - name: misty-bank
-    prompt: "Misty riverbank at dawn, low golden light, water reflections."
-    image: riverside/misty-bank.png

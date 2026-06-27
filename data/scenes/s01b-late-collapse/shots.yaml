@@ -1,0 +1,28 @@
+shots:
+  - id: "01"
+    prompt: "와이드, 수아 POV(창가에서 출입문 쪽) · 고정 · @p1_l_academy_lectureroom, 선생님 강의 중 학생들 착석, 문이 열리고 @p1_c_jihoon_hoodiewithbag_full 이 굳은 얼굴로 늦게 들어온다, 사람들이 돌아본다, 그는 잠깐 둘러보다 급히 자리로 간다 · 연기: 지훈 위축·긴장"
+    duration: 10
+    screenplayHash: 449ebb95e2bbfeed532f9404ae4a52713aac5dd99a1426f812c07e068314d124
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+    locationRefs:
+      - location: academy
+        reference: lecture-room
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: |-
+      Cut #1 — 미디엄 · 고정 · @p1_c_jihoon_hoodiewithbag_full 이 천천히 책상에 엎드리고 어깨가 미세하게 떨린다, 아무도 다가오지 않는다 · 형광등 아래 시간이 멈춘 듯 고요
+      Cut #2 — 클로즈업, 수아 POV · 고정 · 엎드린 지훈을 가만히 바라보는 시선 — 낯선 아이를 처음 눈에 담는 조용한 시선, 누구의 시선인지는 보이지 않는다
+    duration: 11
+    screenplayHash: abe37936a122e867472cb9ce8fefa24b8746163c11991f7eb7b298d3b1af0114
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+    locationRefs:
+      - location: academy
+        reference: lecture-room
+    propRefs: []
+    takes: []

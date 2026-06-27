@@ -1,0 +1,32 @@
+shots:
+  - id: "01"
+    prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_l_classroom_midday 쉬는 시간 교실, @p1_c_jihoon_uniform_full 이 책상에 @p1_p_poetrybook_marginnote 를 펼쳐 여백 메모·밑줄을 손끝으로 짚으며 빠져 읽는다, 곁에 앉은 @p1_c_sua_accidentday_full 가 평소처럼 말을 건다 · 수아 “강지훈, 점심 뭐 먹을래? …야, 강지훈.” 지훈 “어… 어.” (눈도 안 뗌) · 주변은 레퍼런스와 다른 익명 단역(레퍼런스 캐릭터 복제 금지) · 연기: 지훈 책에 완전 몰입, 수아 다정하게 말 걸지만 건성으로 받는 거리감"
+    duration: 7
+    screenplayHash: 47c3e6050a5db721bbdc8ef37ce63053bb626b4169ece0945ada57f2d74cc3c5
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: "02"
+    prompt: "미디엄 투샷 → 수아 클로즈업 · 고정 · @p1_c_sua_accidentday_full 가 @p1_c_jihoon_uniform_full 의 책을 손끝으로 톡톡 건드리며 장난스레 들여다보려 하자 지훈이 무심코 책을 살짝 돌려 가린다, 수아의 웃음이 잠깐 멎었다가 곧 어깨를 으쓱하고 다시 평소처럼 군다 · 연기: 수아 옅은 그늘을 삼키고 애써 밝게, 지훈 무의식적 외면"
+    duration: 6
+    screenplayHash: f8d0c0f342d4e70254461e81f9a2d148e4ad60faefe82e3af4843d490e667f77
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs:
+      - prop: poetry-book
+    takes: []

@@ -1,0 +1,34 @@
+shots:
+  - id: "01"
+    prompt: 미디엄 투샷 · 고정 · @p1_l_hospital_examroom 진료실, @p1_c_doctor_default_full 와 마주 앉은 @p1_c_jihoon_onlyhoodie_full, 옆에 @p1_c_jihoonmother_default_full · 의사가 차트를 보며 천천히 “최근에… 어떤 사고를 목격하셨나요?” 지훈은 대답하지 않는다, 손끝이 무릎 위에서 떨린다
+    duration: 8
+    screenplayHash: 2cba28275681d3f9638b56fdd4c18f233968ffed097689626b1efb9ba753870e
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: doctor
+        look: default
+      - character: jihoon-mother
+        look: default
+    locationRefs:
+      - location: hospital
+        reference: exam-room
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: 미디엄 투샷, 클로즈업 인서트 · 고정 · @p1_c_doctor_default_face 가 @p1_c_jihoonmother_default_face 에게 “외상 후 스트레스라고 합니다. 큰 충격을 겪고 나면 그 순간이 자꾸 되돌아옵니다. 소리로도 오고 잠으로도 오고… 본인이 막을 수 없었던 일인데도 마음은 자꾸 자기 탓을 하거든요.” 엄마가 지훈의 손을 잡으며 “얘가 그냥 본 것뿐인데도… 그래요?” 의사 “본 것만으로도, 옵니다.”
+    duration: 14
+    screenplayHash: cb8fae43b8d5a787f38452fa3263e896890e19c20569352107041f9d5e355c8e
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: doctor
+        look: default
+      - character: jihoon-mother
+        look: default
+    locationRefs:
+      - location: hospital
+        reference: exam-room
+    propRefs: []
+    takes: []

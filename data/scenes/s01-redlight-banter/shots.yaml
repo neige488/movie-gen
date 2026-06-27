@@ -1,0 +1,46 @@
+shots:
+  - id: "01"
+    prompt: "Cut #1 — 와이드 투샷 · 핸드헬드 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_hoodiewithbag_full 이 가쁜 숨으로 도착해 멈추지 않고 빈 차도로 거의 들어선다 · 연기: 조급함, 가쁜 숨\nCut #2 — 지훈 시점 클로즈업 · 미세 드리프트 · 길가에 앉아 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴, 지훈이 '아는 얼굴'임을 알아챈다 · 연기: 수아 평온·무심\nCut #3 — 미디엄 · 핸드헬드 휩 팬 · @p1_c_jihoon_hoodiewithbag_full 이 차도로 나가던 몸을 급하게 틀어 수아 쪽으로 방향을 바꾼다 · 연기: 충동적 방향 전환"
+    duration: 8
+    screenplayHash: df11c33f79059d421c17a5c399aa16fed540aaaf551ca948d197556cb2bbb53f
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: "02"
+    prompt: "미디엄 투샷, 간헐 클로즈업 · 고정+미세 드리프트 · @p1_c_jihoon_hoodiewithbag_full 이 @p1_c_sua_accidentday_full 옆에 와 서고 수아가 책에서 눈을 든다, 둘의 티격태격 · 수아 “너 또 빨간불에 건너려 했지?” 지훈 “아니거든.” 수아 “거짓말.” 지훈 “넌 어떻게 맨날 알아?” 수아 “네가 맨날 그러니까.” · 그 사이 차 한 대가 둘 앞 차도를 스쳐 지나간다 · 연기: 지훈 억울한 웃음, 수아 짓궂은 평온"
+    duration: 12
+    screenplayHash: 8ce2a3480398ddd03329e4e6cb148fc1f201fa6002d0c26349644202b6926975
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: "와이드 풀샷 · 팔로우 · 신호가 초록으로 바뀌고 @p1_c_jihoon_hoodiewithbag_full 이 가방끈을 추켜올리며 “나 먼저 간다, 나중에 보자” 하고 먼저 뛰어 건넌다, @p1_c_sua_accidentday_full 는 그 자리에 남아 멀어지는 그를 본다 · 연기: 따뜻한 오후, 수아 잔잔한 응시"
+    duration: 7
+    screenplayHash: 180e9867ca31eff659d81c466ab9b152a646c9b3437e83c065f196169b5925e8
+    prevShotRef: "02"
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: crosswalk
+        reference: day-wide
+    propRefs: []
+    takes: []

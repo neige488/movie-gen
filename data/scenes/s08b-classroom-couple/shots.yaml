@@ -1,0 +1,36 @@
+shots:
+  - id: "01"
+    prompt: |-
+      Cut #1 — 미디엄 투샷 · 고정 · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 과 @p1_c_sua_accidentday_full 가 마주 앉아 즐겁게 이야기한다, 지훈의 얼굴이 환하다
+      Cut #2 — 와이드 그룹샷 · 핸드헬드 · @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 우르르 다가와 떠든다, @p1_c_sua_accidentday_full 는 그들에게 눈길도 주지 않는다 · 승호 “아 강지훈, 오늘 저녁에 접속할 거지?” 지훈 “아… 오늘은 좀 안 되는데.” 도현 “오— 강지훈, 요즘 수상한데 너 혹시 여자친구 생겼냐?”
+    duration: 15
+    screenplayHash: 5013f742bb65be49886057b9ee31b4f02eb506b1bcde6d78c11e7a48bb375c3a
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+      - character: seungho
+        look: uniform
+      - character: dohyun
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "클로즈업 · 고정 · 옆에 앉은 @p1_c_sua_accidentday_face 가 부끄러운 듯 고개를 돌린다 · (연출 노트: 친구들 시점에서 지훈의 옆자리는 비어 있다 — 첫 관람엔 자연스럽게, 재관람 단서로) · 연기: 수줍음"
+    duration: 5
+    screenplayHash: 78b4b551b97363c0b86aeac9529de03495fa47ce5f117a313ae665b40aea57fa
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []

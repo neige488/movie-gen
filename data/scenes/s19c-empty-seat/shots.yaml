@@ -1,0 +1,28 @@
+shots:
+  - id: "01"
+    prompt: "Cut #1 — 미디엄 · 고정 · @p1_l_schoolhallway_windowrow 복도, @p1_c_jihoon_uniform_full 이 그리움에 이끌리듯 옆 반 창문 앞에 서서 안을 들여다본다 · 연기: 조심스러운 그리움\nCut #2 — 창 너머 와이드 · 고정 · @p1_l_classroom_emptydesk 창가 줄 한 책상만 비어 있고 의자가 책상 위에 거꾸로 올려져 있다, 아무도 그 자리에 앉지 않는다"
+    duration: 7
+    screenplayHash: 3bff04e3ccb8b5f3af18ec7eb5c975529ba64855e0775d79f9337e48f34a9a43
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: school-hallway
+        reference: window-row
+      - location: classroom
+        reference: empty-desk
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: "미디엄 · 핸드헬드 · @p1_l_schoolhallway_windowrow 지나가던 익명 학생들(레퍼런스와 다른 얼굴)이 스치며 “…야, 너 그 얘기 못 들었어? 옆 반에—”, @p1_c_jihoon_uniform_full 은 끝까지 듣지 않고 복도를 달려나간다 · 연기: 불길함·부정, 행인 대사는 끝까지 들리지 않게"
+    duration: 6
+    screenplayHash: c463d74cd032fb041fa0d15e38e58d5cfc294ce72ba7ef1b771fed5b40f20aa1
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: school-hallway
+        reference: window-row
+    propRefs: []
+    takes: []

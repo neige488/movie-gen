@@ -1,0 +1,13 @@
+shots:
+  - id: "01"
+    prompt: "미디엄→클로즈업 · 고정 · 밤 @p1_l_jihoonhome_bedroom, 침대에 누운 @p1_c_jihoon_onlyhoodie_face 이 눈을 뜨고 천장을 본다, 창밖 신호등 불빛이 벽 위에서 붉게·초록으로·다시 붉게 바뀐다 · 연기: 잠들지 못함"
+    duration: 9
+    screenplayHash: f77f77bc765507f80ceefe77ab27dbdc7720c1a7ae06ef0c7af931732bd399ed
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+    locationRefs:
+      - location: jihoon-home
+        reference: bedroom
+    propRefs: []
+    takes: []

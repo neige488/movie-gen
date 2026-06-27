@@ -1,0 +1,43 @@
+shots:
+  - id: "01"
+    prompt: 와이드 · 고정, 미세 드리프트 · @p1_l_interlakenbench_hilllakeview 인터라켄, 호수가 내려다보이는 언덕길, 성인이 된 @p1_c_jihoon_adulttraveler_full 이 통화를 마친다 · 지훈 “응, 엄마. 나 괜찮아. …진짜 괜찮다니까.”
+    duration: 8
+    screenplayHash: a664936c99ce591420fda15ad1ce3e218735421e55bc95470f763a03ffd94817
+    characterRefs:
+      - character: jihoon
+        look: adult-traveler
+    locationRefs:
+      - location: interlaken-bench
+        reference: hill-lake-view
+    propRefs: []
+    takes: []
+  - id: "02"
+    prompt: 미디엄 트래킹 · 핸드헬드 팔로우 · 전화를 끊고 @p1_c_jihoon_adulttraveler_full 이 언덕을 오른다, 저 위 낡은 나무 벤치 — 서울의 그 벤치와 닮았다, 벤치에 등 중간까지 내려오는 하나로 땋은 긴 머리의 @p1_c_sua_travelerbraid_full 가 여행자 옷으로 앉아 있다 · 지훈 혼잣말처럼 “…여기 오고 싶다 그랬잖아.”
+    duration: 9
+    screenplayHash: 8f2c64d2908b851d3d5b95d285b0e6b242872f922272796755f6ca3af0ec9f08
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: adult-traveler
+      - character: sua
+        look: traveler-braid
+    locationRefs:
+      - location: interlaken-bench
+        reference: hill-lake-view
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: 미디엄→클로즈업 · 고정, 천천히 푸시인 · @p1_c_jihoon_adulttraveler_full 이 벤치로 다가가고 @p1_c_sua_travelerbraid_face 가 고개를 돌린다 — 컷 · @p1_l_interlakenbench_hilllakeview 호수, 설산, 바람
+    duration: 10
+    screenplayHash: d248c43ee87b62345f0c61a0d9a6855c23b87afb0efe0ab81dad71cd4381ee6e
+    prevShotRef: "02"
+    characterRefs:
+      - character: jihoon
+        look: adult-traveler
+      - character: sua
+        look: traveler-braid
+    locationRefs:
+      - location: interlaken-bench
+        reference: hill-lake-view
+    propRefs: []
+    takes: []

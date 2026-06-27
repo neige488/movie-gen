@@ -1,0 +1,40 @@
+shots:
+  - id: "01"
+    prompt: "미디엄→클로즈업 · 핸드헬드 · 점심시간 @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 책상에 엎드려 자다 깬다 — 책상 위 @p1_p_poetrybook_coverworn 가 없다, 서랍을 뒤지고 가방을 쏟는다, 없다 · 연기: 점점 다급"
+    duration: 7
+    screenplayHash: 3b52e6cbef6c21179e60e37523008dd748635f0c41fe9973a56cb48f1904e075
+    characterRefs:
+      - character: jihoon
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: "02"
+    prompt: "미디엄 투샷 · 핸드헬드 · 교실 뒤쪽, @p1_c_jihoon_uniform_full 이 성큼성큼 걸어가 @p1_c_sua_uniform_full 앞에 선다 · 지훈 “너지. 어디 숨겼어.” 여학생 어리둥절 “…뭐?” 지훈 “말을 해.” 여학생 뒷걸음질 “무슨 말인지 모르겠는데…” 지훈 “꺼져. 다시는 내 앞에 나타나지 마.” · 연기: 지훈 격앙"
+    duration: 13
+    screenplayHash: 3294e65e1d767f5775a65fdd6ba5c822fb0874ea42f3e4a3e6823c9a8040883c
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: uniform
+      - character: sua
+        look: uniform
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []
+  - id: "03"
+    prompt: 미디엄 · 고정 · (별도 클립) @p1_l_classroom_midday 교실 앞쪽, 친구 둘이 굳은 얼굴로 일어선다 · 친구 “야, 너 미쳤어?”
+    duration: 5
+    screenplayHash: 548b4eb482d012579b42de62695ffce337ab72f5a4f13d203c69455d19158572
+    prevShotRef: "02"
+    characterRefs: []
+    locationRefs:
+      - location: classroom
+        reference: midday
+    propRefs: []
+    takes: []

@@ -1,0 +1,31 @@
+shots:
+  - id: "01"
+    prompt: 미디엄 투샷 · 고정, 미세 드리프트 · 노을 @p1_l_hillbench_sunset, @p1_c_sua_accidentday_full 가 @p1_c_jihoon_onlyhoodie_full 의 무릎을 베고 누워 읽던 @p1_p_poetrybook_coverworn 를 가슴에 덮는다 · 수아 “있잖아. 나 가고 싶은 데 생겼다?” 지훈 “어딘데.” 수아 “호수가 있고 뒤에 눈 쌓인 산이 있어. 물이 무슨 물감 풀어놓은 것 같애.” 지훈 “그런 데가 어딨어.” 수아 “있대, 진짜. 책에서 봤어.”
+    duration: 13
+    screenplayHash: fb65015b7191eca6d28fe58506f83dc90a3b29337e4f934dc3af8cf650810c8a
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: sunset
+    propRefs:
+      - prop: poetry-book
+    takes: []
+  - id: "02"
+    prompt: "클로즈업 투샷 · 고정 · 지훈 “…가자 그럼. 나중에.” @p1_c_sua_accidentday_face 가 고개를 젖혀 올려다보며 “약속한 거다?” @p1_c_jihoon_onlyhoodie_face “어. 약속.” · 연기: 노을빛 약속"
+    duration: 8
+    screenplayHash: 588e00e1e0785a369e3cee2d79040f5cc002358f0362a0b0dba33f970c1c5d96
+    prevShotRef: "01"
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+      - character: sua
+        look: accident-day
+    locationRefs:
+      - location: hill-bench
+        reference: sunset
+    propRefs: []
+    takes: []

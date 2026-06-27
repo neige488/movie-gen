@@ -1,8 +1,0 @@
-name: small-apartment
-references:
-  - name: desk-corner
-    prompt: "Wooden desk in a small apartment corner, single warm lamp, rain-streaked window behind."
-    image: small-apartment/desk-corner.png
-  - name: window-side
-    prompt: "View from inside, looking out a rain-streaked window onto a city at night."
-    image: small-apartment/window-side.png

@@ -1,0 +1,14 @@
+shots:
+  - id: "01"
+    prompt: "와이드 풀샷 · 스테디 트래킹 · 같은 @p1_l_icerink_indoor, @p1_c_jihoon_onlyhoodie_full 이 혼자 빙판 위를 길게·아주 능숙하게 미끄러진다, 표정이 없다, 링크 가장자리에 @p1_p_poetrybook_coverworn 가 놓여 있다 · 연기: 무표정"
+    duration: 9
+    screenplayHash: 64199fe9b87b9e33921612b58f06f0716b3e41d117aa9410eda22c3a08457776
+    characterRefs:
+      - character: jihoon
+        look: only-hoodie
+    locationRefs:
+      - location: ice-rink
+        reference: indoor
+    propRefs:
+      - prop: poetry-book
+    takes: []

@@ -1,0 +1,56 @@
+name: jihoon
+headshot:
+  image: characters/jihoon/headshot-3.png
+  refName: p1_c_jihoon_headshot
+  prompt: 18세 한국 남학생, 마른 편의 체형, 앞머리가 눈을 살짝 가리는 약간 헝클어진 검은 머리, 쌍꺼풀이 옅고 부드러운 눈매, 차분하고 내성적인 평범한 호감형 인상. 얼굴 ID 헤드샷 — 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음.
+looks:
+  - name: uniform
+    uniform:
+      image: jihoon/uniform/uniform.png
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 한국 고교 교복 — 흰 버튼업 셔츠(뾰족 카라), 네이비 블레이저(가슴 엠블럼), 버건디 넥타이(살짝 느슨하게), 네이비 슬랙스, 검정 로퍼.'
+    face:
+      image: jihoon/uniform/face.png
+      refName: p1_c_jihoon_uniform_face
+    body:
+      image: jihoon/uniform/body.png
+      refName: p1_c_jihoon_uniform_full
+  - name: hoodie-with-bag
+    uniform:
+      image: characters/jihoon/hoodie-with-bag/uniform.png
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 교복 셔츠 위에 회색 후드티, 후드 끈이 한쪽만 길게 늘어짐, 지퍼가 반쯤 열린 백팩을 멘 차림.'
+    face:
+      image: characters/jihoon/hoodie-with-bag/face.jpg
+      refName: p1_c_jihoon_hoodiewithbag_face
+    body:
+      image: characters/jihoon/hoodie-with-bag/body.jpg
+      refName: p1_c_jihoon_hoodiewithbag_full
+  - name: only-hoodie
+    uniform:
+      image: characters/jihoon/only-hoodie/uniform.png
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 회색 후드티(후드 끈이 한쪽만 길게 늘어짐), 안에 교복 셔츠 또는 티셔츠, 백팩 없음.'
+    face:
+      image: characters/jihoon/only-hoodie/face.jpg
+      refName: p1_c_jihoon_onlyhoodie_face
+    body:
+      image: characters/jihoon/only-hoodie/body.jpg
+      refName: p1_c_jihoon_onlyhoodie_full
+  - name: date-outfit
+    uniform:
+      image: jihoon/date-outfit/uniform.png
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 티셔츠 위에 깔끔한 니트 또는 버튼업 셔츠, 슬림한 치노 또는 짙은 청바지, 단정한 캐주얼 차림, 백팩 없음.'
+    face:
+      image: jihoon/date-outfit/face.png
+      refName: p1_c_jihoon_dateoutfit_face
+    body:
+      image: jihoon/date-outfit/body.png
+      refName: p1_c_jihoon_dateoutfit_full
+  - name: adult-traveler
+    uniform:
+      image: jihoon/adult-traveler/uniform.png
+      prompt: '바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은 회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 가벼운 알파인 트래블 재킷, 작은 백팩.'
+    face:
+      image: jihoon/adult-traveler/face.png
+      refName: p1_c_jihoon_adulttraveler_face
+    body:
+      image: jihoon/adult-traveler/body.png
+      refName: p1_c_jihoon_adulttraveler_full
