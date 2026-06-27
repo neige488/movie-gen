@@ -277,6 +277,14 @@ export interface Look {
    * and derives `face`/`body` from it. Carries its own generation `prompt`.
    */
   readonly uniform?: ImageReference;
+  /**
+   * Optional unified character sheet — a single 3-panel image (left: full body
+   * front/back · center: close-up headshot · right: 4 face angles). Generated
+   * FROM the Character headshot + this Look's uniform (default prompt:
+   * DEFAULT_SHEET_PROMPT). Carries its own generation `prompt`. Additive — does
+   * not replace `face`/`body`.
+   */
+  readonly sheet?: ImageReference;
 }
 
 export interface CreateLookInput {
@@ -284,6 +292,7 @@ export interface CreateLookInput {
   face: ImageReference;
   body: ImageReference;
   uniform?: ImageReference;
+  sheet?: ImageReference;
 }
 
 export function createLook(input: CreateLookInput): Look {
@@ -296,11 +305,16 @@ export function createLook(input: CreateLookInput): Look {
     throw new DomainInvariantError(
       `Look[${input.name}].uniform.image is required when uniform is set`,
     );
+  if (input.sheet !== undefined && !input.sheet.image)
+    throw new DomainInvariantError(
+      `Look[${input.name}].sheet.image is required when sheet is set`,
+    );
   return {
     name: input.name,
     face: input.face,
     body: input.body,
     ...(input.uniform !== undefined ? { uniform: input.uniform } : {}),
+    ...(input.sheet !== undefined ? { sheet: input.sheet } : {}),
   };
 }
 
@@ -317,6 +331,14 @@ export const DEFAULT_HEADSHOT_PROMPT =
  */
 export const DEFAULT_UNIFORM_PROMPT =
   "한 의상의 2분할 레퍼런스 시트 한 장 — 왼쪽 패널=정면 전신, 오른쪽 패널=후면 전신. 동일 인물·동일 의상, 전신 안 잘리게, 중립 A-포즈, 정면 카메라, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.";
+
+/**
+ * Default generation prompt for the unified character sheet — generated from the
+ * Character headshot + this Look's uniform. A single 3-panel image: full body
+ * front/back (left) · close-up headshot (center) · 4 face angles (right).
+ */
+export const DEFAULT_SHEET_PROMPT =
+  "첨부한 헤드샷(얼굴 ID)과 uniform(의상 앞/뒤)을 바탕으로 만든 통합 캐릭터 레퍼런스 시트 한 장, 가로 3분할. 중앙: 얼굴 클로즈업(정면, 중립 표정, 얼굴 ID). 왼쪽: 전신 — 위 정면 / 아래 후면(uniform 의상 유지, A-포즈). 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 정측면, 로우앵글(아래에서). 동일 인물·동일 의상·일관된 조명, 단색 밝은 회색 배경, 전신 안 잘리게, 소품·글씨·워터마크 없음.";
 
 export interface Character {
   readonly name: string;
@@ -511,6 +533,12 @@ function gatherImageRefs(
         out.push({
           ref: l.uniform,
           where: `Character[${c.name}] Look[${l.name}].uniform`,
+        });
+      }
+      if (l.sheet) {
+        out.push({
+          ref: l.sheet,
+          where: `Character[${c.name}] Look[${l.name}].sheet`,
         });
       }
     }

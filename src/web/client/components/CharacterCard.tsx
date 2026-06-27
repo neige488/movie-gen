@@ -66,6 +66,23 @@ export function CharacterCard({ character, onUploaded }: Props) {
               </div>
               <div className="look__group">
                 <div className="look__group-label">
+                  Sheet (3-panel 통합)
+                  <RefName ref={look.sheet} />
+                </div>
+                <ImageSlot
+                  slot={{
+                    kind: "character-sheet",
+                    character: character.name,
+                    look: look.name,
+                  }}
+                  imagePath={look.sheet?.image ?? ""}
+                  label="sheet"
+                  onUploaded={onUploaded}
+                />
+                {look.sheet?.prompt && <PromptBlock prompt={look.sheet.prompt} />}
+              </div>
+              <div className="look__group">
+                <div className="look__group-label">
                   Face (5-panel sheet)
                   <RefName ref={look.face} />
                 </div>
