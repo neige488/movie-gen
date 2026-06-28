@@ -239,7 +239,6 @@ async function loadCharacters(dir: string): Promise<Character[]> {
           face: l.face,
           body: l.body,
           ...(l.uniform !== undefined ? { uniform: l.uniform } : {}),
-          ...(l.sheet !== undefined ? { sheet: l.sheet } : {}),
         }),
       );
       characters.push(

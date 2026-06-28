@@ -99,9 +99,6 @@ export const lookFileSchema = z.object({
   // Optional outfit source — a single 2-panel (front + back) sheet the director
   // derives face/body from. Carries its own generation prompt.
   uniform: imageReferenceFileSchema.optional(),
-  // Optional unified character sheet — single 3-panel image (body front/back +
-  // headshot + face angles), generated from headshot + uniform.
-  sheet: imageReferenceFileSchema.optional(),
 });
 
 export const characterFileSchema = z.object({

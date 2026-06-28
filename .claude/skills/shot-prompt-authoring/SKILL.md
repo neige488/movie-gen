@@ -58,15 +58,13 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 
 **에셋 이미지 생성 프롬프트:** 각 ImageRef는 생성 `prompt`를 가질 수 있고, 모든 종류에 기본 프롬프트가
 있다(도메인 `DEFAULT_HEADSHOT_PROMPT` / `DEFAULT_FACE_PROMPT` / `DEFAULT_BODY_PROMPT` /
-`DEFAULT_UNIFORM_PROMPT` / `DEFAULT_SHEET_PROMPT`). face/body/uniform/sheet는 모두 **headshot + 그
+`DEFAULT_UNIFORM_PROMPT`). face/body/uniform은 모두 **headshot + 그
 Look의 의상(uniform)을 입력으로** 생성하는 흐름.
 - **headshot**(Character 단위 얼굴 ID): 정면 클로즈업 식별용. `headshot.prompt`.
 - **face**(Look 단위): **얼굴 시트** — 왼쪽 정면 클로즈업 헤드샷 + 오른쪽 4분할(3/4 좌·우, 측면, 아래서). `Look.face`(image + prompt).
 - **body**(Look 단위): **3분할 전신 시트** — 헤드샷(정면 클로즈업) + 전신 앞면 + 전신 뒷면. `Look.body`(image + prompt).
 - **uniform**(Look 단위, 선택): **2분할 앞/뒤** 의상 소스 한 장. `Look.uniform`(image + prompt).
   `@refName`은 보통 video에 쓰는 face/body에 달고, uniform은 소스로만 둔다.
-- **sheet**(Look 단위, 선택): **가로 3분할 통합 시트** 한 장(왼쪽 전신 앞/뒤 · 중앙 클로즈 헤드샷 ·
-  오른쪽 얼굴 4각도). `Look.sheet`(image + prompt). face/body를 대체하지 않는 추가형 ref.
 
 ## Shot 단위 = 1회 생성(≤15초)
 
