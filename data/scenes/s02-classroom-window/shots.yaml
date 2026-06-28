@@ -1,8 +1,10 @@
 shots:
   - id: "01"
-    prompt: "미디엄 (지훈 시점, 복도 창 너머 교실 안) · 핸드헬드 미세 드리프트 · @p1_l_classroom_midday 창가 약간 뒷자리의 @p1_c_sua_uniform_full 가 친구 두셋이 모여 떠드는 이야기를 흥미롭게 듣는다, 까르르 웃고 눈을 반짝이며 맞장구친다 · 주변 친구들은 레퍼런스와 다른 얼굴의 익명 단역(레퍼런스 캐릭터 복제 금지) · 연기: 또래 사이에 자연스럽게 섞인 생기"
-    duration: 7
-    screenplayHash: 76f5641efb82ad28b0ab3e016c5ccd11a52ad8b14ce1228cf496bf38465a20b3
+    prompt: |-
+      Cut #1 — 인서트 · 고정 · @p1_l_classroom_midday 교실 창으로 오후 햇살이 비스듬히 들고, 창밖 나뭇잎이 바람에 흔들린다 · 사색적이고 나른한 공기
+      Cut #2 — 미디엄 (지훈 시점, 복도 창 너머 교실 안) · 핸드헬드 미세 드리프트 · 창가 약간 뒷자리의 @p1_c_sua_uniform_full 가 친구 두셋이 모여 떠드는 이야기를 흥미롭게 듣는다, 까르르 웃고 눈을 반짝이며 맞장구친다 · 주변 친구들은 레퍼런스와 다른 얼굴의 익명 단역(레퍼런스 캐릭터 복제 금지) · 연기: 또래 사이에 자연스럽게 섞인 생기
+    duration: 10
+    screenplayHash: ac668cb92c5aa01e71796472fa7e829047aa54a4f3fca63ce8d1a8ccd69f3823
     characterRefs:
       - character: sua
         look: uniform
@@ -12,9 +14,11 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "클로즈업 (지훈 POV) · 고정, 미세 드리프트 · @p1_c_sua_uniform_face, 친구들 쪽을 보며 웃던 수아가 문득 고개를 돌려 카메라(지훈) 쪽을 본다 · 연기: 무심하다 우연히 눈이 마주치는 순간의 옅은 멈칫"
-    duration: 5
-    screenplayHash: 9f2b2ae664fb1b665fa19d60f4b03587d89fa1536a4533ac4d93394c52062f94
+    prompt: |-
+      Cut #1 — 클로즈업 (지훈 POV) · 고정, 미세 드리프트 · @p1_c_sua_uniform_face, 친구들 쪽을 보며 웃던 수아가 문득 고개를 돌려 카메라(지훈) 쪽을 본다 · 연기: 무심하다 우연히 눈이 마주치는 순간의 옅은 멈칫
+      Cut #2 — 인서트, 클로즈업 (지훈 POV) · 복도 유리창에 비친 @p1_c_sua_uniform_face 의 얼굴이 한순간 부드러운 하이키 역광과 옅은 블룸 속에 환하게 빛난다 — 주변 현실 톤과 대비되는 한 컷(지훈의 눈에만 비친 환상의 결) · @p1_l_classroom_midday
+    duration: 8
+    screenplayHash: 1e29836d66d4b436cf49ec470dccb47fbed280877c634c7da175020f9ddfc960
     prevShotRef: "01"
     characterRefs:
       - character: sua
@@ -25,9 +29,11 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "클로즈업 · 고정 · @p1_l_schoolhallway_windowrow 복도, 창 너머 수아를 보고 있던 @p1_c_jihoon_uniform_face, 눈이 마주치자 시선을 피하지 않고 가만히 마주 본다 · 연기: 들켰지만 담담한, 묘하게 끌리는 응시(과장 없이)"
-    duration: 5
-    screenplayHash: e41f2e148c627c375e601d72810500c4d07fd6ce51bdde2185715785ee88daf8
+    prompt: |-
+      Cut #1 — 클로즈업 · 고정 · @p1_l_schoolhallway_windowrow 복도, 창 너머 수아를 보고 있던 @p1_c_jihoon_uniform_face, 눈이 마주치자 시선을 피하지 않고 가만히 마주 본다 · 연기: 들켰지만 담담한, 묘하게 끌리는 응시(과장 없이)
+      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_l_schoolhallway_windowrow 복도 창틀에 가만히 얹힌 @p1_c_jihoon_uniform_full 의 손 · 정적·여운
+    duration: 8
+    screenplayHash: 65da9c0092c82b8ecced52909d7dc4af2af0d655491d37f492aedae2517ee08b
     characterRefs:
       - character: jihoon
         look: uniform

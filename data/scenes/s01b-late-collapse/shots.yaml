@@ -1,8 +1,10 @@
 shots:
   - id: "01"
-    prompt: "와이드, 수아 POV(창가에서 출입문 쪽) · 고정 · @p1_l_academy_lectureroom, 선생님 강의 중 학생들 착석, 문이 열리고 @p1_c_jihoon_hoodiewithbag_full 이 굳은 얼굴로 늦게 들어온다, 사람들이 돌아본다, 그는 잠깐 둘러보다 급히 자리로 간다 · 연기: 지훈 위축·긴장"
-    duration: 10
-    screenplayHash: 449ebb95e2bbfeed532f9404ae4a52713aac5dd99a1426f812c07e068314d124
+    prompt: |-
+      Cut #1 — 인서트 · 고정 · @p1_l_academy_lectureroom 천장의 형광등이 차갑게 윙윙대고, 칠판엔 지우다 만 분필 자국 · 차갑고 건조한 현실의 공기
+      Cut #2 — 와이드, 수아 POV(창가에서 출입문 쪽) · 고정 · 선생님 강의 중 학생들 착석, 문이 열리고 @p1_c_jihoon_hoodiewithbag_full 이 굳은 얼굴로 늦게 들어온다, 사람들이 돌아본다, 그는 잠깐 둘러보다 급히 자리로 간다 · 연기: 지훈 위축·긴장
+    duration: 13
+    screenplayHash: 1282c1b9dfb08410fb2146e086d2a5c4bb876d362d22deac78147ce29e75612a
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag

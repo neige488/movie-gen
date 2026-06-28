@@ -20,9 +20,11 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "클로즈업 · 고정 · 옆에 앉은 @p1_c_sua_accidentday_face 가 부끄러운 듯 고개를 돌린다 · (연출 노트: 친구들 시점에서 지훈의 옆자리는 비어 있다 — 첫 관람엔 자연스럽게, 재관람 단서로) · 연기: 수줍음"
-    duration: 5
-    screenplayHash: 78b4b551b97363c0b86aeac9529de03495fa47ce5f117a313ae665b40aea57fa
+    prompt: |-
+      Cut #1 — 클로즈업 · 고정 · 옆에 앉은 @p1_c_sua_accidentday_face 가 부끄러운 듯 고개를 돌린다 · 연기: 수줍음
+      Cut #2 — 인서트, 미디엄 (승호·도현 시점) · 고정 · @p1_c_jihoon_uniform_full 이 혼자 옆의 빈 의자 쪽으로 몸을 살짝 기울인 채 환하게 웃으며 이야기한다, 옆자리엔 아무도 없다 · 첫 관람엔 자연스럽게(수줍어 딴청), 재관람 핵심 단서(빈자리에 혼자)
+    duration: 9
+    screenplayHash: bb8720fe7a26b90c1295f48f037224ec94046a58db145a86d6650df0d8f53750
     prevShotRef: "01"
     characterRefs:
       - character: jihoon

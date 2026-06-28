@@ -14,9 +14,11 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: 미디엄 투샷 · 핸드헬드 · @p1_c_jihoon_onlyhoodie_full 이 크게 휘청하고 @p1_c_sua_accidentday_full 가 깔깔 웃는다 — 한순간 지훈의 발이 아무렇지 않게 균형을 잡고 매끄럽게 미끄러진다(아주 짧게, 스치듯), 다음 순간 다시 비틀거린다 · 수아 “봐, 되잖아!”
-    duration: 9
-    screenplayHash: fcf9bbe112432e605412be28be2c8c88a4c5735573e8c8566831c05313fc482d
+    prompt: |-
+      Cut #1 — 미디엄 투샷 · 핸드헬드 · @p1_c_jihoon_onlyhoodie_full 이 크게 휘청하고 @p1_c_sua_accidentday_full 가 깔깔 웃는다 — 한순간 지훈의 발이 아무렇지 않게 균형을 잡고 매끄럽게 미끄러진다(아주 짧게, 스치듯), 다음 순간 다시 비틀거린다 · 수아 “봐, 되잖아!”
+      Cut #2 — 인서트, 클로즈업 · 매끄러운 빙판에 비친 두 사람의 그림자가 나란히 미끄러진다 · 반영(환상의 표식)
+    duration: 12
+    screenplayHash: a5a7bcf443b2d4965f6984e260d3795eff5bdeb903a31487b5579a33723c750f
     prevShotRef: "01"
     characterRefs:
       - character: jihoon

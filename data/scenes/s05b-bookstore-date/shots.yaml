@@ -12,9 +12,12 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드 팔로우 · @p1_l_bookstore_aisles 서가 사이에서 @p1_c_sua_accidentday_full 가 책등을 손끝으로 훑으며 한 권을 찾고, 찾았다는 듯 카메라(지훈)를 돌아보며 웃고 따라오라는 듯 손짓하며 레코드 코너 쪽으로 앞장선다 · 연기: 장난스러운 리드, 친밀함"
-    duration: 7
-    screenplayHash: 73826ee97e992088b24f81fe6a700626c001cb1dd7df1996dd13f43a8598cf19
+    prompt: |-
+      Cut #1 — 인서트 · 고정 · @p1_l_bookstore_aisles 서가 사이로 비스듬히 든 빛, 그 속에 먼지가 천천히 떠다닌다 · 사색적이고 친밀한 공기
+      Cut #2 — 미디엄 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드 팔로우 · @p1_c_sua_accidentday_full 가 책등을 손끝으로 훑으며 한 권을 찾고, 찾았다는 듯 카메라(지훈)를 돌아보며 웃고 따라오라는 듯 손짓하며 레코드 코너 쪽으로 앞장선다 · 연기: 장난스러운 리드, 친밀함
+      Cut #3 — 인서트, 클로즈업 · 책등을 따라 천천히 미끄러지는 @p1_c_sua_accidentday_full 의 손끝 · 책 모티프
+    duration: 12
+    screenplayHash: d636f29df6573d208c09b8de35e74a2e1182c7a46bc667cc6d59bee6fc76ebaa
     prevShotRef: "01"
     characterRefs:
       - character: sua

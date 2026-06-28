@@ -14,9 +14,11 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 투샷 · 천천히 도는 트래킹 · @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full 가 회전목마를 탄다, 수아가 웃는다 · 연기: 어딘가 너무 완벽한 오후"
-    duration: 8
-    screenplayHash: c046ee3b51e6b9910ae39bb95b42311aed47cd43568805d73f57342d6be798e1
+    prompt: |-
+      Cut #1 — 미디엄 투샷 · 천천히 도는 트래킹 · @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full 가 회전목마를 탄다, 수아가 웃는다 · 연기: 어딘가 너무 완벽한 오후
+      Cut #2 — 인서트, 와이드 · 천천히 도는 · @p1_l_amusementpark_carousel 회전목마의 불빛이 천천히 돌고 그 위로 맑고 푸른 하늘 · 비현실적으로 완벽한 결(환상의 징후)
+    duration: 11
+    screenplayHash: 75a8185039b71a5f349a668c3322986b33685d724ab078bab1cd3175aa7cf339
     prevShotRef: "01"
     characterRefs:
       - character: jihoon

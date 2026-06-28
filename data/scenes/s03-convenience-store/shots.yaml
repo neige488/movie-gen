@@ -1,8 +1,10 @@
 shots:
   - id: "01"
-    prompt: "미디엄 투샷 · 고정 · 밤 @p1_l_conveniencestore_windowseat, @p1_c_jihoon_onlyhoodie_full 앞엔 컵라면, @p1_c_sua_accidentday_full 앞엔 삼각김밥 하나와 우유, 수아가 삼각김밥을 아주 조금씩 베어 문다 · 지훈 “그거 하나로 저녁이 돼?” 수아 “천천히 먹으면 오래가.” 지훈 “그게 무슨 말이야.” 수아 “빨리 먹으면 없어지잖아.” · 연기: 수아 담담, 지훈 어이없음"
-    duration: 12
-    screenplayHash: bd5ed16524b65768bb629acc6efe613c39642b42805832103c6b92f762e453e1
+    prompt: |-
+      Cut #1 — 미디엄 투샷 · 고정 · 밤 @p1_l_conveniencestore_windowseat, @p1_c_jihoon_onlyhoodie_full 앞엔 컵라면, @p1_c_sua_accidentday_full 앞엔 삼각김밥 하나와 우유 · 지훈 “그거 하나로 저녁이 돼?” 수아 “천천히 먹으면 오래가.” 지훈 “그게 무슨 말이야.” 수아 “빨리 먹으면 없어지잖아.” · 연기: 수아 담담, 지훈 어이없음
+      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_c_sua_accidentday_full 의 손이 삼각김밥을 아주 조금씩 아껴 베어 문다, 우유는 거의 줄지 않았다 · 결핍의 디테일(아껴 먹는 습관)
+    duration: 15
+    screenplayHash: 9c2539550f534df83e6aaf6a4a55b1697840159b156b91679edf12650f48194b
     characterRefs:
       - character: jihoon
         look: only-hoodie
@@ -14,9 +16,11 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "클로즈업 투샷 · 고정 · @p1_c_sua_accidentday_face 가 당연한 걸 왜 묻냐는 얼굴, @p1_c_jihoon_onlyhoodie_full 이 잠깐 보다 자기 컵라면을 수아 쪽으로 슬쩍 민다, 수아가 웃으며 도로 밀어주며 “내 거 천천히 먹을 거야.” · 연기: 따뜻한 실랑이"
-    duration: 7
-    screenplayHash: f9cb7bd8035f1c1996ddbdb971fb86f0025de3fda02b5fa7d1b22250c9f30156
+    prompt: |-
+      Cut #1 — 클로즈업 투샷 · 고정 · @p1_c_sua_accidentday_face 가 당연한 걸 왜 묻냐는 얼굴, @p1_c_jihoon_onlyhoodie_full 이 잠깐 보다 자기 컵라면을 수아 쪽으로 슬쩍 민다, 수아가 웃으며 도로 밀어주며 “내 거 천천히 먹을 거야.” · 연기: 따뜻한 실랑이
+      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_l_conveniencestore_windowseat 편의점 통유리창에 밤거리 네온과 신호등 불빛(붉은 기운)이 어리고, 마주 앉은 두 사람의 실루엣이 유리에 겹쳐 비친다 · 반영(환상의 표식)
+    duration: 10
+    screenplayHash: 99d35f91b917d7e8b4800f924d1a38974dfa648d90330d82705f8d86e395522d
     prevShotRef: "01"
     characterRefs:
       - character: jihoon

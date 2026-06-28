@@ -3,8 +3,9 @@ shots:
     prompt: |-
       Cut #1 — 와이드 풀샷 · 핸드헬드 팔로우 · @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 골목을 빠져나와 @p1_l_crosswalk_daywide 빨간불·빈 차도로 속도를 줄이지 않고 그대로 들어선다 · 연기: 조급함, 가쁜 숨
       Cut #2 — 슬로우모션, 미디엄→클로즈업 드리프트 · 카메라가 길가에 앉아 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴을 스쳐 지난다 · @p1_l_crosswalk_signalred 빨간불이 프레임 가장자리에서 번진다 · 연기: 수아는 책에서 눈을 떼지 않고 평온·무심
-    duration: 14
-    screenplayHash: 7e55577ebaf1bda49b2eb78e7d9b37180a1fdcd18a2dc701b61e13493f1896ca
+      Cut #3 — 슬로우모션 인서트, 클로즈업 · @p1_c_sua_accidentday_full 의 발끝, 빨간 캔버스 운동화가 보도블록 위에서 가볍게 까딱인다 · @p1_l_crosswalk_signalred 빨간 기운이 가장자리에 번진다 · 빨강 모티프(신호등·운동화) 각인
+    duration: 17
+    screenplayHash: 0eaca1508762a6a71ff70380076c46e70fa7c5fbdc16d287f74424577ffb9349
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag

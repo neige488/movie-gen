@@ -1,8 +1,10 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 핸드헬드, 미세 드리프트 · @p1_l_jihoonhome_bedroom 의 게이밍 책상에서 @p1_c_jihoon_onlyhoodie_full 이 헤드셋을 쓰고 화면에 바짝 붙어 빠르게 손을 놀린다 · 연기: 게임에 완전히 몰입해 작은 탄성과 혼잣웃음, 시간 가는 줄 모르는 천진함, 걱정 하나 없는 얼굴"
-    duration: 6
-    screenplayHash: a4d3baf28a67110060b40e89bfd97bd48ff038d501ee1b35be9d9dd9944b3915
+    prompt: |-
+      Cut #1 — 인서트 · 고정 · @p1_l_jihoonhome_bedroom 커튼 틈으로 비스듬히 든 아침 햇살, 그 빛줄기 속에서 먼지가 천천히 부유한다 · 평화롭고 나른한 일상의 공기
+      Cut #2 — 미디엄 · 핸드헬드, 미세 드리프트 · 게이밍 책상에서 @p1_c_jihoon_onlyhoodie_full 이 헤드셋을 쓰고 화면에 바짝 붙어 빠르게 손을 놀린다 · 연기: 게임에 완전히 몰입해 작은 탄성과 혼잣웃음, 시간 가는 줄 모르는 천진함, 걱정 하나 없는 얼굴
+    duration: 9
+    screenplayHash: 1e8fc580796428f99f66be30a76349c0e450950881dbf3208a7b7119847f721a
     characterRefs:
       - character: jihoon
         look: only-hoodie

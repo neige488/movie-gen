@@ -28,9 +28,11 @@ shots:
       - prop: leopard-headband
     takes: []
   - id: "03"
-    prompt: "미디엄 투샷 (포토부스 정면 화면 구도) · 고정 · [음악 계속] @p1_l_amusementpark_photobooth 좁은 스티커사진 부스에서 @p1_p_deerheadband_default 를 쓴 @p1_c_jihoon_dateoutfit_full 과 @p1_p_leopardheadband_default 를 쓴 @p1_c_sua_accidentday_full 이 바짝 붙어 앉아 카메라를 보며 플래시가 터질 때마다 표정을 바꿔 가며 장난친다 · 연기: 까불거리는 행복, 거리낌 없음"
-    duration: 8
-    screenplayHash: 925df328933b5c4506324688c09b40248a049b6a9e8839917b9cfdec0da55b3e
+    prompt: |-
+      Cut #1 — 미디엄 투샷 (포토부스 정면 화면 구도) · 고정 · [음악 계속] @p1_l_amusementpark_photobooth 좁은 스티커사진 부스에서 @p1_p_deerheadband_default 를 쓴 @p1_c_jihoon_dateoutfit_full 과 @p1_p_leopardheadband_default 를 쓴 @p1_c_sua_accidentday_full 이 바짝 붙어 앉아 카메라를 보며 플래시가 터질 때마다 표정을 바꿔 가며 장난친다 · 연기: 까불거리는 행복, 거리낌 없음
+      Cut #2 — 인서트, 클로즈업 · [음악 계속] 부스 옆 출구로 또르르 인화되어 나오는 스티커사진 — 네 컷 속 두 사람의 웃는 얼굴 · 사진 모티프(나중에 남는 흔적)
+    duration: 11
+    screenplayHash: 0a16745314486e5a0125cc1d74a7199f55be1e6f41def4e51be84c2cb7b79455
     prevShotRef: "02"
     characterRefs:
       - character: jihoon
@@ -45,9 +47,11 @@ shots:
       - prop: leopard-headband
     takes: []
   - id: "04"
-    prompt: "와이드 풀샷 · 스테디 트래킹 · [음악 계속] @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 뒤로 미끄러지며 @p1_c_jihoon_dateoutfit_full 의 두 손을 잡아 끌어준다, 지훈이 엉거주춤 다리가 후들거리며 따라간다 · 연기: 수아 능숙·장난, 지훈 어쩔 줄 몰라 하는 즐거움"
-    duration: 8
-    screenplayHash: 5e66f0c655a471d73bb633c54a381ad911e001240a9ff6e1b924e42e55e0ac68
+    prompt: |-
+      Cut #1 — 와이드 풀샷 · 스테디 트래킹 · [음악 계속] @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 뒤로 미끄러지며 @p1_c_jihoon_dateoutfit_full 의 두 손을 잡아 끌어준다, 지훈이 엉거주춤 다리가 후들거리며 따라간다 · 연기: 수아 능숙·장난, 지훈 어쩔 줄 몰라 하는 즐거움
+      Cut #2 — 인서트, 클로즈업 · [음악 계속] 빙판을 가르는 @p1_c_sua_accidentday_full 의 스케이트 날, 익숙하고 매끄럽게 미끄러진다 · 스케이트 모티프(어린 시절 복선)
+    duration: 11
+    screenplayHash: a4d49aa4ea2f2a60d155e47e39d1e48b1f93f0c4e0c597d588b14bd3923e5442
     prevShotRef: "03"
     characterRefs:
       - character: jihoon

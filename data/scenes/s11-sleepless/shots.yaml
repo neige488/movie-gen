@@ -1,8 +1,10 @@
 shots:
   - id: "01"
-    prompt: "미디엄→클로즈업 · 고정 · 밤 @p1_l_jihoonhome_bedroom, 침대에 누운 @p1_c_jihoon_onlyhoodie_face 이 눈을 뜨고 천장을 본다, 창밖 신호등 불빛이 벽 위에서 붉게·초록으로·다시 붉게 바뀐다 · 연기: 잠들지 못함"
-    duration: 9
-    screenplayHash: f77f77bc765507f80ceefe77ab27dbdc7720c1a7ae06ef0c7af931732bd399ed
+    prompt: |-
+      Cut #1 — 미디엄→클로즈업 · 고정 · 밤 @p1_l_jihoonhome_bedroom, 침대에 누운 @p1_c_jihoon_onlyhoodie_face 이 눈을 뜨고 천장을 본다 · 연기: 잠들지 못함, 공허한 응시
+      Cut #2 — 인서트, 클로즈업 · 고정 · 창밖 신호등 불빛이 침실 벽 위에서 붉게·초록으로·다시 붉게 느리게 바뀐다 · 빨강 모티프(신호등=사고의 잔상, PTSD 복선)
+    duration: 12
+    screenplayHash: 6963e14bccbfa891dcc24def1b4b2341183e040211419f9202c5671a9459b92e
     characterRefs:
       - character: jihoon
         look: only-hoodie

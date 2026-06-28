@@ -3,8 +3,9 @@ shots:
     prompt: |-
       Cut #1 — 미디엄 트래킹 · 핸드헬드 팔로우 · @p1_c_sua_accidentday_full 가 @p1_c_jihoon_dateoutfit_full 의 손을 끌고 언덕길을 오른다 · 수아 “여기, 내가 제일 좋아하는 데.”
       Cut #2 — 와이드 풀샷 · 고정, 천천히 푸시인 · @p1_l_hillbench_daycityview 언덕 위, @p1_c_sua_accidentday_full 가 팔을 벌려 풍경을 보여주고 @p1_c_jihoon_dateoutfit_full 이 숨을 고르며 도시를 내려다본다 · 음악이 천천히 잦아든다
-    duration: 13
-    screenplayHash: 5700f090643e676f64a7b6895402ef0c2ebe92a06497132205c44cc315e4df3f
+      Cut #3 — 인서트, 와이드→클로즈업 · 고정 · @p1_l_hillbench_daycityview 발치에서 바람에 흔들리는 언덕의 풀, 그 너머로 도시가 아득히 펼쳐진다 · 사색적 여백, 음악 잦아듦
+    duration: 16
+    screenplayHash: 70bffeb14f949670024520ed7312a37b36979cf400d3c6e56a2f598bb50c20ef
     characterRefs:
       - character: jihoon
         look: date-outfit
