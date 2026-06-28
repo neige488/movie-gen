@@ -78,8 +78,7 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
     case "character-headshot":
     case "character-face":
     case "character-body":
-    case "character-uniform":
-    case "character-sheet": {
+    case "character-uniform": {
       const c = project.characters.find((x) => x.name === slot.character);
       if (!c) {
         throw new UploadValidationError(
@@ -147,8 +146,7 @@ async function applySlotToProject(
     case "character-headshot":
     case "character-face":
     case "character-body":
-    case "character-uniform":
-    case "character-sheet": {
+    case "character-uniform": {
       const updatedChar = mutateCharacter(
         findCharacter(project, slot.character),
         slot,
@@ -226,8 +224,7 @@ function mutateCharacter(
         | "character-headshot"
         | "character-face"
         | "character-body"
-        | "character-uniform"
-        | "character-sheet";
+        | "character-uniform";
     }
   >,
   relativePath: string,
@@ -242,11 +239,8 @@ function mutateCharacter(
       return { ...l, face: { ...l.face, image: relativePath } };
     if (slot.kind === "character-body")
       return { ...l, body: { ...l.body, image: relativePath } };
-    if (slot.kind === "character-uniform")
-      // creates the uniform ImageRef if the look had none.
-      return { ...l, uniform: { ...l.uniform, image: relativePath } };
-    // character-sheet — creates the sheet ImageRef if the look had none.
-    return { ...l, sheet: { ...l.sheet, image: relativePath } };
+    // character-uniform — creates the uniform ImageRef if the look had none.
+    return { ...l, uniform: { ...l.uniform, image: relativePath } };
   });
   return { ...c, looks };
 }

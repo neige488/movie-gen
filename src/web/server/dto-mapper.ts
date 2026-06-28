@@ -204,7 +204,6 @@ function characterToLibrary(c: Project["characters"][number]): LibraryCharacterD
       face: imageRefToDto(l.face),
       body: imageRefToDto(l.body),
       ...(l.uniform !== undefined ? { uniform: imageRefToDto(l.uniform) } : {}),
-      ...(l.sheet !== undefined ? { sheet: imageRefToDto(l.sheet) } : {}),
     })),
   };
 }
