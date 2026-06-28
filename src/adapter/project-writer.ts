@@ -52,7 +52,6 @@ export async function saveCharacter(
       face: imageRefToYaml(l.face),
       body: imageRefToYaml(l.body),
       ...(l.uniform !== undefined ? { uniform: imageRefToYaml(l.uniform) } : {}),
-      ...(l.sheet !== undefined ? { sheet: imageRefToYaml(l.sheet) } : {}),
     })),
   };
   await writeFile(
