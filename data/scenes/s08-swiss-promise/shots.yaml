@@ -3,7 +3,7 @@ shots:
     prompt: |-
       Cut #1 — 미디엄 투샷 · 고정, 미세 드리프트 · 노을 @p1_l_hillbench_sunset, @p1_c_sua_accidentday_full 가 @p1_c_jihoon_onlyhoodie_full 의 무릎을 베고 누워 읽던 @p1_p_poetrybook_coverworn 를 가슴에 덮는다 · 수아 “있잖아. 나 가고 싶은 데 생겼다?” 지훈 “어딘데.” 수아 “호수가 있고 뒤에 눈 쌓인 산이 있어. 물이 무슨 물감 풀어놓은 것 같애.” 지훈 “그런 데가 어딨어.” 수아 “있대, 진짜. 책에서 봤어.”
       Cut #2 — 인서트, 클로즈업 · 고정 · @p1_c_sua_accidentday_full 가 펼쳐 보이는 @p1_p_poetrybook_coverworn 책 속 한 페이지 — 눈 쌓인 산 아래 물감을 풀어놓은 듯한 푸른 호수 사진 · 스위스 모티프(오프닝·엔딩과 라임)
-    duration: 16
+    duration: 15
     screenplayHash: 4ad68b12341ff3f4dd9a676b700c10cbab84c887309e182c8c64d31f7222c55c
     characterRefs:
       - character: jihoon

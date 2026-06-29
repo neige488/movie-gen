@@ -3,7 +3,7 @@ shots:
     prompt: |-
       Cut #1 — 와이드 그룹샷 · 핸드헬드 다큐 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 끼지 못하고 굳은 얼굴로 듣기만 한다 · 승호 “어제 게임 다 이겨놓고 막판에 팀이 던져서 역전패” 도현 “너 또 혼자 네 명한테 들어갔지?” 승호 “들어가면 따라올 줄 알았다고” 도현 “누가 그걸 따라가냐, 그러니까 만년 골드지” · 연기: 친구들 깔깔, 지훈만 웃지 않고 대화가 멀게 들리는 얼굴
       Cut #2 — 인서트, 클로즈업 · 핸드헬드 · 보도 위를 걷는 @p1_c_jihoon_uniform_full 의 발끝, 친구들의 웃음소리가 점점 멀어지는 듯한 정서 · 고립감
-    duration: 16
+    duration: 15
     screenplayHash: c73e43708bc747a2db7549f15a1bfabfffc6238b3acf3381cdaeffcc787c59b8
     characterRefs:
       - character: jihoon
