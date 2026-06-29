@@ -12,13 +12,13 @@ looks:
       prompt: >-
         첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 얼굴 레퍼런스 시트 한 장. 왼쪽: 정면 클로즈업 헤드샷. 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 측면, 아래에서 본
         모습(로우앵글). 동일 인물·동일 얼굴, 해당 의상의 헤어·넥라인 반영, 중립 표정, 단색 배경, 균일한 조명, 글씨·워터마크 없음.
-      image: characters/jihoon/uniform/face.png
+      image: characters/jihoon/uniform/face-3.png
     body:
       refName: p1_c_jihoon_uniform_full
       prompt: >-
         첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 전신 레퍼런스 시트 한 장, 가로 3분할 — 왼쪽: 헤드샷(정면 클로즈업), 가운데: 전신 앞면, 오른쪽: 전신 뒷면. 동일 인물·동일
         의상, 중립 A-포즈, 전신 안 잘리게, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.
-      image: jihoon/uniform/body.png
+      image: characters/jihoon/uniform/body.png
     uniform:
       refName: p1_c_jihoon_uniform_outfit
       prompt: >-
@@ -44,7 +44,7 @@ looks:
       prompt: >-
         바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은
         회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 교복 셔츠 위에 회색 후드티, 후드 끈이 한쪽만 길게 늘어짐, 지퍼가 반쯤 열린 백팩을 멘 차림.
-      image: characters/jihoon/hoodie-with-bag/uniform.png
+      image: characters/jihoon/hoodie-with-bag/uniform-2.png
   - name: only-hoodie
     face:
       refName: p1_c_jihoon_onlyhoodie_face
@@ -63,26 +63,26 @@ looks:
       prompt: >-
         바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은
         회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 회색 후드티(후드 끈이 한쪽만 길게 늘어짐), 안에 교복 셔츠 또는 티셔츠, 백팩 없음.
-      image: characters/jihoon/only-hoodie/uniform.png
+      image: characters/jihoon/only-hoodie/uniform-2.png
   - name: date-outfit
     face:
       refName: p1_c_jihoon_dateoutfit_face
       prompt: >-
         첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 얼굴 레퍼런스 시트 한 장. 왼쪽: 정면 클로즈업 헤드샷. 오른쪽: 얼굴 각도 4분할 — 3/4 좌, 3/4 우, 측면, 아래에서 본
         모습(로우앵글). 동일 인물·동일 얼굴, 해당 의상의 헤어·넥라인 반영, 중립 표정, 단색 배경, 균일한 조명, 글씨·워터마크 없음.
-      image: jihoon/date-outfit/face.png
+      image: characters/jihoon/date-outfit/face.png
     body:
       refName: p1_c_jihoon_dateoutfit_full
       prompt: >-
         첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 전신 레퍼런스 시트 한 장, 가로 3분할 — 왼쪽: 헤드샷(정면 클로즈업), 가운데: 전신 앞면, 오른쪽: 전신 뒷면. 동일 인물·동일
         의상, 중립 A-포즈, 전신 안 잘리게, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.
-      image: jihoon/date-outfit/body.png
+      image: characters/jihoon/date-outfit/body.png
     uniform:
       refName: p1_c_jihoon_dateoutfit_outfit
       prompt: >-
         바닥에 가지런히 펼쳐 놓은 의상 세트(위에서 내려다본 플랫레이/knolling) — 사람 없음, 옷만. 좌측=앞면 배치, 우측=뒷면 배치, 구성품(상의·하의·신발·소품)이 안 잘리게 전체. 단색 밝은
         회색 배경, 균일한 조명, 옷의 색·질감·디테일이 또렷하게, 글씨·워터마크 없음. 의상: 티셔츠 위에 깔끔한 니트 또는 버튼업 셔츠, 슬림한 치노 또는 짙은 청바지, 단정한 캐주얼 차림, 백팩 없음.
-      image: jihoon/date-outfit/uniform.png
+      image: characters/jihoon/date-outfit/uniform.png
   - name: adult-traveler
     face:
       refName: p1_c_jihoon_adulttraveler_face
