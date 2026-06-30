@@ -69,6 +69,60 @@ describe("Shot — duration invariant", () => {
   });
 });
 
+describe("Shot — start/end frames", () => {
+  it("omits frames when not provided", () => {
+    const shot = createShot({ ...VALID_SHOT_BASE, duration: 5 });
+    expect(shot.startFrame).toBeUndefined();
+    expect(shot.endFrame).toBeUndefined();
+  });
+
+  it("accepts optional start and end frame ImageRefs", () => {
+    const shot = createShot({
+      ...VALID_SHOT_BASE,
+      duration: 5,
+      startFrame: { image: "frames/start.png", prompt: "와이드 오프닝" },
+      endFrame: { image: "frames/end.png" },
+    });
+    expect(shot.startFrame?.image).toBe("frames/start.png");
+    expect(shot.startFrame?.prompt).toBe("와이드 오프닝");
+    expect(shot.endFrame?.image).toBe("frames/end.png");
+  });
+
+  it("rejects a startFrame without image when set", () => {
+    expect(() =>
+      createShot({ ...VALID_SHOT_BASE, duration: 5, startFrame: { image: "" } }),
+    ).toThrow(/startFrame\.image/i);
+  });
+
+  it("preserves frames through setShotPrompt (regression: edits must not drop frames)", () => {
+    const shot = createShot({
+      ...VALID_SHOT_BASE,
+      id: "01",
+      duration: 5,
+      startFrame: { image: "frames/start.png" },
+      endFrame: { image: "frames/end.png" },
+    });
+    const scene = createScene({
+      slug: "s01",
+      slugline: "INT. ROOM - DAY",
+      screenplay: "x",
+      isStarred: true,
+      shots: [shot],
+    });
+    const project = createProject({
+      scenes: [scene],
+      characters: [],
+      locations: [],
+      props: [],
+    });
+    const next = setShotPrompt(project, "s01", "01", "새 프롬프트");
+    const nextShot = next.scenes[0]!.shots[0]!;
+    expect(nextShot.prompt).toBe("새 프롬프트");
+    expect(nextShot.startFrame?.image).toBe("frames/start.png");
+    expect(nextShot.endFrame?.image).toBe("frames/end.png");
+  });
+});
+
 describe("Take — immutable starred snapshot", () => {
   it("creates an unstarred take by default", () => {
     const take = createTake({

@@ -90,8 +90,12 @@ _Avoid_: Script
 Screenplay 본문에 박는 `<!-- shot:NN -->` ... `<!-- /shot:NN -->` HTML comment block. 어느 영역이 어느 Shot에 매핑되는지 표시. Markdown 렌더링 시 안 보임.
 
 **Shot**:
-AI 영상 생성 호출 1회 단위. `prompt` + `duration(4-15s)` + ref들(`characterRefs`, `locationRefs`, `propRefs`, `prevShotRef`) + `screenplay_hash`.
+AI 영상 생성 호출 1회 단위. `prompt` + `duration(4-15s)` + ref들(`characterRefs`, `locationRefs`, `propRefs`, `prevShotRef`) + 선택 `startFrame`/`endFrame` + `screenplay_hash`.
 _Avoid_: **Cut**(영화 편집 단위와 충돌 — 본 도메인에서 절대 사용 금지), Clip, GenShot
+
+**Frame (start/end)**:
+Shot의 **image-to-video 컨디셔닝 스틸**. `startFrame`(첫 프레임) / `endFrame`(끝 프레임), 각각 선택적 **ImageRef**(image + 선택 생성 `prompt`). **실무에선 대부분 start만** 사용하므로 UI도 start를 앞세우고 end는 "선택". 엔진 `@mention` 레지스트리에는 포함하지 않는다(샷 자신의 프레임이라 @로 지칭할 일이 없음). 에셋 경로 `frames/scenes/<slug>/shots/<id>/{start,end}-frame.<ext>`.
+_Avoid_: Keyframe(편집 용어와 혼동), Thumbnail
 
 **Take**:
 한 Shot을 실제로 생성/업로드한 결과 영상 1개. **Immutable.** 1 Shot → N Takes → 최대 1 starred. 재생성/재시도가 새 Take를 만든다. `screenplay_hash` 스냅샷을 가짐.

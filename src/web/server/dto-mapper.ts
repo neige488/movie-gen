@@ -181,6 +181,12 @@ function sceneToDto(scene: Scene, preset: PromptPreset): SceneDto {
         prop: r.prop,
         ...(r.reference !== undefined ? { reference: r.reference } : {}),
       })),
+      ...(shot.startFrame !== undefined
+        ? { startFrame: imageRefToDto(shot.startFrame) }
+        : {}),
+      ...(shot.endFrame !== undefined
+        ? { endFrame: imageRefToDto(shot.endFrame) }
+        : {}),
       takes: shot.takes.map((t) => ({
         id: t.id,
         videoPath: t.videoPath,

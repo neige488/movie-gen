@@ -404,6 +404,33 @@ body {
   color: var(--fg-dim);
   font-family: var(--mono);
 }
+/* Shot start/end frame images (image-to-video conditioning). */
+.shot__frames {
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+}
+.shot__frames-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  margin-bottom: 0.4rem;
+}
+.shot__frames-row {
+  display: flex;
+  gap: 0.75rem;
+}
+.shot__frame {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.shot__frame--end {
+  opacity: 0.85;
+}
 .chip {
   font-size: 0.72rem;
   padding: 0.15rem 0.5rem;

@@ -79,6 +79,14 @@ Look의 의상(uniform)을 입력으로** 생성하는 흐름.
 - **15초를 초과**할 때만 Shot을 나누고 **chaining**한다 — 다음 Shot은 직전 Shot의 starred Take를
   ref로 이어받는다(`prevShotRef`). Scene 경계는 넘지 않는다.
 
+### Shot 프레임(start/end, image-to-video)
+
+- 필요하면 Shot에 **시작/끝 프레임 스틸**을 넣을 수 있다(`startFrame`/`endFrame`, 각각 ImageRef =
+  image + 선택 `prompt`). 엔진이 그 스틸에서 영상을 시작/종료하도록 컨디셔닝하는 용도.
+- **실무에선 대부분 start만** 쓴다. end는 특정 끝 구도를 고정할 때만.
+- 라이브러리가 아니라 **Shot 카드**에서 업로드/교체한다(ShotCard의 "프레임" 섹션). `@mention`
+  레지스트리에는 안 들어간다(샷 자신의 프레임이라 본문에서 `@`로 지칭하지 않음).
+
 ## 샷별 명시 포맷
 
 카메라 **종류(룩)는 prefix에서 상속**하므로 본문에 반복하지 않는다. 본문에서 샷마다 명시하는 것:

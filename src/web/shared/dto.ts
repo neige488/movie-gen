@@ -70,6 +70,10 @@ export interface ShotDto {
   characterRefs: CharacterRefDto[];
   locationRefs: LocationRefDto[];
   propRefs: PropRefDto[];
+  /** Optional first-frame conditioning image (image-to-video). */
+  startFrame?: ImageReferenceDto;
+  /** Optional last-frame conditioning image (rarer than startFrame). */
+  endFrame?: ImageReferenceDto;
   takes: TakeDto[];
   syncStatus: SyncStatus;
 }

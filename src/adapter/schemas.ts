@@ -40,6 +40,22 @@ export const takeFileSchema = z.object({
   isStarred: z.boolean().optional(),
 });
 
+/**
+ * Unified reference-image atom. `image` is the only required field. `name`
+ * (human/angle label) and `prompt` (generation prompt) are used by Location/Prop
+ * references; Look face/body omit them. `refName` is the engine `@이름` (@mention
+ * handle, e.g. `p1_c_suah_face`) — optional, validated in the domain.
+ *
+ * Declared before shotFileSchema/lookFileSchema because both reference it (const
+ * init order — using it before its declaration would throw at module load).
+ */
+export const imageReferenceFileSchema = z.object({
+  image: z.string().min(1),
+  name: z.string().min(1).optional(),
+  prompt: z.string().min(1).optional(),
+  refName: z.string().min(1).optional(),
+});
+
 export const shotFileSchema = z.object({
   id: z.string().min(1),
   prompt: z.string().min(1),
@@ -51,6 +67,9 @@ export const shotFileSchema = z.object({
   characterRefs: z.array(characterRefSchema).default([]),
   locationRefs: z.array(locationRefSchema).default([]),
   propRefs: z.array(propRefSchema).default([]),
+  // Optional first/last-frame conditioning images for image-to-video.
+  startFrame: imageReferenceFileSchema.optional(),
+  endFrame: imageReferenceFileSchema.optional(),
   takes: z.array(takeFileSchema).default([]),
 });
 
@@ -76,19 +95,6 @@ export const promptPresetFileSchema = z.object({
   looks: z.record(z.string()).optional(),
 });
 export type PromptPresetFile = z.infer<typeof promptPresetFileSchema>;
-
-/**
- * Unified reference-image atom. `image` is the only required field. `name`
- * (human/angle label) and `prompt` (generation prompt) are used by Location/Prop
- * references; Look face/body omit them. `refName` is the engine `@이름` (@mention
- * handle, e.g. `p1_c_suah_face`) — optional, validated in the domain.
- */
-export const imageReferenceFileSchema = z.object({
-  image: z.string().min(1),
-  name: z.string().min(1).optional(),
-  prompt: z.string().min(1).optional(),
-  refName: z.string().min(1).optional(),
-});
 
 export const lookFileSchema = z.object({
   name: z.string().min(1),

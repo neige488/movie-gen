@@ -170,6 +170,8 @@ export async function saveSceneShots(
         if (r.reference !== undefined) refOut.reference = r.reference;
         return refOut;
       });
+      if (s.startFrame !== undefined) out.startFrame = imageRefToYaml(s.startFrame);
+      if (s.endFrame !== undefined) out.endFrame = imageRefToYaml(s.endFrame);
       out.takes = s.takes.map((t) => ({
         id: t.id,
         videoPath: t.videoPath,

@@ -21,6 +21,9 @@ export type AssetSlotSpec =
   | { kind: "character-uniform"; character: string; look: string }
   // Voice reference — a self-intro VIDEO (character-level).
   | { kind: "character-voice"; character: string }
+  // Shot first/last-frame conditioning IMAGES (image-to-video).
+  | { kind: "shot-start-frame"; sceneSlug: string; shotId: string }
+  | { kind: "shot-end-frame"; sceneSlug: string; shotId: string }
   | { kind: "location-ref"; location: string; refName: string }
   | { kind: "prop-ref"; prop: string; refName: string };
 

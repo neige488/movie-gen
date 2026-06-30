@@ -126,6 +126,26 @@ describe("AssetStore.upload — character voice (video)", () => {
   });
 });
 
+describe("AssetStore.upload — shot frames (image)", () => {
+  it("start frame writes to frames/scenes/{slug}/shots/{id}/start-frame.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "shot-start-frame", sceneSlug: "s01-prologue", shotId: "01" },
+      "f.png",
+      bytes("S"),
+    );
+    expect(rel).toBe("frames/scenes/s01-prologue/shots/01/start-frame.png");
+  });
+
+  it("end frame writes to frames/scenes/{slug}/shots/{id}/end-frame.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "shot-end-frame", sceneSlug: "s01-prologue", shotId: "01" },
+      "f.jpg",
+      bytes("E"),
+    );
+    expect(rel).toBe("frames/scenes/s01-prologue/shots/01/end-frame.jpg");
+  });
+});
+
 describe("AssetStore.upload — location / prop reference", () => {
   it("location ref writes to locations/{name}/{refName}.{ext}", async () => {
     const rel = await store.upload(
