@@ -245,6 +245,7 @@ async function loadCharacters(dir: string): Promise<Character[]> {
         createCharacter({
           name: file.name,
           headshot: file.headshot,
+          ...(file.voice !== undefined ? { voice: file.voice } : {}),
           looks,
         }),
       );

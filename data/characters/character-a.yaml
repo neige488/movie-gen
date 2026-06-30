@@ -2,6 +2,11 @@ name: character-a
 headshot:
   prompt: 캐릭터 얼굴 ID 헤드샷, 정면 클로즈업, 중립 표정, 어깨선까지, 단색 배경, 균일한 부드러운 조명, 또렷한 이목구비, 의상·헤어 변화와 무관한 얼굴 식별용, 글씨·워터마크 없음.
   image: characters/character-a/headshot.png
+voice:
+  prompt: >-
+    첨부한 캐릭터 시트(얼굴·전신)를 바탕으로 만든 15초 목소리 레퍼런스 영상. 인물이 정면을 보고 카메라에 대고 말한다 — 먼저 중립 톤으로 짧게 자기소개(이름·정체성), 이어서 감정이 서로 다른 대표 대사 2~3줄(예: 차분 →
+    격앙 → 낮게 속삭임). 동일 인물·동일 얼굴, 입모양과 음성이 또렷이 동기화, 자연스러운 발성과 호흡, 정면 미디엄 샷, 단색 배경, 균일한 조명, 자막·글씨·배경음악 없음.
+  video: characters/character-a/voice.mp4
 looks:
   - name: introspective
     face:

@@ -5,6 +5,8 @@ import {
   createScene,
   createLook,
   createCharacter,
+  createVoiceReference,
+  setCharacterVoice,
   createLocation,
   createProp,
   createProject,
@@ -278,6 +280,97 @@ describe("Character — name + headshot + looks", () => {
         looks: [mkLook("hoodie"), mkLook("hoodie")],
       }),
     ).toThrow(/duplicate.*look/i);
+  });
+
+  it("omits voice when not provided", () => {
+    const c = createCharacter({
+      name: "alice",
+      headshot: { image: "h.png" },
+      looks: [createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } })],
+    });
+    expect(c.voice).toBeUndefined();
+  });
+
+  it("accepts an optional voice reference", () => {
+    const c = createCharacter({
+      name: "alice",
+      headshot: { image: "h.png" },
+      voice: { video: "voice.mp4", prompt: "자기소개", refName: "p1_c_alice_voice" },
+      looks: [createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } })],
+    });
+    expect(c.voice?.video).toBe("voice.mp4");
+    expect(c.voice?.refName).toBe("p1_c_alice_voice");
+  });
+
+  it("rejects a voice without video when set", () => {
+    expect(() =>
+      createCharacter({
+        name: "alice",
+        headshot: { image: "h.png" },
+        // @ts-expect-error — runtime guard for non-TS callers / bad YAML
+        voice: { prompt: "no video" },
+        looks: [createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } })],
+      }),
+    ).toThrow(/voice\.video/i);
+  });
+});
+
+describe("VoiceReference", () => {
+  it("requires a video", () => {
+    expect(() => createVoiceReference({ video: "" })).toThrow(/video/i);
+  });
+
+  it("composes video + optional blackVideo / prompt / refName", () => {
+    const v = createVoiceReference({
+      video: "voice.mp4",
+      blackVideo: "voice-black.mp4",
+      prompt: "자기소개 + 대사",
+      refName: "p1_c_alice_voice",
+    });
+    expect(v).toEqual({
+      video: "voice.mp4",
+      blackVideo: "voice-black.mp4",
+      prompt: "자기소개 + 대사",
+      refName: "p1_c_alice_voice",
+    });
+  });
+
+  it("omits undefined optionals", () => {
+    expect(createVoiceReference({ video: "v.mp4" })).toEqual({ video: "v.mp4" });
+  });
+});
+
+describe("setCharacterVoice", () => {
+  const base = () =>
+    createProject({
+      scenes: [],
+      characters: [
+        createCharacter({
+          name: "alice",
+          headshot: { image: "h.png" },
+          voice: { video: "voice.mp4", refName: "p1_c_alice_voice" },
+          looks: [createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } })],
+        }),
+      ],
+      locations: [],
+      props: [],
+    });
+
+  it("sets blackVideo while preserving refName", () => {
+    const next = setCharacterVoice(base(), "alice", {
+      video: "voice.mp4",
+      refName: "p1_c_alice_voice",
+      blackVideo: "voice-black.mp4",
+    });
+    const voice = next.characters[0]!.voice;
+    expect(voice?.blackVideo).toBe("voice-black.mp4");
+    expect(voice?.refName).toBe("p1_c_alice_voice");
+  });
+
+  it("throws on unknown character", () => {
+    expect(() =>
+      setCharacterVoice(base(), "ghost", { video: "v.mp4" }),
+    ).toThrow(/unknown Character/i);
   });
 });
 
@@ -1663,13 +1756,14 @@ describe("Character headshot ImageRef + Look.uniform", () => {
     expect(() => look({ uniform: { image: "" } })).toThrow(/uniform\.image/i);
   });
 
-  it("collectRefNames includes headshot and uniform refNames", () => {
+  it("collectRefNames includes headshot, voice and uniform refNames", () => {
     const project = createProject({
       scenes: [],
       characters: [
         createCharacter({
           name: "alice",
           headshot: { image: "h.png", refName: "p1_c_alice_headshot" },
+          voice: { video: "voice.mp4", refName: "p1_c_alice_voice" },
           looks: [
             createLook({
               name: "casual",
@@ -1687,6 +1781,47 @@ describe("Character headshot ImageRef + Look.uniform", () => {
       "p1_c_alice_casual_face",
       "p1_c_alice_casual_uniform",
       "p1_c_alice_headshot",
+      "p1_c_alice_voice",
     ]);
+  });
+
+  it("rejects a duplicate refName between voice and an image ref", () => {
+    expect(() =>
+      createProject({
+        scenes: [],
+        characters: [
+          createCharacter({
+            name: "alice",
+            headshot: { image: "h.png", refName: "p1_c_alice_dup" },
+            voice: { video: "voice.mp4", refName: "p1_c_alice_dup" },
+            looks: [
+              createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } }),
+            ],
+          }),
+        ],
+        locations: [],
+        props: [],
+      }),
+    ).toThrow(/Duplicate refName/i);
+  });
+
+  it("rejects an invalid voice refName charset", () => {
+    expect(() =>
+      createProject({
+        scenes: [],
+        characters: [
+          createCharacter({
+            name: "alice",
+            headshot: { image: "h.png" },
+            voice: { video: "voice.mp4", refName: "p1-c-alice-voice" },
+            looks: [
+              createLook({ name: "x", face: { image: "f.png" }, body: { image: "b.png" } }),
+            ],
+          }),
+        ],
+        locations: [],
+        props: [],
+      }),
+    ).toThrow(/refName/i);
   });
 });
