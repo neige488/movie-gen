@@ -101,10 +101,25 @@ export const lookFileSchema = z.object({
   uniform: imageReferenceFileSchema.optional(),
 });
 
+/**
+ * Voice reference atom — a ≈15s self-intro video (character-level). `video` is
+ * the source clip; `blackVideo` is an optional ffmpeg-derived "black frame +
+ * audio only" clip. `prompt` (generation prompt) and `refName` (engine @이름)
+ * are optional, mirroring the image refs.
+ */
+export const voiceReferenceFileSchema = z.object({
+  video: z.string().min(1),
+  blackVideo: z.string().min(1).optional(),
+  prompt: z.string().min(1).optional(),
+  refName: z.string().min(1).optional(),
+});
+
 export const characterFileSchema = z.object({
   name: z.string().min(1),
   // Face ID — an ImageReference (image + optional generation prompt / @refName).
   headshot: imageReferenceFileSchema,
+  // Optional voice reference — a ≈15s self-intro video (character-level).
+  voice: voiceReferenceFileSchema.optional(),
   looks: z.array(lookFileSchema),
 });
 export type CharacterFile = z.infer<typeof characterFileSchema>;

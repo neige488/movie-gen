@@ -9,6 +9,7 @@ import {
   type ImageReference,
   type Project,
   type Scene,
+  type VoiceReference,
 } from "@domain/movie.js";
 import {
   assembleFinalPrompt,
@@ -26,6 +27,7 @@ import type {
   LibraryPropDto,
   MovieDto,
   SceneDto,
+  VoiceReferenceDto,
 } from "../shared/dto.js";
 
 /** Map a domain ImageReference to its DTO, omitting undefined optionals. */
@@ -35,6 +37,16 @@ function imageRefToDto(r: ImageReference): ImageReferenceDto {
     ...(r.name !== undefined ? { name: r.name } : {}),
     ...(r.prompt !== undefined ? { prompt: r.prompt } : {}),
     ...(r.refName !== undefined ? { refName: r.refName } : {}),
+  };
+}
+
+/** Map a domain VoiceReference to its DTO, omitting undefined optionals. */
+function voiceRefToDto(v: VoiceReference): VoiceReferenceDto {
+  return {
+    video: v.video,
+    ...(v.blackVideo !== undefined ? { blackVideo: v.blackVideo } : {}),
+    ...(v.prompt !== undefined ? { prompt: v.prompt } : {}),
+    ...(v.refName !== undefined ? { refName: v.refName } : {}),
   };
 }
 
@@ -199,6 +211,7 @@ function characterToLibrary(c: Project["characters"][number]): LibraryCharacterD
   return {
     name: c.name,
     headshot: imageRefToDto(c.headshot),
+    ...(c.voice !== undefined ? { voice: voiceRefToDto(c.voice) } : {}),
     looks: c.looks.map((l) => ({
       name: l.name,
       face: imageRefToDto(l.face),

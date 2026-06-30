@@ -736,6 +736,24 @@ body {
   width: 220px;
   flex-shrink: 0;
 }
+/* Voice reference (character-level): self-intro video + blackify control. */
+.card__voice {
+  width: 220px;
+  flex-shrink: 0;
+}
+.card__voice-black {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  position: relative;
+}
+.card__voice-blackvid {
+  width: 100%;
+  height: 120px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
 
 /* Look (within character) */
 .card__looks {
@@ -903,6 +921,12 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.slot__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
 }
 .slot__label {
   position: absolute;

@@ -39,8 +39,9 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 
 - **네이밍:** `{프로젝트}_{종류}_{고유이름}` · 구분자는 **`_`만**(하이픈·공백 불가).
   - 종류: `c`(character) / `l`(location) / `p`(prop).
-  - 예: `@p1_c_suah_face`, `@p1_c_suah_full`, `@p1_c_jihoon_face`, `@p1_l_rooftop_cafe`.
+  - 예: `@p1_c_suah_face`, `@p1_c_suah_full`, `@p1_c_jihoon_face`, `@p1_l_rooftop_cafe`, `@p1_c_suah_voice`.
   - 캐릭터는 보통 **face + full(body)** 2개를 등록 → 클로즈업엔 `_face`, 전신/와이드엔 `_full`.
+    목소리 레퍼런스를 등록하면 `_voice`(`@p1_c_suah_voice`)로 둔다.
 - 프로젝트 prefix(`p1` 등)는 영화 단위 상수다. 새 ref 이름은 라이브러리의 기존 등록명을 따르고,
   없으면 위 규칙으로 새로 짓되 **전역 충돌이 안 나게** 프로젝트 prefix를 반드시 붙인다.
 - 본문에 쓰는 `@이름`은 **라이브러리에 등록된 `refName`과 정확히 일치**해야 한다(불일치 시 부팅 에러).
@@ -51,20 +52,25 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 `refName`이 그 엔진 `@이름`이다. 라이브러리 에셋을 만들거나 ref 이미지를 등록할 때:
 
 - **Look**: `face.refName` / `body.refName`에 부여 (`p1_c_suah_face` / `p1_c_suah_full`).
+- **Character voice**: `voice.refName`에 부여 (`p1_c_suah_voice`).
 - **Location/Prop**: `references[].refName`에 부여 (`p1_l_rooftop_cafe`).
 - 이 `refName`을 그대로 엔진(Runway 등)에도 같은 이름으로 등록한다 — 둘이 일치해야 `@`가 resolve.
 - 코드는 `refName` **포맷(`[a-z0-9_]+`)·프로젝트 내 유일성**만 검증한다. 작명은 LLM이 규약대로.
 - 유효 `@이름` 레지스트리는 라이브러리의 모든 `refName`에서 자동 도출된다(프리셋에 목록을 두지 않음).
 
-**에셋 이미지 생성 프롬프트:** 각 ImageRef는 생성 `prompt`를 가질 수 있고, 모든 종류에 기본 프롬프트가
+**에셋 생성 프롬프트:** 각 ref는 생성 `prompt`를 가질 수 있고, 모든 종류에 기본 프롬프트가
 있다(도메인 `DEFAULT_HEADSHOT_PROMPT` / `DEFAULT_FACE_PROMPT` / `DEFAULT_BODY_PROMPT` /
-`DEFAULT_UNIFORM_PROMPT`). face/body/uniform은 모두 **headshot + 그
+`DEFAULT_UNIFORM_PROMPT` / `DEFAULT_VOICE_PROMPT`). face/body/uniform은 모두 **headshot + 그
 Look의 의상(uniform)을 입력으로** 생성하는 흐름.
 - **headshot**(Character 단위 얼굴 ID): 정면 클로즈업 식별용. `headshot.prompt`.
 - **face**(Look 단위): **얼굴 시트** — 왼쪽 정면 클로즈업 헤드샷 + 오른쪽 4분할(3/4 좌·우, 측면, 아래서). `Look.face`(image + prompt).
 - **body**(Look 단위): **3분할 전신 시트** — 헤드샷(정면 클로즈업) + 전신 앞면 + 전신 뒷면. `Look.body`(image + prompt).
 - **uniform**(Look 단위, 선택): **2분할 앞/뒤** 의상 소스 한 장. `Look.uniform`(image + prompt).
   `@refName`은 보통 video에 쓰는 face/body에 달고, uniform은 소스로만 둔다.
+- **voice**(Character 단위, 선택): **≈15초 자기소개 영상** — 캐릭터 시트를 입력으로, 「중립 자기소개 →
+  감정 다른 대사 2~3줄」을 섞어 목소리 음색+감정 레인지를 캡처. `Character.voice`(video + prompt +
+  `@refName`). 선택적으로 ffmpeg로 **검은화면+음성만** 파생본(`voice.blackVideo`)을 만들 수 있다(라이브러리
+  UI의 "검은화면 + 음성 추출" 버튼 — 시각 간섭 없이 음성만 참조시킬 때).
 
 ## Shot 단위 = 1회 생성(≤15초)
 

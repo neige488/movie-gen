@@ -312,6 +312,77 @@ describe("applyUpload — character face/body slots", () => {
   });
 });
 
+describe("applyUpload — character voice (video)", () => {
+  const ALICE_WITH_VOICE_PROMPT = `
+name: alice
+headshot:
+  image: alice/headshot.png
+voice:
+  prompt: "자기소개 + 대사 믹스"
+  refName: p1_c_alice_voice
+  video: ""
+looks:
+  - name: hoodie
+    face:
+      image: alice/hoodie/face.png
+    body:
+      image: alice/hoodie/body.png
+`;
+
+  it("creates the voice video on upload when the character had none", async () => {
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+
+    const result = await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-voice", character: "alice" },
+        originalFilename: "intro.mp4",
+        data: Buffer.from("VOICE"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      createProject,
+    });
+
+    expect(result.relativePath).toBe("characters/alice/voice.mp4");
+    const reloaded = await loadProject(dataDir);
+    expect(reloaded.characters[0]!.voice?.video).toBe(
+      "characters/alice/voice.mp4",
+    );
+  });
+
+  it("preserves an existing voice prompt/refName when uploading the video", async () => {
+    // The YAML carries prompt+refName (video empty); the upload only sets video.
+    writeCharacter("alice", ALICE_WITH_VOICE_PROMPT.replace('video: ""', "video: alice/voice-old.mp4"));
+    const ctx = await setupHandler();
+
+    await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-voice", character: "alice" },
+        originalFilename: "intro.mp4",
+        data: Buffer.from("NEW"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      createProject,
+    });
+
+    const reloaded = await loadProject(dataDir);
+    const voice = reloaded.characters[0]!.voice;
+    expect(voice?.video).toBe("characters/alice/voice.mp4");
+    expect(voice?.prompt).toBe("자기소개 + 대사 믹스");
+    expect(voice?.refName).toBe("p1_c_alice_voice");
+  });
+});
+
 describe("applyUpload — location / prop refs", () => {
   it("updates existing location reference image path", async () => {
     writeLocation(

@@ -49,8 +49,13 @@ import {
   AssetStoreError,
   type AssetSlot,
 } from "@adapter/asset-store.js";
+import { createFfmpegVideoTransformer } from "@adapter/video-transformer.js";
 import { collectRefNames, createProject, type Project } from "@domain/movie.js";
 import { projectToLibraryDto, projectToMovieDto } from "./dto-mapper.js";
+import {
+  blackifyVoice,
+  VoiceBlackifyError,
+} from "./voice-blackify-handler.js";
 import {
   applyUpload,
   UploadValidationError,
@@ -101,9 +106,9 @@ const ASSETS_DIR =
   process.env.MOVIEGEN_ASSETS_DIR ?? path.join(PROJECT_ROOT, "assets");
 const PORT = Number(process.env.MOVIEGEN_PORT ?? 5174);
 
-const MAX_IMAGE_UPLOAD_BYTES = 20 * 1024 * 1024; // 20 MB — images
-// Take videos at ~15s max from 씨댄스 2.0 can run a few hundred MB. 500 MB
-// gives headroom without enabling truly pathological uploads.
+// Take/voice videos at ~15s max from 씨댄스 2.0 can run a few hundred MB. 500 MB
+// gives headroom without enabling truly pathological uploads. The same limit
+// covers the /api/assets/upload route (images + voice video).
 const MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024;
 
 /**
@@ -197,6 +202,7 @@ async function main(): Promise<void> {
     );
 
   const assetStore = createAssetStore(ASSETS_DIR);
+  const videoTransformer = createFfmpegVideoTransformer();
   const app = express();
   // JSON parser scoped to small payloads — the starred-toggle endpoints carry
   // only {isStarred: boolean}. Upload endpoints use multipart and aren't
@@ -325,14 +331,16 @@ async function main(): Promise<void> {
     }
   });
 
-  // Image upload endpoint. Multipart fields:
-  //   slot   = JSON-encoded AssetSlot (image slots only — take-video is
-  //            rejected here by upload-handler and must use /api/takes/upload)
-  //   file   = the image binary
+  // Asset upload endpoint. Multipart fields:
+  //   slot   = JSON-encoded AssetSlot (image slots + character-voice VIDEO;
+  //            take-video is rejected here and must use /api/takes/upload)
+  //   file   = the image OR voice-video binary (per-slot extension validated
+  //            in the asset store). Uses the video size limit so a voice clip
+  //            fits; the extension guard keeps images to image formats.
   app.post("/api/assets/upload", (req, res) => {
     const bb = Busboy({
       headers: req.headers,
-      limits: { files: 1, fileSize: MAX_IMAGE_UPLOAD_BYTES, fields: 5 },
+      limits: { files: 1, fileSize: MAX_VIDEO_UPLOAD_BYTES, fields: 5 },
     });
 
     let slotJson = "";
@@ -370,7 +378,7 @@ async function main(): Promise<void> {
         res
           .status(413)
           .json({
-            error: `file exceeds limit (${MAX_IMAGE_UPLOAD_BYTES} bytes)`,
+            error: `file exceeds limit (${MAX_VIDEO_UPLOAD_BYTES} bytes)`,
           });
         return;
       }
@@ -412,6 +420,37 @@ async function main(): Promise<void> {
     });
 
     req.pipe(bb);
+  });
+
+  // Voice blackify endpoint. No body — derives a "black frame + audio only"
+  // video from the Character's voice source clip via ffmpeg and stores it at
+  // voice.blackVideo. Returns the updated LibraryDto. Needs ffmpeg installed.
+  app.post("/api/characters/:name/voice/blackify", (req, res) => {
+    const name = req.params.name;
+    void blackifyVoice({
+      project: currentProject,
+      characterName: name,
+      assetStore,
+      transformer: videoTransformer,
+      dataDir: DATA_DIR,
+      saveCharacter,
+    }).then(
+      (result) => {
+        currentProject = result.project;
+        res.json(projectToLibraryDto(currentProject));
+      },
+      (err: Error) => {
+        if (err instanceof VoiceBlackifyError) {
+          // Unknown character / no source video — client-actionable.
+          res.status(400).json({ error: err.message });
+        } else {
+          // ffmpeg missing or transform failure → 500 with the actionable
+          // message (e.g. "ffmpeg not found — brew install ffmpeg").
+          console.error("[movie-gen] voice blackify failed:", err);
+          res.status(500).json({ error: err.message });
+        }
+      },
+    );
   });
 
   // Take video upload endpoint. Multipart fields:

@@ -76,6 +76,7 @@ export async function applyUpload(deps: ApplyUploadDeps): Promise<UploadResult> 
 function validateSlotTarget(project: Project, slot: AssetSlot): void {
   switch (slot.kind) {
     case "character-headshot":
+    case "character-voice":
     case "character-face":
     case "character-body":
     case "character-uniform": {
@@ -85,7 +86,13 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
           `unknown character "${slot.character}"`,
         );
       }
-      if (slot.kind !== "character-headshot") {
+      // Look-scoped slots must point at an existing Look; headshot/voice are
+      // character-level and have no `look`.
+      if (
+        slot.kind === "character-face" ||
+        slot.kind === "character-body" ||
+        slot.kind === "character-uniform"
+      ) {
         if (!c.looks.some((l) => l.name === slot.look)) {
           throw new UploadValidationError(
             `unknown look "${slot.look}" on character "${slot.character}"`,
@@ -144,6 +151,7 @@ async function applySlotToProject(
 ): Promise<Project> {
   switch (slot.kind) {
     case "character-headshot":
+    case "character-voice":
     case "character-face":
     case "character-body":
     case "character-uniform": {
@@ -222,6 +230,7 @@ function mutateCharacter(
     {
       kind:
         | "character-headshot"
+        | "character-voice"
         | "character-face"
         | "character-body"
         | "character-uniform";
@@ -229,9 +238,14 @@ function mutateCharacter(
   >,
   relativePath: string,
 ): Character {
-  // Patch only the image path; preserve refName/name/prompt on the ImageRef.
+  // Patch only the image/video path; preserve refName/name/prompt on the ref.
   if (slot.kind === "character-headshot") {
     return { ...c, headshot: { ...c.headshot, image: relativePath } };
+  }
+  if (slot.kind === "character-voice") {
+    // Sets the voice VIDEO path; creates the voice ref if absent. Preserves
+    // any existing refName/prompt/blackVideo.
+    return { ...c, voice: { ...c.voice, video: relativePath } };
   }
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;

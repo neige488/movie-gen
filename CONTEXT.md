@@ -44,11 +44,14 @@
 - **공통 프롬프트 + 최종 프롬프트 조립: 영화 단위 PromptPreset.** 엔진(씨댄스/Runway)에 붙여넣는 텍스트는 도구가 Shot마다 **조립**한다: `prefix → Shot.prompt → suffix`. 조각만 디스크에 저장하고 **조립 결과는 derive**(저장 안 함) — 공통 프롬프트를 바꾸면 모든 Shot의 최종 프롬프트에 즉시 반영. PromptPreset은 영화 단위 단일 파일 **`data/prompt-preset.yaml`**(순서·막 SSOT인 `movie.yaml`과 별개 — 관심사 분리)에 둔다.
   - **prefix/suffix**(공통 프롬프트): 모든 Shot에 공통으로 감싸는 텍스트. prefix = 카메라/화질 룩(예: `cinematic 4K, ...`, 보통 영어), suffix = 네거티브(예: `배경 음악 없음. 자막 없음. ...`, 한글이 잘 먹음).
   - **Ref는 본문 인라인 `@이름`.** 엔진 레퍼런스는 **계정 전역**으로 이름 등록되고, Shot.prompt 본문에 `@이름`을 직접 써서 지칭한다(별도 ref 블록 생성 안 함). 네이밍: `{프로젝트}_{c|l|p}_{고유이름}`, 구분자 `_`만(하이픈 불가), 전역 충돌 방지 위해 프로젝트 prefix 필수. 예: `@p1_c_suah_face`, `@p1_l_rooftop_cafe`.
-  - **@이름의 SSOT = 라이브러리.** 각 레퍼런스 이미지(`Look.face`/`Look.body`, `Location`/`Prop`의 `references[]`)는 통일 원자 **`ImageRef {image, refName?, name?, prompt?}`** 다. `refName`이 그 엔진 `@이름`. 유효한 `@이름` 레지스트리 = 프로젝트 전체 `refName` 집합(`collectRefNames`) — 별도 목록을 수기로 두지 않는다. Shot 프롬프트의 `@멘션`을 이 레지스트리와 대조해 **없는 이름이면 부팅 에러**(정합성). refName이 하나도 없으면 검증 off(opt-in).
+  - **@이름의 SSOT = 라이브러리.** 각 레퍼런스 이미지(`Look.face`/`Look.body`, `Location`/`Prop`의 `references[]`)는 통일 원자 **`ImageRef {image, refName?, name?, prompt?}`** 다. `refName`이 그 엔진 `@이름`. `Character.voice`(VoiceReference)도 `refName`을 가질 수 있어 레지스트리에 포함된다. 유효한 `@이름` 레지스트리 = 프로젝트 전체 `refName` 집합(`collectRefNames`) — 별도 목록을 수기로 두지 않는다. Shot 프롬프트의 `@멘션`을 이 레지스트리와 대조해 **없는 이름이면 부팅 에러**(정합성). refName이 하나도 없으면 검증 off(opt-in).
   - **refName 작성·검증:** `refName`은 라이브러리 에셋에 명시 저장하되 **작성하는 LLM이 규약대로 생성**(엔진 등록명과 일치). 코드는 **포맷(`[a-z0-9_]+`)·프로젝트 내 유일성**만 검증(`createProject`).
   - **화면비**: 프롬프트 토큰이 아니라 엔진 출력 포맷에서 설정하는 영화 단위 상수. 본문에 비율 토큰을 넣지 않는다.
   - **샷별 작성 포맷·룩 라이브러리**는 스킬 `shot-prompt-authoring`에 둔다(작성 워크플로의 SSOT).
   - **언어 기본값:** `Shot.prompt`·ref 식별자는 **한글**, prefix는 영어, suffix 네거티브는 한글. 프리셋 파일이 없거나 비면 identity 프리셋(빈 affix)으로 동작 — 정합성 break 아님. 파일이 있는데 malformed면 부팅 시 명확히 실패.
+
+- **목소리 레퍼런스 + 영상 후처리: Character.voice + VideoTransformer 포트.** 캐릭터 목소리는 **≈15초 자기소개 영상**(`Character.voice`, 의상 무관 Character 단위)으로 잡는다. 선택적으로 ffmpeg로 **검은화면+음성만** 파생본(`voice.blackVideo`)을 만든다 — 시각 간섭 없이 음성만 엔진에 참조시킬 때. ffmpeg 접근은 **헥사고날 포트**(`VideoTransformer`, adapter `createFfmpegVideoTransformer`)로 격리 — 도메인은 ffmpeg를 모르고, 파생본 경로(`characters/<name>/voice-black.mp4`)만 도메인에 들어온다. ffmpeg 미설치 시 변환 엔드포인트가 actionable 에러(`brew install ffmpeg`)를 반환할 뿐 업로드·나머지 기능은 영향 없음(opt-in 후처리).
+  - _Why:_ 영상 변환은 외부 바이너리 의존이라 도메인 순수성을 지키려면 포트로 격리해야 하고, 검은화면 파생은 "있으면 좋은" 후처리라 원본 voice와 독립적인 optional 필드로 둬 마이그레이션 부담을 없앤다.
 
 ## Language
 
@@ -110,8 +113,12 @@ _Avoid_: Attempt, Render
 캐릭터의 얼굴 ID. **Character 단위**(의상 무관, 영화 전체 공통). **ImageRef**로 저장 — 이미지 + 선택 생성 `prompt`(기본 `DEFAULT_HEADSHOT_PROMPT`) + 선택 `@refName`.
 _Avoid_: Portrait
 
+**Voice**:
+캐릭터의 목소리 레퍼런스 — **≈15초 자기소개 영상**. **Character 단위·선택**(목소리는 의상 무관). 캐릭터 시트를 입력으로 「중립 자기소개 → 감정 다른 대사 2~3줄」을 섞어 음색+감정 레인지를 캡처. **VoiceReference**로 저장 — `{ video, blackVideo?, prompt?, refName? }`(기본 `DEFAULT_VOICE_PROMPT`). ImageRef와 달리 미디어가 **영상**이라 별도 원자. `blackVideo`는 ffmpeg로 만든 **검은화면+음성만** 파생본(시각 간섭 제거용, 라이브러리 UI 버튼으로 생성). `@refName`은 `_voice` 접미사(`p1_c_suah_voice`).
+_Avoid_: Audio, Sound (영상이므로)
+
 **Look**:
-캐릭터의 의상/스타일 변종. 한 캐릭터가 영화 중 여러 의상을 입을 수 있으므로 Look 단위로 분기. FaceProfile + BodyProfile + 선택 Uniform을 가진다.
+캐릭터의 의상/스타일 변종. 한 캐릭터가 영화 중 여러 의상을 입을 수 있으므로 Look 단위로 분기. FaceProfile + BodyProfile + 선택 Uniform을 가진다. (목소리는 Look이 아니라 Character 단위 — [Voice] 참조.)
 _Avoid_: Outfit, Costume, Wardrobe
 
 **Uniform**:
@@ -152,7 +159,7 @@ _Avoid_: Shot.prompt에 조립 결과 저장하기
 엔진 레퍼런스를 본문에서 직접 지칭하는 `@이름`(계정 전역 등록명). 네이밍 `{프로젝트}_{c|l|p}_{고유이름}`, 구분자 `_`만. 라이브러리 ImageRef의 `refName`(= 등록명)과 대조해 검증. 작성 규칙·룩 라이브러리는 스킬 `shot-prompt-authoring` 참조.
 
 **ImageRef** (reference image atom):
-모든 레퍼런스 이미지의 통일 단위 `{ image, refName?, name?, prompt? }`. `image`만 필수. `refName` = 엔진 `@이름`(LLM 작성·코드 검증). `name`(앵글 라벨)은 Location/Prop이 사용, `prompt`(생성 프롬프트)는 Location/Prop·headshot·uniform이 사용. Character는 `headshot`, Look은 `face`/`body`/`uniform?`, Location/Prop은 `references[]`로 가진다.
+모든 레퍼런스 이미지의 통일 단위 `{ image, refName?, name?, prompt? }`. `image`만 필수. `refName` = 엔진 `@이름`(LLM 작성·코드 검증). `name`(앵글 라벨)은 Location/Prop이 사용, `prompt`(생성 프롬프트)는 Location/Prop·headshot·uniform이 사용. Character는 `headshot`(+ 선택 `voice`), Look은 `face`/`body`/`uniform?`, Location/Prop은 `references[]`로 가진다. **VoiceReference**(`{ video, blackVideo?, prompt?, refName? }`)는 미디어가 영상이라 ImageRef와 별개 원자지만 `refName`은 같은 레지스트리에 합류한다.
 
 ## Relationships
 

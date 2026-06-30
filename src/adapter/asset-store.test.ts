@@ -104,6 +104,28 @@ describe("AssetStore.upload — look face/body slots", () => {
   });
 });
 
+describe("AssetStore.upload — character voice (video)", () => {
+  it("writes the voice video to characters/{name}/voice.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "character-voice", character: "alice" },
+      "intro.mp4",
+      bytes("VOICE"),
+    );
+    expect(rel).toBe("characters/alice/voice.mp4");
+    expect(existsSync(path.join(assetsDir, rel))).toBe(true);
+  });
+
+  it("rejects a non-video extension on the voice slot", async () => {
+    await expect(
+      store.upload(
+        { kind: "character-voice", character: "alice" },
+        "intro.png",
+        bytes("X"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+  });
+});
+
 describe("AssetStore.upload — location / prop reference", () => {
   it("location ref writes to locations/{name}/{refName}.{ext}", async () => {
     const rel = await store.upload(

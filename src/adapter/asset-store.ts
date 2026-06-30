@@ -50,6 +50,8 @@ export type AssetSlot =
   | { kind: "character-face"; character: string; look: string }
   | { kind: "character-body"; character: string; look: string }
   | { kind: "character-uniform"; character: string; look: string }
+  // Voice reference — a ≈15s self-intro VIDEO (character-level).
+  | { kind: "character-voice"; character: string }
   | { kind: "location-ref"; location: string; refName: string }
   | { kind: "prop-ref"; prop: string; refName: string }
   | {
@@ -84,9 +86,9 @@ const ALLOWED_VIDEO_EXTENSIONS = new Set(["mp4", "webm", "mov"]);
 
 function isVideoSlot(slot: AssetSlot): slot is Extract<
   AssetSlot,
-  { kind: "take-video" }
+  { kind: "take-video" } | { kind: "character-voice" }
 > {
-  return slot.kind === "take-video";
+  return slot.kind === "take-video" || slot.kind === "character-voice";
 }
 
 const SAFE_NAME = /^[a-zA-Z0-9_.-]+$/;
@@ -129,7 +131,7 @@ export function createAssetStore(assetsRoot: string): AssetStore {
       // For video slots we require an explicit, known extension — there is no
       // sensible default, and silently choosing one would hide bugs.
       throw new AssetStoreError(
-        `take video requires an extension; allowed: ${[...ALLOWED_VIDEO_EXTENSIONS].join(", ")}`,
+        `video requires an extension; allowed: ${[...ALLOWED_VIDEO_EXTENSIONS].join(", ")}`,
       );
     }
     const ext = originalFilename.slice(dot + 1).toLowerCase();
@@ -175,6 +177,13 @@ export function createAssetStore(assetsRoot: string): AssetStore {
         return {
           dir: path.join("characters", slot.character, slot.look),
           basename: `uniform.${ext}`,
+        };
+      }
+      case "character-voice": {
+        assertSafeSegment(slot.character, "character name");
+        return {
+          dir: path.join("characters", slot.character),
+          basename: `voice.${ext}`,
         };
       }
       case "location-ref": {

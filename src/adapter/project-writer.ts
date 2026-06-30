@@ -26,6 +26,7 @@ import type {
   Location,
   Prop,
   Shot,
+  VoiceReference,
 } from "@domain/movie.js";
 
 /** Serialize an ImageReference, omitting undefined optionals for clean diffs. */
@@ -38,6 +39,16 @@ function imageRefToYaml(r: ImageReference): Record<string, unknown> {
   return out;
 }
 
+/** Serialize a VoiceReference, omitting undefined optionals for clean diffs. */
+function voiceRefToYaml(v: VoiceReference): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  if (v.refName !== undefined) out.refName = v.refName;
+  if (v.prompt !== undefined) out.prompt = v.prompt;
+  out.video = v.video;
+  if (v.blackVideo !== undefined) out.blackVideo = v.blackVideo;
+  return out;
+}
+
 export async function saveCharacter(
   dataDir: string,
   character: Character,
@@ -47,6 +58,9 @@ export async function saveCharacter(
   const payload = {
     name: character.name,
     headshot: imageRefToYaml(character.headshot),
+    ...(character.voice !== undefined
+      ? { voice: voiceRefToYaml(character.voice) }
+      : {}),
     looks: character.looks.map((l) => ({
       name: l.name,
       face: imageRefToYaml(l.face),
