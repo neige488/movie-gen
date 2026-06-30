@@ -26,6 +26,7 @@ import {
 import { shotPaletteColor } from "../shot-palette.js";
 import { StarButton } from "./StarButton.js";
 import { PromptBlock } from "./PromptBlock.js";
+import { ImageSlot } from "./ImageSlot.js";
 
 interface Props {
   shot: ShotDto;
@@ -229,6 +230,11 @@ export function ShotCard({
           </div>
         </>
       )}
+      <FramesSection
+        shot={shot}
+        sceneSlug={sceneSlug}
+        onChanged={onTakeUploaded}
+      />
       <TakesSection
         shot={shot}
         sceneSlug={sceneSlug}
@@ -236,6 +242,52 @@ export function ShotCard({
         onMovieChanged={onMovieChanged}
       />
     </article>
+  );
+}
+
+/**
+ * Start / end frame conditioning images for image-to-video generation. In
+ * practice most shots use only a START frame, so it's shown first and the end
+ * frame is labelled optional. Each is an ImageSlot (upload/replace) plus its
+ * optional generation prompt. Uploads refresh via `onChanged` (parent refetch).
+ */
+function FramesSection({
+  shot,
+  sceneSlug,
+  onChanged,
+}: {
+  shot: ShotDto;
+  sceneSlug: string;
+  onChanged: () => void;
+}) {
+  return (
+    <div className="shot__frames">
+      <div className="shot__frames-label">프레임 (image-to-video)</div>
+      <div className="shot__frames-row">
+        <div className="shot__frame">
+          <ImageSlot
+            slot={{ kind: "shot-start-frame", sceneSlug, shotId: shot.id }}
+            imagePath={shot.startFrame?.image ?? ""}
+            label="start frame"
+            onUploaded={onChanged}
+          />
+          {shot.startFrame?.prompt && (
+            <PromptBlock prompt={shot.startFrame.prompt} />
+          )}
+        </div>
+        <div className="shot__frame shot__frame--end">
+          <ImageSlot
+            slot={{ kind: "shot-end-frame", sceneSlug, shotId: shot.id }}
+            imagePath={shot.endFrame?.image ?? ""}
+            label="end frame (선택)"
+            onUploaded={onChanged}
+          />
+          {shot.endFrame?.prompt && (
+            <PromptBlock prompt={shot.endFrame.prompt} />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

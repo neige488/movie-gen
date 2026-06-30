@@ -1125,6 +1125,7 @@ async function main(): Promise<void> {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
     currentProject = result.project;

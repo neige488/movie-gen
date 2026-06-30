@@ -125,6 +125,18 @@ export interface Shot {
   readonly characterRefs: readonly CharacterRef[];
   readonly locationRefs: readonly LocationRef[];
   readonly propRefs: readonly PropRef[];
+  /**
+   * Optional first-frame conditioning image for image-to-video generation —
+   * the still the engine starts the clip from. In practice this is the common
+   * one (most shots use only a start frame). ImageReference (image + optional
+   * generation `prompt`). Not part of the @mention registry.
+   */
+  readonly startFrame?: ImageReference;
+  /**
+   * Optional last-frame conditioning image (rarer than `startFrame`). When set
+   * the engine targets this still as the clip's final frame. ImageReference.
+   */
+  readonly endFrame?: ImageReference;
   readonly takes: readonly Take[];
 }
 
@@ -138,6 +150,8 @@ export interface CreateShotInput {
   characterRefs?: readonly CharacterRef[];
   locationRefs?: readonly LocationRef[];
   propRefs?: readonly PropRef[];
+  startFrame?: ImageReference;
+  endFrame?: ImageReference;
   takes?: readonly Take[];
 }
 
@@ -171,6 +185,15 @@ export function createShot(input: CreateShotInput): Shot {
     );
   }
 
+  if (input.startFrame !== undefined && !input.startFrame.image)
+    throw new DomainInvariantError(
+      `Shot[${input.id}].startFrame.image is required when startFrame is set`,
+    );
+  if (input.endFrame !== undefined && !input.endFrame.image)
+    throw new DomainInvariantError(
+      `Shot[${input.id}].endFrame.image is required when endFrame is set`,
+    );
+
   return {
     id: input.id,
     prompt: input.prompt,
@@ -181,6 +204,8 @@ export function createShot(input: CreateShotInput): Shot {
     characterRefs: input.characterRefs ?? [],
     locationRefs: input.locationRefs ?? [],
     propRefs: input.propRefs ?? [],
+    ...(input.startFrame !== undefined ? { startFrame: input.startFrame } : {}),
+    ...(input.endFrame !== undefined ? { endFrame: input.endFrame } : {}),
     takes,
   };
 }
@@ -896,6 +921,8 @@ export function setShotPrompt(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPrompt",
@@ -926,6 +953,8 @@ export function setShotDuration(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotDuration",
@@ -956,6 +985,8 @@ export function setShotCharacterRefs(
         characterRefs: refs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotCharacterRefs",
@@ -988,6 +1019,8 @@ export function setShotLocationRefs(
         characterRefs: shot.characterRefs,
         locationRefs: refs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotLocationRefs",
@@ -1032,6 +1065,8 @@ export function setShotPrevShotRef(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPrevShotRef",
@@ -1090,6 +1125,8 @@ export function setShotPropRefs(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: refs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPropRefs",
@@ -1148,6 +1185,8 @@ export function acknowledgeShot(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: shot.takes,
   });
 
@@ -1233,6 +1272,8 @@ export function acknowledgeTake(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: nextTakes,
   });
 
@@ -1325,6 +1366,8 @@ export function setTakeStarred(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: nextTakes,
   });
 

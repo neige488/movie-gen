@@ -182,6 +182,8 @@ async function loadScene(slug: string, sceneDir: string): Promise<Scene> {
           prop: p.prop,
           reference: p.reference,
         })),
+        ...(sf.startFrame !== undefined ? { startFrame: sf.startFrame } : {}),
+        ...(sf.endFrame !== undefined ? { endFrame: sf.endFrame } : {}),
         takes: sf.takes.map((t) =>
           createTake({
             id: t.id,
