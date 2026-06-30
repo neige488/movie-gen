@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어져 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 @p1_p_poetrybook_coverworn 를 내밀며 “이거… 따님 거 같아서요.” · 연기: 지훈 조심스러움, 엄마 의아함"
+    prompt: "미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어져 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 @p1_p_poetrybook_cover 를 내밀며 “이거… 따님 거 같아서요.” · 연기: 지훈 조심스러움, 엄마 의아함"
     duration: 8
     screenplayHash: 28df57d56047484a89405b7d34286093e23ca43663b3f954d5129b18a2ebac60
     characterRefs:
@@ -60,7 +60,7 @@ shots:
     propRefs: []
     takes: []
   - id: "05"
-    prompt: "슬로우모션 → 빠른 컷 · 핸드헬드 · @p1_l_crosswalk_daywide, 달리던 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_full 를 비켜 지나가 다 건너서 아는 얼굴인 듯 돌아본다, 그 인기척에 수아가 고개를 들고 초록불로 착각해 따라 건넌다, 브레이크 소리·허공에 뜬 책·길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포(완결해 보여주지 말 것)"
+    prompt: "슬로우모션 → 빠른 컷 · 핸드헬드 · @p1_l_crosswalk_daywide, 달리던 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_full 를 비켜 지나가 다 건너서 아는 얼굴인 듯 돌아본다, 그 인기척에 수아가 고개를 들고 초록불로 착각해 따라 건넌다, 브레이크 소리·허공에 뜬 책·길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포(완결해 보여주지 말 것)"
     duration: 9
     screenplayHash: 850ff3de5735a539365d17bdab1e6faea0d2608ee28f60410691ea204b5c9fc7
     prevShotRef: "04"

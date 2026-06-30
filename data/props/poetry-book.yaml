@@ -1,12 +1,16 @@
 name: poetry-book
 references:
-  - name: cover-worn
-    refName: p1_p_poetrybook_coverworn
-    prompt: 작고 닳은 한국 시집 — 부드럽게 바랜 천 표지, 제목은 의도적으로 초점 밖이라 읽히지 않음, 오랜 손길에 둥글어진 모서리. 얕은 심도. 최대한 자연스럽게. 인물 없는 소품 레퍼런스 이미지, 시네마틱 35mm 필름.
-    image: poetry-book/cover-worn.png
+  - name: cover
+    refName: p1_p_poetrybook_cover
+    prompt: >-
+      작은 한국 시집 — 수아가 직접 씌운 아이보리색 책 커버, 은은하고 특별한 무늬(잔잔한 패턴)가 들어간 깔끔한 천·종이 커버, 정성껏 아껴 싸맨 느낌, 원래 표지 제목은 커버에 가려 보이지 않는다. 얕은
+      심도. 최대한 자연스럽게. 인물 없는 소품 레퍼런스 이미지, 시네마틱 35mm 필름.
+    image: props/poetry-book/cover.png
   - name: underline-page
     refName: p1_p_poetrybook_underlinepage
-    prompt: 오래된 시집 속 극단적 얕은 초점 클로즈업 — 밑줄 친 한 줄만 초점, 나머지 글자는 부드럽게 흐림, 연필 밑줄이 살짝 떨림. 따뜻한 창가 빛. (실촬영 대체 예정 — 글자는 감독 자작) 최대한 자연스럽게. 시네마틱 35mm 필름.
+    prompt: >-
+      오래된 시집 속 극단적 얕은 초점 클로즈업 — 밑줄 친 한 줄만 초점, 나머지 글자는 부드럽게 흐림, 연필 밑줄이 살짝 떨림. 따뜻한 창가 빛. (실촬영 대체 예정 — 글자는 감독 자작) 최대한
+      자연스럽게. 시네마틱 35mm 필름.
     image: poetry-book/underline-page.png
   - name: margin-note
     refName: p1_p_poetrybook_marginnote

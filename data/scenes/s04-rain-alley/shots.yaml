@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: 와이드→미디엄 · 핸드헬드 · 늦은 오후 비, @p1_l_rainalley_rain 학교에서 버스정류장으로 가는 하굣길을 @p1_c_jihoon_onlyhoodie_full 이 우산을 쓰고 걷는다, 저만치서 @p1_c_sua_accidentday_full 가 @p1_p_poetrybook_coverworn 를 품에 꼭 안고 빗속을 뛰어와 그대로 우산 안으로 쏙 들어온다
+    prompt: 와이드→미디엄 · 핸드헬드 · 늦은 오후 비, @p1_l_rainalley_rain 학교에서 버스정류장으로 가는 하굣길을 @p1_c_jihoon_onlyhoodie_full 이 우산을 쓰고 걷는다, 저만치서 @p1_c_sua_accidentday_full 가 @p1_p_poetrybook_cover 를 품에 꼭 안고 빗속을 뛰어와 그대로 우산 안으로 쏙 들어온다
     duration: 5
     screenplayHash: 4a7ae81c32324cfa62a1b375e5af805db60496416c3db7ce2f75b456f69641ce
     characterRefs:

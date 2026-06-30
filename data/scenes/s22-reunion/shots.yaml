@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_coverworn 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?” · 연기: 잔잔한 결심"
+    prompt: "미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_cover 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?” · 연기: 잔잔한 결심"
     duration: 8
     screenplayHash: 103f836fe373f885c3b068ae620ecc8d15a9a9f9373dcae325b40c0276d8adff
     prevShotRef: "01"

@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄→클로즈업 · 핸드헬드 · 점심시간 @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 책상에 엎드려 자다 깬다 — 책상 위 @p1_p_poetrybook_coverworn 가 없다, 서랍을 뒤지고 가방을 쏟는다, 없다 · 연기: 점점 다급"
+    prompt: "미디엄→클로즈업 · 핸드헬드 · 점심시간 @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 책상에 엎드려 자다 깬다 — 책상 위 @p1_p_poetrybook_cover 가 없다, 서랍을 뒤지고 가방을 쏟는다, 없다 · 연기: 점점 다급"
     duration: 7
     screenplayHash: 3b52e6cbef6c21179e60e37523008dd748635f0c41fe9973a56cb48f1904e075
     characterRefs:

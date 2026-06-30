@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "Cut #1 — 와이드 투샷 · 핸드헬드 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_hoodiewithbag_full 이 가쁜 숨으로 도착해 멈추지 않고 빈 차도로 거의 들어선다 · 연기: 조급함, 가쁜 숨\nCut #2 — 지훈 시점 클로즈업 · 미세 드리프트 · 길가에 앉아 @p1_p_poetrybook_coverworn 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴, 지훈이 '아는 얼굴'임을 알아챈다 · 연기: 수아 평온·무심\nCut #3 — 미디엄 · 핸드헬드 휩 팬 · @p1_c_jihoon_hoodiewithbag_full 이 차도로 나가던 몸을 급하게 틀어 수아 쪽으로 방향을 바꾼다 · 연기: 충동적 방향 전환"
+    prompt: "Cut #1 — 와이드 투샷 · 핸드헬드 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_hoodiewithbag_full 이 가쁜 숨으로 도착해 멈추지 않고 빈 차도로 거의 들어선다 · 연기: 조급함, 가쁜 숨\nCut #2 — 지훈 시점 클로즈업 · 미세 드리프트 · 길가에 앉아 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴, 지훈이 '아는 얼굴'임을 알아챈다 · 연기: 수아 평온·무심\nCut #3 — 미디엄 · 핸드헬드 휩 팬 · @p1_c_jihoon_hoodiewithbag_full 이 차도로 나가던 몸을 급하게 틀어 수아 쪽으로 방향을 바꾼다 · 연기: 충동적 방향 전환"
     duration: 8
     screenplayHash: df11c33f79059d421c17a5c399aa16fed540aaaf551ca948d197556cb2bbb53f
     characterRefs:

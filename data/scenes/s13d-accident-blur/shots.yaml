@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "빠른 파편 몽타주 · 핸드헬드, 거칠게 컷 · 어느 게 어느 날인지 분간 안 되게 뒤섞는다\nCut #1 (가짜) — @p1_l_sidestreet_schoolroute 이면도로, 끼익 마찰음, 넘어진 익명의 교복 여자아이(레퍼런스와 다른 얼굴, 수아 아님)가 벌떡 일어나 치마를 털고 뒤도 안 보고 가버린다\nCut #2 (진짜) — @p1_l_crosswalk_daywide 브레이크 소리, 허공에 뜬 책\nCut #3 (가짜) — 길에 떨어진 @p1_p_poetrybook_coverworn 를 줍는 손\nCut #4 (진짜) — 길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포"
+    prompt: "빠른 파편 몽타주 · 핸드헬드, 거칠게 컷 · 어느 게 어느 날인지 분간 안 되게 뒤섞는다\nCut #1 (가짜) — @p1_l_sidestreet_schoolroute 이면도로, 끼익 마찰음, 넘어진 익명의 교복 여자아이(레퍼런스와 다른 얼굴, 수아 아님)가 벌떡 일어나 치마를 털고 뒤도 안 보고 가버린다\nCut #2 (진짜) — @p1_l_crosswalk_daywide 브레이크 소리, 허공에 뜬 책\nCut #3 (가짜) — 길에 떨어진 @p1_p_poetrybook_cover 를 줍는 손\nCut #4 (진짜) — 길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포"
     duration: 7
     screenplayHash: 431ae2fdb42ee97a9302cc904d4d74930580b65df10b30cd15833315b4312621
     characterRefs: []
