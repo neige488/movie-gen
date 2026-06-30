@@ -4,7 +4,7 @@ references:
     refName: p1_l_amusementpark_carousel
     prompt: >-
       실내 테마파크 분위기의 회전목마 — 파스텔 목마, 잔잔한 깃발, 밝은 실내 돔 조명, 살짝 몽환적으로 과하게 완벽한 빛. 배경 2026년 서울 성북구. 최대한 자연스럽게. 인물 없는 로케이션 레퍼런스 이미지,
-      고르고 부드러운 자연광과 은은한 중립 톤, 공간 구조·재질이 또렷한 정상 노출(그레이드는 후처리 looks가 입힘).
+      따뜻한 골든 색감과 파스텔 톤, 부드러운 노스탤지어 무드, 공간 디테일이 또렷한 정상 노출(과노출 금지), 35mm 필름.
     image: amusement-park/carousel.png
   - name: headband-stall
     refName: p1_l_amusementpark_headbandstall
