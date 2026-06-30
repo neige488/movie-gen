@@ -1,21 +1,30 @@
 shots:
   - id: "01"
+    prompt: "미디엄 클로즈업 · 핸드헬드 팔로우(흔들리며 바짝 따라붙음) · 거리를 @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 전력 질주한다(얼굴 일관성 위해 @p1_c_jihoon_hoodiewithbag_face 동반), 배경은 얕은 심도로 흐릿한 거리, 저만치 앞에 횡단보도가 보인다 · 연기: 가쁜 숨, 조급한 얼굴, 다급한 보폭"
+    duration: 6
+    screenplayHash: 0c475d6378db52af692bed11e26b547e90d52b36c8086ad7bfbe586e7690df2a
+    characterRefs:
+      - character: jihoon
+        look: hoodie-with-bag
+    locationRefs: []
+    propRefs: []
+    takes: []
+  - id: "02"
     prompt: |-
-      Cut #1 — 와이드 풀샷 · 카메라는 @p1_l_crosswalk_daywide 횡단보도 진입부 보도에 낮게 고정 · @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 프레임 안쪽 먼 뒤에서 카메라(횡단보도) 쪽으로 전력 질주해 점점 크게 다가오다 빨간불·차 없는 빈 차도로 속도를 줄이지 않고 그대로 발을 내딛는다 · 동선: 화면 뒤→앞(카메라를 향해 달려옴) · 연기: 조급함, 거친 숨
-      Cut #2 — 슬로우모션, 미디엄→클로즈업 · 카메라가 옆으로 천천히 흐르며, 횡단보도 가에 서서 신호를 기다리며 @p1_p_poetrybook_cover 를 두 손으로 펼쳐 든 채 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴을 스쳐 지난다 · 책은 펼쳐 들어 표지가 카메라에 보이지 않는다(책등이 카메라를 향함) · @p1_l_crosswalk_signalred 신호등 빨간불이 프레임 가장자리에서 붉게 번진다 · 연기: 수아는 책에서 눈을 떼지 않고 평온·무심
-      Cut #3 — 슬로우모션 인서트, 발 클로즈업(로우앵글) · 보도블록 위에 선 @p1_c_sua_accidentday_full 의 두 발, 빨간 캔버스 운동화 한쪽 발끝이 신호를 기다리듯 가볍게 까딱인다 · 바닥에 @p1_l_crosswalk_signalred 신호등 빨간빛이 옅게 어린다 · 빨강 모티프(신호등·운동화) 각인
-    duration: 15
-    screenplayHash: e6eb808aa962e11949dd8e6fb29a7dab2c681295355015854f43e363ffbcd101
+      Cut #1 — 슬로우모션, 미디엄 · 핸드헬드 · 시작 프레임(횡단보도 앞에 신호등 쪽을 보고 건널 준비를 하며 카메라를 등진 채 @p1_p_poetrybook_cover 를 펼쳐 들고 읽는 @p1_c_sua_accidentday_full)에서 이어져, @p1_c_jihoon_hoodiewithbag_full 이 그녀 뒤에서 옆을 빠르게 추월해 프레임을 가로질러 차도로 나아간다, 추월하는 순간 카메라가 수아를 지나치며 @p1_c_sua_accidentday_face 의 3/4 옆얼굴이 스치듯 보인다 · 책은 펼쳐 들어 표지가 카메라에 보이지 않는다 · 신호등 빨간불이 프레임 가장자리에서 붉게 번진다 · 연기: 수아는 책에서 눈을 떼지 않고 평온·무심, 지훈은 멈추지 않고 빈 차도로
+      Cut #2 — 슬로우모션 인서트, 발 클로즈업(로우앵글) · 보도블록 위에 선 @p1_c_sua_accidentday_full 의 두 발, 빨간 캔버스 운동화 한쪽 발끝이 신호를 기다리듯 가볍게 까딱인다 · 바닥에 신호등 빨간빛이 옅게 어린다 · 빨강 모티프(신호등·운동화) 각인
+    duration: 10
+    screenplayHash: 535e14cf09a68f2324925520e70678f6f8eb2a3dc2f9ceb3d0155b08433ffb5b
+    prevShotRef: "01"
     characterRefs:
       - character: jihoon
         look: hoodie-with-bag
       - character: sua
         look: accident-day
-    locationRefs:
-      - location: crosswalk
-        reference: day-wide
-      - location: crosswalk
-        reference: signal-red
+    locationRefs: []
     propRefs:
       - prop: poetry-book
+    startFrame:
+      image: s00a-op-seed-crosswalk/start-frame-sua.png
+      prompt: 'Cut #1 시작 프레임(image-to-video 첫 프레임). 성북구 거리(한낮, 빨간불 횡단보도·흰 줄무늬·건너편 상가 한글 간판). 횡단보도 가, 보도 끝에 @p1_c_sua_accidentday_full 가 카메라를 등지고(뒤에서 본 뒷모습, 살짝 3/4 측면) 신호등·건너편 쪽을 보며 건널 준비를 하듯 서서 @p1_p_poetrybook_cover 를 두 손으로 펼쳐 들고 고개를 숙여 읽고 있다(빨간 캔버스 운동화, 책 표지는 보이지 않음). 카메라는 수아 뒤 보도에서 그녀의 등 너머로 횡단보도와 건너편을 바라본다(지훈 추월 방향과 같은 시선). 아직 지훈은 프레임에 없다 — 이 정지 프레임에서 영상이 시작되면 지훈이 뒤에서 옆을 추월해 들어온다. 인물은 수아 한 명만, 자연스럽게. 첨부한 거리 레퍼런스 위에 수아 뒷모습을 합성하는 식으로.'
     takes: []
