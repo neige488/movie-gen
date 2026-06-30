@@ -40,6 +40,22 @@ export const takeFileSchema = z.object({
   isStarred: z.boolean().optional(),
 });
 
+/**
+ * Unified reference-image atom. `image` is the only required field. `name`
+ * (human/angle label) and `prompt` (generation prompt) are used by Location/Prop
+ * references; Look face/body omit them. `refName` is the engine `@이름` (@mention
+ * handle, e.g. `p1_c_suah_face`) — optional, validated in the domain.
+ *
+ * Declared before shotFileSchema/lookFileSchema because both reference it (const
+ * init order — using it before its declaration would throw at module load).
+ */
+export const imageReferenceFileSchema = z.object({
+  image: z.string().min(1),
+  name: z.string().min(1).optional(),
+  prompt: z.string().min(1).optional(),
+  refName: z.string().min(1).optional(),
+});
+
 export const shotFileSchema = z.object({
   id: z.string().min(1),
   prompt: z.string().min(1),
@@ -51,6 +67,9 @@ export const shotFileSchema = z.object({
   characterRefs: z.array(characterRefSchema).default([]),
   locationRefs: z.array(locationRefSchema).default([]),
   propRefs: z.array(propRefSchema).default([]),
+  // Optional first/last-frame conditioning images for image-to-video.
+  startFrame: imageReferenceFileSchema.optional(),
+  endFrame: imageReferenceFileSchema.optional(),
   takes: z.array(takeFileSchema).default([]),
 });
 
@@ -77,19 +96,6 @@ export const promptPresetFileSchema = z.object({
 });
 export type PromptPresetFile = z.infer<typeof promptPresetFileSchema>;
 
-/**
- * Unified reference-image atom. `image` is the only required field. `name`
- * (human/angle label) and `prompt` (generation prompt) are used by Location/Prop
- * references; Look face/body omit them. `refName` is the engine `@이름` (@mention
- * handle, e.g. `p1_c_suah_face`) — optional, validated in the domain.
- */
-export const imageReferenceFileSchema = z.object({
-  image: z.string().min(1),
-  name: z.string().min(1).optional(),
-  prompt: z.string().min(1).optional(),
-  refName: z.string().min(1).optional(),
-});
-
 export const lookFileSchema = z.object({
   name: z.string().min(1),
   // Each profile is a single pre-split sheet image (face = 5 panels, body = 3)
@@ -101,10 +107,25 @@ export const lookFileSchema = z.object({
   uniform: imageReferenceFileSchema.optional(),
 });
 
+/**
+ * Voice reference atom — a ≈15s self-intro video (character-level). `video` is
+ * the source clip; `blackVideo` is an optional ffmpeg-derived "black frame +
+ * audio only" clip. `prompt` (generation prompt) and `refName` (engine @이름)
+ * are optional, mirroring the image refs.
+ */
+export const voiceReferenceFileSchema = z.object({
+  video: z.string().min(1),
+  blackVideo: z.string().min(1).optional(),
+  prompt: z.string().min(1).optional(),
+  refName: z.string().min(1).optional(),
+});
+
 export const characterFileSchema = z.object({
   name: z.string().min(1),
   // Face ID — an ImageReference (image + optional generation prompt / @refName).
   headshot: imageReferenceFileSchema,
+  // Optional voice reference — a ≈15s self-intro video (character-level).
+  voice: voiceReferenceFileSchema.optional(),
   looks: z.array(lookFileSchema),
 });
 export type CharacterFile = z.infer<typeof characterFileSchema>;

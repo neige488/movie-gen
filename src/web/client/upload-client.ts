@@ -7,6 +7,7 @@
  */
 
 import type {
+  LibraryDto,
   MovieDto,
   SceneCopyResponseDto,
   TakeUploadResponseDto,
@@ -18,6 +19,11 @@ export type AssetSlotSpec =
   | { kind: "character-face"; character: string; look: string }
   | { kind: "character-body"; character: string; look: string }
   | { kind: "character-uniform"; character: string; look: string }
+  // Voice reference — a self-intro VIDEO (character-level).
+  | { kind: "character-voice"; character: string }
+  // Shot first/last-frame conditioning IMAGES (image-to-video).
+  | { kind: "shot-start-frame"; sceneSlug: string; shotId: string }
+  | { kind: "shot-end-frame"; sceneSlug: string; shotId: string }
   | { kind: "location-ref"; location: string; refName: string }
   | { kind: "prop-ref"; prop: string; refName: string };
 
@@ -44,6 +50,21 @@ export async function uploadAsset(
     throw new Error(message);
   }
   return (await res.json()) as UploadResponseDto;
+}
+
+/**
+ * Derive a "black frame + audio only" video from a Character's voice clip
+ * (server runs ffmpeg). Returns the updated LibraryDto so the caller refreshes
+ * the library in one round-trip. Surfaces the server's `error` verbatim — e.g.
+ * "ffmpeg not found — brew install ffmpeg" when ffmpeg is missing.
+ */
+export async function blackifyVoice(character: string): Promise<LibraryDto> {
+  const res = await fetch(
+    `/api/characters/${encodeURIComponent(character)}/voice/blackify`,
+    { method: "POST" },
+  );
+  if (!res.ok) throw await asError(res, "voice blackify failed");
+  return (await res.json()) as LibraryDto;
 }
 
 /**

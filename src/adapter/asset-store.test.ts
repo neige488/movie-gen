@@ -104,6 +104,48 @@ describe("AssetStore.upload — look face/body slots", () => {
   });
 });
 
+describe("AssetStore.upload — character voice (video)", () => {
+  it("writes the voice video to characters/{name}/voice.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "character-voice", character: "alice" },
+      "intro.mp4",
+      bytes("VOICE"),
+    );
+    expect(rel).toBe("characters/alice/voice.mp4");
+    expect(existsSync(path.join(assetsDir, rel))).toBe(true);
+  });
+
+  it("rejects a non-video extension on the voice slot", async () => {
+    await expect(
+      store.upload(
+        { kind: "character-voice", character: "alice" },
+        "intro.png",
+        bytes("X"),
+      ),
+    ).rejects.toThrow(AssetStoreError);
+  });
+});
+
+describe("AssetStore.upload — shot frames (image)", () => {
+  it("start frame writes to frames/scenes/{slug}/shots/{id}/start-frame.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "shot-start-frame", sceneSlug: "s01-prologue", shotId: "01" },
+      "f.png",
+      bytes("S"),
+    );
+    expect(rel).toBe("frames/scenes/s01-prologue/shots/01/start-frame.png");
+  });
+
+  it("end frame writes to frames/scenes/{slug}/shots/{id}/end-frame.{ext}", async () => {
+    const rel = await store.upload(
+      { kind: "shot-end-frame", sceneSlug: "s01-prologue", shotId: "01" },
+      "f.jpg",
+      bytes("E"),
+    );
+    expect(rel).toBe("frames/scenes/s01-prologue/shots/01/end-frame.jpg");
+  });
+});
+
 describe("AssetStore.upload — location / prop reference", () => {
   it("location ref writes to locations/{name}/{refName}.{ext}", async () => {
     const rel = await store.upload(

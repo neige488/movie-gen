@@ -22,6 +22,7 @@ import {
   saveCharacter,
   saveLocation,
   saveProp,
+  saveSceneShots,
 } from "@adapter/project-writer.js";
 import { createAssetStore } from "@adapter/asset-store.js";
 import { createProject } from "@domain/movie.js";
@@ -111,6 +112,7 @@ describe("applyUpload — character headshot", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -148,6 +150,7 @@ describe("applyUpload — character headshot", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
     ctx = { ...ctx, project: r1.project };
@@ -164,6 +167,7 @@ describe("applyUpload — character headshot", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -198,6 +202,7 @@ describe("applyUpload — character face/body slots", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -228,6 +233,7 @@ describe("applyUpload — character face/body slots", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -254,6 +260,7 @@ describe("applyUpload — character face/body slots", () => {
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -281,6 +288,7 @@ describe("applyUpload — character face/body slots", () => {
         saveCharacter,
         saveLocation,
         saveProp,
+        saveSceneShots,
         createProject,
       }),
     ).rejects.toThrow(/character.*ghost/i);
@@ -306,9 +314,137 @@ describe("applyUpload — character face/body slots", () => {
         saveCharacter,
         saveLocation,
         saveProp,
+        saveSceneShots,
         createProject,
       }),
     ).rejects.toThrow(/look.*ghost-look/i);
+  });
+});
+
+describe("applyUpload — character voice (video)", () => {
+  const ALICE_WITH_VOICE_PROMPT = `
+name: alice
+headshot:
+  image: alice/headshot.png
+voice:
+  prompt: "자기소개 + 대사 믹스"
+  refName: p1_c_alice_voice
+  video: ""
+looks:
+  - name: hoodie
+    face:
+      image: alice/hoodie/face.png
+    body:
+      image: alice/hoodie/body.png
+`;
+
+  it("creates the voice video on upload when the character had none", async () => {
+    writeCharacter("alice", ALICE_YAML);
+    const ctx = await setupHandler();
+
+    const result = await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-voice", character: "alice" },
+        originalFilename: "intro.mp4",
+        data: Buffer.from("VOICE"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      saveSceneShots,
+      createProject,
+    });
+
+    expect(result.relativePath).toBe("characters/alice/voice.mp4");
+    const reloaded = await loadProject(dataDir);
+    expect(reloaded.characters[0]!.voice?.video).toBe(
+      "characters/alice/voice.mp4",
+    );
+  });
+
+  it("preserves an existing voice prompt/refName when uploading the video", async () => {
+    // The YAML carries prompt+refName (video empty); the upload only sets video.
+    writeCharacter("alice", ALICE_WITH_VOICE_PROMPT.replace('video: ""', "video: alice/voice-old.mp4"));
+    const ctx = await setupHandler();
+
+    await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "character-voice", character: "alice" },
+        originalFilename: "intro.mp4",
+        data: Buffer.from("NEW"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      saveSceneShots,
+      createProject,
+    });
+
+    const reloaded = await loadProject(dataDir);
+    const voice = reloaded.characters[0]!.voice;
+    expect(voice?.video).toBe("characters/alice/voice.mp4");
+    expect(voice?.prompt).toBe("자기소개 + 대사 믹스");
+    expect(voice?.refName).toBe("p1_c_alice_voice");
+  });
+});
+
+describe("applyUpload — shot frames", () => {
+  it("sets startFrame on the shot, reloads with the new path", async () => {
+    // writeMinimalScene (in setupHandler) creates scene s01-open with shot "01".
+    const ctx = await setupHandler();
+
+    const result = await applyUpload({
+      project: ctx.project,
+      command: {
+        slot: { kind: "shot-start-frame", sceneSlug: "s01-open", shotId: "01" },
+        originalFilename: "start.png",
+        data: Buffer.from("START"),
+      },
+      assetStore: ctx.assetStore,
+      dataDir,
+      saveCharacter,
+      saveLocation,
+      saveProp,
+      saveSceneShots,
+      createProject,
+    });
+
+    expect(result.relativePath).toBe(
+      "frames/scenes/s01-open/shots/01/start-frame.png",
+    );
+    const reloaded = await loadProject(dataDir);
+    const shot = reloaded.scenes[0]!.shots[0]!;
+    expect(shot.startFrame?.image).toBe(
+      "frames/scenes/s01-open/shots/01/start-frame.png",
+    );
+    expect(shot.endFrame).toBeUndefined();
+  });
+
+  it("rejects a frame upload targeting an unknown shot", async () => {
+    const ctx = await setupHandler();
+    await expect(
+      applyUpload({
+        project: ctx.project,
+        command: {
+          slot: { kind: "shot-end-frame", sceneSlug: "s01-open", shotId: "99" },
+          originalFilename: "e.png",
+          data: Buffer.from("E"),
+        },
+        assetStore: ctx.assetStore,
+        dataDir,
+        saveCharacter,
+        saveLocation,
+        saveProp,
+        saveSceneShots,
+        createProject,
+      }),
+    ).rejects.toThrow(/unknown shot/i);
   });
 });
 
@@ -342,6 +478,7 @@ references:
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -379,6 +516,7 @@ references:
       saveCharacter,
       saveLocation,
       saveProp,
+      saveSceneShots,
       createProject,
     });
 
@@ -408,6 +546,7 @@ references:
         saveCharacter,
         saveLocation,
         saveProp,
+        saveSceneShots,
         createProject,
       }),
     ).rejects.toThrow(/reference.*ghost/i);

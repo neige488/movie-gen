@@ -39,8 +39,9 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 
 - **네이밍:** `{프로젝트}_{종류}_{고유이름}` · 구분자는 **`_`만**(하이픈·공백 불가).
   - 종류: `c`(character) / `l`(location) / `p`(prop).
-  - 예: `@p1_c_suah_face`, `@p1_c_suah_full`, `@p1_c_jihoon_face`, `@p1_l_rooftop_cafe`.
+  - 예: `@p1_c_suah_face`, `@p1_c_suah_full`, `@p1_c_jihoon_face`, `@p1_l_rooftop_cafe`, `@p1_c_suah_voice`.
   - 캐릭터는 보통 **face + full(body)** 2개를 등록 → 클로즈업엔 `_face`, 전신/와이드엔 `_full`.
+  - 목소리 레퍼런스를 등록하면 `_voice`(`@p1_c_suah_voice`)로 둔다.
   - **`_full`엔 `_face`를 동반한다(얼굴 일관성):** 인물이 식별 가능하게 나오는 근접~미디엄
     전신 샷에서 `@..._full`을 쓸 땐 같은 인물의 `@..._face`도 **함께 인라인**한다 — full 시트는
     전신이라 얼굴이 작아, face 시트(다각도 얼굴)를 같이 줘야 엔진이 얼굴을 안정적으로 잡는다.
@@ -60,20 +61,25 @@ prefix/suffix를 본문에 직접 쓰지 말 것(중복됨).
 `refName`이 그 엔진 `@이름`이다. 라이브러리 에셋을 만들거나 ref 이미지를 등록할 때:
 
 - **Look**: `face.refName` / `body.refName`에 부여 (`p1_c_suah_face` / `p1_c_suah_full`).
+- **Character voice**: `voice.refName`에 부여 (`p1_c_suah_voice`).
 - **Location/Prop**: `references[].refName`에 부여 (`p1_l_rooftop_cafe`).
 - 이 `refName`을 그대로 엔진(Runway 등)에도 같은 이름으로 등록한다 — 둘이 일치해야 `@`가 resolve.
 - 코드는 `refName` **포맷(`[a-z0-9_]+`)·프로젝트 내 유일성**만 검증한다. 작명은 LLM이 규약대로.
 - 유효 `@이름` 레지스트리는 라이브러리의 모든 `refName`에서 자동 도출된다(프리셋에 목록을 두지 않음).
 
-**에셋 이미지 생성 프롬프트:** 각 ImageRef는 생성 `prompt`를 가질 수 있고, 모든 종류에 기본 프롬프트가
+**에셋 생성 프롬프트:** 각 ref는 생성 `prompt`를 가질 수 있고, 모든 종류에 기본 프롬프트가
 있다(도메인 `DEFAULT_HEADSHOT_PROMPT` / `DEFAULT_FACE_PROMPT` / `DEFAULT_BODY_PROMPT` /
-`DEFAULT_UNIFORM_PROMPT`). face/body/uniform은 모두 **headshot + 그
+`DEFAULT_UNIFORM_PROMPT` / `DEFAULT_VOICE_PROMPT`). face/body/uniform은 모두 **headshot + 그
 Look의 의상(uniform)을 입력으로** 생성하는 흐름.
 - **headshot**(Character 단위 얼굴 ID): 정면 클로즈업 식별용. `headshot.prompt`.
 - **face**(Look 단위): **얼굴 시트** — 왼쪽 정면 클로즈업 헤드샷 + 오른쪽 4분할(3/4 좌·우, 측면, 아래서). `Look.face`(image + prompt).
 - **body**(Look 단위): **3분할 전신 시트** — 헤드샷(정면 클로즈업) + 전신 앞면 + 전신 뒷면. `Look.body`(image + prompt).
 - **uniform**(Look 단위, 선택): **2분할 앞/뒤** 의상 소스 한 장. `Look.uniform`(image + prompt).
   `@refName`은 보통 video에 쓰는 face/body에 달고, uniform은 소스로만 둔다.
+- **voice**(Character 단위, 선택): **≈15초 자기소개 영상** — 캐릭터 시트를 입력으로, 「중립 자기소개 →
+  감정 다른 대사 2~3줄」을 섞어 목소리 음색+감정 레인지를 캡처. `Character.voice`(video + prompt +
+  `@refName`). 선택적으로 ffmpeg로 **검은화면+음성만** 파생본(`voice.blackVideo`)을 만들 수 있다(라이브러리
+  UI의 "검은화면 + 음성 추출" 버튼 — 시각 간섭 없이 음성만 참조시킬 때).
 
 ## Shot 단위 = 1회 생성(≤15초)
 
@@ -84,6 +90,14 @@ Look의 의상(uniform)을 입력으로** 생성하는 흐름.
 - **컷별 절대 시간(`[0–7초]` 등)을 쓰지 않는다.** 각 컷의 자연스러운 길이는 영상 엔진(촬영감독)이
   잡는다 — 프롬프트엔 컷 **순서·내용**만 둔다. 시간값을 박으면 재테이크로 길이를 조정할 때마다
   프롬프트도 고쳐야 해 어긋난다. **전체 Shot 길이만** `duration`으로 관리한다.
+
+### Shot 프레임(start/end, image-to-video)
+
+- 필요하면 Shot에 **시작/끝 프레임 스틸**을 넣을 수 있다(`startFrame`/`endFrame`, 각각 ImageRef =
+  image + 선택 `prompt`). 엔진이 그 스틸에서 영상을 시작/종료하도록 컨디셔닝하는 용도.
+- **실무에선 대부분 start만** 쓴다. end는 특정 끝 구도를 고정할 때만.
+- 라이브러리가 아니라 **Shot 카드**에서 업로드/교체한다(ShotCard의 "프레임" 섹션). `@mention`
+  레지스트리에는 안 들어간다(샷 자신의 프레임이라 본문에서 `@`로 지칭하지 않음).
 
 ## 샷별 명시 포맷
 

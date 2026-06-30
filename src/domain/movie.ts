@@ -125,6 +125,18 @@ export interface Shot {
   readonly characterRefs: readonly CharacterRef[];
   readonly locationRefs: readonly LocationRef[];
   readonly propRefs: readonly PropRef[];
+  /**
+   * Optional first-frame conditioning image for image-to-video generation —
+   * the still the engine starts the clip from. In practice this is the common
+   * one (most shots use only a start frame). ImageReference (image + optional
+   * generation `prompt`). Not part of the @mention registry.
+   */
+  readonly startFrame?: ImageReference;
+  /**
+   * Optional last-frame conditioning image (rarer than `startFrame`). When set
+   * the engine targets this still as the clip's final frame. ImageReference.
+   */
+  readonly endFrame?: ImageReference;
   readonly takes: readonly Take[];
 }
 
@@ -138,6 +150,8 @@ export interface CreateShotInput {
   characterRefs?: readonly CharacterRef[];
   locationRefs?: readonly LocationRef[];
   propRefs?: readonly PropRef[];
+  startFrame?: ImageReference;
+  endFrame?: ImageReference;
   takes?: readonly Take[];
 }
 
@@ -171,6 +185,15 @@ export function createShot(input: CreateShotInput): Shot {
     );
   }
 
+  if (input.startFrame !== undefined && !input.startFrame.image)
+    throw new DomainInvariantError(
+      `Shot[${input.id}].startFrame.image is required when startFrame is set`,
+    );
+  if (input.endFrame !== undefined && !input.endFrame.image)
+    throw new DomainInvariantError(
+      `Shot[${input.id}].endFrame.image is required when endFrame is set`,
+    );
+
   return {
     id: input.id,
     prompt: input.prompt,
@@ -181,6 +204,8 @@ export function createShot(input: CreateShotInput): Shot {
     characterRefs: input.characterRefs ?? [],
     locationRefs: input.locationRefs ?? [],
     propRefs: input.propRefs ?? [],
+    ...(input.startFrame !== undefined ? { startFrame: input.startFrame } : {}),
+    ...(input.endFrame !== undefined ? { endFrame: input.endFrame } : {}),
     takes,
   };
 }
@@ -334,16 +359,71 @@ export const DEFAULT_FACE_PROMPT =
 export const DEFAULT_BODY_PROMPT =
   "첨부한 헤드샷(얼굴 ID)과 uniform(의상)을 바탕으로 만든 전신 레퍼런스 시트 한 장, 가로 3분할 — 왼쪽: 헤드샷(정면 클로즈업), 가운데: 전신 앞면, 오른쪽: 전신 뒷면. 동일 인물·동일 의상, 중립 A-포즈, 전신 안 잘리게, 단색 밝은 회색 배경, 균일한 스튜디오 조명, 소품·글씨·워터마크 없음.";
 
+/**
+ * Default generation prompt for a Character voice reference — a ≈15s self-intro
+ * video generated from the character sheet. Mixes a neutral self-introduction
+ * (timbre baseline) with a few emotionally-varied lines (vocal range) so the
+ * engine learns more than a flat read.
+ */
+export const DEFAULT_VOICE_PROMPT =
+  "첨부한 캐릭터 시트(얼굴·전신)를 바탕으로 만든 15초 목소리 레퍼런스 영상. 인물이 정면을 보고 카메라에 대고 말한다 — 먼저 중립 톤으로 짧게 자기소개(이름·정체성), 이어서 감정이 서로 다른 대표 대사 2~3줄(예: 차분 → 격앙 → 낮게 속삭임). 동일 인물·동일 얼굴, 입모양과 음성이 또렷이 동기화, 자연스러운 발성과 호흡, 정면 미디엄 샷, 단색 배경, 균일한 조명, 자막·글씨·배경음악 없음.";
+
+/**
+ * VoiceReference — a Character's voice reference. A short (≈15s) self-intro
+ * video (the character, generated from its sheet, talking to camera) that
+ * captures the voice's timbre + emotional range. Character-level (a voice is
+ * independent of outfit/Look).
+ *
+ * `video` is the source self-intro clip. `blackVideo` is an optional derived
+ * clip — a black frame with only the source audio (ffmpeg), for engines that
+ * want the voice without any visual interference but only accept a video
+ * container. Carries its own generation `prompt` and an optional engine
+ * `@refName` (e.g. `p1_c_suah_voice`) like the image refs.
+ */
+export interface VoiceReference {
+  /** Relative asset path of the source self-intro video. */
+  readonly video: string;
+  /** Optional derived "black screen + audio only" video (ffmpeg). */
+  readonly blackVideo?: string;
+  /** How this voice video was generated. Optional. */
+  readonly prompt?: string;
+  /** Engine `@이름` (@mention handle), e.g. `p1_c_suah_voice`. Optional. */
+  readonly refName?: string;
+}
+
+export interface CreateVoiceReferenceInput {
+  video: string;
+  blackVideo?: string;
+  prompt?: string;
+  refName?: string;
+}
+
+export function createVoiceReference(
+  input: CreateVoiceReferenceInput,
+): VoiceReference {
+  if (!input.video)
+    throw new DomainInvariantError("VoiceReference.video is required");
+  return {
+    video: input.video,
+    ...(input.blackVideo !== undefined ? { blackVideo: input.blackVideo } : {}),
+    ...(input.prompt !== undefined ? { prompt: input.prompt } : {}),
+    ...(input.refName !== undefined ? { refName: input.refName } : {}),
+  };
+}
+
 export interface Character {
   readonly name: string;
   /** Face ID — single image (character-level), with optional generation prompt. */
   readonly headshot: ImageReference;
+  /** Optional voice reference — a ≈15s self-intro video (character-level). */
+  readonly voice?: VoiceReference;
   readonly looks: readonly Look[];
 }
 
 export interface CreateCharacterInput {
   name: string;
   headshot: ImageReference;
+  voice?: VoiceReference;
   looks: readonly Look[];
 }
 
@@ -353,6 +433,10 @@ export function createCharacter(input: CreateCharacterInput): Character {
   if (!input.headshot?.image)
     throw new DomainInvariantError(
       `Character[${input.name}].headshot.image is required`,
+    );
+  if (input.voice !== undefined && !input.voice.video)
+    throw new DomainInvariantError(
+      `Character[${input.name}].voice.video is required when voice is set`,
     );
   if (input.looks.length === 0) {
     throw new DomainInvariantError(
@@ -371,6 +455,7 @@ export function createCharacter(input: CreateCharacterInput): Character {
   return {
     name: input.name,
     headshot: input.headshot,
+    ...(input.voice !== undefined ? { voice: input.voice } : {}),
     looks: input.looks,
   };
 }
@@ -476,12 +561,11 @@ export function createProject(input: {
   }
 
   // Engine @refName integrity: charset ([a-z0-9_]+ — the @mention charset, no
-  // hyphens/uppercase) and project-wide uniqueness across every ImageReference
-  // (headshot + Look face/body/uniform + Location/Prop refs). refName is optional, so refs
-  // without it are skipped.
+  // hyphens/uppercase) and project-wide uniqueness across every reference
+  // (headshot + Look face/body/uniform + Character voice + Location/Prop refs).
+  // refName is optional, so refs without it are skipped.
   const seenRefName = new Map<string, string>();
-  for (const { ref, where } of gatherImageRefs(input)) {
-    const rn = ref.refName;
+  for (const { refName: rn, where } of gatherRefNames(input)) {
     if (rn === undefined) continue;
     if (!REFNAME_RE.test(rn)) {
       throw new DomainInvariantError(
@@ -513,19 +597,34 @@ interface ProjectImageParts {
   readonly props: readonly Prop[];
 }
 
-/** Every ImageReference in the project, tagged with a human-readable location. */
-function gatherImageRefs(
+/**
+ * Every engine-`@refName`-bearing reference in the project, tagged with a
+ * human-readable location. Covers ImageReferences (Character headshot + Look
+ * face/body/uniform + Location/Prop refs) AND the Character voice reference.
+ * Only the optional `refName` is surfaced — both consumers (uniqueness check +
+ * registry) care about the name, not the underlying media.
+ */
+function gatherRefNames(
   p: ProjectImageParts,
-): { ref: ImageReference; where: string }[] {
-  const out: { ref: ImageReference; where: string }[] = [];
+): { refName?: string; where: string }[] {
+  const out: { refName?: string; where: string }[] = [];
   for (const c of p.characters) {
-    out.push({ ref: c.headshot, where: `Character[${c.name}].headshot` });
+    out.push({ refName: c.headshot.refName, where: `Character[${c.name}].headshot` });
+    if (c.voice) {
+      out.push({ refName: c.voice.refName, where: `Character[${c.name}].voice` });
+    }
     for (const l of c.looks) {
-      out.push({ ref: l.face, where: `Character[${c.name}] Look[${l.name}].face` });
-      out.push({ ref: l.body, where: `Character[${c.name}] Look[${l.name}].body` });
+      out.push({
+        refName: l.face.refName,
+        where: `Character[${c.name}] Look[${l.name}].face`,
+      });
+      out.push({
+        refName: l.body.refName,
+        where: `Character[${c.name}] Look[${l.name}].body`,
+      });
       if (l.uniform) {
         out.push({
-          ref: l.uniform,
+          refName: l.uniform.refName,
           where: `Character[${c.name}] Look[${l.name}].uniform`,
         });
       }
@@ -533,12 +632,18 @@ function gatherImageRefs(
   }
   for (const loc of p.locations) {
     for (const r of loc.references) {
-      out.push({ ref: r, where: `Location[${loc.name}] ref[${r.name ?? "?"}]` });
+      out.push({
+        refName: r.refName,
+        where: `Location[${loc.name}] ref[${r.name ?? "?"}]`,
+      });
     }
   }
   for (const prop of p.props) {
     for (const r of prop.references) {
-      out.push({ ref: r, where: `Prop[${prop.name}] ref[${r.name ?? "?"}]` });
+      out.push({
+        refName: r.refName,
+        where: `Prop[${prop.name}] ref[${r.name ?? "?"}]`,
+      });
     }
   }
   return out;
@@ -546,13 +651,13 @@ function gatherImageRefs(
 
 /**
  * The movie's engine @mention registry: every `refName` present across the
- * project's ImageReferences (Character headshot + Look face/body/uniform +
+ * project's references (Character headshot + voice + Look face/body/uniform +
  * Location/Prop references). Used to validate that inline `@names` in Shot
  * prompts point at a real registered ref.
  */
 export function collectRefNames(project: Project): string[] {
-  return gatherImageRefs(project)
-    .map((x) => x.ref.refName)
+  return gatherRefNames(project)
+    .map((x) => x.refName)
     .filter((n): n is string => n !== undefined);
 }
 
@@ -586,6 +691,42 @@ export function movieSequence(
     if (scene) out.push(scene);
   }
   return out;
+}
+
+/**
+ * Replace a Character's `voice` reference, returning a new Project. Used by the
+ * voice blackify endpoint (to set `blackVideo` after ffmpeg) and any caller that
+ * needs to set the whole voice ref. `createCharacter`/`createProject` re-validate
+ * invariants (voice.video required, refName charset + project-wide uniqueness).
+ * All other Character fields (headshot, looks) are preserved untouched.
+ */
+export function setCharacterVoice(
+  project: Project,
+  characterName: string,
+  voice: VoiceReference,
+): Project {
+  const character = project.characters.find((c) => c.name === characterName);
+  if (!character) {
+    throw new DomainInvariantError(
+      `setCharacterVoice: unknown Character "${characterName}"`,
+    );
+  }
+  const nextCharacters = project.characters.map((c) =>
+    c.name === characterName
+      ? createCharacter({
+          name: c.name,
+          headshot: c.headshot,
+          voice,
+          looks: c.looks,
+        })
+      : c,
+  );
+  return createProject({
+    scenes: project.scenes,
+    characters: nextCharacters,
+    locations: project.locations,
+    props: project.props,
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -780,6 +921,8 @@ export function setShotPrompt(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPrompt",
@@ -810,6 +953,8 @@ export function setShotDuration(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotDuration",
@@ -840,6 +985,8 @@ export function setShotCharacterRefs(
         characterRefs: refs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotCharacterRefs",
@@ -872,6 +1019,8 @@ export function setShotLocationRefs(
         characterRefs: shot.characterRefs,
         locationRefs: refs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotLocationRefs",
@@ -916,6 +1065,8 @@ export function setShotPrevShotRef(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: shot.propRefs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPrevShotRef",
@@ -974,6 +1125,8 @@ export function setShotPropRefs(
         characterRefs: shot.characterRefs,
         locationRefs: shot.locationRefs,
         propRefs: refs,
+        startFrame: shot.startFrame,
+        endFrame: shot.endFrame,
         takes: shot.takes,
       }),
     "setShotPropRefs",
@@ -1032,6 +1185,8 @@ export function acknowledgeShot(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: shot.takes,
   });
 
@@ -1117,6 +1272,8 @@ export function acknowledgeTake(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: nextTakes,
   });
 
@@ -1209,6 +1366,8 @@ export function setTakeStarred(
     characterRefs: shot.characterRefs,
     locationRefs: shot.locationRefs,
     propRefs: shot.propRefs,
+    startFrame: shot.startFrame,
+    endFrame: shot.endFrame,
     takes: nextTakes,
   });
 

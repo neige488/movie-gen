@@ -21,6 +21,8 @@ import type {
   Location,
   Project,
   Prop,
+  Scene,
+  Shot,
 } from "@domain/movie.js";
 import type { AssetStore, AssetSlot } from "@adapter/asset-store.js";
 
@@ -38,6 +40,11 @@ export interface ApplyUploadDeps {
   saveCharacter: (dataDir: string, c: Character) => Promise<void>;
   saveLocation: (dataDir: string, l: Location) => Promise<void>;
   saveProp: (dataDir: string, p: Prop) => Promise<void>;
+  saveSceneShots: (
+    dataDir: string,
+    sceneSlug: string,
+    shots: readonly Shot[],
+  ) => Promise<void>;
   createProject: (input: {
     scenes: readonly Project["scenes"][number][];
     characters: readonly Character[];
@@ -76,6 +83,7 @@ export async function applyUpload(deps: ApplyUploadDeps): Promise<UploadResult> 
 function validateSlotTarget(project: Project, slot: AssetSlot): void {
   switch (slot.kind) {
     case "character-headshot":
+    case "character-voice":
     case "character-face":
     case "character-body":
     case "character-uniform": {
@@ -85,7 +93,13 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
           `unknown character "${slot.character}"`,
         );
       }
-      if (slot.kind !== "character-headshot") {
+      // Look-scoped slots must point at an existing Look; headshot/voice are
+      // character-level and have no `look`.
+      if (
+        slot.kind === "character-face" ||
+        slot.kind === "character-body" ||
+        slot.kind === "character-uniform"
+      ) {
         if (!c.looks.some((l) => l.name === slot.look)) {
           throw new UploadValidationError(
             `unknown look "${slot.look}" on character "${slot.character}"`,
@@ -120,6 +134,12 @@ function validateSlotTarget(project: Project, slot: AssetSlot): void {
       }
       return;
     }
+    case "shot-start-frame":
+    case "shot-end-frame": {
+      // Frame slot must point at an existing Shot in an existing Scene.
+      findShot(project, slot.sceneSlug, slot.shotId);
+      return;
+    }
     case "take-video": {
       // Takes go through their dedicated orchestrator (take-upload-handler).
       // Reject here so a misrouted request fails fast with a clear message.
@@ -144,6 +164,7 @@ async function applySlotToProject(
 ): Promise<Project> {
   switch (slot.kind) {
     case "character-headshot":
+    case "character-voice":
     case "character-face":
     case "character-body":
     case "character-uniform": {
@@ -182,6 +203,28 @@ async function applySlotToProject(
       await deps.saveProp(deps.dataDir, updatedProp);
       return rebuildProject(deps, { ...project, props });
     }
+    case "shot-start-frame":
+    case "shot-end-frame": {
+      const { scene, shot } = findShot(
+        project,
+        slot.sceneSlug,
+        slot.shotId,
+      );
+      const field = slot.kind === "shot-start-frame" ? "startFrame" : "endFrame";
+      // Patch only the image path; preserve any existing prompt on the frame.
+      const updatedShot: Shot = {
+        ...shot,
+        [field]: { ...shot[field], image: relativePath },
+      };
+      const updatedShots = scene.shots.map((s) =>
+        s.id === shot.id ? updatedShot : s,
+      );
+      await deps.saveSceneShots(deps.dataDir, scene.slug, updatedShots);
+      const scenes = project.scenes.map((s) =>
+        s.slug === scene.slug ? { ...scene, shots: updatedShots } : s,
+      );
+      return rebuildProject(deps, { ...project, scenes });
+    }
     case "take-video": {
       // Unreachable — validateSlotTarget rejects this slot kind upstream.
       throw new UploadValidationError(
@@ -195,6 +238,22 @@ async function applySlotToProject(
       );
     }
   }
+}
+
+function findShot(
+  project: Project,
+  sceneSlug: string,
+  shotId: string,
+): { scene: Scene; shot: Shot } {
+  const scene = project.scenes.find((s) => s.slug === sceneSlug);
+  if (!scene) throw new UploadValidationError(`unknown scene "${sceneSlug}"`);
+  const shot = scene.shots.find((s) => s.id === shotId);
+  if (!shot) {
+    throw new UploadValidationError(
+      `unknown shot "${shotId}" in scene "${sceneSlug}"`,
+    );
+  }
+  return { scene, shot };
 }
 
 function findCharacter(project: Project, name: string): Character {
@@ -222,6 +281,7 @@ function mutateCharacter(
     {
       kind:
         | "character-headshot"
+        | "character-voice"
         | "character-face"
         | "character-body"
         | "character-uniform";
@@ -229,9 +289,14 @@ function mutateCharacter(
   >,
   relativePath: string,
 ): Character {
-  // Patch only the image path; preserve refName/name/prompt on the ImageRef.
+  // Patch only the image/video path; preserve refName/name/prompt on the ref.
   if (slot.kind === "character-headshot") {
     return { ...c, headshot: { ...c.headshot, image: relativePath } };
+  }
+  if (slot.kind === "character-voice") {
+    // Sets the voice VIDEO path; creates the voice ref if absent. Preserves
+    // any existing refName/prompt/blackVideo.
+    return { ...c, voice: { ...c.voice, video: relativePath } };
   }
   const looks = c.looks.map((l) => {
     if (l.name !== slot.look) return l;

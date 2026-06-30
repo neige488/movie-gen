@@ -70,6 +70,10 @@ export interface ShotDto {
   characterRefs: CharacterRefDto[];
   locationRefs: LocationRefDto[];
   propRefs: PropRefDto[];
+  /** Optional first-frame conditioning image (image-to-video). */
+  startFrame?: ImageReferenceDto;
+  /** Optional last-frame conditioning image (rarer than startFrame). */
+  endFrame?: ImageReferenceDto;
   takes: TakeDto[];
   syncStatus: SyncStatus;
 }
@@ -198,10 +202,22 @@ export interface LookDto {
   uniform?: ImageReferenceDto;
 }
 
+export interface VoiceReferenceDto {
+  /** Relative path of the source self-intro video (empty if unset). */
+  video: string;
+  /** Optional derived "black screen + audio only" video. */
+  blackVideo?: string;
+  prompt?: string;
+  /** Engine `@이름` (@mention handle), e.g. `p1_c_suah_voice`. */
+  refName?: string;
+}
+
 export interface LibraryCharacterDto {
   name: string;
   /** Face ID — image + optional generation prompt / @refName. */
   headshot: ImageReferenceDto;
+  /** Optional voice reference — a ≈15s self-intro video (character-level). */
+  voice?: VoiceReferenceDto;
   looks: LookDto[];
 }
 
