@@ -5,24 +5,21 @@
 # - suffix: 모든 Shot 공통 네거티브. 한글이 잘 먹어 한글 유지.
 # - looks: 씬별 카메라/필름/조명/그레이드 '완전 패키지'. scene.yaml(또는 shot)의
 #   `look` 키로 선택. look 미지정 씬(오프닝·모호)은 예약 키 `default`.
-#   ★ 환상층(fantasy) ↔ 현실층(reality)의 시각 분리가 이 영화 형식의 심장:
-#     위장(살아있는 첫사랑)은 환상 룩으로 따뜻·완벽하게, 진실(혼자·트라우마)은
-#     현실 룩으로 차갑·파편적으로. 클라이맥스(s24)에서 두 룩이 충돌한다.
+#   ★ 기본(파스텔) ↔ 차가운 현실(reality)의 대비가 이 영화 형식의 심장:
+#     위장(살아있는 첫사랑)도 살아있을 때의 진짜 따뜻한 기억도 모두 기본 파스텔 룩으로,
+#     진실(혼자·트라우마·사고)이 침범하는 순간만 차가운 현실 룩으로. s24에서 둘이 충돌.
 #
 # 레퍼런스(@이름)는 여기 두지 않는다 — 라이브러리 refName이 SSOT.
 
 prefix: ""
 
-suffix: "레퍼런스 외형·의상 그대로 유지(재해석·재착장·변형 금지). 배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 화면에 동일 인물 중복 없음."
+suffix: "레퍼런스 외형·의상 그대로 유지(재해석·재착장·변형 금지). 배경 음악 없음. 자막 없음. 글씨 없음. 내레이션 없음. 오로지 대사와 효과음. 얼굴에 추가 점 없음. 한 화면 안에 동일 인물 복제·중복 금지(같은 인물의 정상 등장·시간 연속은 허용). 배경 엑스트라·행인·군중은 레퍼런스 주인공과 다른 얼굴·다른 의상으로(주인공 얼굴·의상 복제 금지)."
 
 looks:
-  # 기본 — 오프닝·모호 씬. 따뜻한 노스탤지어 베이스(환상만큼 극단은 아님).
-  default: "35mm film, warm nostalgic Korean coming-of-age look, soft golden light, shallow depth of field, gentle dreamlike haze, film grain"
+  # 기본(파스텔) — 대부분의 씬(환상·살아있을 때 진짜 기억·일상 데이트). 따뜻한
+  # 파스텔 노스탤지어. 위장도 진짜 기억도 모두 이 룩으로(미세 구별 안 함).
+  default: "35mm film, warm nostalgic Korean coming-of-age look, soft pastel palette, gentle golden light, shallow depth of field, dreamlike haze, film grain"
 
-  # 환상층 — 살아있는 수아와의 첫사랑(위장). 이와이 슌지 × 소피아 코폴라:
-  # 하이키 역광·파스텔·과한 블룸·렌즈 플레어 = '너무 완벽해서 불온한' 기억의 결.
-  fantasy: "35mm film, dreamy high-key backlight, pastel bloom, soft lens flare, hazy over-exposed glow, idyllic too-perfect warmth, golden-hour grade, warm red accents, nostalgic film grain"
-
-  # 현실층 — 혼자·PTSD·사고(진실). 린 램지:
-  # 16mm·차가운 형광·빨강만 남긴 탈색·핸드헬드·파편 = 트라우마의 날것.
+  # 차가운 현실 — 사고·PTSD·혼자·부재(진실). 린 램지: 16mm·차가운 형광·빨강만 남긴
+  # 탈색·핸드헬드·파편. 따뜻한 기본을 차갑게 침범하는 순간에만.
   reality: "16mm film grain, cold fluorescent light, desaturated palette with only deep red retained, handheld unstable framing, harsh contrast, fragmented intimate close-ups, clinical detachment"
