@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어져 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 @p1_p_poetrybook_cover 를 내밀며 “이거… 따님 거 같아서요.” · 연기: 지훈 조심스러움, 엄마 의아함"
+    prompt: "미디엄 · 고정 · @p1_l_suahome_frontdoor 복도식 아파트 3층, @p1_c_jihoon_uniform_full 이 초인종을 누른다, @p1_c_sua_accidentday_full 는 복도 끝 조금 떨어져 서 있다, 문이 열리고 얼굴에 피로가 깊은 @p1_c_suamother_default_full 가 나온다 · 지훈 @p1_p_poetrybook_cover 를 내밀며 “이거… 따님 거 같아서요.” · 연기: 지훈 조심스러움, 엄마 의아함 · voice: @p1_c_jihoon_voice"
     duration: 8
     screenplayHash: 28df57d56047484a89405b7d34286093e23ca43663b3f954d5129b18a2ebac60
     characterRefs:
@@ -17,7 +17,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "클로즈업 · 고정, 미세 드리프트 · @p1_c_suamother_default_face 가 @p1_p_poetrybook_namepage 속표지를 넘긴다 — 손글씨 이름, 손이 천천히 떨리기 시작하고 말없이 책을 가슴에 꼭 끌어안는다 · 지훈(작게) “길에서… 주웠어요.” · 연기: 엄마 무언의 무너짐, 대사 없이 떨림과 몸짓으로"
+    prompt: "@video에서 이어진 컷. 클로즈업 · 고정, 미세 드리프트 · @p1_c_suamother_default_face 가 @p1_p_poetrybook_namepage 속표지를 넘긴다 — 손글씨 이름, 손이 천천히 떨리기 시작하고 말없이 책을 가슴에 꼭 끌어안는다 · 지훈(작게) “길에서… 주웠어요.” · 연기: 엄마 무언의 무너짐, 대사 없이 떨림과 몸짓으로 · voice: @p1_c_jihoon_voice"
     duration: 9
     screenplayHash: 1f4b1cbef63aae0916c02951c257766c31c51fa0f5fd07e7ccf7f11df46125ea
     prevShotRef: "01"
@@ -31,7 +31,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "03"
-    prompt: "Cut #1 — 미디엄 (지훈 시점, 열린 문 너머) · 고정 · @p1_l_suahome_photowall 거실 사진 액자들, 한 여자아이의 성장 기록 — 그중 스케이트를 신고 빙판에서 아빠 손을 잡은 어린 수아, 액자 끝엔 교복 영정\nCut #2 — 클로즈업 인서트 · 고정 · @p1_l_suahome_entryglimpse 신발장 위 가지런한 빨간 운동화\nCut #3 — 클로즈업 · 고정 · @p1_c_jihoon_uniform_face, 세계가 멈춘 듯한 얼굴 · 연기: 깨달음 직전의 정지"
+    prompt: "@video에서 이어진 컷. Cut #1 — 미디엄 (지훈 시점, 열린 문 너머) · 고정 · @p1_l_suahome_photowall 거실 사진 액자들, 한 여자아이의 성장 기록 — 그중 스케이트를 신고 빙판에서 아빠 손을 잡은 어린 수아, 액자 끝엔 교복 영정\nCut #2 — 클로즈업 인서트 · 고정 · @p1_l_suahome_entryglimpse 신발장 위 가지런한 빨간 운동화\nCut #3 — 클로즈업 · 고정 · @p1_c_jihoon_uniform_face, 세계가 멈춘 듯한 얼굴 · 연기: 깨달음 직전의 정지"
     duration: 10
     screenplayHash: 076540d428062b12e881b06bc89a41d46ff746db4e0344118760686b5816a31e
     prevShotRef: "02"
@@ -46,11 +46,11 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "빠른 파편 몽타주(환상의 마지막 명멸) · 핸드헬드, 거칠게 컷 · @p1_c_jihoon_dateoutfit_full 과 @p1_c_sua_accidentday_full 의 따뜻한 환상 데이트 파편들 — 빨간불 문답, 우산 속 둘, 회전목마, 빙판 위 맞잡은 손, 우체통 — 이 빠르게 스쳐가며 흩어지고 @p1_c_sua_accidentday_face 의 얼굴이 흩어진다 · 연기: 환상이 무너져 내리는 현기증"
+    prompt: "@video에서 이어진 컷. 빠른 파편 몽타주(환상의 마지막 명멸) · 핸드헬드, 거칠게 컷 · @p1_c_jihoon_dateoutfit_full 과 @p1_c_sua_accidentday_full 의 따뜻한 환상 데이트 파편들 — 빨간불 문답, 우산 속 둘, 회전목마, 빙판 위 맞잡은 손, 우체통 — 이 빠르게 스쳐가며 흩어지고 @p1_c_sua_accidentday_face 의 얼굴이 흩어진다 · 연기: 환상이 무너져 내리는 현기증"
     duration: 8
     screenplayHash: eb871140d0228d99660300965ccef313f628b5494bee3bd6e452d6ab27fdeefa
     prevShotRef: "03"
-    look: fantasy
+    look: default
     characterRefs:
       - character: jihoon
         look: date-outfit
@@ -60,7 +60,7 @@ shots:
     propRefs: []
     takes: []
   - id: "05"
-    prompt: "슬로우모션 → 빠른 컷 · 핸드헬드 · @p1_l_crosswalk_daywide, 달리던 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_full 를 비켜 지나가 다 건너서 아는 얼굴인 듯 돌아본다, 그 인기척에 수아가 고개를 들고 초록불로 착각해 따라 건넌다, 브레이크 소리·허공에 뜬 책·길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포(완결해 보여주지 말 것)"
+    prompt: "@video에서 이어진 컷. 슬로우모션 → 빠른 컷 · 핸드헬드 · @p1_l_crosswalk_daywide, 달리던 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_full 를 비켜 지나가 다 건너서 아는 얼굴인 듯 돌아본다, 그 인기척에 수아가 고개를 들고 초록불로 착각해 따라 건넌다, 브레이크 소리·허공에 뜬 책·길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포(완결해 보여주지 말 것)"
     duration: 9
     screenplayHash: 850ff3de5735a539365d17bdab1e6faea0d2608ee28f60410691ea204b5c9fc7
     prevShotRef: "04"
@@ -76,7 +76,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "06"
-    prompt: "크레인업 부감 · 무음 · @p1_l_suahome_photowall 거실 바닥에 @p1_c_jihoon_uniform_full 이 무너져 누워 소리 없이 경련하듯 몸을 떤다, 카메라가 천천히 크레인으로 떠올라 작아지는 지훈을 내려다본다 · (의사 보이스오버) “사고 전에, 두 사람이 알고 지낸 흔적이 없습니다. …감당할 수 없는 기억은, 견딜 수 있는 기억으로 다시 쓰이기도 합니다.” · 연기: 무음, 고립의 부감, 소리 없는 떨림"
+    prompt: "@video에서 이어진 컷. 크레인업 부감 · 무음 · @p1_l_suahome_photowall 거실 바닥에 @p1_c_jihoon_uniform_full 이 무너져 누워 소리 없이 경련하듯 몸을 떤다, 카메라가 천천히 크레인으로 떠올라 작아지는 지훈을 내려다본다 · (의사 보이스오버) “사고 전에, 두 사람이 알고 지낸 흔적이 없습니다. …감당할 수 없는 기억은, 견딜 수 있는 기억으로 다시 쓰이기도 합니다.” · 연기: 무음, 고립의 부감, 소리 없는 떨림"
     duration: 12
     screenplayHash: f5b203a6ba64254abae156588d1ef667303cba0307687d0790a9c7835f0c51e4
     prevShotRef: "05"

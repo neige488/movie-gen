@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "와이드 · 고정 · @p1_l_schoolhallway_windowrow 복도, 교무실을 나서는 @p1_c_jihoon_uniform_full, 복도 끝 창가 빛 속에 @p1_c_sua_accidentday_full 가 멀리 서서 그를 가만히 바라본다(다가오지 않음), 지훈은 쪽지를 주머니에 넣고 수아가 선 쪽과 반대로 걸어간다 · 연기: 수아 멀리서 읽을 수 없는 조용한 응시, 지훈 무심히 멀어짐"
+    prompt: "@video에서 이어진 컷. 와이드 · 고정 · @p1_l_schoolhallway_windowrow 복도, 교무실을 나서는 @p1_c_jihoon_uniform_full, 복도 끝 창가 빛 속에 @p1_c_sua_accidentday_full 가 멀리 서서 그를 가만히 바라본다(다가오지 않음), 지훈은 쪽지를 주머니에 넣고 수아가 선 쪽과 반대로 걸어간다 · 연기: 수아 멀리서 읽을 수 없는 조용한 응시, 지훈 무심히 멀어짐"
     duration: 7
     screenplayHash: aa7246748236683d5752d3eb48710f9d70582fa2754d5be50a6b03b969d51678
     prevShotRef: "01"

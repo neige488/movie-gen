@@ -2,7 +2,7 @@ shots:
   - id: "01"
     prompt: |-
       Cut #1 — 미디엄 투샷 · 고정 · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 의 가방에서 @p1_p_poetrybook_cover 가 살짝 삐져나와 있다, 옆의 @p1_c_sua_accidentday_full 가 흘깃 본다 · 수아 “오, 강지훈~ 웬일이야. 무슨 책이래?”
-      Cut #2 — 클로즈업 투샷 · 고정 · @p1_c_jihoon_uniform_full 이 황급히 책을 가방에 밀어 넣는다 · 지훈 “안 돼. 만지지 마.” @p1_c_sua_accidentday_face 가 그 반응에 깜짝 놀란다 · 수아 “뭔데? 중요한 거야?”
+      Cut #2 — 클로즈업 투샷 · 고정 · @p1_c_jihoon_uniform_full 이 황급히 책을 가방에 밀어 넣는다 · 지훈 “안 돼. 만지지 마.” @p1_c_sua_accidentday_face 가 그 반응에 깜짝 놀란다 · 수아 “뭔데? 중요한 거야?” · voice: @p1_c_sua_voice
     duration: 14
     screenplayHash: c220a790d4e7039c5c127d90e99bef4547a55a096c0aa5aecc4693a00e785b5f
     characterRefs:
@@ -17,7 +17,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "클로즈업 · 고정 · 지훈 “아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아.” @p1_c_jihoon_uniform_face 의 시선이 잠깐 흔들린다 · 연기: 숨기는 듯"
+    prompt: "@video에서 이어진 컷. 클로즈업 · 고정 · 지훈 “아니… 그런 건 아니고. 어제 길에서 누가 떨어뜨린 거 같아.” @p1_c_jihoon_uniform_face 의 시선이 잠깐 흔들린다 · 연기: 숨기는 듯 · voice: @p1_c_jihoon_voice"
     duration: 6
     screenplayHash: af6666396468cbc0c9ee9a731a4f8fab04017070be85c01f11e9c8126e8b0c3d
     prevShotRef: "01"

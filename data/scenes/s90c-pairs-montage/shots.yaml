@@ -9,7 +9,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "연쇄 디졸브 몽타주, 동일 구도 · 고정 · 대사 없음 · 투샷이 하나씩 같은 구도의 혼자 샷으로 바뀐다 — @p1_l_hillbench_daycityview 벤치에서 책 읽던 두 사람이 혼자 앉은 @p1_c_jihoon_onlyhoodie_full 으로, 편의점 마주 앉은 둘이 컵라면 하나로, 회전목마 나란히가 아이들 사이 혼자로, 아이스링크 손잡고가 혼자 능숙하게로"
+    prompt: "@video에서 이어진 컷. 연쇄 디졸브 몽타주, 동일 구도 · 고정 · 대사 없음 · 투샷이 하나씩 같은 구도의 혼자 샷으로 바뀐다 — @p1_l_hillbench_daycityview 벤치에서 책 읽던 두 사람이 혼자 앉은 @p1_c_jihoon_onlyhoodie_full 으로, 편의점 마주 앉은 둘이 컵라면 하나로, 회전목마 나란히가 아이들 사이 혼자로, 아이스링크 손잡고가 혼자 능숙하게로"
     duration: 12
     screenplayHash: 09a92c24688ec1379edfb567b376188fffa5b973be996082eb25b76b39eacd68
     prevShotRef: "01"
@@ -22,7 +22,7 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "미디엄 · 스테디 트래킹 · @p1_l_rainalley_rain 비 오는 하굣길 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
+    prompt: "@video에서 이어진 컷. 미디엄 · 스테디 트래킹 · @p1_l_rainalley_rain 비 오는 하굣길 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
     duration: 7
     screenplayHash: 02ceaacd309a600efa1db6bb8872f3626e86dc600a912c3e032430e58650de40
     prevShotRef: "02"
@@ -35,7 +35,7 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "동일 구도 리빌 · 핸드헬드 · 대사 없음(무음) · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 누군가에게 따지던 같은 블로킹에서 상대가 @p1_c_classmategirl_uniform_full 모르는 단발 여학생으로 드러난다 — 수아가 아니었다 · 연기: 입모양만, 여학생 공포, 지훈 광기 — 그가 따진 건 처음부터 모르는 아이"
+    prompt: "@video에서 이어진 컷. 동일 구도 리빌 · 핸드헬드 · 대사 없음(무음) · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 누군가에게 따지던 같은 블로킹에서 상대가 @p1_c_classmategirl_uniform_full 모르는 단발 여학생으로 드러난다 — 수아가 아니었다 · 연기: 입모양만, 여학생 공포, 지훈 광기 — 그가 따진 건 처음부터 모르는 아이"
     duration: 8
     screenplayHash: d0b5fb4e40a71023f07ca471ef1dc6f321294d4060971733922b9f38722f3b5c
     prevShotRef: "03"

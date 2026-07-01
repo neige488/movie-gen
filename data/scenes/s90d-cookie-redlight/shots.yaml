@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: 미디엄 투샷 · 고정 · @p1_l_crosswalk_signalred 횡단보도 빨간불, @p1_c_jihoon_onlyhoodie_full 이 습관처럼 앞으로 나가려다 멈춘다 · 수아 “빨간불엔?” 지훈 “멈춘다.” 수아 “차가 안 와도?” 지훈 “멈춘다.” 수아 “이제 잘하네.” 지훈 “네가 선생님이냐?” 수아 “응. 넌 학생.” · @p1_c_sua_accidentday_face 와 마주 보며 지훈이 피식 웃는다
+    prompt: "미디엄 투샷 · 고정 · @p1_l_crosswalk_signalred 횡단보도 빨간불, @p1_c_jihoon_onlyhoodie_full 이 습관처럼 앞으로 나가려다 멈춘다 · 수아 “빨간불엔?” 지훈 “멈춘다.” 수아 “차가 안 와도?” 지훈 “멈춘다.” 수아 “이제 잘하네.” 지훈 “네가 선생님이냐?” 수아 “응. 넌 학생.” · @p1_c_sua_accidentday_face 와 마주 보며 지훈이 피식 웃는다 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice"
     duration: 14
     screenplayHash: 3a0b7383900a1c55c043f3e69600d9eb620525cbb29f09e5419a3b556ded72a4
     characterRefs:

@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 → 와이드 · 고정 · @p1_l_academy_lectureroom 학원 강의실, 빼곡한 익명 학생들(레퍼런스와 다른 얼굴) 사이에서 @p1_c_jihoon_hoodiewithbag_full 혼자, 칠판을 보는 둥 마는 둥 눈빛이 비어 있다 · 연기: 군중 속 고립, 무기력"
+    prompt: "@video에서 이어진 컷. 미디엄 → 와이드 · 고정 · @p1_l_academy_lectureroom 학원 강의실, 빼곡한 익명 학생들(레퍼런스와 다른 얼굴) 사이에서 @p1_c_jihoon_hoodiewithbag_full 혼자, 칠판을 보는 둥 마는 둥 눈빛이 비어 있다 · 연기: 군중 속 고립, 무기력"
     duration: 6
     screenplayHash: a7d1e4dd113893e29d1fabb562ee7761c325777596583a8f752db474ef0ba34b
     prevShotRef: "01"
@@ -25,7 +25,7 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "미디엄 투샷 구도(맞은편 빈자리 강조) · 고정 · 밤 @p1_l_conveniencestore_windowseat 편의점 창가, @p1_c_jihoon_onlyhoodie_full 이 혼자 컵라면을 먹는다, 맞은편 자리는 비어 있다(한때 둘이 앉던 그 자리), 창밖으로 사람들이 지나간다 · 연기: 습관처럼 혼자, 비어 버린 맞은편"
+    prompt: "@video에서 이어진 컷. 미디엄 투샷 구도(맞은편 빈자리 강조) · 고정 · 밤 @p1_l_conveniencestore_windowseat 편의점 창가, @p1_c_jihoon_onlyhoodie_full 이 혼자 컵라면을 먹는다, 맞은편 자리는 비어 있다(한때 둘이 앉던 그 자리), 창밖으로 사람들이 지나간다 · 연기: 습관처럼 혼자, 비어 버린 맞은편"
     duration: 6
     screenplayHash: 702eb2e7a43c949cba4d95d2a28dd95d14c5448fe477987987e5e8aa743dc9e5
     prevShotRef: "02"
@@ -38,7 +38,7 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "와이드 · 핸드헬드 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, 무리 지어 떠드는 익명의 또래들(레퍼런스와 다른 얼굴) 사이로 @p1_c_jihoon_uniform_full 이 혼자 걷는다 · 연기: 세상과 분리된 혼자, 시간이 흘러가는 감각"
+    prompt: "@video에서 이어진 컷. 와이드 · 핸드헬드 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, 무리 지어 떠드는 익명의 또래들(레퍼런스와 다른 얼굴) 사이로 @p1_c_jihoon_uniform_full 이 혼자 걷는다 · 연기: 세상과 분리된 혼자, 시간이 흘러가는 감각"
     duration: 6
     screenplayHash: 6214c027d366cee5cb86511c6c3e45fd8850a00d42c903e8c7552091a6bb874d
     prevShotRef: "03"

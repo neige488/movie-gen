@@ -15,7 +15,7 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: 미디엄→클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_full 이 길에 남은 @p1_p_poetrybook_cover 로 다가가 줍는다 · 지훈 가버린 쪽을 향해 “저기—! …책.” 아무도 없다 · @p1_c_jihoon_uniform_face 이 책을 든 채 멍하니 서서 손끝으로 책 표지를 문지른다
+    prompt: "@video에서 이어진 컷. 미디엄→클로즈업 인서트 · 고정 · @p1_c_jihoon_uniform_full 이 길에 남은 @p1_p_poetrybook_cover 로 다가가 줍는다 · 지훈 가버린 쪽을 향해 “저기—! …책.” 아무도 없다 · @p1_c_jihoon_uniform_face 이 책을 든 채 멍하니 서서 손끝으로 책 표지를 문지른다 · voice: @p1_c_jihoon_voice"
     duration: 8
     screenplayHash: 050c8b78eaafa6571aef7ca772c6144a5bc4a2ce27925441e0b21ae679a52ca3
     prevShotRef: "01"

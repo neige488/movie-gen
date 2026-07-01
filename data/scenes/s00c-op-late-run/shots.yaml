@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 풀샷 · 고정 · @p1_l_jihoonhome_living 에서 @p1_c_jihoonmother_indoor_full 이 아침 정리를 하다 방 쪽으로 고개를 돌려 부른다 · 연기: 정겹고 느긋한 아침의 잔소리, '지훈아 학원 갈 때 안 됐니' 하고 부르는 입모양, 따뜻한 중산층 가정의 평범한 아침"
+    prompt: "미디엄 풀샷 · 고정 · @p1_l_jihoonhome_living 에서 @p1_c_jihoonmother_indoor_full 이 아침 정리를 하다 방 쪽으로 고개를 돌려 부른다 · 연기: 정겹고 느긋한 아침의 잔소리, '지훈아 학원 갈 때 안 됐니' 하고 부르는 입모양, 따뜻한 중산층 가정의 평범한 아침 · voice: @p1_c_jihoonmother_voice"
     duration: 5
     screenplayHash: 37623d34a92eb7bae8899b6a385b04705f1f62fa7a61fff1049f5ea152d04573
     characterRefs:
@@ -38,7 +38,7 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "미디엄 · 핸드헬드 팔로우 · @p1_l_jihoonhome_bedroom 에서 @p1_c_jihoon_hoodiewithbag_full 이 후드티 끈이 한쪽만 길게 늘어진 채 지퍼가 반쯤 열린 백팩을 대충 둘러메고 책과 물건을 허둥지둥 쓸어 담는다 · 연기: 덜렁대는 다급함, 우당탕거리는 손놀림"
+    prompt: "@video에서 이어진 컷. 미디엄 · 핸드헬드 팔로우 · @p1_l_jihoonhome_bedroom 에서 @p1_c_jihoon_hoodiewithbag_full 이 후드티 끈이 한쪽만 길게 늘어진 채 지퍼가 반쯤 열린 백팩을 대충 둘러메고 책과 물건을 허둥지둥 쓸어 담는다 · 연기: 덜렁대는 다급함, 우당탕거리는 손놀림"
     duration: 6
     screenplayHash: 294c29dd6505d54354f5882418242c4479e6c393b4a9ad3ce2c5cccbb2e4e302
     prevShotRef: "03"
@@ -51,7 +51,7 @@ shots:
     propRefs: []
     takes: []
   - id: "05"
-    prompt: "미디엄 풀샷 · 핸드헬드 · @p1_l_jihoonhome_entryway 에서 @p1_c_jihoon_hoodiewithbag_full 이 신발을 구겨 신으며 거실 쪽으로 외치고 곧장 문을 박차고 나간다 · 연기: '엄마 나 갔다 올게' 외치는 입모양, 대답도 안 듣고 뛰쳐나가는 활기"
+    prompt: "@video에서 이어진 컷. 미디엄 풀샷 · 핸드헬드 · @p1_l_jihoonhome_entryway 에서 @p1_c_jihoon_hoodiewithbag_full 이 신발을 구겨 신으며 거실 쪽으로 외치고 곧장 문을 박차고 나간다 · 연기: '엄마 나 갔다 올게' 외치는 입모양, 대답도 안 듣고 뛰쳐나가는 활기"
     duration: 5
     screenplayHash: 64dfb2737b8ffca42d18d0a6847b71190d6dfb074bd94b9df60370e08863219f
     prevShotRef: "04"
@@ -64,7 +64,7 @@ shots:
     propRefs: []
     takes: []
   - id: "06"
-    prompt: "와이드 풀샷 · 팔로우 · 아침 @p1_l_homealley_morning 집 앞 마른 골목으로 @p1_c_jihoon_hoodiewithbag_full 이 뛰어나온다 · 연기: 거친 숨, 조급함"
+    prompt: "@video에서 이어진 컷. 와이드 풀샷 · 팔로우 · 아침 @p1_l_homealley_morning 집 앞 마른 골목으로 @p1_c_jihoon_hoodiewithbag_full 이 뛰어나온다 · 연기: 거친 숨, 조급함"
     duration: 5
     screenplayHash: df3a7ddd026e9bae1f6b284bffafa1cd6928548927dce9d266e2cc88196cc40c
     prevShotRef: "05"

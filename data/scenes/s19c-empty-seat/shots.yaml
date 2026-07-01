@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 · 핸드헬드 · @p1_l_schoolhallway_windowrow 지나가던 익명 학생들(레퍼런스와 다른 얼굴)이 스치며 “…야, 너 그 얘기 못 들었어? 옆 반에—”, @p1_c_jihoon_uniform_full 은 끝까지 듣지 않고 복도를 달려나간다 · 연기: 불길함·부정, 행인 대사는 끝까지 들리지 않게"
+    prompt: "@video에서 이어진 컷. 미디엄 · 핸드헬드 · @p1_l_schoolhallway_windowrow 지나가던 익명 학생들(레퍼런스와 다른 얼굴)이 스치며 “…야, 너 그 얘기 못 들었어? 옆 반에—”, @p1_c_jihoon_uniform_full 은 끝까지 듣지 않고 복도를 달려나간다 · 연기: 불길함·부정, 행인 대사는 끝까지 들리지 않게"
     duration: 6
     screenplayHash: c463d74cd032fb041fa0d15e38e58d5cfc294ce72ba7ef1b771fed5b40f20aa1
     prevShotRef: "01"

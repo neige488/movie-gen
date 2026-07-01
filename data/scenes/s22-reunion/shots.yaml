@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄 투샷 · 고정, 미세 푸시인 · @p1_l_hillbench_daycityview 언덕 벤치, (s19b에서 달려온) @p1_c_jihoon_uniform_full 이 숨을 고르며 다가서고 @p1_c_sua_accidentday_full 가 늘 입던 그 옷으로 앉아 있다 · 수아 “왔어?” 지훈 “미안해. …너 괜찮은 거야?” 수아 “이제 괜찮아.” · 연기: 지훈 안도와 죄책감, 수아 잔잔"
+    prompt: "미디엄 투샷 · 고정, 미세 푸시인 · @p1_l_hillbench_daycityview 언덕 벤치, (s19b에서 달려온) @p1_c_jihoon_uniform_full 이 숨을 고르며 다가서고 @p1_c_sua_accidentday_full 가 늘 입던 그 옷으로 앉아 있다 · 수아 “왔어?” 지훈 “미안해. …너 괜찮은 거야?” 수아 “이제 괜찮아.” · 연기: 지훈 안도와 죄책감, 수아 잔잔 · voice: @p1_c_jihoon_voice, @p1_c_sua_voice"
     duration: 10
     screenplayHash: 374df80ff6f566d446a52c9a375a299322efe07b636e4e1b98188c117630b854
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_cover 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?” · 연기: 잔잔한 결심"
+    prompt: "@video에서 이어진 컷. 미디엄 · 고정 · @p1_l_hillbench_daycityview, @p1_c_sua_accidentday_full 가 우체통을 열어 @p1_p_poetrybook_cover 를 꺼낸다 · 수아 “이 책… 이제 돌려주러 갈까?” · 연기: 잔잔한 결심 · voice: @p1_c_sua_voice"
     duration: 8
     screenplayHash: 103f836fe373f885c3b068ae620ecc8d15a9a9f9373dcae325b40c0276d8adff
     prevShotRef: "01"

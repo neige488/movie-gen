@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: 와이드 투샷 · 스테디 · 맑은 날 @p1_l_amusementpark_carousel 회전목마 앞, @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full · 수아 “나 이런 데 처음 와 봐.” 지훈 “거짓말하지 마.” 수아 회전목마를 올려다보며 “진짜야. …좋다.”
+    prompt: "와이드 투샷 · 스테디 · 맑은 날 @p1_l_amusementpark_carousel 회전목마 앞, @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full · 수아 “나 이런 데 처음 와 봐.” 지훈 “거짓말하지 마.” 수아 회전목마를 올려다보며 “진짜야. …좋다.” · voice: @p1_c_sua_voice, @p1_c_jihoon_voice"
     duration: 9
     screenplayHash: 8ca1fbef3d22c85fd53f1979343b0d392103d6da4caba19fda8a19013d9e0da3
     characterRefs:
@@ -15,6 +15,7 @@ shots:
     takes: []
   - id: "02"
     prompt: |-
+      @video에서 이어진 컷(직전 샷 영상에서 연속).
       Cut #1 — 미디엄 투샷 · 천천히 도는 트래킹 · @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full 가 회전목마를 탄다, 수아가 웃는다 · 연기: 어딘가 너무 완벽한 오후
       Cut #2 — 인서트, 와이드 · 천천히 도는 · @p1_l_amusementpark_carousel 회전목마의 불빛이 천천히 돌고 그 위로 맑고 푸른 하늘 · 비현실적으로 완벽한 결(환상의 징후)
     duration: 11

@@ -11,10 +11,10 @@ shots:
     takes: []
   - id: "02"
     prompt: |-
-      Cut #1 — 슬로우모션, 미디엄 · 핸드헬드 · 시작 프레임(횡단보도 앞에 신호등 쪽을 보고 건널 준비를 하며 카메라를 등진 채 @p1_p_poetrybook_cover 를 펼쳐 들고 읽는 @p1_c_sua_accidentday_full)에서 이어져, @p1_c_jihoon_hoodiewithbag_full 이 그녀 뒤에서 옆을 빠르게 추월해 프레임을 가로질러 차도로 나아간다, 추월하는 순간 카메라가 수아를 지나치며 @p1_c_sua_accidentday_face 의 3/4 옆얼굴이 스치듯 보인다 · 책은 펼쳐 들어 표지가 카메라에 보이지 않는다 · 신호등 빨간불이 프레임 가장자리에서 붉게 번진다 · 연기: 수아는 책에서 눈을 떼지 않고 평온·무심, 지훈은 멈추지 않고 빈 차도로
+      Cut #1 — 슬로우모션, 와이드→미디엄 · 핸드헬드 · 시작 프레임(횡단보도 앞쪽 보도에 카메라를 등지고 서서 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_full)에서 이어져, @p1_c_jihoon_hoodiewithbag_full 이 프레임 밖에서 끼어들어 수아 옆을 지나 차도로 막 발을 내딛는 순간, 세상이 느려지며 카메라가 수아의 3/4 옆얼굴(@p1_c_sua_accidentday_face)을 스치듯 담는다 · 책 표지 안 보임(책등이 카메라 쪽) · 신호등 빨간불이 프레임 가장자리에서 붉게 번진다 · 연기: 지훈은 차도 경계에서 발을 내딛는 중(분기 직전, 아직 멈추지도 건너지도 않음), 수아 평온·무심
       Cut #2 — 슬로우모션 인서트, 발 클로즈업(로우앵글) · 보도블록 위에 선 @p1_c_sua_accidentday_full 의 두 발, 빨간 캔버스 운동화 한쪽 발끝이 신호를 기다리듯 가볍게 까딱인다 · 바닥에 신호등 빨간빛이 옅게 어린다 · 빨강 모티프(신호등·운동화) 각인
     duration: 10
-    screenplayHash: 535e14cf09a68f2324925520e70678f6f8eb2a3dc2f9ceb3d0155b08433ffb5b
+    screenplayHash: 7bb6c2a6ac14c98bf1cad502cb83e9c9ffd51e32c7a4a3d22bb7db8c85e3b373
     prevShotRef: "01"
     characterRefs:
       - character: jihoon
@@ -25,6 +25,6 @@ shots:
     propRefs:
       - prop: poetry-book
     startFrame:
-      image: s00a-op-seed-crosswalk/start-frame-sua.png
-      prompt: 'Cut #1 시작 프레임(image-to-video 첫 프레임). 성북구 거리(한낮, 빨간불 횡단보도·흰 줄무늬·건너편 상가 한글 간판). 횡단보도 가, 보도 끝에 @p1_c_sua_accidentday_full 가 카메라를 등지고(뒤에서 본 뒷모습, 살짝 3/4 측면) 신호등·건너편 쪽을 보며 건널 준비를 하듯 서서 @p1_p_poetrybook_cover 를 두 손으로 펼쳐 들고 고개를 숙여 읽고 있다(빨간 캔버스 운동화, 책 표지는 보이지 않음). 카메라는 수아 뒤 보도에서 그녀의 등 너머로 횡단보도와 건너편을 바라본다(지훈 추월 방향과 같은 시선). 아직 지훈은 프레임에 없다 — 이 정지 프레임에서 영상이 시작되면 지훈이 뒤에서 옆을 추월해 들어온다. 인물은 수아 한 명만, 자연스럽게. 첨부한 거리 레퍼런스 위에 수아 뒷모습을 합성하는 식으로.'
+      image: s00a-op-seed-crosswalk/start-frame.png
+      prompt: '한낮 성북구 거리, 빨간불 횡단보도(흰 줄무늬·건너편 상가 한글 간판). 횡단보도 앞쪽 보도에 @p1_c_sua_accidentday_full 가 카메라를 등진 뒷모습(살짝 3/4 측면)으로 서서 @p1_p_poetrybook_cover 를 두 손으로 펼쳐 들고 고개를 숙여 읽고 있다(빨간 캔버스 운동화, 책 표지는 보이지 않음). 인물은 수아 한 명만. 자연스럽게.'
     takes: []
