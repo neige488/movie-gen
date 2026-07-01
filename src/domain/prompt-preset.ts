@@ -103,6 +103,14 @@ export function findUnregisteredLooks(
 const MENTION_RE = /@([a-z0-9_]+)/g;
 
 /**
+ * Reserved engine `@mentions` that are NOT library refNames and must never be
+ * flagged as unregistered. `@video` is Runway's handle for the previous shot's
+ * video (image-to-video chaining via `prevShotRef`) — it resolves at the engine,
+ * not from the library, like a Shot's own start/end frame.
+ */
+const RESERVED_MENTIONS = new Set<string>(["video"]);
+
+/**
  * Extract the engine ref `@names` mentioned in a text, in first-seen order,
  * de-duplicated, WITHOUT the leading `@`. Matches the registered-name charset
  * (lowercase letters, digits, underscore — hyphens are not allowed by the
@@ -133,6 +141,7 @@ export function findUnregisteredMentions(
   const unknown = new Set<string>();
   for (const text of texts) {
     for (const name of extractRefMentions(text)) {
+      if (RESERVED_MENTIONS.has(name)) continue;
       if (!known.has(name)) unknown.add(name);
     }
   }
