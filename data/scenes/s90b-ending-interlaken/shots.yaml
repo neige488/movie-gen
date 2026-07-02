@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "와이드 · 고정, 미세 드리프트 · @p1_l_interlakenbench_hilllakeview 인터라켄, 호수가 내려다보이는 언덕길, 성인이 된 @p1_c_jihoon_adulttraveler_full 이 통화를 마친다 · 지훈 “응, 엄마. 나 괜찮아. …진짜 괜찮다니까.” · voice: @p1_c_jihoon_voice"
+    prompt: "와이드 · fixed camera, 미세 드리프트 · @p1_l_interlakenbench_hilllakeview 인터라켄, 호수가 내려다보이는 풀 언덕길 — 성인이 된 @p1_c_jihoon_adulttraveler_full 이 화면 왼쪽 아래 언덕길에 서서 몸을 화면 오른쪽의 호수와 설산 쪽으로 반쯤 튼 채 전화를 귀에 대고 있다, 언덕길은 화면 오른쪽 위로 이어지고 프레임은 지훈과 그 너머 호수·설산으로 채워진다 · 조명: clear alpine daylight from camera-left · 지훈이 말한다: “응, 엄마. 나 괜찮아. …진짜 괜찮다니까.” · 연기: 통화를 마치며 숨을 한 번 길게 내쉬고 전화기를 든 손을 천천히 내린다 · voice: @p1_c_jihoon_voice"
     duration: 8
     screenplayHash: a664936c99ce591420fda15ad1ce3e218735421e55bc95470f763a03ffd94817
     characterRefs:
@@ -12,7 +12,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄 트래킹 · 핸드헬드 팔로우 · 전화를 끊고 @p1_c_jihoon_adulttraveler_full 이 언덕을 오른다, 저 위 낡은 나무 벤치 — 서울의 그 벤치와 닮았다, 벤치에 등 중간까지 내려오는 하나로 땋은 긴 머리의 @p1_c_sua_travelerbraid_full 가 여행자 옷으로 앉아 있다 · 지훈 혼잣말처럼 “…여기 오고 싶다 그랬잖아.”"
+    prompt: "@video에서 이어진 컷. 미디엄 · handheld tracking shot(등 뒤에서 따라간다) · @p1_c_jihoon_adulttraveler_full 이 전화기를 주머니에 넣고 언덕길을 화면 왼쪽 아래에서 오른쪽 위로 오른다 · 길이 끝나는 화면 오른쪽 위 언덕마루에 @p1_l_interlakenbench_hilllakeview 나무 벤치가 호수를 향해 놓여 있고, 벤치에는 @p1_c_sua_travelerbraid_full 가 카메라에 등을 보인 채 앉아 있다 — 뒷모습만 보이고 얼굴은 프레임에 담기지 않는다 · 조명: clear alpine daylight from camera-left · 지훈이 걸음을 옮기며 혼잣말한다: “…여기 오고 싶다 그랬잖아.” · 연기: 벤치의 뒷모습을 발견한 순간 걸음이 반 박자 느려지고 시선이 그 자리에 고정된다 · voice: @p1_c_jihoon_voice"
     duration: 9
     screenplayHash: 8f2c64d2908b851d3d5b95d285b0e6b242872f922272796755f6ca3af0ec9f08
     prevShotRef: "01"
@@ -27,7 +27,10 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄→클로즈업 · 고정, 천천히 푸시인 · @p1_c_jihoon_adulttraveler_full 이 벤치로 다가가고 @p1_c_sua_travelerbraid_face 가 고개를 돌린다 — 컷 · @p1_l_interlakenbench_hilllakeview 호수, 설산, 바람"
+    prompt: |-
+      @video에서 이어진 컷.
+      Cut #1 — 미디엄 · slow push-in · 카메라는 벤치 등받이 뒤편 — @p1_c_jihoon_adulttraveler_full 이 화면 왼쪽에서 벤치 왼쪽 옆으로 다가와 멈춰 서고, 벤치에 앉은 @p1_c_sua_travelerbraid_full 가 인기척에 고개를 화면 왼쪽으로 천천히 돌리기 시작한다 — 얼굴이 드러나기 직전에 하드 컷, 얼굴은 끝까지 프레임 밖에 머문다 · 조명: clear alpine daylight from camera-left · 연기: 지훈 — 멈춰 서서 마른침을 삼키고 손끝이 옷자락을 살짝 쥔다
+      Cut #2 — 와이드 · fixed camera · @p1_l_interlakenbench_hilllakeview 청록빛 호수와 만년설 봉우리, 바람에 언덕의 풀이 일제히 눕는다 — 인물 없는 풍경
     duration: 10
     screenplayHash: d248c43ee87b62345f0c61a0d9a6855c23b87afb0efe0ab81dad71cd4381ee6e
     prevShotRef: "02"

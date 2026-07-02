@@ -1,6 +1,10 @@
 shots:
   - id: "01"
-    prompt: "미디엄 투샷 · 고정 · @p1_l_crosswalk_signalred 횡단보도 빨간불, @p1_c_jihoon_onlyhoodie_full 이 습관처럼 앞으로 나가려다 멈춘다 · 수아 “빨간불엔?” 지훈 “멈춘다.” 수아 “차가 안 와도?” 지훈 “멈춘다.” 수아 “이제 잘하네.” 지훈 “네가 선생님이냐?” 수아 “응. 넌 학생.” · @p1_c_sua_accidentday_face 와 마주 보며 지훈이 피식 웃는다 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice"
+    prompt: |-
+      Cut #1 — 인서트 클로즈업 · fixed camera · @p1_l_crosswalk_signalred 길 건너편 보행 신호등의 빨간불 · 조명: soft midday sunlight from camera-right
+      Cut #2 — 미디엄 투샷(차도 쪽에서 보도의 두 사람을 향해) · fixed camera · 횡단보도 앞 보도 끝에 @p1_c_jihoon_onlyhoodie_full 이 화면 오른쪽, @p1_c_sua_accidentday_full 가 화면 왼쪽에 나란히 서서 길 건너편(카메라 쪽)을 향해 있다, 지훈이 습관처럼 한 발을 차도로 내딛으려다 스스로 멈추고 발을 보도 안으로 거둔다 · 수아가 앞을 본 채 말한다: “빨간불엔?” 지훈이 답한다: “멈춘다.” 수아: “차가 안 와도?” 지훈: “멈춘다.”
+      Cut #3 — 클로즈업 · fixed camera · @p1_c_sua_accidentday_face 가 고개를 화면 오른쪽 지훈 쪽으로 돌리며 말한다: “이제 잘하네.”
+      Cut #4 — 미디엄 투샷(같은 축) · slow push-in · @p1_c_jihoon_onlyhoodie_full(얼굴 일관성 위해 @p1_c_jihoon_onlyhoodie_face 동반) 이 수아 쪽으로 몸을 틀어 마주 보고 말한다: “네가 선생님이냐?” @p1_c_sua_accidentday_full 가 답한다: “응. 넌 학생.” · 연기: 지훈 — 피식 웃음이 새어 나와 고개를 살짝 젓는다, 수아 — 눈꼬리가 휘는 장난스러운 표정 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice
     duration: 14
     screenplayHash: 3a0b7383900a1c55c043f3e69600d9eb620525cbb29f09e5419a3b556ded72a4
     characterRefs:

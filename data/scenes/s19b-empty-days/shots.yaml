@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 고정, 미세 드리프트 · 밤 @p1_l_jihoonhome_bedroom 책상 스탠드 아래에서 @p1_c_jihoon_onlyhoodie_full 이 혼자 문제집을 푼다, 무표정하게 펜을 움직인다, 곁에 아무도 없다 · 연기: 감정을 누른 기계적 일상"
+    prompt: |-
+      미디엄 · fixed camera, subtle drift · 밤, @p1_l_jihoonhome_bedroom 방의 책상 앞에 @p1_c_jihoon_onlyhoodie_full 이 혼자 앉아 있다, 몸은 화면 왼쪽의 책상 위 문제집을 향해 숙이고 얼굴은 비스듬히 카메라 쪽에 보인다 · single warm desk lamp from screen-left, dark room beyond · 무표정하게 펜만 일정한 속도로 움직인다, 방 안에 다른 사람은 없다 · 연기: 눈은 문제집에 고정, 어깨는 가라앉아 있다
     duration: 6
     screenplayHash: d684aa1f2ea39f106f9f35dd1ab54f3c6eea4de630ed50f61e5a10c2bb61b019
     characterRefs:
@@ -12,7 +13,8 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄 → 와이드 · 고정 · @p1_l_academy_lectureroom 학원 강의실, 빼곡한 익명 학생들(레퍼런스와 다른 얼굴) 사이에서 @p1_c_jihoon_hoodiewithbag_full 혼자, 칠판을 보는 둥 마는 둥 눈빛이 비어 있다 · 연기: 군중 속 고립, 무기력"
+    prompt: |-
+      @video에서 이어진 컷. 와이드 → 미디엄 · slow push-in · @p1_l_academy_lectureroom 학원 강의실, 화이트보드 쪽에서 바라본 구도로 빼곡한 익명 학생들(레퍼런스와 다른 얼굴)이 카메라 방향을 향해 줄지어 앉아 필기하고, 그 가운데 줄 중간에 @p1_c_jihoon_hoodiewithbag_full 이 앉아 있다 · flat fluorescent from above · 주변 학생들은 고개를 숙여 필기하는데 지훈만 펜을 쥔 채 멈춰 있고 시선이 화이트보드 아래 허공으로 미끄러진다 · 연기: 눈꺼풀이 느리게 깜빡이고 초점이 풀려 있다
     duration: 6
     screenplayHash: a7d1e4dd113893e29d1fabb562ee7761c325777596583a8f752db474ef0ba34b
     prevShotRef: "01"
@@ -25,7 +27,8 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄 투샷 구도(맞은편 빈자리 강조) · 고정 · 밤 @p1_l_conveniencestore_windowseat 편의점 창가, @p1_c_jihoon_onlyhoodie_full 이 혼자 컵라면을 먹는다, 맞은편 자리는 비어 있다(한때 둘이 앉던 그 자리), 창밖으로 사람들이 지나간다 · 연기: 습관처럼 혼자, 비어 버린 맞은편"
+    prompt: |-
+      @video에서 이어진 컷. 미디엄 투샷 구도 · fixed camera · 밤, @p1_l_conveniencestore_windowseat 창가 자리에 @p1_c_jihoon_onlyhoodie_full 이 화면 오른쪽 자리에 앉아 컵라면을 먹고, 화면 왼쪽 맞은편 자리는 의자만 빈 채 프레임 안에 함께 담긴다(한때 둘이 앉던 그 자리), 뒤쪽 통유리창 밖으로 행인들이 지나간다 · bright store light from above, dark street outside the glass · 연기: 시선이 한 번 빈 맞은편에 머물렀다가 다시 컵라면으로 내려온다, 젓가락질이 습관처럼 느리다
     duration: 6
     screenplayHash: 702eb2e7a43c949cba4d95d2a28dd95d14c5448fe477987987e5e8aa743dc9e5
     prevShotRef: "02"
@@ -38,7 +41,8 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "@video에서 이어진 컷. 와이드 · 핸드헬드 팔로우 · @p1_l_sidestreet_schoolroute 하굣길, 무리 지어 떠드는 익명의 또래들(레퍼런스와 다른 얼굴) 사이로 @p1_c_jihoon_uniform_full 이 혼자 걷는다 · 연기: 세상과 분리된 혼자, 시간이 흘러가는 감각"
+    prompt: |-
+      @video에서 이어진 컷. 와이드 · slow tracking shot, 지훈과 나란히 이동 · 한낮, @p1_l_sidestreet_schoolroute 이면도로 보도를 @p1_c_jihoon_uniform_full 이 화면 왼쪽에서 오른쪽으로 혼자 걷고, 무리 지어 떠드는 익명의 또래들(레퍼런스와 다른 얼굴)이 같은 방향으로 그를 앞질러 간다 · flat midday daylight · 연기: 또래들이 스쳐 가도 고개를 들지 않는다, 일정한 보폭, 가방끈을 쥔 손
     duration: 6
     screenplayHash: 6214c027d366cee5cb86511c6c3e45fd8850a00d42c903e8c7552091a6bb874d
     prevShotRef: "03"

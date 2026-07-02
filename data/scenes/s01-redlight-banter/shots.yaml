@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "@video에서 이어진 컷(직전 s00a, 차도로 발 내딛던 순간에서 분기). 미디엄 · 핸드헬드 휩 팬 · 차도로 막 들어서던 @p1_c_jihoon_hoodiewithbag_full 이 수아의 아는 얼굴(@p1_c_sua_accidentday_face)을 알아채고 나가던 몸을 급하게 틀어 @p1_c_sua_accidentday_full 쪽으로 방향을 바꾼다(얼굴 일관성 위해 @p1_c_jihoon_hoodiewithbag_face 동반) · 연기: 충동적 방향 전환, 수아 평온·무심"
+    prompt: |-
+      @video에서 이어진 컷(직전 s00a, 차도로 발 내딛던 순간에서 분기). 미디엄(등 뒤 3/4 측면, 길 건너편이 화면 안쪽) · handheld(인물을 프레임에 유지) · @p1_l_crosswalk_daywide 횡단보도 앞 — @p1_c_sua_accidentday_full 는 보도 끝 화면 오른쪽에서 길 건너편(화면 안쪽)을 향해 선 채 책에 시선을 두고 있다. 차도로 막 발을 내딛던 @p1_c_jihoon_hoodiewithbag_full 이 화면 오른쪽 수아의 옆얼굴(@p1_c_sua_accidentday_face)을 알아보고, 내딛던 발을 도로 거둬 몸을 화면 오른쪽으로 틀어 수아의 왼쪽 옆(화면 왼쪽)에 다가선다(얼굴 일관성 위해 @p1_c_jihoon_hoodiewithbag_face 동반) · 조명: soft midday sunlight from camera-left · 연기: 지훈 — 아는 얼굴을 알아본 순간의 충동적인 방향 전환, 수아 — 평온한 무심
     duration: 6
     screenplayHash: e386256214eaac74195f874cfd762685ebd5612b5206d8cf3c17b0c64d7744d6
     characterRefs:
@@ -17,8 +18,11 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 미디엄 투샷, 간헐 클로즈업 · 고정+미세 드리프트 · @p1_c_jihoon_hoodiewithbag_full 이 @p1_c_sua_accidentday_full 옆에 와 서고 수아가 책에서 눈을 든다, 둘의 티격태격 · 수아 “너 또 빨간불에 건너려 했지?” 지훈 “아니거든.” 수아 “거짓말.” 지훈 “넌 어떻게 맨날 알아?” 수아 “네가 맨날 그러니까.” · 연기: 지훈 억울한 웃음, 수아 짓궂은 평온
-      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_l_crosswalk_daywide 둘 앞 차도를 스쳐 지나는 자동차 바퀴가 아스팔트 위를 굴러간다 (나중에 수아를 칠 차, 첫 관람엔 평범한 차) · voice: @p1_c_jihoon_voice, @p1_c_sua_voice
+      Cut #1 — 미디엄 투샷(등 뒤 3/4 측면, 길 건너편이 화면 안쪽) · fixed camera, 미세 드리프트 · @p1_l_crosswalk_daywide 를 배경으로 @p1_c_jihoon_hoodiewithbag_full 이 화면 왼쪽, @p1_c_sua_accidentday_full 가 화면 오른쪽에 나란히 서서 길 건너편을 향한다. 수아가 책에서 눈을 들어 고개를 화면 왼쪽 지훈 쪽으로 돌리며 말한다: "너 또 빨간불에 건너려 했지?" 지훈이 정면(길 건너편)을 본 채 답한다: "아니거든." · 조명: soft midday sunlight from camera-left
+      Cut #2 — 클로즈업 · fixed camera · @p1_c_sua_accidentday_face 가 화면 왼쪽(지훈 쪽)을 보며 말한다: "거짓말." · 연기: 확신에 찬 장난기, 입꼬리만 살짝 올라간다
+      Cut #3 — 리버스 클로즈업 · fixed camera · @p1_c_jihoon_hoodiewithbag_face 가 화면 오른쪽(수아 쪽)을 보며 말한다: "넌 어떻게 맨날 알아?" · 연기: 억울해서 살짝 벌어지는 입
+      Cut #4 — 미디엄 투샷(등 뒤 3/4 측면) · fixed camera · @p1_c_sua_accidentday_full(화면 오른쪽)가 화면 왼쪽의 @p1_c_jihoon_hoodiewithbag_full 을 향해 말한다: "네가 맨날 그러니까." 지훈이 억울한 듯 웃고, 그 사이 차 한 대가 둘 앞 차도를 화면 왼쪽에서 오른쪽으로 스쳐 지나간다 (나중에 수아를 칠 차, 첫 관람엔 평범한 차)
+      Cut #5 — 인서트(low angle 클로즈업) · fixed camera · 방금 지나간 자동차의 바퀴가 아스팔트 위를 화면 왼쪽에서 오른쪽으로 굴러간다 · voice: @p1_c_jihoon_voice, @p1_c_sua_voice
     duration: 15
     screenplayHash: c3bc74d99fd3e5fbcf82dfa0f6a3ae6797ffd5f2cf7de1a41e50c1b7d8523804
     prevShotRef: "01"
@@ -35,8 +39,8 @@ shots:
   - id: "03"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 인서트, 클로즈업 · 고정 · @p1_l_crosswalk_signalred 신호등의 빨간불이 꺼지고 초록불이 켜진다 · 빨강→초록 모티프
-      Cut #2 — 와이드 풀샷 · 팔로우 · 신호가 초록으로 바뀌고 @p1_c_jihoon_hoodiewithbag_full 이 가방끈을 추켜올리며 “나 먼저 간다, 나중에 보자” 하고 먼저 뛰어 건넌다, @p1_c_sua_accidentday_full 는 그 자리에 남아 멀어지는 그를 본다 · 연기: 따뜻한 오후, 수아 잔잔한 응시 · voice: @p1_c_jihoon_voice
+      Cut #1 — 인서트 클로즈업 · fixed camera · @p1_l_crosswalk_signalred 보행 신호등의 빨간불이 꺼지고 초록불이 켜진다 · 조명: soft midday sunlight from camera-left
+      Cut #2 — 와이드 풀샷(이쪽 보도에서 길 건너편을 정면으로) · fixed camera · @p1_l_crosswalk_daywide 횡단보도, @p1_c_jihoon_hoodiewithbag_full(화면 왼쪽)이 가방끈을 추켜올리며 말한다: "나 먼저 간다. 나중에 보자." 그러곤 카메라에서 멀어지는 방향으로 횡단보도를 뛰어 건너 길 건너편으로 작아진다. @p1_c_sua_accidentday_full(화면 오른쪽)는 이쪽 보도에 그대로 남아 멀어지는 지훈의 등을 바라본다 · 연기: 수아 — 잔잔한 응시, 따뜻한 오후의 느긋함 · voice: @p1_c_jihoon_voice
     duration: 10
     screenplayHash: 664077c77eccb9753d6e3bf3ee896fd01972301a17279eca8a19f4d31200a72c
     prevShotRef: "02"

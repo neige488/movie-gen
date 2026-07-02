@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      Cut #1 — 인서트 · 고정 · @p1_l_academy_lectureroom 천장의 형광등이 차갑게 윙윙대고, 화이트보드엔 지우다 만 마커 자국 · 차갑고 건조한 현실의 공기
-      Cut #2 — 와이드, 수아 POV(창가에서 출입문 쪽) · 고정 · @p1_l_academy_lectureroom 앞에서 익명의 선생님이 강의 중이고 익명의 학생들이 드문드문 책상에 앉아 듣고 있다, 문이 열리고 @p1_c_jihoon_hoodiewithbag_full 이 굳은 얼굴로 늦게 들어온다, 사람들이 돌아본다, 그는 잠깐 둘러보다 급히 자리로 간다 · 연기: 지훈 위축·긴장
+      Cut #1 — 인서트 · slow tilt down · @p1_l_academy_lectureroom 천장의 형광등이 차갑게 윙윙대고, 카메라가 천천히 내려와 지우다 만 마커 자국이 남은 화이트보드에 멈춘다 · 조명: cold fluorescent light from above
+      Cut #2 — 와이드(수아 POV — 교실 뒤 창가 자리의 앉은 눈높이, 시선의 주인은 프레임에 보이지 않는다) · fixed camera · @p1_l_academy_lectureroom 화면 안쪽 교실 앞에서 익명의 선생님이 화이트보드 앞에 서서 강의하고, 익명의 학생들이 드문드문 등을 보이고 앉아 있다. 앞쪽 화면 왼쪽의 출입문이 열리고 @p1_c_jihoon_hoodiewithbag_full 이 굳은 얼굴로 늦게 들어선다. 선생님과 학생들의 고개가 문 쪽(화면 왼쪽)으로 돌아간다. 지훈은 잠깐 강의실을 둘러보고 화면 오른쪽 중간 줄의 빈 책상으로 서둘러 가 앉는다 · 연기: 지훈 — 움츠러든 어깨, 바닥에 떨군 시선
     duration: 13
     screenplayHash: 74126c90d63d03f2e0d4e76e59125630e93b89548f6ff266bbbb805c2e426c58
     characterRefs:
@@ -16,8 +16,8 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 미디엄 · 고정 · @p1_c_jihoon_hoodiewithbag_full 이 천천히 책상에 엎드리고 어깨가 미세하게 떨린다, 아무도 다가오지 않는다 · 형광등 아래 시간이 멈춘 듯 고요
-      Cut #2 — 클로즈업, 수아 POV · 고정 · 엎드린 지훈을 가만히 바라보는 시선 — 낯선 아이를 처음 눈에 담는 조용한 시선, 누구의 시선인지는 보이지 않는다
+      Cut #1 — 미디엄(통로 쪽 측면) · fixed camera · 책상 앞의 @p1_c_jihoon_hoodiewithbag_full 이 천천히 팔을 포개고 책상에 엎드린다. 어깨가 미세하게 떨린다. 주변 학생들은 등을 보인 채 강의만 듣고, 아무도 다가오지 않는다 · 조명: cold fluorescent light from above · 형광등 아래 시간이 멈춘 듯 고요한 공기
+      Cut #2 — 클로즈업(수아 POV — 같은 창가 자리, 시선의 주인은 프레임에 보이지 않는다) · fixed camera · 화면 오른쪽 대각선 앞에 엎드린 @p1_c_jihoon_hoodiewithbag_full 의 등과 미세하게 떨리는 어깨에 프레임이 오래 머문다 · 낯선 아이를 처음 눈에 담는 조용한 시선
     duration: 11
     screenplayHash: abe37936a122e867472cb9ce8fefa24b8746163c11991f7eb7b298d3b1af0114
     prevShotRef: "01"

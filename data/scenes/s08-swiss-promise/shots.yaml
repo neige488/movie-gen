@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      Cut #1 — 미디엄 투샷 · 고정, 미세 드리프트 · 노을 @p1_l_hillbench_sunset, @p1_c_sua_accidentday_full 가 @p1_c_jihoon_onlyhoodie_full 의 무릎을 베고 누워 읽던 @p1_p_poetrybook_cover 를 가슴에 덮는다 · 수아 “있잖아. 나 가고 싶은 데 생겼다?” 지훈 “어딘데.” 수아 “호수가 있고 뒤에 눈 쌓인 산이 있어. 물이 무슨 물감 풀어놓은 것 같애.” 지훈 “그런 데가 어딨어.” 수아 “있대, 진짜. 책에서 봤어.”
-      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_c_sua_accidentday_full 가 펼쳐 보이는 @p1_p_poetrybook_cover 책 속 한 페이지 — 눈 쌓인 산 아래 물감을 풀어놓은 듯한 푸른 호수 사진 · 스위스 모티프(오프닝·엔딩과 라임) · voice: @p1_c_sua_voice, @p1_c_jihoon_voice
+      Cut #1 — 미디엄 투샷 · fixed camera, 미세 드리프트 · @p1_l_hillbench_sunset 벤치 정면 — @p1_c_jihoon_onlyhoodie_full(얼굴 일관성 위해 @p1_c_jihoon_onlyhoodie_face 동반) 이 벤치 화면 오른쪽에 카메라를 향해 앉고, @p1_c_sua_accidentday_full(얼굴 일관성 위해 @p1_c_sua_accidentday_face 동반) 는 지훈의 무릎을 베고 머리를 화면 오른쪽에 둔 채 다리를 화면 왼쪽으로 뻗어 하늘을 보고 누워, 읽던 @p1_p_poetrybook_cover 를 가슴에 덮는다, 두 사람 등 뒤로 노을 하늘과 불 켜지는 도시 · warm sunset backlight from behind the bench · 수아가 (책을 가슴에 덮으며) 말한다: "있잖아. 나 가고 싶은 데 생겼다?" 지훈이 말한다: "어딘데." 수아가 말한다: "호수가 있고, 뒤에 눈 쌓인 산이 있어. 물이 무슨… 물감 풀어놓은 것 같애." 지훈이 말한다: "그런 데가 어딨어." 수아가 (웃으며) 말한다: "있대, 진짜. 책에서 봤어." · 연기: 수아 들뜬 말투로 허공에 손가락을 그리고, 지훈은 수아 얼굴을 내려다보며 옅은 미소
+      Cut #2 — 인서트 클로즈업 · fixed camera · @p1_c_sua_accidentday_full 가 누운 채 @p1_p_poetrybook_cover 를 두 손으로 들어 카메라 쪽으로 펼쳐 보인다 — 펼친 페이지에 눈 쌓인 산 아래 물감을 풀어놓은 듯한 푸른 호수 사진 · 연기: 수아의 손끝이 호수 사진을 짚는다 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice
     duration: 15
     screenplayHash: 4ad68b12341ff3f4dd9a676b700c10cbab84c887309e182c8c64d31f7222c55c
     characterRefs:
@@ -19,8 +19,8 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 클로즈업 투샷 · 고정 · 지훈 “…가자 그럼. 나중에.” @p1_c_sua_accidentday_face 가 고개를 젖혀 올려다보며 “약속한 거다?” @p1_c_jihoon_onlyhoodie_face “어. 약속.” · 연기: 노을빛 약속
-      Cut #2 — 인서트, 클로즈업 · 고정 · 노을 진 벤치 위에서 @p1_c_sua_accidentday_full 의 손과 @p1_c_jihoon_onlyhoodie_full 의 손이 닿을 듯 가까이 놓여 있다 · 손 모티프(나중에 빼지 못하는 손과 라임) · voice: @p1_c_jihoon_voice, @p1_c_sua_voice
+      Cut #1 — 클로즈업 투샷 · fixed camera · 직전과 같은 배치 — @p1_c_jihoon_onlyhoodie_face 얼굴이 화면 위쪽에서 아래를 내려다보고, 무릎을 벤 @p1_c_sua_accidentday_face 얼굴이 화면 아래쪽에서 지훈을 올려다본다 · warm sunset backlight from behind the bench · 지훈이 말한다: "…가자 그럼. 나중에." 수아가 (고개를 젖혀 올려다보며) 말한다: "약속한 거다?" 지훈이 말한다: "어. 약속." · 연기: 서로 눈을 맞추고, 수아 입꼬리가 올라가고 지훈은 천천히 고개를 끄덕인다
+      Cut #2 — 인서트 클로즈업 · fixed camera · 벤치 좌판 위 — @p1_c_sua_accidentday_full 의 손과 @p1_c_jihoon_onlyhoodie_full 의 손이 닿을 듯 가까이 나란히 놓여 있다, 손끝만 미세하게 움직인다 · voice: @p1_c_jihoon_voice, @p1_c_sua_voice
     duration: 11
     screenplayHash: 9cc4565a0288eeaa35bac3613811ddc39e10221df541166292d5bf73b03c8ba5
     prevShotRef: "01"

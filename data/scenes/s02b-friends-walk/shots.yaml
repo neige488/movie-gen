@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      Cut #1 — 와이드 그룹샷 · 고정, 미세 드리프트 · @p1_l_schoolground_field 방과 후 운동장을 가로지르는 @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 시시콜콜 떠들고 그 사이 @p1_c_jihoon_uniform_full 은 끼지 못하고 굳은 얼굴로 듣기만 한다 · 승호 “어제 게임 다 이겨놓고 막판에 팀이 던져서 역전패” 도현 “너 또 혼자 네 명한테 들어갔지?” 승호 “들어가면 따라올 줄 알았다고” 도현 “누가 그걸 따라가냐, 그러니까 만년 골드지” · 연기: 친구들 깔깔, 지훈만 웃지 않고 대화가 멀게 들리는 얼굴
-      Cut #2 — 인서트, 클로즈업 · 고정 · @p1_l_schoolground_field 운동장 흙바닥을 걷는 @p1_c_jihoon_uniform_full 의 발끝, 친구들의 웃음소리가 점점 멀어지는 듯한 정서 · 고립감 · voice: @p1_c_seungho_voice, @p1_c_dohyun_voice
+      Cut #1 — 와이드 그룹샷 · fixed camera, subtle drift · soft afternoon sunlight from camera-left · @p1_l_schoolground_field 방과 후 운동장, @p1_c_seungho_uniform_full 가 화면 왼쪽·@p1_c_dohyun_uniform_full 가 가운데 나란히 앞장서고 @p1_c_jihoon_uniform_full 은 화면 오른쪽 반 걸음 뒤에서, 셋이 화면 왼쪽에서 오른쪽으로 운동장을 가로질러 걷는다 · 승호가 말한다: “어제 게임 다 이겨놓고 막판에 팀이 던져서 역전패” 도현이 웃으며 말한다: “너 또 혼자 네 명한테 들어갔지?” 승호가 말한다: “들어가면 따라올 줄 알았다고” 도현이 말한다: “누가 그걸 따라가냐, 그러니까 만년 골드지” · 연기: 승호·도현은 서로 어깨를 치며 깔깔대고, 지훈은 웃지 않고 시선을 바닥에 둔 채 걷는다
+      Cut #2 — 인서트, 클로즈업 · fixed camera · @p1_l_schoolground_field 운동장 흙바닥, @p1_c_jihoon_uniform_full 의 발이 화면 왼쪽에서 오른쪽으로 걷는다, 발끝이 흙을 스치고 보폭이 느리다 · voice: @p1_c_seungho_voice, @p1_c_dohyun_voice
     duration: 15
     screenplayHash: aab9596b123b9b4e4f80c5e175febc193edabaf810ed610e317fa5ed9fe5297a
     characterRefs:
@@ -18,7 +18,8 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄→와이드 (지훈 시점 발견 샷) · 고정 · 걷던 @p1_c_jihoon_uniform_full 의 시선이 멎는다, 멀찍이 @p1_l_schoolground_standbench 운동장 가장자리 스탠드 벤치에 @p1_c_sua_accidentday_full 가 혼자 앉아 @p1_p_poetrybook_cover 를 읽고 있다(원경으로 작게), “나 먼저 가볼게” 하고 지훈이 걸음을 떼자 @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 어리둥절 서로를 본다 · 연기: 지훈 무언가에 끌리듯, 친구들 어리둥절"
+    prompt: |-
+      @video에서 이어진 컷. 미디엄→와이드 · slow dolly out · soft afternoon sunlight from camera-left · 걷던 @p1_c_jihoon_uniform_full 이 화면 오른쪽 전방을 보다 걸음을 멈춘다 · 화면 오른쪽 원경, @p1_l_schoolground_standbench 운동장 가장자리 스탠드 벤치에 @p1_c_sua_accidentday_full 가 운동장을 향해 혼자 앉아 @p1_p_poetrybook_cover 를 읽고 있다(원경으로 작게) · 지훈이 시선을 벤치에 둔 채 말한다: “나 먼저 가볼게” · 화면 왼쪽의 @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 는 멈춰 서서 서로를 본다 · 연기: 지훈은 몸이 먼저 벤치 쪽으로 반쯤 돌아 있고, 승호·도현은 눈썹을 올린 채 어리둥절 · voice: @p1_c_jihoon_voice
     duration: 6
     screenplayHash: e81c04d4a999ed8b85eabac88184ecab21838bf10ece939cabae93d6474b67d4
     prevShotRef: "01"
@@ -38,7 +39,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 팔로우 → 벤치로 다가가며 클로즈업 · 핸드헬드 · @p1_c_jihoon_uniform_full 이 무리에서 빠져나가 @p1_l_schoolground_standbench 운동장을 가로질러 수아 쪽으로 걸어가다 걸음이 점점 빨라진다, 다가갈수록 스탠드 벤치의 @p1_c_sua_accidentday_full 가 점점 커지며 @p1_c_sua_accidentday_face 로 클로즈업된다 — 바람에 흩날리는 나뭇잎 사이로 햇살을 받은 옆모습 · 연기: 수아 평온·무심, 지훈 끌리듯"
+    prompt: |-
+      @video에서 이어진 컷. 팔로우 미디엄→클로즈업 · handheld tracking shot, 지훈을 뒤따라 · soft afternoon sunlight from camera-left · @p1_c_jihoon_uniform_full 이 무리에서 빠져나와 @p1_l_schoolground_standbench 운동장을 화면 왼쪽에서 오른쪽으로 가로질러 걷는다, 보폭이 점점 넓어진다 · 전방 스탠드 벤치에 운동장을 향해 앉은 @p1_c_sua_accidentday_full 가 프레임 안에서 점점 커지고, 벤치 가까이에서 햇살을 받은 @p1_c_sua_accidentday_face 의 옆모습이 화면 오른쪽에 크게 잡힌다, 바람에 나뭇잎이 흩날린다 · 연기: 수아는 고개를 책에 둔 채 평온, 지훈은 시선이 벤치에 고정
     duration: 8
     screenplayHash: 0bb74fcee9b00fc8b7c8f129aef5a52283f7531c1b9504ccfcf1ad16c5e91e6f
     prevShotRef: "02"

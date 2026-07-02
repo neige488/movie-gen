@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      Cut #1 — 인서트, 클로즈업 · 고정 · @p1_l_busstop_dusk 젖은 아스팔트 위 빗물 웅덩이에 노을이 잠겨 붉게 일렁인다 · 반영·노을의 결
-      Cut #2 — 와이드 · 고정 · 비가 그친 젖은 거리에 노을, 버스가 들어오고 @p1_c_sua_accidentday_full 가 버스에 오르려 한다
+      Cut #1 — 인서트, 클로즈업 · fixed camera · warm low sunset light from camera-left · 비가 갓 그친 젖은 아스팔트의 빗물 웅덩이에 노을이 잠겨 붉게 일렁이고, 마지막 낙수 한 방울이 떨어져 잔파문이 번진다 · 반영·노을의 결
+      Cut #2 — 와이드 · fixed camera · @p1_l_busstop_dusk 유리 셸터가 화면 오른쪽 보도에 서 있고, 차도는 화면 왼쪽, 버스가 화면 왼쪽에서 들어와 셸터 앞 연석에 멈춘다 · @p1_c_sua_accidentday_full 가 셸터에서 나와 승차문 앞에 서서 오르려 하고, @p1_c_jihoon_onlyhoodie_full 은 셸터 옆 화면 오른쪽에 몇 걸음 떨어져 서서 그녀의 뒷모습을 본다
     duration: 9
     screenplayHash: 58794ea348b890bec15ced852655e374f9c4ee86f7f89d8244b4af6f91766003
     characterRefs:
@@ -18,8 +18,8 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 미디엄 투샷 · 고정, 미세 푸시인 · @p1_c_jihoon_onlyhoodie_full 이 “수아야!” 부르고, 한 발을 디딘 채 뒤돌아보는 @p1_c_sua_accidentday_face · 지훈 “혹시… 이번 주말에 뭐 해?” · 수아가 환하게 웃는다 · 연기: 설렘
-      Cut #2 — 인서트, 클로즈업 · 버스 차창 유리에 비친 @p1_c_sua_accidentday_face 의 환한 미소 · 반영(환상의 표식), 노을빛 · voice: @p1_c_jihoon_voice
+      Cut #1 — 미디엄 투샷 · slow push-in · warm low sunset light from camera-left · 화면 오른쪽 @p1_c_jihoon_onlyhoodie_full 이 버스 쪽으로 한 걸음 나서며 외친다: “수아야!” 화면 왼쪽 버스 승차구에 한 발을 디딘 @p1_c_sua_accidentday_full(얼굴 일관성 위해 @p1_c_sua_accidentday_face 동반)가 화면 오른쪽 지훈 쪽으로 고개를 돌려 그를 본다 · 지훈이 말한다: “혹시… 이번 주말에 뭐 해?” 수아가 환하게 웃는다 · 연기: 지훈은 내린 손을 쥐었다 펴고, 수아는 눈이 휘어지게 웃는다
+      Cut #2 — 인서트, 클로즈업 · fixed camera · 버스 차창 유리에 비친 @p1_c_sua_accidentday_face 의 환한 미소, 유리 위로 노을빛 반사가 겹쳐 어린다 · 반영(환상의 표식) · voice: @p1_c_jihoon_voice
     duration: 13
     screenplayHash: 1b422c8d3f500e6c9ca2235a1b907992f6d8dc79635068e6d9d785ffb95831e7
     prevShotRef: "01"

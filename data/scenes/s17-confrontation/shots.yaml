@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "미디엄→클로즈업 · 핸드헬드 · 점심시간 @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 책상에 엎드려 자다 깬다 — 책상 위 @p1_p_poetrybook_cover 가 없다, 서랍을 뒤지고 가방을 쏟는다, 없다 · 연기: 점점 다급"
+    prompt: |-
+      미디엄 · handheld, slow push-in · soft window daylight from camera-left · 점심시간 @p1_l_classroom_midday 교실, 창가 줄 자기 책상에 엎드려 자던 @p1_c_jihoon_uniform_full 이 깨어 상체를 든다 — 책상 위에 @p1_p_poetrybook_cover 가 없다. 서랍을 뒤지고 가방을 책상 위에 거꾸로 쏟는다 · 연기: 눈을 비비다 굳고, 뒤지는 손이 점점 커지고 호흡이 짧아진다
     duration: 7
     screenplayHash: 3b52e6cbef6c21179e60e37523008dd748635f0c41fe9973a56cb48f1904e075
     characterRefs:
@@ -13,7 +14,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄 투샷 · 핸드헬드 · 교실 뒤쪽, @p1_c_jihoon_uniform_full 이 성큼성큼 걸어가 @p1_c_sua_uniform_full 앞에 선다 · 지훈 “너지. 어디 숨겼어.” 여학생 어리둥절 “…뭐?” 지훈 “말을 해.” 여학생 뒷걸음질 “무슨 말인지 모르겠는데…” 지훈 “꺼져. 다시는 내 앞에 나타나지 마.” · 연기: 지훈 격앙 · voice: @p1_c_jihoon_voice"
+    prompt: |-
+      @video에서 이어진 컷. 미디엄 투샷 · handheld follow, then hold · soft window daylight from camera-left · @p1_c_jihoon_uniform_full 이 화면 왼쪽에서 오른쪽으로 성큼성큼 걸어가 교실 뒤편에 서 있던 @p1_c_sua_uniform_full 앞에 멈춰 선다 — 지훈이 화면 왼쪽에서 오른쪽을 향하고, 여학생이 화면 오른쪽에서 그를 마주 본다 · 지훈이 노려보며 말한다: “너지. 어디 숨겼어.” 여학생이 눈을 크게 뜨며 말한다: “…뭐?” 지훈이 말한다: “말을 해.” 여학생이 화면 오른쪽 뒷벽 쪽으로 반걸음 뒷걸음질 치며 말한다: “무슨 말인지 모르겠는데…” 지훈이 말한다: “꺼져. 다시는 내 앞에 나타나지 마.” · 연기: 지훈 턱에 힘이 들어가고 목소리가 커진다, 여학생 손끝이 옆 책상 모서리를 더듬는다 · voice: @p1_c_jihoon_voice
     duration: 13
     screenplayHash: 3294e65e1d767f5775a65fdd6ba5c822fb0874ea42f3e4a3e6823c9a8040883c
     prevShotRef: "01"
@@ -28,7 +30,8 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄 · 고정 · (별도 클립) @p1_l_classroom_midday 교실 앞쪽, 친구 둘이 굳은 얼굴로 일어선다 · 친구 “야, 너 미쳤어?”"
+    prompt: |-
+      @video에서 이어진 컷. (별도 클립) 미디엄 · fixed camera · soft window daylight from camera-left · @p1_l_classroom_midday 교실 앞쪽, 앞자리에 앉아 있던 친구 둘이 의자를 밀며 일어나 화면 오른쪽 교실 뒤편을 바라본다 · 친구가 그쪽을 향해 말한다: “야, 너 미쳤어?” · 연기: 미간이 굳고 입이 반쯤 벌어진다
     duration: 5
     screenplayHash: 548b4eb482d012579b42de62695ffce337ab72f5a4f13d203c69455d19158572
     prevShotRef: "02"

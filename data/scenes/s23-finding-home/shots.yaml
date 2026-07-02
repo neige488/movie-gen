@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "미디엄 트래킹 · 핸드헬드 팔로우 · 오후, 낯선 동네 골목을 @p1_c_sua_accidentday_full 가 반 발짝 앞서 걷고 @p1_c_jihoon_uniform_full 이 쪽지를 보며 따른다 · 지훈 “이 동네 맞아?” 수아 “이쪽이야.” 지훈 “…와 본 적 있어?” 수아 잠깐 멈칫하더니 돌아보지 않고 “그냥, 알 것 같아.” · voice: @p1_c_jihoon_voice, @p1_c_sua_voice"
+    prompt: |-
+      미디엄 · handheld tracking shot · soft late-afternoon sunlight from camera-left · 오후 낯선 주택가 골목, @p1_c_sua_accidentday_full 가 반 발짝 앞서 화면 왼쪽에서 오른쪽으로 걷고, 그 뒤에서 @p1_c_jihoon_uniform_full 이 손의 쪽지와 골목 앞쪽을 번갈아 보며 같은 방향으로 따라 걷는다. 카메라는 두 사람 옆에서 나란히 따라간다 · 지훈이 쪽지를 보며 말한다: “이 동네 맞아?” 수아가 앞을 본 채 말한다: “이쪽이야.” 지훈이 말한다: “…와 본 적 있어?” 수아가 걸음을 잠깐 멈췄다가, 돌아보지 않고 다시 걸으며 말한다: “그냥, 알 것 같아.” · 연기: 수아 등과 어깨가 한순간 굳었다 풀린다, 지훈은 고개를 갸웃한다 · voice: @p1_c_jihoon_voice, @p1_c_sua_voice
     duration: 11
     screenplayHash: 1acb4b5dae634dcfd151fa08c5694b0132e9df939a17b1061091b4bd92b154ef
     characterRefs:
@@ -14,7 +15,8 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 와이드 · 고정, 로우앵글 · @p1_l_suahome_corridorapartment 오래된 복도식 아파트 앞, @p1_c_sua_accidentday_full 가 멈춰 서 올려다본다 · 수아 “…여기다.” · voice: @p1_c_sua_voice"
+    prompt: |-
+      @video에서 이어진 컷. 와이드 로우앵글 · fixed camera · soft late-afternoon sunlight from camera-left · @p1_l_suahome_corridorapartment 아파트 앞, 화면 왼쪽에서 걸어 들어온 @p1_c_sua_accidentday_full 가 화면 중앙에 멈춰 서서 건물 위층을 올려다보고, @p1_c_jihoon_uniform_full 이 한 걸음 뒤 화면 왼쪽에 멈춰 그녀의 시선을 따라 올려다본다. 두 사람은 카메라를 등지고, 시선은 건물 외부 복도를 향한다 · 수아가 올려다본 채 말한다: “…여기다.” · 연기: 수아 손끝이 옷자락을 살짝 쥔다 · voice: @p1_c_sua_voice
     duration: 6
     screenplayHash: 54499fd668c542d56119a797d01a91ab77dec53c62f081d7b8bb0d34180f26c0
     prevShotRef: "01"

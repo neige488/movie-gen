@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "와이드 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드, 다가가는 미세 전진 · @p1_l_bookstore_storefront 서점 앞 통유리창 옆에서 @p1_c_sua_accidentday_full 가 기다리다 카메라(지훈) 쪽을 발견하고 환하게 손을 흔든다 · 연기: 반가움, 설렘 가득한 첫 데이트의 인사"
+    prompt: "미디엄 와이드 (지훈 1인칭 POV — 지훈은 화면에 없음) · handheld, slow walk-in — 카메라가 길 쪽에서 서점 입구를 정면으로 보며 천천히 다가간다 · soft afternoon daylight from camera-left · @p1_l_bookstore_storefront 입구 통유리창 앞에 @p1_c_sua_accidentday_full 가 길 쪽(카메라 쪽)을 향해 서서 기다리다, 카메라(지훈)를 발견하고 환하게 손을 흔든다 · 연기: 발끝을 살짝 들며 크게 흔드는 손, 활짝 번지는 웃음"
     duration: 6
     screenplayHash: 23d6fe78790217164d3be282a47eb2e88a6afd545347425cf28295d5ee6c3c88
     characterRefs:
@@ -14,9 +14,9 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 인서트 · 고정 · @p1_l_bookstore_aisles 서가 사이로 비스듬히 든 빛, 그 속에 먼지가 천천히 떠다닌다 · 사색적이고 친밀한 공기
-      Cut #2 — 미디엄 (지훈 1인칭 POV — 지훈은 화면에 없음) · 핸드헬드 팔로우 · @p1_c_sua_accidentday_full 가 책등을 손끝으로 훑으며 한 권을 찾고, 찾았다는 듯 카메라(지훈)를 돌아보며 웃고 따라오라는 듯 손짓하며 레코드 코너 쪽으로 앞장선다 · 연기: 장난스러운 리드, 친밀함
-      Cut #3 — 인서트, 클로즈업 · 책등을 따라 천천히 미끄러지는 @p1_c_sua_accidentday_full 의 손끝 · 책 모티프
+      Cut #1 — 인서트 와이드 · fixed camera · soft afternoon daylight from camera-left · @p1_l_bookstore_aisles 서가 통로 안으로 창빛이 비스듬히 들고, 그 빛줄기 속에 먼지가 천천히 떠다닌다 · 고요한 공기
+      Cut #2 — 인서트 클로즈업 · fixed camera · @p1_c_sua_accidentday_full 의 손끝이 화면 오른쪽 책장의 책등 위를 왼쪽에서 오른쪽으로 천천히 미끄러진다 · 책 모티프
+      Cut #3 — 미디엄 (지훈 1인칭 POV — 지훈은 화면에 없음) · handheld, slow follow · 통로 중간에서 @p1_c_sua_accidentday_full 가 화면 오른쪽 책장을 마주 보고 서서 책을 고르다 한 권을 찾고, 카메라(지훈) 쪽을 돌아보며 웃은 뒤 따라오라는 손짓을 하고 통로 안쪽 레코드 코너 방향으로 앞장서 걸어간다. 카메라는 그 뒤를 천천히 따라간다 · 연기: 장난스러운 리드, 돌아볼 때 반짝 커지는 눈
     duration: 12
     screenplayHash: d636f29df6573d208c09b8de35e74a2e1182c7a46bc667cc6d59bee6fc76ebaa
     prevShotRef: "01"
@@ -29,7 +29,7 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄 투샷 → 클로즈업 투샷 (POV에서 투샷으로 전환, 지훈이 처음 한 프레임에) · 고정, 미세 드리프트 · @p1_l_bookstore_recordcorner 레코드 코너에서 @p1_c_sua_accidentday_full 가 헤드폰을 집어 @p1_c_jihoon_dateoutfit_face 의 귀에 살며시 씌워 준다, 헤드폰 너머로 음악이 차오르고 수아가 눈을 맞추며 웃는다 · (이 음악은 이어지는 데이트 장면으로 계속 흐른다) · 연기: 지훈의 긴장이 사르르 풀리고, 수아 안온한 미소"
+    prompt: "@video에서 이어진 컷. 미디엄 투샷 (POV에서 투샷으로 전환 — 지훈이 처음 화면에 들어온다) · fixed camera, slow push-in · warm tungsten glow from camera-left · @p1_l_bookstore_recordcorner 청음 스테이션 앞에서 @p1_c_jihoon_dateoutfit_face 가 화면 왼쪽에 서서 오른쪽을 보고, @p1_c_sua_accidentday_full 가 화면 오른쪽에서 그를 마주 본다. 수아가 헤드폰을 집어 지훈의 양쪽 귀에 살며시 씌워 주고, 눈을 맞춘 채 웃는다. 헤드폰 너머로 음악이 차오른다 (이 음악은 이어지는 데이트 장면으로 계속 흐른다) · 연기: 지훈은 굳어 있던 어깨가 내려가고 숨을 길게 내쉰다, 수아는 눈을 맞춘 채 입꼬리가 천천히 올라간다"
     duration: 8
     screenplayHash: 97cae9d6f0824c3276f779a2dab2245502f365d5193b69f7c5222348a7e428db
     prevShotRef: "02"

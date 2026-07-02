@@ -1,6 +1,11 @@
 shots:
   - id: "01"
-    prompt: "빠른 파편 몽타주 · 핸드헬드, 거칠게 컷 · 어느 게 어느 날인지 분간 안 되게 뒤섞는다\nCut #1 (가짜) — @p1_l_sidestreet_schoolroute 이면도로, 끼익 마찰음, 넘어진 익명의 교복 여자아이(레퍼런스와 다른 얼굴, 수아 아님)가 벌떡 일어나 치마를 털고 뒤도 안 보고 가버린다\nCut #2 (진짜) — @p1_l_crosswalk_daywide 브레이크 소리, 허공에 뜬 책\nCut #3 (가짜) — 길에 떨어진 @p1_p_poetrybook_cover 를 줍는 손\nCut #4 (진짜) — 길 위를 구르는 빨간 운동화 한 짝 · 연기: 날것·잔혹·빠르게, 미완의 공포"
+    prompt: |-
+      파편 몽타주 — 서로 다른 날의 짧은 컷들이 연달아 이어진다, 어느 게 어느 날인지 분간되지 않게, 컷마다 동작은 하나씩만
+      Cut #1 (가짜) — 와이드 · handheld · harsh midday daylight from above · @p1_l_sidestreet_schoolroute 이면도로 한복판, 넘어져 있던 익명의 교복 여자아이(레퍼런스와 다른 얼굴, 수아 아님)가 벌떡 일어나 치마를 털고, 카메라를 등진 채 길 안쪽으로 뒤도 안 보고 멀어진다, 끼익 하는 타이어 마찰음
+      Cut #2 (진짜) — 인서트 · fixed camera · @p1_l_crosswalk_daywide 흰 줄무늬 횡단보도 위 허공에 책 한 권이 slow motion 으로 떠 있다, 화면 밖에서 브레이크 소리
+      Cut #3 (가짜) — 클로즈업 인서트 · fixed camera · 아스팔트 위에 떨어진 @p1_p_poetrybook_cover 를 향해 손 하나가 화면 오른쪽에서 들어와 집어 든다
+      Cut #4 (진짜) — 로우앵글 인서트 · fixed camera · 도로 바닥, 빨간 운동화 한 짝이 화면 왼쪽에서 오른쪽으로 굴러가다 멈춘다 · 연기: 어떤 컷도 사건의 전후를 보여주지 않고 중간에서 끊긴다(완결 금지)
     duration: 7
     screenplayHash: 431ae2fdb42ee97a9302cc904d4d74930580b65df10b30cd15833315b4312621
     characterRefs: []
@@ -13,7 +18,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄 → 클로즈업 · 고정 · 밤 @p1_l_jihoonhome_bedroom 책상 앞 @p1_c_jihoon_onlyhoodie_face, 시집을 보다 눈이 흐려진 채 숨을 짧게 들이켜고 손끝이 떨린다, 책을 덮지도 펼치지도 못한 채 굳어 있다, 창밖에서 신호등 불빛이 붉게 한 번 번진다 · 연기: 영문 모를 공포의 첫 침투, 과각성 직전의 멍함"
+    prompt: |-
+      @video에서 이어진 컷. 미디엄에서 클로즈업으로 · slow push-in · dim night interior, cold spill from the window camera-left · 밤 @p1_l_jihoonhome_bedroom 책상 앞, 화면 오른쪽에 앉아 몸을 화면 왼쪽 책상 쪽으로 향한 @p1_c_jihoon_onlyhoodie_face 가 펼쳐 든 @p1_p_poetrybook_cover 위에서 시선이 풀린 채 굳어 있다. 숨을 짧게 들이켜고 책장을 잡은 손끝이 떨린다, 책을 덮지도 펼치지도 못한 채 멈춰 있고, 창밖 신호등 불빛이 얼굴 위로 붉게 한 번 번진다 · 연기: 초점 잃은 눈, 마른침을 삼키고 얕은 숨이 목에 걸린다
     duration: 6
     screenplayHash: 8e7d945d6d9ac68b84dcf3738cac3fa9655af87a42ba3fc203f20ccec2c3b46b
     prevShotRef: "01"

@@ -1,8 +1,8 @@
 shots:
   - id: "01"
     prompt: |-
-      Cut #1 — 미디엄→클로즈업 · 고정 · 밤 @p1_l_jihoonhome_bedroom, 침대에 누운 @p1_c_jihoon_onlyhoodie_face 이 눈을 뜨고 천장을 본다 · 연기: 잠들지 못함, 공허한 응시
-      Cut #2 — 인서트, 클로즈업 · 고정 · 창밖 신호등 불빛이 침실 벽 위에서 붉게·초록으로·다시 붉게 느리게 바뀐다 · 빨강 모티프(신호등=사고의 잔상, PTSD 복선)
+      Cut #1 — 클로즈업 · slow push-in · 밤 @p1_l_jihoonhome_bedroom, dim night interior, slow alternating red and green traffic-light glow from the window on camera-right · @p1_c_jihoon_onlyhoodie_face 이 침대에 반듯이 누워 있다, 머리는 화면 왼쪽·창문은 화면 오른쪽, 뜬 눈으로 천장을 올려다본다 · 연기: 눈을 감지 못하고 시선은 천장 한 점에 고정, 마른침을 삼키고 이불 위 손끝이 미세하게 움찔한다
+      Cut #2 — 인서트 클로즈업 · fixed camera · 침대 머리맡 위 빈 벽, 화면 오른쪽 창에서 든 신호등 불빛이 벽 위에서 붉게, 초록으로, 다시 붉게 느리게 바뀐다
     duration: 12
     screenplayHash: 6963e14bccbfa891dcc24def1b4b2341183e040211419f9202c5671a9459b92e
     characterRefs:

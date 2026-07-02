@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "와이드 투샷 · 스테디 · 맑은 날 @p1_l_amusementpark_carousel 회전목마 앞, @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full · 수아 “나 이런 데 처음 와 봐.” 지훈 “거짓말하지 마.” 수아 회전목마를 올려다보며 “진짜야. …좋다.” · voice: @p1_c_sua_voice, @p1_c_jihoon_voice"
+    prompt: |-
+      와이드 투샷 · fixed camera · warm diffused dome light from above · @p1_l_amusementpark_carousel 회전목마를 정면 배경으로 두고, @p1_c_jihoon_onlyhoodie_full 이 화면 왼쪽·@p1_c_sua_accidentday_full 가 화면 오른쪽에 나란히 서서 몸을 서로에게 반쯤 돌린다 · 수아가 지훈을 보며 말한다: “나 이런 데 처음 와 봐.” 지훈이 말한다: “거짓말하지 마.” 수아가 고개를 들어 회전목마를 올려다보며 말한다: “진짜야. …좋다.” · voice: @p1_c_sua_voice, @p1_c_jihoon_voice
     duration: 9
     screenplayHash: 8ca1fbef3d22c85fd53f1979343b0d392103d6da4caba19fda8a19013d9e0da3
     characterRefs:
@@ -16,8 +17,8 @@ shots:
   - id: "02"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 미디엄 투샷 · 천천히 도는 트래킹 · @p1_c_jihoon_onlyhoodie_full 과 @p1_c_sua_accidentday_full 가 회전목마를 탄다, 수아가 웃는다 · 연기: 어딘가 너무 완벽한 오후
-      Cut #2 — 인서트, 와이드 · 천천히 도는 · @p1_l_amusementpark_carousel 회전목마의 불빛이 천천히 돌고 그 위로 맑고 푸른 하늘 · 비현실적으로 완벽한 결(환상의 징후)
+      Cut #1 — 미디엄 투샷 · slow tracking shot, 목마와 같은 속도로 나란히 · warm diffused dome light from above · @p1_l_amusementpark_carousel 회전목마가 천천히 돌고, @p1_c_jihoon_onlyhoodie_full 이 화면 왼쪽 목마에·@p1_c_sua_accidentday_full 가 화면 오른쪽 목마에 앉아 프레임 안에 유지된다 · 연기: 수아가 지훈 쪽으로 고개를 돌려 소리 내어 웃고, 지훈은 봉을 잡은 채 마주 웃는다
+      Cut #2 — 인서트, 로우앵글 와이드 · slow tilt up · 천천히 도는 회전목마의 불빛에서 위로 올라가면 구름 한 점 없는 맑고 푸른 하늘, 지붕의 깃발이 일정한 리듬으로 잔잔하게 흔들린다
     duration: 11
     screenplayHash: 75a8185039b71a5f349a668c3322986b33685d724ab078bab1cd3175aa7cf339
     prevShotRef: "01"

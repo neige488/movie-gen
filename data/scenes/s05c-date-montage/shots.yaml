@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄 투샷 · 핸드헬드, 가벼운 드리프트 · [음악 계속] @p1_l_amusementpark_headbandstall 동물 머리띠가 줄지어 걸린 가판대 앞, @p1_c_sua_accidentday_full 와 @p1_c_jihoon_dateoutfit_full 이 이것저것 골라 보며 깔깔댄다 · 연기: 들뜬 장난, 첫 데이트의 흥"
+    prompt: "미디엄 투샷 · handheld, gentle drift · bright festive light from above · [음악 계속] @p1_l_amusementpark_headbandstall 매대 앞에 @p1_c_jihoon_dateoutfit_full 이 화면 왼쪽, @p1_c_sua_accidentday_full 가 화면 오른쪽에 나란히 서서 매대를 마주 보고, 머리띠를 하나씩 집어 서로의 머리에 대 보며 깔깔댄다. 카메라는 매대 옆 45도에서 두 사람의 얼굴이 프레임 안에 보이게 잡는다 · 연기: 웃음이 터져 어깨가 들썩인다, 들뜬 장난"
     duration: 7
     screenplayHash: cf61f725e77d150f9ec38d66f305594f73f43b6f1ed77300de47ea3eb5a7fec1
     characterRefs:
@@ -14,7 +14,7 @@ shots:
     propRefs: []
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 정면 클로즈업 · 고정, 미세 드리프트 · [음악 계속] @p1_l_amusementpark_headbandstall 에서 @p1_c_sua_accidentday_face 가 @p1_p_leopardheadband_default 를 골라 쓰고 두 손으로 얼굴을 가렸다가 부끄럽다는 듯 손을 떼고 환하게 웃는다 · 연기: 수줍은 장난, 사랑스러움"
+    prompt: "@video에서 이어진 컷. 정면 클로즈업 · fixed camera, subtle drift · bright festive light from above · [음악 계속] @p1_l_amusementpark_headbandstall 매대 앞에서 @p1_c_sua_accidentday_face 가 카메라를 정면으로 보고 서서 @p1_p_leopardheadband_default 를 머리에 쓴다. 두 손으로 얼굴을 가렸다가, 부끄럽다는 듯 손을 떼며 환하게 웃는다. 얼굴이 프레임 안에 유지된다 · 연기: 수줍은 장난, 웃을 때 눈이 접힌다"
     duration: 6
     screenplayHash: a0b78fe400555985a0bf0a26d2085f8e1ffd6edd4aed361da249d36ec3eb04d9
     prevShotRef: "01"
@@ -30,8 +30,8 @@ shots:
   - id: "03"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 미디엄 투샷 (포토부스 정면 화면 구도) · 고정 · [음악 계속] @p1_l_amusementpark_photobooth 좁은 스티커사진 부스에서 @p1_p_deerheadband_default 를 쓴 @p1_c_jihoon_dateoutfit_full 과 @p1_p_leopardheadband_default 를 쓴 @p1_c_sua_accidentday_full 이 바짝 붙어 앉아 카메라를 보며 플래시가 터질 때마다 표정을 바꿔 가며 장난친다 · 연기: 까불거리는 행복, 거리낌 없음
-      Cut #2 — 인서트, 클로즈업 · [음악 계속] 부스 옆 출구로 또르르 인화되어 나오는 스티커사진 — 네 컷 속 두 사람의 웃는 얼굴 · 사진 모티프(나중에 남는 흔적)
+      Cut #1 — 미디엄 투샷 (부스 촬영 화면 시점의 정면 구도) · fixed camera · bright ring light from front · [음악 계속] @p1_l_amusementpark_photobooth 좁은 부스 안, @p1_p_deerheadband_default 를 쓴 @p1_c_jihoon_dateoutfit_full 이 화면 왼쪽, @p1_p_leopardheadband_default 를 쓴 @p1_c_sua_accidentday_full 가 화면 오른쪽에 바짝 붙어 앉아 카메라를 정면으로 본다. 플래시가 터질 때마다 두 사람이 표정과 포즈를 바꾼다 · 연기: 볼을 맞대고, 손가락 브이, 우스꽝스러운 찡그림 — 거리낌 없는 장난
+      Cut #2 — 인서트 클로즈업 · fixed camera · [음악 계속] 부스 바깥 인화구에서 스티커사진 한 장이 또르르 밀려 나온다 — 네 컷 속 @p1_c_jihoon_dateoutfit_full 과 @p1_c_sua_accidentday_full 의 웃는 얼굴 · 사진 모티프(나중에 남는 흔적)
     duration: 11
     screenplayHash: 0a16745314486e5a0125cc1d74a7199f55be1e6f41def4e51be84c2cb7b79455
     prevShotRef: "02"
@@ -50,8 +50,8 @@ shots:
   - id: "04"
     prompt: |-
       @video에서 이어진 컷(직전 샷 영상에서 연속).
-      Cut #1 — 와이드 풀샷 · 스테디 트래킹 · [음악 계속] @p1_l_icerink_indoor, @p1_c_sua_accidentday_full 가 뒤로 미끄러지며 @p1_c_jihoon_dateoutfit_full 의 두 손을 잡아 끌어준다, 지훈이 엉거주춤 다리가 후들거리며 따라간다 · 연기: 수아 능숙·장난, 지훈 어쩔 줄 몰라 하는 즐거움
-      Cut #2 — 인서트, 클로즈업 · [음악 계속] 빙판을 가르는 @p1_c_sua_accidentday_full 의 스케이트 날, 익숙하고 매끄럽게 미끄러진다 · 스케이트 모티프(어린 시절 복선)
+      Cut #1 — 와이드 풀샷 · smooth tracking shot, 두 사람의 이동과 나란히 · soft diffused ceiling light from above · [음악 계속] @p1_l_icerink_indoor 빙판 한가운데, @p1_c_sua_accidentday_full 가 화면 오른쪽에서 뒤로 미끄러지며 @p1_c_jihoon_dateoutfit_full 의 두 손을 잡아 끌고, 지훈은 화면 왼쪽에서 수아를 마주 본 채 끌려간다. 두 사람은 화면 왼쪽에서 오른쪽으로 나아간다 · 연기: 수아는 여유 있게 웃고, 지훈은 무릎이 후들거리고 상체가 앞뒤로 휘청인다
+      Cut #2 — 인서트 클로즈업 · smooth tracking shot · [음악 계속] 빙판을 가르는 @p1_c_sua_accidentday_full 의 스케이트 날이 화면 왼쪽에서 오른쪽으로 익숙하고 매끄럽게 미끄러진다 · 스케이트 모티프(어린 시절 복선)
     duration: 11
     screenplayHash: a4d49aa4ea2f2a60d155e47e39d1e48b1f93f0c4e0c597d588b14bd3923e5442
     prevShotRef: "03"
@@ -66,7 +66,7 @@ shots:
     propRefs: []
     takes: []
   - id: "05"
-    prompt: "@video에서 이어진 컷. 미디엄 투샷 → 와이드 · 아크 트래킹 후 풀어주며 와이드 · [음악 계속] 샷이 바뀌면 @p1_c_jihoon_dateoutfit_full 이 제법 능숙하게 탄다, @p1_c_sua_accidentday_full 가 그를 잡은 채 뒤로·지훈은 앞으로 눈을 마주 보며 웃고, 둘이 빙판 위를 길게 함께 미끄러진다 · 연기: 더없이 행복, 어딘가 너무 완벽한 오후"
+    prompt: "@video에서 이어진 컷. 미디엄 투샷 · slow arc, then dolly out to wide · soft diffused ceiling light from above · [음악 계속] @p1_l_icerink_indoor 빙판 위, @p1_c_sua_accidentday_full 가 화면 오른쪽에서 뒤로, @p1_c_jihoon_dateoutfit_full 이 화면 왼쪽에서 앞으로 — 서로 손을 잡고 마주 본 채 직전 샷과 같은 방향(화면 왼쪽에서 오른쪽)으로 길게 함께 미끄러진다. 이번에는 지훈의 스케이팅이 흔들림 없이 안정적이다 · 연기: 눈을 마주 본 채 웃음이 잦아들지 않는다, 한 번도 비틀거리지 않는 너무 완벽한 오후"
     duration: 10
     screenplayHash: 41544905ad60b3b7b3d4f31b02f415a8bbf9ced0f04eab32059b12cc9d727cb9
     prevShotRef: "04"

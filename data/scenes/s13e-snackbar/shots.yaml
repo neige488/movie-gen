@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "미디엄 투샷 · 고정, 미세 드리프트 · @p1_l_snackbar_interior 통유리 분식 식당, 떡볶이 2인분이 놓인 테이블에서 @p1_c_jihoon_onlyhoodie_full 은 먹지 않고 @p1_p_poetrybook_cover 만 들여다보고, 맞은편에 앉은 @p1_c_sua_accidentday_full 가 그런 지훈을 말없이 가만히 본다, 김이 천천히 식어 간다 · 연기: 지훈 책에 빠짐, 수아 닿지 않는 채 조용히 지켜봄"
+    prompt: |-
+      미디엄 투샷(측면) · fixed camera, 미세 드리프트 · @p1_l_snackbar_interior 통유리 바로 옆 창가 테이블 — @p1_c_jihoon_onlyhoodie_full 이 화면 오른쪽 스툴에 앉아 화면 왼쪽을 향하고, 맞은편 화면 왼쪽 스툴에 @p1_c_sua_accidentday_full 가 앉아 지훈을 마주 본다, 두 사람 사이 테이블에 떡볶이 2인분, 등 뒤 배경의 통유리 너머로 바깥 보도 · bright daylight through the glass wall behind the table · 지훈은 먹지 않고 @p1_p_poetrybook_cover 만 내려다보고, 수아는 말없이 지훈을 본다, 떡볶이 김이 천천히 옅어진다 · 연기: 지훈 손끝으로 책장 모서리만 만지작, 수아 무릎 위에 두 손을 모으고 가만히
     duration: 7
     screenplayHash: 733c395bd67e4371677430b0586ebe188abda46a9b3a517e75c0165422f71340
     look: default
@@ -16,7 +17,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 클로즈업(손) · 고정, 미세 드리프트 · @p1_l_snackbar_interior 테이블 위, @p1_c_sua_accidentday_full 가 책에 빠진 @p1_c_jihoon_onlyhoodie_full 의 손에 가만히 자기 손을 포갠다, 지훈은 @p1_p_poetrybook_cover 에서 눈을 떼지 않은 채 천천히 손을 뺀다, 수아의 손이 빈 테이블 위에 남는다 · 연기: 대사 없이 손만 — 수아 닿으려는 마지막 손길, 지훈 무의식적 거부(살아있는 환상의 위로조차 외면)"
+    prompt: |-
+      @video에서 이어진 컷. 클로즈업(테이블 위 손) · fixed camera, 미세 드리프트 · @p1_l_snackbar_interior 테이블 위 — 화면 오른쪽에 @p1_c_jihoon_onlyhoodie_full 의 손이 @p1_p_poetrybook_cover 옆에 놓여 있고, 화면 왼쪽에서 @p1_c_sua_accidentday_full 의 손이 들어와 그 위에 가만히 포개진다 · 지훈은 책에서 눈을 떼지 않은 채 천천히 손을 빼 화면 오른쪽 책 쪽으로 가져가고, 수아의 손만 빈 테이블 위에 남는다 · 연기: 대사 없이 손만 — 수아의 손가락이 잠깐 오므라들었다가 힘없이 펴진다
     duration: 7
     screenplayHash: dcd29b22ba6d3526f016bc5e671f71a11e735237d060fbcf69dc5e3f083ef24d
     prevShotRef: "01"
@@ -33,7 +35,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄 · 고정 · (창밖 빛이 기울어 시간이 흘렀다) @p1_l_snackbar_interior 같은 테이블, 떡볶이는 붇고 식었고 맞은편 자리는 비어 있다, @p1_c_jihoon_onlyhoodie_full 은 여전히 그 자리에서 @p1_p_poetrybook_cover 만 본다 · 연기: 시간이 지나도 변함없는 몰입, 비어 버린 맞은편"
+    prompt: |-
+      @video에서 이어진 컷. 미디엄 · fixed camera · @p1_l_snackbar_interior 같은 테이블, 같은 구도 — 창밖 빛이 낮게 기울어 시간이 흘렀다, 떡볶이는 김 없이 붇어 있고, 화면 왼쪽 맞은편 스툴은 비어 있다 · low tilted late-afternoon light through the glass behind the table · @p1_c_jihoon_onlyhoodie_full 은 화면 오른쪽 같은 자리에서 여전히 @p1_p_poetrybook_cover 만 내려다본다 · 연기: 자세가 처음과 거의 같고, 책장 넘기는 손만 움직인다
     duration: 6
     screenplayHash: 85b62425d663529d49cad6714dae19b08253e2f0ebe1bf23511ba96a9c116edf
     prevShotRef: "02"
@@ -47,7 +50,8 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "04"
-    prompt: "@video에서 이어진 컷. 와이드 (친구 시점, 보도에서 통유리 너머) · 핸드헬드 후 정지 · @p1_l_snackbar_storefront 통유리 분식 식당 앞을 지나던 @p1_c_seungho_uniform_full 와 @p1_c_dohyun_uniform_full 가 멈칫한다, 유리 너머 @p1_c_jihoon_onlyhoodie_full 이 혼자 2인분을 앞에 두고 책에 빠져 있다, 친구들의 얼굴이 굳고 무어라 말하려다 그냥 지나간다 · 연기: 또래의 어색한 거리두기, 걱정과 회피 사이"
+    prompt: |-
+      @video에서 이어진 컷. 와이드 · handheld tracking, then holds still · @p1_l_snackbar_storefront 보도에서 통유리 정면을 향한 앵글 — @p1_c_seungho_uniform_full 과 @p1_c_dohyun_uniform_full 이 화면 왼쪽에서 오른쪽으로 나란히 걸어오다 유리 앞 화면 중앙에서 멈칫한다 · flat cold daylight on the sidewalk · 유리 너머 창가 테이블에 @p1_c_jihoon_onlyhoodie_full 이 혼자, 2인분을 앞에 두고 고개 숙여 책에 빠져 있고 맞은편 스툴은 비어 있다 · 연기: 두 친구가 서로 눈짓을 주고받고 입을 열려다 다물고, 다시 화면 오른쪽으로 걸어가 프레임 아웃
     duration: 7
     screenplayHash: a43e08347cd2294a78ee6684095fb093b713fc98575bc3f9423023def99a843f
     prevShotRef: "03"

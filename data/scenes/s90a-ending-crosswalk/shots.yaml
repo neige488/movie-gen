@@ -1,6 +1,8 @@
 shots:
   - id: "01"
-    prompt: "와이드→미디엄 투샷 · 고정 · @p1_l_crosswalk_daywide 빨간불, @p1_c_jihoon_onlyhoodie_full 이 서 있고 옆에 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_face 의 옆모습 · 지훈은 이번엔 건너지 않고 멈춰 선 채 수아 쪽으로 고개를 돌린다 · 지훈 “안녕. 갑자기 말 걸어서 미안한데 난 지훈이라고 해.” · 수아는 책에서 고개를 들지 않는다 · 컷 투 블랙"
+    prompt: |-
+      Cut #1 — 와이드 투샷 · fixed camera · @p1_l_crosswalk_daywide 빨간불의 횡단보도, 카메라는 두 사람 등 뒤에서 길 건너편을 바라본다 — 보도 끝에 @p1_c_jihoon_onlyhoodie_full 이 화면 왼쪽에서 길 건너편을 향해 서 있고, 그 오른쪽 반 걸음 옆 화면 오른쪽에 @p1_c_sua_accidentday_full 가 살짝 3/4 뒷모습으로 고개를 숙여 @p1_p_poetrybook_cover 를 펼쳐 읽는다, 길 건너편 저 멀리 신호등의 빨간불 · 조명: soft midday sunlight from camera-left · 연기: 지훈 — 두 발이 보도 경계 안쪽에 멈춘 채 움직이지 않는다(이번엔 건너지 않는다), 고개만 천천히 화면 오른쪽 수아 쪽으로 돌린다
+      Cut #2 — 오버 더 숄더 클로즈업 · slow push-in · 프레임 왼쪽 가장자리에 @p1_c_jihoon_onlyhoodie_full 의 어깨가 걸리고, 프레임 오른쪽에 고개 숙여 책을 읽는 @p1_c_sua_accidentday_face 의 3/4 옆얼굴 · 지훈이 수아를 보며 말한다: “안녕. 갑자기 말 걸어서 미안한데 난 지훈이라고 해.” · 수아는 책에서 고개를 들지 않는다, 시선은 끝까지 책 위에 머문다 · 컷 투 블랙 · voice: @p1_c_jihoon_voice
     duration: 12
     screenplayHash: 56a4174530679c02a0358855c8f9a97a8dddabda7c605f6d834e49422bd1d351
     characterRefs:

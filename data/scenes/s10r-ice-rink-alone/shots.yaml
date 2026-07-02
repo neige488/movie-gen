@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "와이드 풀샷 · 스테디 트래킹 · 같은 @p1_l_icerink_indoor, @p1_c_jihoon_onlyhoodie_full 이 혼자 빙판 위를 길게·아주 능숙하게 미끄러진다, 표정이 없다, 링크 가장자리에 @p1_p_poetrybook_cover 가 놓여 있다 · 연기: 무표정"
+    prompt: |-
+      와이드 풀샷 · fixed camera · soft diffused ceiling light from above · 같은 @p1_l_icerink_indoor 를 같은 보드 축에서 바라본다, 전경 화면 오른쪽 보드 위에 @p1_p_poetrybook_cover 가 놓여 있고, @p1_c_jihoon_onlyhoodie_full 이 혼자 빙판을 길고 능숙한 스트라이드로 화면 왼쪽에서 오른쪽으로 가로질러 미끄러진다 · 연기: 시선은 진행 방향에 고정, 입을 다문 무표정, 팔만 규칙적으로 흔든다
     duration: 9
     screenplayHash: 64199fe9b87b9e33921612b58f06f0716b3e41d117aa9410eda22c3a08457776
     characterRefs:

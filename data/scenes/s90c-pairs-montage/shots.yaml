@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "접사 인서트 · 고정, 미세 드리프트 · 대사 없음 · 검은 화면 엔딩 크레딧이 짧게 흐르고 그 사이로 @p1_p_poetrybook_marginnote 시집 여백의 손글씨 메모가 한 줄씩 접사로 끼어든다 · 연기: 설명 없이 이미지로만, 불온한 정적"
+    prompt: "접사 인서트 · fixed camera, 미세 드리프트 · 대사 없음 · 검은 화면 위로 엔딩 크레딧이 짧게 흐르고, 그 사이로 @p1_p_poetrybook_marginnote 의 여백 손글씨 메모가 한 줄씩 화면을 가득 채우는 접사로 끼어든다 — 프레임에는 종이의 결과 글씨만, 설명 없음 · 조명: dim cold toplight from above · 정적, 종이 스치는 소리만"
     duration: 7
     screenplayHash: ab5ced4597817c1498046c6593662800ecb0f22f711f8573e4823a08e363246b
     characterRefs: []
@@ -9,7 +9,12 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 연쇄 디졸브 몽타주, 동일 구도 · 고정 · 대사 없음 · 투샷이 하나씩 같은 구도의 혼자 샷으로 바뀐다 — @p1_l_hillbench_daycityview 벤치에서 책 읽던 두 사람이 혼자 앉은 @p1_c_jihoon_onlyhoodie_full 으로, 편의점 마주 앉은 둘이 컵라면 하나로, 회전목마 나란히가 아이들 사이 혼자로, 아이스링크 손잡고가 혼자 능숙하게로"
+    prompt: |-
+      @video에서 이어진 컷. 대사 없음 — 투샷이 같은 구도의 혼자 샷으로 디졸브되는 몽타주.
+      Cut #1 — 와이드 · fixed camera · @p1_l_hillbench_daycityview 벤치에 나란히 앉아 책을 읽던 두 사람에서 왼쪽 옆자리의 소녀가 디졸브로 사라진다 — 같은 구도, @p1_c_jihoon_onlyhoodie_full 이 벤치 오른쪽 끝에 혼자 앉아 있고 벤치 왼쪽은 비어 있다 · 조명: flat overcast daylight
+      Cut #2 — 인서트, 미디엄 클로즈업 · fixed camera · 편의점 창가 테이블 — 마주 놓인 김이 오르는 컵라면 두 개에서 맞은편 자리의 사람과 컵라면이 디졸브로 사라지고 컵라면 하나만 남는다, 맞은편 의자는 비어 있다 · 조명: cold fluorescent from above
+      Cut #3 — 와이드 · fixed camera · 놀이공원 회전목마가 천천히 돈다 — 목마에 앉은 @p1_c_jihoon_onlyhoodie_full 의 옆 목마에 탔던 동승자가 디졸브로 사라진다, 아이들 사이에 혼자, 옆 목마는 빈 채로 돈다 · 조명: flat overcast daylight
+      Cut #4 — 와이드 · fixed camera · 실내 아이스링크 — 나란히 손잡고 지치던 둘에서 옆사람이 디졸브로 사라지고, @p1_c_jihoon_onlyhoodie_full 이 혼자 화면 왼쪽에서 오른쪽으로 흔들림 없이 미끄러져 간다 · 조명: cold white rink light from above
     duration: 12
     screenplayHash: 09a92c24688ec1379edfb567b376188fffa5b973be996082eb25b76b39eacd68
     prevShotRef: "01"
@@ -22,7 +27,7 @@ shots:
     propRefs: []
     takes: []
   - id: "03"
-    prompt: "@video에서 이어진 컷. 미디엄 · 스테디 트래킹 · @p1_l_rainalley_rain 비 오는 하굣길 — 우산 하나를 같이 쓰던 둘이 우산 하나로 혼자 걷는 @p1_c_jihoon_onlyhoodie_full 으로 바뀐다, 한쪽 어깨가 비에 젖는 일도 없다"
+    prompt: "@video에서 이어진 컷. 미디엄 · steady tracking shot(옆에서 나란히 따라간다) · @p1_l_rainalley_rain 비 내리는 하굣길 보도 — 우산 하나를 같이 쓰고 걷던 둘에서 옆사람이 디졸브로 사라지고, @p1_c_jihoon_onlyhoodie_full 이 우산 하나를 쓰고 화면 왼쪽에서 오른쪽으로 혼자 걷는다 · 우산은 머리 위 한가운데 똑바로 서 있고 양어깨가 모두 말라 있다 — 한쪽 어깨가 젖는 일도 없다 · 조명: overcast dim daylight · 연기: 시선은 정면, 표정 없는 일정한 걸음"
     duration: 7
     screenplayHash: 02ceaacd309a600efa1db6bb8872f3626e86dc600a912c3e032430e58650de40
     prevShotRef: "02"
@@ -35,7 +40,7 @@ shots:
     propRefs: []
     takes: []
   - id: "04"
-    prompt: "@video에서 이어진 컷. 동일 구도 리빌 · 핸드헬드 · 대사 없음(무음) · @p1_l_classroom_midday 교실, @p1_c_jihoon_uniform_full 이 누군가에게 따지던 같은 블로킹에서 상대가 @p1_c_classmategirl_uniform_full 모르는 단발 여학생으로 드러난다 — 수아가 아니었다 · 연기: 입모양만, 여학생 공포, 지훈 광기 — 그가 따진 건 처음부터 모르는 아이"
+    prompt: "@video에서 이어진 컷. 미디엄 투샷, 동일 구도 리빌 · handheld · 대사 없음(무음, 입모양만) · @p1_l_classroom_midday 점심시간 교실 뒤쪽 — @p1_c_jihoon_uniform_full 이 화면 왼쪽에 서서 화면 오른쪽을 향해 소리 없이 입모양으로 따지고, 맞은편 화면 오른쪽에 책상까지 뒷걸음질로 몰린 상대가 @p1_c_classmategirl_uniform_full 로 드러난다 — 수아가 아니었다, 그가 따진 건 처음부터 모르는 아이다 · 조명: cold window light from camera-left · 연기: 지훈 — 핏대 선 목, 부릅뜬 눈, 같은 입모양의 반복; 여학생 — 어깨를 움츠리고 두 손을 가슴 앞에 모은 채 눈에 눈물이 고인다"
     duration: 8
     screenplayHash: d0b5fb4e40a71023f07ca471ef1dc6f321294d4060971733922b9f38722f3b5c
     prevShotRef: "03"

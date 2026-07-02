@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "미디엄 · 고정, 미세 드리프트 · 밤 @p1_l_jihoonhome_bedroom 책상에 앉은 @p1_c_jihoon_onlyhoodie_full 이 @p1_p_poetrybook_marginnote 를 펼쳐 본다 · (앞 장면 친구들의 수근거림이 배경 잔향으로 깔렸다가 천천히 잦아들고 방이 조용해진다) · 연기: 책에 잠긴 무방비, 고요"
+    prompt: |-
+      미디엄 · fixed camera, 미세 드리프트 · 밤 @p1_l_jihoonhome_bedroom — @p1_c_jihoon_onlyhoodie_full 이 화면 오른쪽 책상 앞에 카메라를 등진 반측면으로 앉아 @p1_p_poetrybook_marginnote 를 펼쳐 읽고, 그의 등 뒤 화면 왼쪽 배경에 침대가 보인다 · dim room lit by a single warm desk lamp from camera-right · (앞 장면 친구들의 수근거림이 배경 잔향으로 깔렸다가 천천히 잦아들고 방이 조용해진다) · 연기: 시선은 책장에 고정, 느리고 고른 호흡
     duration: 5
     screenplayHash: 08eda863d4dbff0b73c0f4d3dc80936832bc09f589db9627c743d9329062080d
     characterRefs:
@@ -13,7 +14,11 @@ shots:
       - prop: poetry-book
     takes: []
   - id: "02"
-    prompt: "@video에서 이어진 컷. 미디엄 → 지훈 클로즈업 · 고정 · @p1_c_jihoon_onlyhoodie_full 의 등 뒤 침대 쪽에서 나직한 목소리 — 수아 “혹시… 그 여자애 좋아하는 거야?” 지훈의 책장 넘기던 손이 멈춘다, 수아 “…나는?” 침대 위에 @p1_c_sua_accidentday_full 의 흐릿한 그림자(또렷하지 않게·반투명 실루엣처럼), 지훈이 천천히 뒤돌아본다 — 아무도 없다 · 연기: 수아 조용한 항변·쓸쓸함, 지훈 서늘한 깨달음 직전 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice"
+    prompt: |-
+      @video에서 이어진 컷.
+      Cut #1 — 미디엄 · fixed camera · 직전과 같은 구도 — 화면 오른쪽 책상의 @p1_c_jihoon_onlyhoodie_full 등 너머, 화면 왼쪽 침대 쪽은 어둠에 잠겨 있다 · 수아가 (프레임 밖에서 나직이) 말한다: "혹시… 그 여자애 좋아하는 거야?" · 연기: 지훈의 책장을 넘기던 손이 멈춘다
+      Cut #2 — 미디엄 와이드 · fixed camera · 화면 왼쪽 침대에 @p1_c_sua_accidentday_full 가 흐릿한 반투명 실루엣으로 걸터앉아 화면 오른쪽 책상의 지훈 등을 바라보고, @p1_c_jihoon_onlyhoodie_full 은 등을 보인 채 굳어 있다 · 수아가 (조용히) 말한다: "…나는?"
+      Cut #3 — 미디엄 · fixed camera · @p1_c_jihoon_onlyhoodie_full 이 천천히 고개를 화면 왼쪽 어깨 너머로 돌려 침대를 본다 — 침대는 비어 있다, 아무도 없다 · 연기: 시선이 빈 이불 위를 천천히 훑고, 숨을 삼킨다 · voice: @p1_c_sua_voice, @p1_c_jihoon_voice
     duration: 8
     screenplayHash: 0ee389a5210d14232cc66cc57c709c5a06c46ab8e361f9f3d77b36c9fe35862c
     prevShotRef: "01"

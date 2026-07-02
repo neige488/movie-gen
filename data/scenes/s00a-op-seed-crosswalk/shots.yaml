@@ -1,6 +1,6 @@
 shots:
   - id: "01"
-    prompt: "미디엄 클로즈업 · 핸드헬드 팔로우(흔들리며 바짝 따라붙음) · 거리를 @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 전력 질주한다(얼굴 일관성 위해 @p1_c_jihoon_hoodiewithbag_face 동반), 배경은 얕은 심도로 흐릿한 거리, 저만치 앞에 횡단보도가 보인다 · 연기: 가쁜 숨, 조급한 얼굴, 다급한 보폭"
+    prompt: "미디엄 클로즈업 · handheld tracking shot(인물 옆에서 나란히 따라간다) · 상가 거리 보도에서 @p1_c_jihoon_hoodiewithbag_full 이 학원 가방을 메고 화면 왼쪽에서 오른쪽으로 전력 질주한다(얼굴 일관성 위해 @p1_c_jihoon_hoodiewithbag_face 동반), 진행 방향인 화면 오른쪽 저 멀리에 횡단보도가 보인다 · 조명: soft midday sunlight from camera-left · 연기: 가쁜 숨, 앞만 노려보는 조급한 눈, 크게 내딛는 다급한 보폭"
     duration: 6
     screenplayHash: 0c475d6378db52af692bed11e26b547e90d52b36c8086ad7bfbe586e7690df2a
     characterRefs:
@@ -11,8 +11,8 @@ shots:
     takes: []
   - id: "02"
     prompt: |-
-      Cut #1 — 슬로우모션, 와이드→미디엄 · 핸드헬드 · 시작 프레임(횡단보도 앞쪽 보도에 카메라를 등지고 서서 @p1_p_poetrybook_cover 를 읽는 @p1_c_sua_accidentday_full)에서 이어져, @p1_c_jihoon_hoodiewithbag_full 이 프레임 밖에서 끼어들어 수아 옆을 지나 차도로 막 발을 내딛는 순간, 세상이 느려지며 카메라가 수아의 3/4 옆얼굴(@p1_c_sua_accidentday_face)을 스치듯 담는다 · 책 표지 안 보임(책등이 카메라 쪽) · 신호등 빨간불이 프레임 가장자리에서 붉게 번진다 · 연기: 지훈은 차도 경계에서 발을 내딛는 중(분기 직전, 아직 멈추지도 건너지도 않음), 수아 평온·무심
-      Cut #2 — 슬로우모션 인서트, 발 클로즈업(로우앵글) · 보도블록 위에 선 @p1_c_sua_accidentday_full 의 두 발, 빨간 캔버스 운동화 한쪽 발끝이 신호를 기다리듯 가볍게 까딱인다 · 바닥에 신호등 빨간빛이 옅게 어린다 · 빨강 모티프(신호등·운동화) 각인
+      Cut #1 — 슬로우모션, 와이드에서 미디엄 · handheld, slow push-in · 시작 프레임에서 이어진다: @p1_c_sua_accidentday_full 는 횡단보도 앞 보도 끝 화면 오른쪽에 카메라를 등진 살짝 3/4 측면으로 서서 길 건너편을 향한 채 @p1_p_poetrybook_cover 를 읽고 있다(책등이 카메라 쪽, 표지는 보이지 않음). @p1_c_jihoon_hoodiewithbag_full 이 화면 왼쪽 프레임 밖에서 들어와 수아의 왼쪽 옆을 지나 화면 안쪽 차도를 향해 발을 내딛는 순간 세상이 느려지고, 스쳐 지나는 그 찰나 수아의 3/4 옆얼굴(@p1_c_sua_accidentday_face)이 프레임에 담긴다. 길 건너편 저 멀리 신호등의 빨간불이 프레임 가장자리에서 붉게 번진다 · 조명: soft midday sunlight from camera-left · 연기: 지훈 — 차도 경계에서 한 발을 내딛는 중(분기 직전, 멈추지도 건너지도 않은 열린 동작), 수아 — 책에 시선을 둔 평온한 무심
+      Cut #2 — 슬로우모션 인서트, 발 클로즈업(low angle) · fixed camera · 보도블록 경계 위에 나란히 선 @p1_c_sua_accidentday_full 의 두 발, 한쪽 발끝이 신호를 기다리듯 가볍게 까딱인다, 운동화 코와 보도 바닥에 건너편 신호등의 빨간빛이 옅게 어린다
     duration: 10
     screenplayHash: 7bb6c2a6ac14c98bf1cad502cb83e9c9ffd51e32c7a4a3d22bb7db8c85e3b373
     prevShotRef: "01"

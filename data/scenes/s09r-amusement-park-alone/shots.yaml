@@ -1,6 +1,7 @@
 shots:
   - id: "01"
-    prompt: "와이드 풀샷 · 고정 · 같은 @p1_l_amusementpark_carousel 회전목마, @p1_c_jihoon_onlyhoodie_full 이 혼자 목마에 앉아 한 손에 @p1_p_poetrybook_cover 를 들고 있다, 주위엔 아이들과 부모들뿐, 회전목마가 돈다 · 연기: 텅 빈 표정"
+    prompt: |-
+      와이드 풀샷 · fixed camera · diffused dome light from above · 같은 @p1_l_amusementpark_carousel 회전목마를 같은 정면 축에서 바라본다, @p1_c_jihoon_onlyhoodie_full 이 목마에 혼자 앉아 한 손에 @p1_p_poetrybook_cover 를 쥐고 있고 바로 옆(화면 오른쪽) 목마는 비어 있다, 다른 목마엔 아이들과 부모들, 회전목마가 천천히 돌아 지훈이 화면 왼쪽에서 오른쪽으로 지나간다 · 연기: 초점 없는 시선을 아래에 두고 입을 다문 채 몸이 목마의 흔들림에 그대로 흔들리게 둔다
     duration: 8
     screenplayHash: f6e314cea3c25accee8625297ca96581ef9fef7830f608da216cf9d033c34254
     characterRefs:
